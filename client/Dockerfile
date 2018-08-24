@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install yarn
 
 WORKDIR /code
 
-# COPY ./package.json /code/package.json
-# RUN yarn install
+COPY ./package.json /code/package.json
+RUN yarn install
 
 COPY . /code/
