@@ -27,7 +27,7 @@ services:
         volumes:
             - ./client/:/code
         ports:
-            - '3005:3000'
+            - '3005:3005'
 
 volumes:
   media:
