@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from report.admin import ReportAdmin
 from report.models import Report
-from .models import Project
+from .models import Project, District
 from .forms import ProjectAdminForm
 
 
@@ -44,3 +44,10 @@ class ProjectAdmin(admin.ModelAdmin):
         if not instance.selected_report and reports and len(reports):
             instance.selected_report = reports[0]
             instance.save()
+
+
+@admin.register(District)
+class DistrictAdmin(admin.ModelAdmin):
+    search_fields = ('name', 'code')
+    list_display = ('name', 'code')
+    ordering = ('name',)
