@@ -22,8 +22,19 @@ class ProjectAdmin(admin.ModelAdmin):
     inlines = (ReportInline,)
     form = ProjectAdminForm
     search_fields = ('name', 'long', 'lat', 'selected_report__name')
-    list_display = ('name', 'long', 'lat', 'get_selected_report')
-    list_select_related = ('selected_report', )
+    list_display = (
+        'name', 'long', 'lat', 'get_selected_report', 'get_district',
+    )
+    list_select_related = ('selected_report',)
+    list_filter = ('district',)
+
+    def get_district(self, instance):
+        district = instance.district
+        if district:
+            link = reverse('admin:project_district_change', args=(district.id,))
+            return mark_safe('<a href="%s">%s</a>' % (link, district))
+
+    get_district.short_description = 'District'
 
     def get_selected_report(self, instance):
         report = instance.selected_report

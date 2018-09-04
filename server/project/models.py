@@ -11,7 +11,7 @@ class District(models.Model):
         ordering = ['name']
 
     def __str__(self):
-        return '%s (%s)' % (self.name, self.code)
+        return '{} ({})'.format(self.name, self.code)
 
 
 class Project(models.Model):
