@@ -63,11 +63,11 @@ def extract_rc_pie_chart(data):
         },
         {
             'name': 'Actual',
-            'size': '@TotalRC',
+            # 'size': '@TotalRC',
             'children': [
                 {
                     'name': 'Sponsored',
-                    'size': '@Sponsored',
+                    # 'size': '@Sponsored',
                     'children': [
                         {
                             'name': 'Male',
@@ -81,7 +81,7 @@ def extract_rc_pie_chart(data):
                 },
                 {
                     'name': 'Available',
-                    'size': '@Available',
+                    # 'size': '@Available',
                     'children': [
                         {
                             'name': 'Male',
@@ -111,7 +111,7 @@ def extract_education(data):
     fields = [
         {
             'name': '#RC of Primary School Age',
-            'size': '@PrimarySchoolAge',
+            # 'size': '@PrimarySchoolAge',
             'children': [
                 {
                     'name': 'RC of Primary School Age Involved in Formal Education',
@@ -130,7 +130,7 @@ def extract_education(data):
 
         {
             'name': '#RC of Secondary School Age',
-            'size': '@SecondarySchoolAge',
+            # 'size': '@SecondarySchoolAge',
             'children': [
                 {
                     'name': 'RC of Secondary School Age Involved in Formal Education',
