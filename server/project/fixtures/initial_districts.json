@@ -1,0 +1,602 @@
+[
+    {
+        "model": "project.District",
+        "pk": 1,
+        "fields": {
+            "name": "Sindhupalchok",
+            "code": "C-BAG-23"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 2,
+        "fields": {
+            "name": "Kabhrepalanchok",
+            "code": "C-BAG-24"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 3,
+        "fields": {
+            "name": "Lalitpur",
+            "code": "C-BAG-25"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 4,
+        "fields": {
+            "name": "Bhaktapur",
+            "code": "C-BAG-26"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 5,
+        "fields": {
+            "name": "Kathmandu",
+            "code": "C-BAG-27"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 6,
+        "fields": {
+            "name": "Nuwakot",
+            "code": "C-BAG-28"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 7,
+        "fields": {
+            "name": "Rasuwa",
+            "code": "C-BAG-29"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 8,
+        "fields": {
+            "name": "Dhading",
+            "code": "C-BAG-30"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 9,
+        "fields": {
+            "name": "Dhanusha",
+            "code": "C-JAN-17"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 10,
+        "fields": {
+            "name": "Mahottari",
+            "code": "C-JAN-18"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 11,
+        "fields": {
+            "name": "Sarlahi",
+            "code": "C-JAN-19"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 12,
+        "fields": {
+            "name": "Sindhuli",
+            "code": "C-JAN-20"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 13,
+        "fields": {
+            "name": "Ramechhap",
+            "code": "C-JAN-21"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 14,
+        "fields": {
+            "name": "Dolakha",
+            "code": "C-JAN-22"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 15,
+        "fields": {
+            "name": "Makawanpur",
+            "code": "C-NAR-31"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 16,
+        "fields": {
+            "name": "Rautahat",
+            "code": "C-NAR-32"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 17,
+        "fields": {
+            "name": "Bara",
+            "code": "C-NAR-33"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 18,
+        "fields": {
+            "name": "Parsa",
+            "code": "C-NAR-34"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 19,
+        "fields": {
+            "name": "Chitawan",
+            "code": "C-NAR-35"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 20,
+        "fields": {
+            "name": "Morang",
+            "code": "E-KOS-05"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 21,
+        "fields": {
+            "name": "Sunsari",
+            "code": "E-KOS-06"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 22,
+        "fields": {
+            "name": "Dhankuta",
+            "code": "E-KOS-07"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 23,
+        "fields": {
+            "name": "Terhathum",
+            "code": "E-KOS-08"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 24,
+        "fields": {
+            "name": "Sankhuwasabha",
+            "code": "E-KOS-09"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 25,
+        "fields": {
+            "name": "Bhojpur",
+            "code": "E-KOS-10"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 26,
+        "fields": {
+            "name": "Taplejung",
+            "code": "E-MEC-01"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 27,
+        "fields": {
+            "name": "Panchthar",
+            "code": "E-MEC-02"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 28,
+        "fields": {
+            "name": "Ilam",
+            "code": "E-MEC-03"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 29,
+        "fields": {
+            "name": "Jhapa",
+            "code": "E-MEC-04"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 30,
+        "fields": {
+            "name": "Solukhumbu",
+            "code": "E-SAG-11"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 31,
+        "fields": {
+            "name": "Okhaldhunga",
+            "code": "E-SAG-12"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 32,
+        "fields": {
+            "name": "Khotang",
+            "code": "E-SAG-13"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 33,
+        "fields": {
+            "name": "Udayapur",
+            "code": "E-SAG-14"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 34,
+        "fields": {
+            "name": "Saptari",
+            "code": "E-SAG-15"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 35,
+        "fields": {
+            "name": "Siraha",
+            "code": "E-SAG-16"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 36,
+        "fields": {
+            "name": "Kanchanpur",
+            "code": "F-MAH-72"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 37,
+        "fields": {
+            "name": "Dadeldhura",
+            "code": "F-MAH-73"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 38,
+        "fields": {
+            "name": "Baitadi",
+            "code": "F-MAH-74"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 39,
+        "fields": {
+            "name": "Darchula",
+            "code": "F-MAH-75"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 40,
+        "fields": {
+            "name": "Bajura",
+            "code": "F-SET-67"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 41,
+        "fields": {
+            "name": "Bajhang",
+            "code": "F-SET-68"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 42,
+        "fields": {
+            "name": "Achham",
+            "code": "F-SET-69"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 43,
+        "fields": {
+            "name": "Doti",
+            "code": "F-SET-70"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 44,
+        "fields": {
+            "name": "Kailali",
+            "code": "F-SET-71"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 45,
+        "fields": {
+            "name": "Banke",
+            "code": "M-BHE-57"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 46,
+        "fields": {
+            "name": "Bardiya",
+            "code": "M-BHE-58"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 47,
+        "fields": {
+            "name": "Surkhet",
+            "code": "M-BHE-59"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 48,
+        "fields": {
+            "name": "Dailekh",
+            "code": "M-BHE-60"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 49,
+        "fields": {
+            "name": "Jajarkot",
+            "code": "M-BHE-61"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 50,
+        "fields": {
+            "name": "Dolpa",
+            "code": "M-KAR-62"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 51,
+        "fields": {
+            "name": "Jumla",
+            "code": "M-KAR-63"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 52,
+        "fields": {
+            "name": "Kalikot",
+            "code": "M-KAR-64"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 53,
+        "fields": {
+            "name": "Mugu",
+            "code": "M-KAR-65"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 54,
+        "fields": {
+            "name": "Humla",
+            "code": "M-KAR-66"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 55,
+        "fields": {
+            "name": "Pyuthan",
+            "code": "M-RAP-52"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 56,
+        "fields": {
+            "name": "Rolpa",
+            "code": "M-RAP-53"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 57,
+        "fields": {
+            "name": "Rukum",
+            "code": "M-RAP-54"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 58,
+        "fields": {
+            "name": "Salyan",
+            "code": "M-RAP-55"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 59,
+        "fields": {
+            "name": "Dang",
+            "code": "M-RAP-56"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 60,
+        "fields": {
+            "name": "Mustang",
+            "code": "W-DHA-42"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 61,
+        "fields": {
+            "name": "Myagdi",
+            "code": "W-DHA-43"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 62,
+        "fields": {
+            "name": "Parbat",
+            "code": "W-DHA-44"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 63,
+        "fields": {
+            "name": "Baglung",
+            "code": "W-DHA-45"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 64,
+        "fields": {
+            "name": "Gorkha",
+            "code": "W-GAN-36"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 65,
+        "fields": {
+            "name": "Lamjung",
+            "code": "W-GAN-37"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 66,
+        "fields": {
+            "name": "Tanahu",
+            "code": "W-GAN-38"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 67,
+        "fields": {
+            "name": "Syangja",
+            "code": "W-GAN-39"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 68,
+        "fields": {
+            "name": "Kaski",
+            "code": "W-GAN-40"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 69,
+        "fields": {
+            "name": "Manang",
+            "code": "W-GAN-41"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 70,
+        "fields": {
+            "name": "Gulmi",
+            "code": "W-LUM-46"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 71,
+        "fields": {
+            "name": "Palpa",
+            "code": "W-LUM-47"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 72,
+        "fields": {
+            "name": "Nawalparasi",
+            "code": "W-LUM-48"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 73,
+        "fields": {
+            "name": "Rupandehi",
+            "code": "W-LUM-49"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 74,
+        "fields": {
+            "name": "Kapilbastu",
+            "code": "W-LUM-50"
+        }
+    },
+    {
+        "model": "project.District",
+        "pk": 75,
+        "fields": {
+            "name": "Arghakhanchi",
+            "code": "W-LUM-51"
+        }
+    }
+]

@@ -3,8 +3,23 @@ from django.db import models
 # Create your models here.
 
 
+class District(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    code = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['name']
+
+    def __str__(self):
+        return '%s (%s)' % (self.name, self.code)
+
+
 class Project(models.Model):
     name = models.CharField(max_length=255)
+    district = models.ForeignKey(
+        District, on_delete=models.CASCADE, related_name='projects',
+        blank=True, null=True,
+    )
     selected_report = models.OneToOneField(
         'report.Report', related_name='+',
         on_delete=models.DO_NOTHING,
