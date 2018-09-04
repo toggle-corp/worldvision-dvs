@@ -6,9 +6,11 @@ import {
 
 export const urlForProjects = `${wsEndpoint}/projects/`;
 
-export const urlForReports = `${wsEndpoint}/reports/`;
-
 export const createParamsForGet = () => ({
     method: GET,
     headers: commonHeaderForGet,
 });
+
+export const createUrlForReport = projectId => (
+    `${wsEndpoint}/projects-report/${projectId}`
+);

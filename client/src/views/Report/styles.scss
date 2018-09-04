@@ -1,0 +1,27 @@
+.region {
+    display: flex;
+    flex-direction: column;
+
+    .map {
+        flex-grow: 1;
+    }
+
+    .sunburst-container {
+        flex-grow: 1;
+        .sunburst {
+
+        }
+    }
+
+    .horizontal-bar-container {
+        flex-grow: 1;
+        .horizontal-bar {
+        }
+    }
+
+    .donut-chart-container {
+        flex-grow: 1;
+        .donut-chart {
+        }
+    }
+}

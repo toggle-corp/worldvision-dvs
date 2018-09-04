@@ -2,8 +2,20 @@
 
 .dashboard {
     display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100vw;
     height: 100vh;
+
+    .content {
+        display: flex;
+        flex-grow: 1;
+
+        &:not(.active) {
+            display: none;
+        }
+
+        .map {
+            display: flex;
+            flex-grow: 1;
+        }
+    }
 }

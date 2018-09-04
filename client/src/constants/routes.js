@@ -15,7 +15,7 @@ export const routes = {
     dashboard: {
         order: 1,
         type: ROUTE.public,
-        path: '/',
+        path: '/:projectId?/',
         loader: () => import('../views/Dashboard'),
     },
 };
