@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import turf from 'turf';
 
 import {
     reportSelector,
@@ -17,6 +18,7 @@ import DonutChart from '#rscz/DonutChart';
 import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
+import { mapToList } from '#rsu/common';
 
 import districts from '../../resources/districts.json';
 
@@ -45,7 +47,8 @@ const mapDispatchToProps = dispatch => ({
 export default class Report extends PureComponent {
     static propTypes = propTypes;
 
-    static valueSelector = d => d.size;
+    static sizeSelector = d => d.size;
+    static valueSelector = d => d.value;
     static labelSelector = d => d.name;
 
     constructor(props) {
@@ -53,7 +56,28 @@ export default class Report extends PureComponent {
 
         this.state = {
             reportGetPending: true,
+            code: undefined,
+            bounds: [],
+            legendItems: [],
         };
+    }
+
+    static getDerivedStateFromProps(props, state) {
+        const { project: { district: { code = '' } = {} } = {} } = props;
+
+        if (code !== state.code) {
+            const selectedFeature = districts.features.filter((feature) => {
+                const { OCHA_PCODE } = feature.properties;
+                return code === OCHA_PCODE;
+            });
+            const bounds = turf.bbox(turf.featureCollection(selectedFeature));
+
+            return {
+                code,
+                bounds,
+            };
+        }
+        return null;
     }
 
     componentDidMount() {
@@ -86,14 +110,25 @@ export default class Report extends PureComponent {
             <MapLayer
                 map={map}
                 type="line"
-                filter={['==', 'OCHA_PCODE', 'W-LUM-49']}
+                filter={['==', 'OCHA_PCODE', this.state.code]}
                 paint={{
-                    'line-color': '#00f',
+                    'line-color': '#08327d',
                     'line-opacity': 1,
                     'line-width': 2,
                 }}
                 sourceKey="districts"
-                layerKey="districts"
+                layerKey="line"
+            />
+            <MapLayer
+                map={map}
+                type="fill"
+                filter={['==', 'OCHA_PCODE', this.state.code]}
+                paint={{
+                    'fill-color': '#08327d',
+                    'fill-opacity': 0.3,
+                }}
+                sourceKey="districts"
+                layerKey="fill"
             />
         </React.Fragment>
     )
@@ -111,6 +146,7 @@ export default class Report extends PureComponent {
         }
 
         const {
+            bounds,
             reportGetPending,
         } = this.state;
 
@@ -119,8 +155,16 @@ export default class Report extends PureComponent {
             childMonitoring,
             healthNutrition,
             rcPieChart,
+            rcData,
         } = report.data;
-        console.warn(project);
+
+        const modifier = (element, key) => (
+            {
+                name: key,
+                value: element,
+            }
+        );
+        const remoteChildren = mapToList(rcData, modifier);
 
         return (
             <div className={styles.region}>
@@ -132,16 +176,32 @@ export default class Report extends PureComponent {
                     <Map
                         className={styles.map}
                         childRenderer={this.renderDistrictLayers}
-                        bounds={this.nepalBounds}
+                        bounds={bounds}
                     />
                     <div className={styles.rcContainer}>
+                        <h3>RC Data</h3>
+                        <div className={styles.horizontalBarContainer}>
+                            <HorizontalBar
+                                className={styles.horizontalBar}
+                                data={remoteChildren}
+                                valueSelector={Report.valueSelector}
+                                labelSelector={Report.labelSelector}
+                                showGridLines={false}
+                                margins={{
+                                    top: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    left: 100,
+                                }}
+                            />
+                        </div>
                         <h3>RC Distribution</h3>
                         <div className={styles.sunburstContainer} >
                             <SunBurst
                                 className={styles.sunburst}
                                 data={rcPieChart}
-                                labelSelector={d => d.name}
-                                valueSelector={d => d.size}
+                                labelSelector={Report.labelSelector}
+                                valueSelector={Report.sizeSelector}
                             />
                         </div>
                     </div>
@@ -152,7 +212,7 @@ export default class Report extends PureComponent {
                         <SunBurst
                             className={styles.item}
                             data={education}
-                            valueSelector={Report.valueSelector}
+                            valueSelector={Report.sizeSelector}
                             labelSelector={Report.labelSelector}
                         />
                     </div>
@@ -161,16 +221,16 @@ export default class Report extends PureComponent {
                         <HorizontalBar
                             className={styles.item}
                             data={healthNutrition}
-                            valueSelector={d => d.value}
                             scaleType="log"
-                            labelSelector={d => d.name}
+                            valueSelector={Report.valueSelector}
+                            labelSelector={Report.labelSelector}
                             showGridLines={false}
                             margins={
                                 {
                                     top: 24,
                                     right: 24,
                                     bottom: 40,
-                                    left: 30,
+                                    left: 300,
                                 }
                             }
                         />
@@ -180,8 +240,8 @@ export default class Report extends PureComponent {
                         <DonutChart
                             className={styles.item}
                             data={childMonitoring}
-                            valueSelector={d => d.value}
-                            labelSelector={d => d.name}
+                            valueSelector={Report.valueSelector}
+                            labelSelector={Report.labelSelector}
                         />
                     </div>
                 </div>

@@ -27,13 +27,23 @@
         .rc-container {
             display: flex;
             flex-basis: 50%;
-            flex-direction: column;
+            flex-direction: row;
             flex-grow: 1;
             padding: $spacing-medium;
 
             h3 {
                 flex-shrink: 0;
                 padding: $spacing-extra-small $spacing-small;
+            }
+
+            .horizontal-bar-container {
+                display: flex;
+                flex-grow: 1;
+                padding: $spacing-large;
+
+                .horizontal-bar {
+                    flex-grow: 1;
+                }
             }
 
             .sunburst-container {

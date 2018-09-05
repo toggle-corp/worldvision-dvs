@@ -16,7 +16,7 @@ import {
     projectsSelector,
     setProjectsAction,
 } from '#redux';
-import nepalGeoJson from '../../resources/districts.json';
+import nepalGeoJson from '#resources/districts.json';
 
 import styles from './styles.scss';
 import ProjectsGetRequest from './requests/ProjectsGetRequest';
@@ -141,9 +141,9 @@ export default class Dashboard extends PureComponent {
                 map={map}
                 type="line"
                 paint={{
-                    'line-color': '#f00',
+                    'line-color': '#a5a6a9',
                     'line-opacity': 1,
-                    'line-width': 2,
+                    'line-width': 1,
                 }}
                 sourceKey="bounds"
                 layerKey="bounds"
@@ -152,7 +152,7 @@ export default class Dashboard extends PureComponent {
                 map={map}
                 type="circle"
                 paint={{
-                    'circle-color': '#0f0',
+                    'circle-color': '#f43530',
                     'circle-radius': 7,
                     'circle-opacity': 1,
                 }}
@@ -162,9 +162,9 @@ export default class Dashboard extends PureComponent {
                 onClick={this.handlePointClick}
                 hoverInfo={{
                     paint: {
-                        'circle-color': '#ff0',
-                        'circle-radius': 7,
-                        'circle-opacity': 1,
+                        'circle-color': '#f43530',
+                        'circle-radius': 9,
+                        'circle-opacity': 0.7,
                     },
                     showTooltip: true,
                     tooltipProperty: 'name',
@@ -191,6 +191,11 @@ export default class Dashboard extends PureComponent {
                 id: project.id,
             },
         ));
+
+        const rcData = projects.map(project => ({
+            project: project.name,
+            ...project.rcData,
+        }));
 
         this.points = turf.featureCollection(points);
         const {
