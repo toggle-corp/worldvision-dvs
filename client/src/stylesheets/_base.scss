@@ -69,7 +69,7 @@ body {
         .main-content {
             position: relative;
             perspective: 1000px;
-            background-color: $color-background;
+            background-color: $color-foreground;
             padding: $spacing-small-alt;
             height: calc(100vh - #{$height-navbar});
             overflow-y: auto;
@@ -86,7 +86,7 @@ body {
     // @frozenhelium
     transform-origin: bottom;
     border: $width-separator-thin solid $color-separator-alt;
-    background-color: $color-background-alt;
+    background-color: $color-foreground;
     height: 100%;
     animation: slide-in $duration-slow ease forwards;
 }

@@ -7,7 +7,8 @@ import turf from 'turf';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import MultiViewContainer from '#rscv/MultiViewContainer';
-import Map from '#rscz/Map';
+
+import Map from '#rscz/Map/index';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 
@@ -73,11 +74,18 @@ export default class Dashboard extends PureComponent {
                 wrapContainer: true,
             },
             report: {
-                component: () => (
-                    <Report
-                        projectId={this.state.selectedProjectId}
-                    />
-                ),
+                component: () => {
+                    const { projects } = this.props;
+                    const { selectedProjectId } = this.state;
+                    const project = projects.find(p => (p || {}).id === selectedProjectId);
+
+                    return (
+                        <Report
+                            projectId={this.state.selectedProjectId}
+                            project={project}
+                        />
+                    );
+                },
                 wrapContainer: true,
             },
         };
@@ -188,7 +196,6 @@ export default class Dashboard extends PureComponent {
         const {
             projectsGetPending,
         } = this.state;
-
 
         return (
             <div className={styles.dashboard}>

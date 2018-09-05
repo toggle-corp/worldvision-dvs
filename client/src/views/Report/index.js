@@ -28,6 +28,7 @@ const propTypes = {
     setReport: PropTypes.func.isRequired,
     projectId: PropTypes.number.isRequired,
     report: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    project: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 
@@ -100,6 +101,7 @@ export default class Report extends PureComponent {
     render() {
         const {
             report,
+            project,
         } = this.props;
 
         if (!report) {
@@ -118,64 +120,71 @@ export default class Report extends PureComponent {
             healthNutrition,
             rcPieChart,
         } = report.data;
+        console.warn(project);
 
         return (
             <div className={styles.region}>
                 { reportGetPending && <LoadingAnimation /> }
-                <Map
-                    className={styles.map}
-                    childRenderer={this.renderMapLayers}
-                    bounds={this.nepalBounds}
-                />
-                <div
-                    className={styles.sunburstContainer}
-                >
-                    <h2>Education</h2>
-                    <SunBurst
-                        className={styles.sunburst}
-                        data={education}
-                        valueSelector={Report.valueSelector}
-                        labelSelector={Report.labelSelector}
-                    />
+                <div className={styles.header} >
+                    <h2>{project.name}</h2>
                 </div>
-                <div
-                    className={styles.horizontalBarContainer}
-                >
-                    <h2>Health/Nutrition</h2>
-                    <HorizontalBar
-                        className={styles.horizontalBar}
-                        data={healthNutrition}
-                        valueSelector={d => d.value}
-                        scaleType="log"
-                        labelSelector={d => d.name}
-                        showGridLines={false}
-                        margins={
-                            {
-                                top: 24,
-                                right: 24,
-                                bottom: 40,
-                                left: 30,
+                <div className={styles.upperContainer}>
+                    <Map
+                        className={styles.map}
+                        childRenderer={this.renderDistrictLayers}
+                        bounds={this.nepalBounds}
+                    />
+                    <div className={styles.rcContainer}>
+                        <h3>RC Distribution</h3>
+                        <div className={styles.sunburstContainer} >
+                            <SunBurst
+                                className={styles.sunburst}
+                                data={rcPieChart}
+                                labelSelector={d => d.name}
+                                valueSelector={d => d.size}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={styles.lowerContainer}>
+                    <div className={styles.itemContainer} >
+                        <h3>Education</h3>
+                        <SunBurst
+                            className={styles.item}
+                            data={education}
+                            valueSelector={Report.valueSelector}
+                            labelSelector={Report.labelSelector}
+                        />
+                    </div>
+                    <div className={styles.itemContainer} >
+                        <h3>Health/Nutrition</h3>
+                        <HorizontalBar
+                            className={styles.item}
+                            data={healthNutrition}
+                            valueSelector={d => d.value}
+                            scaleType="log"
+                            labelSelector={d => d.name}
+                            showGridLines={false}
+                            margins={
+                                {
+                                    top: 24,
+                                    right: 24,
+                                    bottom: 40,
+                                    left: 30,
+                                }
                             }
-                        }
-                    />
+                        />
+                    </div>
+                    <div className={styles.itemContainer} >
+                        <h3>Child Monitoring</h3>
+                        <DonutChart
+                            className={styles.item}
+                            data={childMonitoring}
+                            valueSelector={d => d.value}
+                            labelSelector={d => d.name}
+                        />
+                    </div>
                 </div>
-                <div
-                    className={styles.donutChartContainer}
-                >
-                    <h2>Child Monitoring</h2>
-                    <DonutChart
-                        className={styles.donutChart}
-                        data={childMonitoring}
-                        valueSelector={d => d.value}
-                        labelSelector={d => d.name}
-                    />
-                </div>
-                <SunBurst
-                    className={styles.sunburst}
-                    data={rcPieChart}
-                    valueSelector={d => d.size}
-                    labelSelector={d => d.name}
-                />
             </div>
         );
     }
