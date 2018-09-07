@@ -14,6 +14,8 @@ import MapSource from '#rscz/Map/MapSource';
 
 import {
     projectsSelector,
+    pointsSelector,
+    rcDataSelector,
     setProjectsAction,
 } from '#redux';
 import nepalGeoJson from '#resources/districts.json';
@@ -21,14 +23,19 @@ import nepalGeoJson from '#resources/districts.json';
 import styles from './styles.scss';
 import ProjectsGetRequest from './requests/ProjectsGetRequest';
 import Report from '../Report';
+import BarChart from './BarChart';
 
 const propTypes = {
     projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+    points: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+    rcData: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     setProjects: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
+    points: pointsSelector(state),
+    rcData: rcDataSelector(state),
 });
 const mapDispatchToProps = dispatch => ({
     setProjects: params => dispatch(setProjectsAction(params)),
@@ -61,34 +68,6 @@ export default class Dashboard extends PureComponent {
         }).create();
 
         this.nepalBounds = turf.bbox(nepalGeoJson);
-        this.views = {
-            map: {
-                component: () => (
-                    <Map
-                        className={styles.map}
-                        childRenderer={this.renderMapLayers}
-                        bounds={this.nepalBounds}
-                    />
-                ),
-                mount: true,
-                wrapContainer: true,
-            },
-            report: {
-                component: () => {
-                    const { projects } = this.props;
-                    const { selectedProjectId } = this.state;
-                    const project = projects.find(p => (p || {}).id === selectedProjectId);
-
-                    return (
-                        <Report
-                            projectId={this.state.selectedProjectId}
-                            project={project}
-                        />
-                    );
-                },
-                wrapContainer: true,
-            },
-        };
     }
 
     componentDidMount() {
@@ -133,7 +112,7 @@ export default class Dashboard extends PureComponent {
             />
             <MapSource
                 map={map}
-                geoJson={this.points}
+                geoJson={this.props.points}
                 sourceKey="points"
                 supportHover
             />
@@ -176,6 +155,7 @@ export default class Dashboard extends PureComponent {
     render() {
         const {
             projects,
+            rcData,
         } = this.props;
 
         if (!projects) {
@@ -184,30 +164,58 @@ export default class Dashboard extends PureComponent {
 
         const { selectedView } = this.state;
 
-        const points = projects.map(project => turf.point(
-            [project.long, project.lat],
-            {
-                name: project.name,
-                id: project.id,
-            },
-        ));
-
-        const rcData = projects.map(project => ({
-            project: project.name,
-            ...project.rcData,
-        }));
-
-        this.points = turf.featureCollection(points);
         const {
             projectsGetPending,
         } = this.state;
+
+        const views = {
+            map: {
+                component: () => (
+                    <React.Fragment>
+                        <Map
+                            className={styles.map}
+                            childRenderer={this.renderMapLayers}
+                            bounds={this.nepalBounds}
+                        />
+                        <BarChart
+                            data={rcData}
+                            className={styles.barchart}
+                            labelName="project"
+                            labelSelector={d => d.project}
+                            margins={{
+                                top: 0,
+                                right: 0,
+                                bottom: 30,
+                                left: 100,
+                            }}
+                        />
+                    </React.Fragment>
+                ),
+                mount: true,
+                wrapContainer: true,
+            },
+            report: {
+                component: () => {
+                    const { selectedProjectId } = this.state;
+                    const project = projects.find(p => (p || {}).id === selectedProjectId);
+
+                    return (
+                        <Report
+                            projectId={this.state.selectedProjectId}
+                            project={project}
+                        />
+                    );
+                },
+                wrapContainer: true,
+            },
+        };
 
         return (
             <div className={styles.dashboard}>
                 { projectsGetPending ?
                     (<LoadingAnimation />) : (
                         <MultiViewContainer
-                            views={this.views}
+                            views={views}
                             containerClassName={styles.content}
                             active={selectedView}
                             activeClassName={styles.active}
