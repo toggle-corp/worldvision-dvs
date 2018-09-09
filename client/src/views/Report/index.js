@@ -57,13 +57,14 @@ export default class Report extends PureComponent {
         this.state = {
             reportGetPending: true,
             code: undefined,
+            location: undefined,
             bounds: [],
-            legendItems: [],
         };
     }
 
     static getDerivedStateFromProps(props, state) {
-        const { project: { district: { code = '' } = {} } = {} } = props;
+        const { project = {} } = props;
+        const { district: { code = '' } = {} } = project;
 
         if (code !== state.code) {
             const selectedFeature = districts.features.filter((feature) => {
@@ -71,10 +72,19 @@ export default class Report extends PureComponent {
                 return code === OCHA_PCODE;
             });
             const bounds = turf.bbox(turf.featureCollection(selectedFeature));
-
+            const { long, lat, name, id } = project;
+            const point = turf.point(
+                [long, lat],
+                {
+                    name,
+                    id,
+                },
+            );
+            const location = turf.featureCollection([point]);
             return {
                 code,
                 bounds,
+                location,
             };
         }
         return null;
@@ -129,6 +139,32 @@ export default class Report extends PureComponent {
                 }}
                 sourceKey="districts"
                 layerKey="fill"
+            />
+            <MapSource
+                map={map}
+                geoJson={this.state.location}
+                sourceKey="points"
+                supportHover
+            />
+            <MapLayer
+                map={map}
+                type="circle"
+                paint={{
+                    'circle-color': '#f43530',
+                    'circle-radius': 7,
+                    'circle-opacity': 1,
+                }}
+                sourceKey="points"
+                layerKey="points"
+                hoverInfo={{
+                    paint: {
+                        'circle-color': '#f43530',
+                        'circle-radius': 9,
+                        'circle-opacity': 0.7,
+                    },
+                    showTooltip: true,
+                    tooltipProperty: 'name',
+                }}
             />
         </React.Fragment>
     )

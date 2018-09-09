@@ -27,7 +27,7 @@ import BarChart from './BarChart';
 
 const propTypes = {
     projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-    points: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
+    points: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     rcData: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     setProjects: PropTypes.func.isRequired,
 };
@@ -49,6 +49,7 @@ const getHashFromBrowser = () => window.location.hash.substr(2);
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Dashboard extends PureComponent {
     static propTypes = propTypes;
+    static labelSelector = d => d.project;
 
     constructor(props) {
         super(props);
@@ -181,7 +182,7 @@ export default class Dashboard extends PureComponent {
                             data={rcData}
                             className={styles.barchart}
                             labelName="project"
-                            labelSelector={d => d.project}
+                            labelSelector={Dashboard.labelSelector}
                             margins={{
                                 top: 0,
                                 right: 0,
@@ -203,6 +204,7 @@ export default class Dashboard extends PureComponent {
                         <Report
                             projectId={this.state.selectedProjectId}
                             project={project}
+                            location={this.projectLocation}
                         />
                     );
                 },

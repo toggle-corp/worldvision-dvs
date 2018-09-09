@@ -38,6 +38,7 @@
 
             .horizontal-bar-container {
                 display: flex;
+                flex-direction: row;
                 flex-grow: 1;
                 padding: $spacing-large;
 
