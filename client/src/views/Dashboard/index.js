@@ -119,14 +119,24 @@ export default class Dashboard extends PureComponent {
             />
             <MapLayer
                 map={map}
+                type="fill"
+                paint={{
+                    'fill-color': '#008974',
+                    'fill-opacity': 0.2,
+                }}
+                sourceKey="bounds"
+                layerKey="bounds-fill"
+            />
+            <MapLayer
+                map={map}
                 type="line"
                 paint={{
-                    'line-color': '#a5a6a9',
+                    'line-color': '#008974',
                     'line-opacity': 1,
                     'line-width': 1,
                 }}
                 sourceKey="bounds"
-                layerKey="bounds"
+                layerKey="bounds-outline"
             />
             <MapLayer
                 map={map}
@@ -172,25 +182,27 @@ export default class Dashboard extends PureComponent {
         const views = {
             map: {
                 component: () => (
-                    <React.Fragment>
+                    <div className={styles.dashboardContent} >
                         <Map
                             className={styles.map}
                             childRenderer={this.renderMapLayers}
                             bounds={this.nepalBounds}
                         />
-                        <BarChart
-                            data={rcData}
-                            className={styles.barchart}
-                            labelName="project"
-                            labelSelector={Dashboard.labelSelector}
-                            margins={{
-                                top: 0,
-                                right: 0,
-                                bottom: 30,
-                                left: 100,
-                            }}
-                        />
-                    </React.Fragment>
+                        <div className={styles.barchartContainer}>
+                            <BarChart
+                                data={rcData}
+                                className={styles.barchart}
+                                labelName="project"
+                                labelSelector={d => d.project}
+                                margins={{
+                                    top: 0,
+                                    right: 0,
+                                    bottom: 30,
+                                    left: 100,
+                                }}
+                            />
+                        </div>
+                    </div>
                 ),
                 mount: true,
                 wrapContainer: true,

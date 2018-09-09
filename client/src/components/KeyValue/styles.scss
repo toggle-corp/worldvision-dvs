@@ -1,0 +1,16 @@
+@import '~base-scss/base';
+
+.item {
+    display: table-row;
+
+    .title {
+        display: table-cell;
+        padding: $spacing-small $spacing-medium;
+    }
+
+    .value {
+        display: table-cell;
+        padding: $spacing-small $spacing-medium;
+        text-align: right;
+    }
+}

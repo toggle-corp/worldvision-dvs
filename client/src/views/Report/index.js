@@ -227,22 +227,22 @@ export default class Report extends PureComponent {
                                     top: 0,
                                     right: 0,
                                     bottom: 0,
-                                    left: 100,
+                                    left: 64,
                                 }}
-                            />
-                        </div>
-                        <h3>RC Distribution</h3>
-                        <div className={styles.sunburstContainer} >
-                            <SunBurst
-                                className={styles.sunburst}
-                                data={rcPieChart}
-                                labelSelector={Report.labelSelector}
-                                valueSelector={Report.sizeSelector}
                             />
                         </div>
                     </div>
                 </div>
                 <div className={styles.lowerContainer}>
+                    <div className={styles.itemContainer}>
+                        <h3>RC Actual Distribution</h3>
+                        <SunBurst
+                            className={styles.item}
+                            data={rcPieChart}
+                            labelSelector={Report.labelSelector}
+                            valueSelector={Report.sizeSelector}
+                        />
+                    </div>
                     <div className={styles.itemContainer} >
                         <h3>Education</h3>
                         <SunBurst

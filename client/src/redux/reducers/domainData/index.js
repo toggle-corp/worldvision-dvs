@@ -45,31 +45,17 @@ const setProject = (state, action) => {
         } = project.rcData;
 
         const actual = sponsered + available;
-        let rc;
-        let difference;
-        let rcLabel;
-        let differenceLabel;
-        const variance = Math.abs(actual - planned) / planned;
-
-        if (actual > planned) {
-            rc = planned;
-            difference = actual - planned;
-            rcLabel = 'Planned RC';
-            differenceLabel = 'Exceeded RC';
-        } else {
-            rc = actual;
-            difference = planned - actual;
-            rcLabel = 'Actual RC';
-            differenceLabel = 'Remaining RC';
-        }
+        const rc = Math.min(actual, planned);
+        const difference = Math.abs(actual - planned);
+        const variance = difference / planned;
 
         return {
             project: project.name,
             variance,
             rc,
             difference,
-            rcLabel,
-            differenceLabel,
+            rcLabel: (actual > planned) ? 'Planned RC' : 'Actual RC',
+            differenceLabel: (actual > planned) ? 'Exceeded RC' : 'Remaining RC',
         };
     });
 

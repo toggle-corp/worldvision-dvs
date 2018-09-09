@@ -16,13 +16,13 @@
 }
 
 .tooltip {
-    box-shadow: 0 6px 10px -3px rgba(0, 0, 0, .5);
-    background-color: #fafafa;
+    display: block;
     position: fixed;
     z-index: 10;
+    box-shadow: 0 6px 10px -3px rgba(0, 0, 0, .5);
+    background-color: #fafafa;
     padding: 6px 12px;
     animation: fade-in .2s ease-in;
-    display: block;
     text-align: center;
 }
 

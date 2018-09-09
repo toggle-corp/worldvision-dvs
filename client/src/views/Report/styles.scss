@@ -3,6 +3,7 @@
 .region {
     display: flex;
     flex-direction: column;
+    border: $width-separator-thin solid $color-separator;
     width: 100%;
 
     .header {
@@ -26,8 +27,8 @@
 
         .rc-container {
             display: flex;
+            flex-direction: column;
             flex-basis: 50%;
-            flex-direction: row;
             flex-grow: 1;
             padding: $spacing-medium;
 
@@ -61,17 +62,18 @@
 
     .lower-container {
         display: flex;
-        flex-grow: 1;
+        flex-wrap: wrap;
 
         .item-container {
             display: flex;
-            flex-basis: 33%;
+            flex-basis: 50%;
             flex-direction: column;
             flex-shrink: 0;
             padding: $spacing-medium;
 
             .item {
                 flex-grow: 1;
+                height: 512px;
             }
         }
     }

@@ -99,45 +99,56 @@ class BarChart extends PureComponent {
         this.dimensions = ['rc', 'difference'];
         this.labels = data.map(d => labelSelector(d));
 
-
         this.series = stack()
             .keys(this.dimensions)
             .offset(stackOffsetNone)(data);
 
+        this.series = this.series.map((set) => {
+            const { key, index } = set;
+            const newSet = set.map((datum) => {
+                const newDatum = [...datum];
+                newDatum.data = datum.data;
+                newDatum.key = key;
+                return newDatum;
+            });
+            newSet.index = index;
+            newSet.key = key;
+            return newSet;
+        });
+
         const stackMin = row => min(row, d => d[0]);
         const stackMax = row => max(row, d => d[1]);
 
-
-        this.x = scaleLinear()
-            .domain([min(this.series, stackMin), max(this.series, stackMax)])
-            .rangeRound([0, width]);
-
-        this.y = scaleBand()
+        this.x = scaleBand()
             .domain(this.labels)
-            .rangeRound([height, 0])
+            .rangeRound([0, this.width])
             .padding(0.1);
+
+        this.y = scaleLinear()
+            .domain([min(this.series, stackMin), max(this.series, stackMax)])
+            .rangeRound([this.height, 0]);
     }
 
     colors = (d) => {
-        const { key, index } = d;
-        const { variance } = d[index].data;
-        let color;
-        if (key === 'difference' && variance <= 0.05) {
-            color = '#ec0c1c';
-        } else if (key === 'difference') {
-            color = '#ccebc5';
-        } else if (key === 'rc') {
-            color = '#599ad4';
+        const { key, data: { variance } } = d;
+        if (key === 'rc') {
+            return '#599ad4';
         }
-        return color;
+
+        if (variance <= 0.02) {
+            return 'green';
+        } else if (variance <= 0.05) {
+            return 'orange';
+        }
+        return 'red';
     };
 
     handleMouseOver = (d) => {
-        const { key, index } = d;
-        const data = d[index];
-        const value = data.data[key];
-        const { rcLabel, differenceLabel } = data.data;
+        const { key, data } = d;
+        const value = data[key];
+        const { rcLabel, differenceLabel } = data;
         const label = key === 'rc' ? rcLabel : differenceLabel;
+
         select(this.tooltip)
             .html(`<span>${label} : ${value}</span>`)
             .transition()
@@ -189,19 +200,19 @@ class BarChart extends PureComponent {
             .data(series)
             .enter()
             .append('g')
-            .attr('fill', d => colors(d))
-            .on('mouseover', handleMouseOver)
-            .on('mousemove', handleMouseMove)
-            .on('mouseout', handleMouseOut)
             .selectAll('rect')
             .data(d => d)
             .enter()
             .append('rect')
-            .attr('x', d => x(d[0]))
-            .attr('y', d => y(labelSelector(d.data)))
-            .attr('height', y.bandwidth)
-            .attr('width', d => x(d[1]) - x(d[0]))
-            .attr('cursor', 'pointer');
+            .attr('x', d => x(labelSelector(d.data)))
+            .attr('y', d => y(d[1]))
+            .attr('width', x.bandwidth)
+            .attr('height', d => y(d[0]) - y(d[1]))
+            .attr('cursor', 'pointer')
+            .attr('fill', d => colors(d))
+            .on('mouseover', handleMouseOver)
+            .on('mousemove', handleMouseMove)
+            .on('mouseout', handleMouseOut);
 
         group
             .append('g')

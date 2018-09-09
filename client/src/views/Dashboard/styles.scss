@@ -2,25 +2,41 @@
 
 .dashboard {
     @extend %main-content;
-    display: flex;
-    width: 100%;
+    margin: auto;
+    border: 0;
+    width: 80%;
 
     .content {
         display: flex;
-        flex-grow: 1;
+        height: 100%;
 
         &:not(.active) {
             display: none;
         }
 
-        .map {
+        .dashboard-content {
             display: flex;
-            flex-grow: 1;
-        }
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
 
-        .barchart {
-            display: flex;
-            flex-grow: 1;
+            .map {
+                margin-bottom: $spacing-small;
+                border: $width-separator-thin solid $color-separator;
+                height: 60%;
+            }
+
+            .barchart-container {
+                display: flex;
+                margin: $spacing-small 0;
+                border: $width-separator-thin solid $color-separator;
+                padding: $spacing-medium $spacing-large;
+                height: 40%;
+
+                .barchart {
+                    flex-grow: 1;
+                }
+            }
         }
     }
 }
