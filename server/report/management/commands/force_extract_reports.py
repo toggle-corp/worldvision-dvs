@@ -7,7 +7,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         for report in Report.objects.all():
-            report.extract_from_file()
+            report.data = Report.extract_from_file(report.file)
             report.save()
             self.stdout.write(
                 self.style.SUCCESS(
