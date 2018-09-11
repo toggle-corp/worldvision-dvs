@@ -84,7 +84,10 @@ export default class Dashboard extends PureComponent {
         this.views = {
             map: {
                 component: () => {
-                    const { summary } = this.props;
+                    const {
+                        summary,
+                        projects,
+                    } = this.props;
 
                     return (
                         <div className={styles.dashboardContent} >
@@ -99,6 +102,7 @@ export default class Dashboard extends PureComponent {
                             <Summary
                                 className={styles.aggregatedContainer}
                                 summary={summary}
+                                noOfProjects={projects.length}
                             />
                         </div>
                     );
@@ -179,13 +183,6 @@ export default class Dashboard extends PureComponent {
         ) : (
             {}
         );
-        let rcDataForHover = [];
-        if (project.rcData) {
-            rcDataForHover = Object.keys(project.rcData).map(k => ({
-                name: k,
-                value: project.rcData[k],
-            }));
-        }
         return (
             <React.Fragment>
                 <MapSource
@@ -248,7 +245,7 @@ export default class Dashboard extends PureComponent {
                                 <div className={styles.hoverInfo}>
                                     <h4>{project.name}</h4>
                                     <ListView
-                                        data={rcDataForHover}
+                                        data={project.rcData}
                                         className={styles.rcDataHover}
                                         rendererParams={this.rcDataParams}
                                         keyExtractor={Report.healthKeySelector}

@@ -13,13 +13,13 @@ import styles from './styles.scss';
 const propTypes = {
     className: PropTypes.string,
     summary: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    projects: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+    noOfProjects: PropTypes.number,
 };
 
 const defaultProps = {
     className: '',
     summary: {},
-    projects: [],
+    noOfProjects: 0,
 };
 
 export default class Summary extends PureComponent {
@@ -54,10 +54,14 @@ export default class Summary extends PureComponent {
                 healthNutrition,
                 reportDate,
             },
-            projects,
+            noOfProjects,
         } = this.props;
 
-        console.warn(this.props.summary);
+        const infoText = `The data below is
+            aggregated from sponsorship
+            management report from ${noOfProjects}
+            projects of Nepal as of`;
+
         return (
             <div className={`${styles.summary} ${className}`}>
                 <header className={styles.header}>
@@ -65,8 +69,7 @@ export default class Summary extends PureComponent {
                 </header>
                 <section className={styles.content}>
                     <span className={styles.info}>
-                        The data below is aggregated from sponsorship
-                        management report of all projects of Nepal as of
+                        {infoText}
                         <FormattedDate
                             className={styles.date}
                             date={reportDate}
