@@ -32,7 +32,11 @@ class Project(models.Model):
 
     def get_rc_data(self):
         if self.selected_report:
-            return self.selected_report.data.get('rcData')
+            data = self.selected_report.data
+            return {
+                'rcData': data.get('rcData'),
+                'reportDate': data.get('reportDate'),
+            }
 
     def __str__(self):
         return self.name

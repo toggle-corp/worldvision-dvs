@@ -1,3 +1,6 @@
+from .report_fields import LABELS, CAMEL_CASES
+
+
 def _numeral(value, ignore=False):
     """
     Change to integer/float
@@ -23,91 +26,84 @@ def _percentage(value):
 def generate_hierarchy(obj, data):
     result = {}
 
-    result['name'] = obj['name']
-    if obj.get('size'):
-        result['size'] = _numeral(data[obj['size']])
+    result['name'] = obj['name'] if 'name' in obj else LABELS[obj['key']]
 
     children = obj.get('children')
     if children:
         result['children'] = []
         for child in children:
             result['children'].append(generate_hierarchy(child, data))
+    elif obj.get('key'):
+        result['size'] = _numeral(data[obj['key']])
 
     return result
 
 
 def extract_rc_data(data):
+    fields = (
+        '@PlannedRC', '@Sponsored', '@Available', '@TotalHold', '@TotalDeath',
+    )
     return {
-        'planned': _numeral(data['@PlannedRC']),
-        'sponsered': _numeral(data['@Sponsored']),
-        'available': _numeral(data['@Available']),
-        'hold': _numeral(data['@TotalHold']),
-        'death': _numeral(data['@TotalDeath']),
+        CAMEL_CASES[field]: _numeral(data[field])
+        for field in fields
     }
 
 
 def extract_health_nutrition(data):
     fields = (
-       #   Title, Field, status
-       ('Satisfactory', '@HealthSatisfactory', 'good'),
-       ('Not Satisfactory', '@HealthNotSatisfactory', 'bad'),
-       ('#RC Aged 0 – 59 Months', '@Below5Child', 'normal'),
-       ('Not Participating in Health/Nutrition Activities', '@NotParticipatingHealthNutriActivities', 'normal'),  # noqa E501
-       ('Health/Growth Card Not Verified', '@NotVarifiedHealthGrowthCard', 'bad'),
-       ('Child Not Following Growth Curve', '@NotFollowingGrowthCurve', 'bad'),
-       ('MUAC Severe Malnutrition', '@MUACSevereMalnutrition', 'bad'),
-       ('MUAC Acute Malnutrition', '@MUACModerateMalnutrition', 'bad'),
-       ('Partially Immunized and with No Vaccination in Last 12 Months', '@MUACPartiallyImmunized', 'normal'),  # noqa E501
+       ('@HealthSatisfactory', 'good'),
+       ('@HealthNotSatisfactory', 'bad'),
+       ('@Below5Child', 'normal'),
+       ('@NotParticipatingHealthNutriActivities', 'normal'),
+       ('@NotVarifiedHealthGrowthCard', 'bad'),
+       ('@NotFollowingGrowthCurve', 'bad'),
+       ('@MUACSevereMalnutrition', 'bad'),
+       ('@MUACModerateMalnutrition', 'bad'),
+       ('@MUACPartiallyImmunized', 'normal'),
     )
     return [
-        {'name': _d[0], 'value': _numeral(data.get(_d[1])), 'type': _d[2], 'key': _d[1]}
-        for _d in fields
+        {
+            'name': LABELS[_d[0]],
+            'value': _numeral(data.get(_d[0])),
+            'type': _d[1], 'key': _d[0],
+        } for _d in fields
     ]
 
 
 def extract_rc_pie_chart(data):
     fields = [
         {
-            'name': 'Planned RC',
-            'size': '@PlannedRC',
+            'key': '@PlannedRC',
         },
         {
-            'name': 'Actual',
-            # 'size': '@TotalRC',
+            'key': '@TotalRC',
             'children': [
                 {
-                    'name': 'Sponsored',
-                    # 'size': '@Sponsored',
+                    'key': '@Sponsored',
                     'children': [
                         {
-                            'name': 'Male',
-                            'size': '@SponsoredMale',
+                            'key': '@SponsoredMale',
                         },
                         {
-                            'name': 'Female',
-                            'size': '@SponsoredFemale',
+                            'key': '@SponsoredFemale',
                         },
                     ],
                 },
                 {
-                    'name': 'Available',
-                    # 'size': '@Available',
+                    'key': '@Available',
                     'children': [
                         {
-                            'name': 'Male',
-                            'size': '@AvailableMale',
+                            'key': '@AvailableMale',
                         },
                         {
-                            'name': 'Female',
-                            'size': '@AvailableFemale',
+                            'key': '@AvailableFemale',
                         },
                     ],
                 },
             ],
         },
         {
-            'name': 'Hold',
-            'size': '@TotalHold',
+            'key': '@TotalHold',
         },
     ]
 
@@ -120,43 +116,34 @@ def extract_rc_pie_chart(data):
 def extract_education(data):
     fields = [
         {
-            'name': '#RC of Primary School Age',
-            # 'size': '@PrimarySchoolAge',
+            'key': '@PrimarySchoolAge',
             'children': [
                 {
-                    'name': 'RC of Primary School Age Involved in Formal Education',
-                    'size': '@PrimarySchoolAgeFormal',
+                    'key': '@PrimarySchoolAgeFormal',
                 },
                 {
-                    'name': 'RC of Primary School Age Involved in Non-Formal Education',
-                    'size': '@PrimarySchoolAgeNonFormal',
+                    'key': '@PrimarySchoolAgeNonFormal',
                 },
                 {
-                    'name': 'RC of Primary School Age Not Involved in Education',
-                    'size': '@PrimarySchoolAgeNoEducation',
+                    'key': '@PrimarySchoolAgeNoEducation',
                 },
             ],
         },
 
         {
-            'name': '#RC of Secondary School Age',
-            # 'size': '@SecondarySchoolAge',
+            'key': '@SecondarySchoolAge',
             'children': [
                 {
-                    'name': 'RC of Secondary School Age Involved in Formal Education',
-                    'size': '@SecondarySchoolAgeFormal',
+                    'key': '@SecondarySchoolAgeFormal',
                 },
                 {
-                    'name': 'RC of Secondary School Age Involved in Non-Formal Education',
-                    'size': '@SecondarySchoolAgeNonFormal',
+                    'key': '@SecondarySchoolAgeNonFormal',
                 },
                 {
-                    'name': 'RC of Secondary School Age Involved in Vocational Preparation',
-                    'size': '@SecondarySchoolAgeVocational',
+                    'key': '@SecondarySchoolAgeVocational',
                 },
                 {
-                    'name': 'RC of Secondary School Age Not Involved in Education or Vocational Preparation',  # noqa E501
-                    'size': '@SecondarySchoolAgeNoEducation',
+                    'key': '@SecondarySchoolAgeNoEducation',
                 },
             ],
         },
@@ -170,30 +157,36 @@ def extract_education(data):
 
 def extract_child_monitoring(data):
     fields = (
-       ('Not Sighted More than 30 Days & Less than 60 Days', '@NotSighted30Days'),
-       ('Not Sighted More than 60 Days & Less than 90 Days', '@NotSighted60Days'),
-       ('Not Sighted More than 90 Days', '@NotSighted90Days'),
-       ('Visits Completed in Report Period', '@VisitCompleted'),
-       ('Sponsor Visits Completed in Report Period', '@SponsorVisitCompleted'),
+       '@NotSighted30Days',
+       '@NotSighted60Days',
+       '@NotSighted90Days',
+       '@VisitCompleted',
+       '@SponsorVisitCompleted',
     )
-    return [{'name': _d[0], 'value': _numeral(data.get(_d[1])), 'key': _d[1]} for _d in fields]
+    return [
+        {
+            'name': LABELS[field],
+            'value': _numeral(data.get(field)),
+            'key': field,
+        } for field in fields
+    ]
 
 
 def extract_correspondence(data):
     def normalize(_d, fields):
         return {
-            field[0]: _numeral(_d[field[1]], ignore=True)
+            CAMEL_CASES[field]: _numeral(_d[field], ignore=True)
             for field in fields
         }
 
     fields = (
-        ('typeName', '@TypeName'),
-        ('initial', '@Initial'),
-        ('received', '@Received'),
-        ('closed', '@Closed'),
-        ('pendingCurrent', '@PendingCurrent'),
-        ('pendingOverDue', '@PendingOverDue'),
-        ('pendingTotal', '@Textbox370'),
+        '@TypeName',
+        '@Initial',
+        '@Received',
+        '@Closed',
+        '@PendingCurrent',
+        '@PendingOverDue',
+        '@Textbox370',
     )
     return [normalize(datum, fields) for datum in data]
 
