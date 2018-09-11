@@ -42,17 +42,18 @@ def extract_rc_data(data):
 
 def extract_health_nutrition(data):
     fields = (
-       ('Satisfactory', '@HealthSatisfactory'),
-       ('Not Satisfactory', '@HealthNotSatisfactory'),
-       ('#RC Aged 0 – 59 Months', '@Below5Child'),
-       ('Not Participating in Health/Nutrition Activities', '@NotParticipatingHealthNutriActivities'),  # noqa E501
-       ('Health/Growth Card Not Verified', '@NotVarifiedHealthGrowthCard'),
-       ('Child Not Following Growth Curve', '@NotFollowingGrowthCurve'),
-       ('MUAC Severe Malnutrition', '@MUACSevereMalnutrition'),
-       ('MUAC Acute Malnutrition', '@MUACModerateMalnutrition'),
-       ('Partially Immunized and with No Vaccination in Last 12 Months', '@MUACPartiallyImmunized'),
+       #   Title, Field, status
+       ('Satisfactory', '@HealthSatisfactory', 'good'),
+       ('Not Satisfactory', '@HealthNotSatisfactory', 'bad'),
+       ('#RC Aged 0 – 59 Months', '@Below5Child', 'normal'),
+       ('Not Participating in Health/Nutrition Activities', '@NotParticipatingHealthNutriActivities', 'normal'),  # noqa E501
+       ('Health/Growth Card Not Verified', '@NotVarifiedHealthGrowthCard', 'bad'),
+       ('Child Not Following Growth Curve', '@NotFollowingGrowthCurve', 'bad'),
+       ('MUAC Severe Malnutrition', '@MUACSevereMalnutrition', 'bad'),
+       ('MUAC Acute Malnutrition', '@MUACModerateMalnutrition', 'bad'),
+       ('Partially Immunized and with No Vaccination in Last 12 Months', '@MUACPartiallyImmunized', 'normal'),  # noqa E501
     )
-    return [{'name': _d[0], 'value': _numeral(data.get(_d[1]))} for _d in fields]
+    return [{'name': _d[0], 'value': _numeral(data.get(_d[1])), 'type': _d[2]} for _d in fields]
 
 
 def extract_rc_pie_chart(data):
@@ -161,12 +162,12 @@ def extract_education(data):
 def extract_child_monitoring(data):
     fields = (
        ('Not Sighted More than 90 Days', '@NotSighted90Days'),
-       ('Not Sighted More than  60 Days & Less than 90 Days', '@NotSighted60Days'),
+       ('Not Sighted More than 60 Days & Less than 90 Days', '@NotSighted60Days'),
        ('Not Sighted More than 30 Days & Less than 60 Days', '@NotSighted30Days'),
        ('Visits Completed in Report Period', '@VisitCompleted'),
        ('Sponsor Visits Completed in Report Period', '@SponsorVisitCompleted'),
     )
-    return [{'name': _d[0], 'value': _numeral(data.get(_d[1]))} for _d in fields]
+    return [{'name': _d[0], 'value': _numeral(data.get(_d[1])), 'key': _d[1]} for _d in fields]
 
 
 def extract_correspondence(data):
