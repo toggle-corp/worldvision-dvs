@@ -11,6 +11,7 @@ from rest_framework import routers
 from project.views import (
     ProjectViewSet,
     ProjectReportViewSet,
+    ProjectSummaryViewSet,
 )
 
 # Rest Routers
@@ -20,6 +21,9 @@ router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet, base_name='project')
 router.register(
     r'projects-report', ProjectReportViewSet, base_name='project-report'
+)
+router.register(
+    r'projects-summary', ProjectSummaryViewSet, base_name='project-summary'
 )
 
 
