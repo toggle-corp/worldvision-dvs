@@ -4,6 +4,7 @@ from django.contrib.postgres.fields import JSONField
 from project.models import Project
 from .utils import parse_xml
 from .extractor import extract_data
+from .validators import validate_file_extension
 
 
 class Report(models.Model):
@@ -12,7 +13,7 @@ class Report(models.Model):
         Project, on_delete=models.CASCADE, related_name='reports',
     )
     data = JSONField(default=None, blank=True, null=True)
-    file = models.FileField(upload_to='reports/')
+    file = models.FileField(upload_to='reports/', validators=[validate_file_extension])
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

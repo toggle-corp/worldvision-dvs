@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from .models import Project
 from .serializers import ProjectSerializer
 from report.serializers import ReportSerializer
+from report.report_fields import LABELS
 
 
 class ProjectViewSet(viewsets.ViewSet):
@@ -31,27 +32,27 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
     """
     Project's report viewset
     """
+
+    def normalize(self, fields, data):
+        return [
+            {'key': key, 'value': data[key], 'label': LABELS[key]}
+            for key in fields
+        ]
+
+    def initial_dict(self, fields):
+        return {field: 0 for field in fields}
+
     def list(self, request, version):
-        child_monitoring = {
-            '@NotSighted90Days': 0,
-            '@NotSighted60Days': 0,
-            '@NotSighted30Days': 0,
-        }
-        health_nutrition = {
-            '@HealthSatisfactory': 0,
-            '@HealthNotSatisfactory': 0,
-        }
-        correspondences = {
-            'pendingCurrent': 0,
-            'pendingOverDue': 0,
-        }
-        rc = {
-            'planned': 0,
-            'sponsered': 0,
-            'available': 0,
-            'hold': 0,
-            'death': 0,
-        }
+        child_monitoring_fields = ['@NotSighted30Days', '@NotSighted60Days', '@NotSighted90Days']
+        health_nutrition_fields = ['@HealthSatisfactory', '@HealthNotSatisfactory']
+        correspondences_fields = ['pendingCurrent', 'pendingOverDue']
+        rc_fields = ['planned', 'sponsored', 'available', 'hold', 'death']
+
+        child_monitoring = self.initial_dict(child_monitoring_fields)
+        health_nutrition = self.initial_dict(health_nutrition_fields)
+        correspondences = self.initial_dict(correspondences_fields)
+        rc = self.initial_dict(rc_fields)
+
         for project in Project.objects.all():
             report = project.selected_report
             if report and report.data:
@@ -70,8 +71,9 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
                 for key in rc.keys():
                     rc[key] += data['rcData'][key]
         return response.Response({
-            'childMonitoring': child_monitoring,
-            'healthNutrition': health_nutrition,
-            'correspondences': correspondences,
-            'rc': rc,
+            'reportDate': Project.objects.first().selected_report.data.get('reportDate'),
+            'childMonitoring': self.normalize(child_monitoring_fields, child_monitoring),
+            'healthNutrition': self.normalize(health_nutrition_fields, health_nutrition),
+            'correspondences': self.normalize(correspondences_fields, correspondences),
+            'rc': self.normalize(rc_fields, rc),
         })
