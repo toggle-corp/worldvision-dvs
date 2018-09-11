@@ -5,6 +5,7 @@
     flex-direction: column;
     border: $width-separator-thin solid $color-separator;
     width: 100%;
+    height: 100%;
 
     .header {
         display: flex;
@@ -15,65 +16,108 @@
         padding: $spacing-small $spacing-medium;
     }
 
-    .upper-container {
-        display: flex;
-        flex-shrink: 0;
-        height: 512px;
+    .container {
+        flex-grow: 1;
+        height: 100%;
+        overflow-y: auto;
 
-        .map {
-            flex-basis: 50%;
-            flex-grow: 1;
+        h3 {
+            text-transform: initial;
+            color: $color-accent;
+            font-size: $font-size-large-alt;
+            font-weight: $font-weight-bold;
         }
 
-        .rc-container {
+        .upper-container {
             display: flex;
-            flex-direction: column;
-            flex-basis: 50%;
-            flex-grow: 1;
-            padding: $spacing-medium;
-
-            h3 {
-                flex-shrink: 0;
-                padding: $spacing-extra-small $spacing-small;
-            }
-
-            .horizontal-bar-container {
-                display: flex;
-                flex-direction: row;
-                flex-grow: 1;
-                padding: $spacing-large;
-
-                .horizontal-bar {
-                    flex-grow: 1;
-                }
-            }
-
-            .sunburst-container {
-                display: flex;
-                flex-grow: 1;
-                padding: $spacing-large;
-
-                .sunburst {
-                    flex-grow: 1;
-                }
-            }
-        }
-    }
-
-    .lower-container {
-        display: flex;
-        flex-wrap: wrap;
-
-        .item-container {
-            display: flex;
-            flex-basis: 50%;
-            flex-direction: column;
             flex-shrink: 0;
-            padding: $spacing-medium;
+            height: 45vh;
+
+            .map {
+                flex-basis: 50%;
+                flex-grow: 1;
+            }
+
+            .rc-container {
+                display: flex;
+                flex-basis: 50%;
+                flex-direction: column;
+                flex-grow: 1;
+                padding: $spacing-large;
+
+                h3 {
+                    flex-shrink: 0;
+                }
+
+                .horizontal-bar-container {
+                    display: flex;
+                    flex-direction: row;
+                    flex-grow: 1;
+                    padding: $spacing-super-large-alt;
+
+                    .horizontal-bar {
+                        flex-grow: 1;
+                    }
+                }
+            }
+        }
+
+        .lower-container {
+            display: flex;
+            height: 70vh;
 
             .item {
-                flex-grow: 1;
-                height: 512px;
+                display: flex;
+                flex-basis: 50%;
+                flex-direction: column;
+                flex-shrink: 0;
+                padding: $spacing-large;
+
+                .viz-container {
+                    display: flex;
+                    flex-grow: 1;
+                    padding: $spacing-super-duper-large;
+                    height: 360px;
+
+                    .viz {
+                        flex-grow: 1;
+                    }
+                }
+
+                .table {
+                    display: table;
+                    margin-top: $spacing-medium;
+                    border-collapse: collapse;
+                }
+            }
+        }
+
+        .table-container {
+            display: flex;
+
+            .item {
+                display: flex;
+                flex-basis: 50%;
+                flex-direction: column;
+                flex-shrink: 0;
+                padding: $spacing-large;
+
+                .viz-container {
+                    display: flex;
+                    flex-grow: 1;
+                    padding: $spacing-super-large-alt;
+                    height: 360px;
+
+                    .viz {
+                        flex-grow: 1;
+                    }
+                }
+
+                .table {
+                    display: table;
+                    margin-top: $spacing-medium;
+                    border-collapse: collapse;
+                }
             }
         }
     }

@@ -15,10 +15,12 @@ import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
 import HorizontalBar from '#rscz/HorizontalBar';
 import DonutChart from '#rscz/DonutChart';
+import ListView from '#rscv/List/ListView';
 import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
+import KeyValue from '#components/KeyValue';
 
 import districts from '../../resources/districts.json';
 
@@ -50,6 +52,9 @@ export default class Report extends PureComponent {
     static sizeSelector = d => d.size;
     static valueSelector = d => d.value;
     static labelSelector = d => d.name;
+
+    static healthKeySelector = d => d.name;
+    static childKeySelector = d => d.name;
 
     constructor(props) {
         super(props);
@@ -110,19 +115,31 @@ export default class Report extends PureComponent {
         }
     }
 
+    healthNutritionParams = (key, data) => ({
+        title: data.name,
+        value: data.value,
+    });
+
     renderDistrictLayers = ({ map }) => (
         <React.Fragment>
             <MapSource
                 map={map}
                 geoJson={districts}
                 sourceKey="districts"
+                supportHover
+            />
+            <MapSource
+                map={map}
+                geoJson={this.state.location}
+                sourceKey="points"
+                supportHover
             />
             <MapLayer
                 map={map}
                 type="line"
                 filter={['==', 'OCHA_PCODE', this.state.code]}
                 paint={{
-                    'line-color': '#08327d',
+                    'line-color': '#ffffff',
                     'line-opacity': 1,
                     'line-width': 2,
                 }}
@@ -134,31 +151,26 @@ export default class Report extends PureComponent {
                 type="fill"
                 filter={['==', 'OCHA_PCODE', this.state.code]}
                 paint={{
-                    'fill-color': '#08327d',
+                    'fill-color': '#00897B',
                     'fill-opacity': 0.3,
                 }}
                 sourceKey="districts"
                 layerKey="fill"
             />
-            <MapSource
-                map={map}
-                geoJson={this.state.location}
-                sourceKey="points"
-                supportHover
-            />
             <MapLayer
                 map={map}
                 type="circle"
                 paint={{
-                    'circle-color': '#f43530',
+                    'circle-color': '#f37123',
                     'circle-radius': 7,
                     'circle-opacity': 1,
                 }}
                 sourceKey="points"
                 layerKey="points"
+                property="id"
                 hoverInfo={{
                     paint: {
-                        'circle-color': '#f43530',
+                        'circle-color': '#f37123',
                         'circle-radius': 9,
                         'circle-opacity': 0.7,
                     },
@@ -208,77 +220,110 @@ export default class Report extends PureComponent {
                 <div className={styles.header} >
                     <h2>{project.name}</h2>
                 </div>
-                <div className={styles.upperContainer}>
-                    <Map
-                        className={styles.map}
-                        childRenderer={this.renderDistrictLayers}
-                        bounds={bounds}
-                    />
-                    <div className={styles.rcContainer}>
-                        <h3>RC Data</h3>
-                        <div className={styles.horizontalBarContainer}>
+                <div className={styles.container}>
+                    <div className={styles.upperContainer}>
+                        <Map
+                            className={styles.map}
+                            childRenderer={this.renderDistrictLayers}
+                            bounds={bounds}
+                        />
+                        <div className={styles.rcContainer}>
+                            <h3>RC Data</h3>
+                            <div className={styles.horizontalBarContainer}>
+                                <HorizontalBar
+                                    className={styles.horizontalBar}
+                                    data={remoteChildren}
+                                    valueSelector={Report.valueSelector}
+                                    labelSelector={Report.labelSelector}
+                                    showGridLines={false}
+                                    colorScheme={[
+                                        '#FF7725',
+                                        '#BF591C',
+                                        '#7F3B12',
+                                        '#401E09',
+                                        '#E56B21',
+                                    ]}
+                                    margins={{
+                                        top: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        left: 64,
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.lowerContainer}>
+                        <div className={styles.item}>
+                            <h3>RC Actual Distribution</h3>
+                            <div className={styles.vizContainer}>
+                                <SunBurst
+                                    className={styles.viz}
+                                    data={rcPieChart}
+                                    labelSelector={Report.labelSelector}
+                                    valueSelector={Report.sizeSelector}
+                                />
+                            </div>
+                        </div>
+                        <div className={styles.item} >
+                            <h3>Education</h3>
+                            <div className={styles.vizContainer}>
+                                <SunBurst
+                                    className={styles.viz}
+                                    data={education}
+                                    valueSelector={Report.sizeSelector}
+                                    labelSelector={Report.labelSelector}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.tableContainer} >
+                        <div className={styles.item} >
+                            <h3>Health/Nutrition</h3>
+                            {/*
                             <HorizontalBar
-                                className={styles.horizontalBar}
-                                data={remoteChildren}
+                                className={styles.viz}
+                                data={healthNutrition}
+                                scaleType="log"
                                 valueSelector={Report.valueSelector}
                                 labelSelector={Report.labelSelector}
                                 showGridLines={false}
-                                margins={{
-                                    top: 0,
-                                    right: 0,
-                                    bottom: 0,
-                                    left: 64,
-                                }}
+                                margins={
+                                    {
+                                        top: 24,
+                                        right: 24,
+                                        bottom: 40,
+                                        left: 300,
+                                    }
+                                }
+                            />
+                            */}
+                            <ListView
+                                className={styles.table}
+                                data={healthNutrition}
+                                rendererParams={this.healthNutritionParams}
+                                keyExtractor={Report.healthKeySelector}
+                                renderer={KeyValue}
                             />
                         </div>
-                    </div>
-                </div>
-                <div className={styles.lowerContainer}>
-                    <div className={styles.itemContainer}>
-                        <h3>RC Actual Distribution</h3>
-                        <SunBurst
-                            className={styles.item}
-                            data={rcPieChart}
-                            labelSelector={Report.labelSelector}
-                            valueSelector={Report.sizeSelector}
-                        />
-                    </div>
-                    <div className={styles.itemContainer} >
-                        <h3>Education</h3>
-                        <SunBurst
-                            className={styles.item}
-                            data={education}
-                            valueSelector={Report.sizeSelector}
-                            labelSelector={Report.labelSelector}
-                        />
-                    </div>
-                    <div className={styles.itemContainer} >
-                        <h3>Health/Nutrition</h3>
-                        <HorizontalBar
-                            className={styles.item}
-                            data={healthNutrition}
-                            scaleType="log"
-                            valueSelector={Report.valueSelector}
-                            labelSelector={Report.labelSelector}
-                            showGridLines={false}
-                            margins={
-                                {
-                                    top: 24,
-                                    right: 24,
-                                    bottom: 40,
-                                    left: 300,
-                                }
-                            }
-                        />
-                    </div>
-                    <div className={styles.itemContainer} >
-                        <h3>Child Monitoring</h3>
-                        <DonutChart
-                            className={styles.item}
-                            data={childMonitoring}
-                            valueSelector={Report.valueSelector}
-                            labelSelector={Report.labelSelector}
-                        />
+                        <div className={styles.item} >
+                            <h3>Child Monitoring</h3>
+                            <ListView
+                                className={styles.table}
+                                data={childMonitoring}
+                                rendererParams={this.healthNutritionParams}
+                                keyExtractor={Report.childKeySelector}
+                                renderer={KeyValue}
+                            />
+                            {/*
+                            <DonutChart
+                                className={styles.viz}
+                                data={childMonitoring}
+                                valueSelector={Report.valueSelector}
+                                labelSelector={Report.labelSelector}
+                            />
+                            */}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -122,7 +122,7 @@ class BarChart extends PureComponent {
         this.x = scaleBand()
             .domain(this.labels)
             .rangeRound([0, this.width])
-            .padding(0.1);
+            .padding(0.4);
 
         this.y = scaleLinear()
             .domain([min(this.series, stackMin), max(this.series, stackMax)])
@@ -132,15 +132,15 @@ class BarChart extends PureComponent {
     colors = (d) => {
         const { key, data: { variance } } = d;
         if (key === 'rc') {
-            return '#599ad4';
+            return '#039BE5';
         }
 
         if (variance <= 0.02) {
-            return 'green';
+            return '#27ae60';
         } else if (variance <= 0.05) {
-            return 'orange';
+            return '#F57C00';
         }
-        return 'red';
+        return '#E64A19';
     };
 
     handleMouseOver = (d) => {
@@ -206,6 +206,7 @@ class BarChart extends PureComponent {
             .append('rect')
             .attr('x', d => x(labelSelector(d.data)))
             .attr('y', d => y(d[1]))
+        // .attr('width', `${Math.min(x.bandwidth(), 40)}px`)
             .attr('width', x.bandwidth)
             .attr('height', d => y(d[0]) - y(d[1]))
             .attr('cursor', 'pointer')

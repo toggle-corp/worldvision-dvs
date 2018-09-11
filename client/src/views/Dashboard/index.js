@@ -121,8 +121,8 @@ export default class Dashboard extends PureComponent {
                 map={map}
                 type="fill"
                 paint={{
-                    'fill-color': '#008974',
-                    'fill-opacity': 0.2,
+                    'fill-color': '#00897B',
+                    'fill-opacity': 0.4,
                 }}
                 sourceKey="bounds"
                 layerKey="bounds-fill"
@@ -131,7 +131,7 @@ export default class Dashboard extends PureComponent {
                 map={map}
                 type="line"
                 paint={{
-                    'line-color': '#008974',
+                    'line-color': '#ffffff',
                     'line-opacity': 1,
                     'line-width': 1,
                 }}
@@ -142,7 +142,7 @@ export default class Dashboard extends PureComponent {
                 map={map}
                 type="circle"
                 paint={{
-                    'circle-color': '#f43530',
+                    'circle-color': '#f37123',
                     'circle-radius': 7,
                     'circle-opacity': 1,
                 }}
@@ -152,7 +152,7 @@ export default class Dashboard extends PureComponent {
                 onClick={this.handlePointClick}
                 hoverInfo={{
                     paint: {
-                        'circle-color': '#f43530',
+                        'circle-color': '#f37123',
                         'circle-radius': 9,
                         'circle-opacity': 0.7,
                     },
@@ -175,9 +175,7 @@ export default class Dashboard extends PureComponent {
 
         const { selectedView } = this.state;
 
-        const {
-            projectsGetPending,
-        } = this.state;
+        const { projectsGetPending } = this.state;
 
         const views = {
             map: {

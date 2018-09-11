@@ -2,6 +2,7 @@
 
 .item {
     display: table-row;
+    border-bottom: $width-separator-thin solid $color-separator;
 
     .title {
         display: table-cell;
