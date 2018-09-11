@@ -34,36 +34,20 @@
             font-weight: $font-weight-bold;
         }
 
-        .upper-container {
+        .item {
             display: flex;
+            flex-direction: column;
             flex-shrink: 0;
-            height: 45vh;
+            padding: $spacing-large;
 
-            .map {
-                flex-basis: 50%;
-                flex-grow: 1;
-            }
-
-            .rc-container {
+            .viz-container {
                 display: flex;
-                flex-basis: 50%;
-                flex-direction: column;
                 flex-grow: 1;
-                padding: $spacing-large;
+                padding: $spacing-super-large-alt;
+                height: 360px;
 
-                h3 {
-                    flex-shrink: 0;
-                }
-
-                .horizontal-bar-container {
-                    display: flex;
-                    flex-direction: row;
+                .viz {
                     flex-grow: 1;
-                    padding: $spacing-super-large-alt;
-
-                    .horizontal-bar {
-                        flex-grow: 1;
-                    }
                 }
             }
         }
@@ -73,74 +57,50 @@
             height: 70vh;
 
             .item {
-                display: flex;
-                flex-basis: 50%;
-                flex-direction: column;
-                flex-shrink: 0;
-                padding: $spacing-large;
-
-                .viz-container {
-                    display: flex;
-                    flex-grow: 1;
-                    padding: $spacing-super-duper-large;
-                    height: 360px;
-
-                    .viz {
-                        flex-grow: 1;
-                    }
-                }
-
-                .table {
-                    display: table;
-                    margin-top: $spacing-medium;
-                    border-collapse: collapse;
-                }
+                flex-basis: 33%;
             }
         }
 
-        .table-container {
+        .upper-container {
             display: flex;
+            flex-shrink: 0;
 
-            .item {
-                display: flex;
+            .map {
                 flex-basis: 50%;
-                flex-direction: column;
-                flex-shrink: 0;
+                flex-grow: 1;
+            }
+
+            .table-container {
+                flex-basis: 50%;
+                flex-grow: 1;
                 padding: $spacing-large;
 
-                .viz-container {
-                    display: flex;
-                    flex-grow: 1;
-                    padding: $spacing-super-large-alt;
-                    height: 360px;
-
-                    .viz {
-                        flex-grow: 1;
-                    }
-                }
-
-                .table {
-                    display: table;
-                    flex-grow: 1;
-                    margin-top: $spacing-medium;
-                    border-collapse: collapse;
-
-                    .flash-data {
-                        color: $color-danger;
-                    }
-                }
-
-                .viz-wrapper-wrapper {
-                    display: flex;
+                .item {
+                    flex-basis: 50%;
 
                     .table {
+                        display: table;
                         flex-grow: 1;
+                        margin-top: $spacing-medium;
+                        border-collapse: collapse;
+
+                        .flash-data {
+                            color: $color-danger;
+                        }
                     }
 
-                    .viz-wrapper {
+                    .viz-wrapper-wrapper {
                         display: flex;
-                        align-items: center;
-                        flex-direction: column;
+
+                        .table {
+                            flex-grow: 1;
+                        }
+
+                        .viz-wrapper {
+                            display: flex;
+                            align-items: center;
+                            flex-direction: column;
+                        }
                     }
                 }
             }

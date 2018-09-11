@@ -1,6 +1,4 @@
-import React, {
-    PureComponent,
-} from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import turf from 'turf';
@@ -105,7 +103,6 @@ export default class Dashboard extends PureComponent {
                         </div>
                     );
                 },
-                mount: true,
                 wrapContainer: true,
             },
             report: {

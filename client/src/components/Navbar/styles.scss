@@ -12,8 +12,20 @@ $color-text-on-primary: get-text-color($color-primary);
     color: $color-text-on-navbar;
 
     .header {
-        text-transform: uppercase;
+        display: flex;
+        align-items: flex-end;
+        text-transform: capitalize;
         font-size: $font-size-large;
-        font-weight: $font-weight-bold;
+
+        .logo {
+            margin: 0 $spacing-medium;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        span {
+            line-height: 0.9;
+            font-weight: $font-weight-normal;
+        }
     }
 }

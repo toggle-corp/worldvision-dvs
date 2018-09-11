@@ -1,0 +1,85 @@
+@import '~base-scss/base';
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .header {
+        flex-shrink: 0;
+        border-bottom: $width-separator-thin solid $color-separator;
+        padding: $spacing-small $spacing-medium;
+
+        h2 {
+            text-transform: capitalize;
+            color: $color-accent;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .content {
+        flex-grow: 1;
+        overflow-y: auto;
+
+        .info {
+            display: inline-block;
+            border-bottom: $width-separator-thin solid $color-separator;
+            background-color: $color-background-header;
+            padding: $spacing-medium;
+            line-height: 1.3;
+            color: $color-text-label;
+            font-size: $font-size-medium-alt;
+            font-style: italic;
+
+            .date {
+                padding: 0 $spacing-extra-small-alt;
+
+                &:after {
+                    content: '.';
+                }
+            }
+        }
+
+        .item {
+            padding-bottom: $spacing-large;
+            width: 100%;
+
+            h3 {
+                padding: $spacing-small $spacing-medium;
+                text-transform: capitalize;
+                color: $color-accent;
+                font-weight: $font-weight-bold;
+            }
+
+            .table {
+                display: table;
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .item-table-viz {
+                display: flex;
+                align-items: center;
+
+                .table {
+                    flex-grow: 1;
+                }
+
+                .viz {
+                    width: 180px;
+                }
+            }
+
+            .item-table-viz-alt {
+                .table {
+                    width: 100%;
+                }
+
+                .viz {
+                    cursor: pointer;
+                    padding: $spacing-medium $spacing-large;
+                }
+            }
+        }
+    }
+}

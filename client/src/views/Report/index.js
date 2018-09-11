@@ -16,11 +16,11 @@ import SunBurst from '#rscz/SunBurst';
 import HorizontalBar from '#rscz/HorizontalBar';
 import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
+import KeyValue from '#components/KeyValue';
 import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
-import KeyValue from '#components/KeyValue';
 
 import districts from '../../resources/districts.json';
 
@@ -162,19 +162,30 @@ export default class Report extends PureComponent {
                 supportHover
             >
                 <MapLayer
+                    layerKey="points-red"
+                    type="circle"
+                    paint={{
+                        'circle-color': '#ffffff',
+                        'circle-radius': 14,
+                        'circle-opacity': 0.6,
+                    }}
+                    property="id"
+                    onClick={this.handlePointClick}
+                />
+                <MapLayer
                     layerKey="points"
                     type="circle"
                     paint={{
                         'circle-color': '#f37123',
-                        'circle-radius': 7,
+                        'circle-radius': 10,
                         'circle-opacity': 1,
                     }}
                     property="id"
                     hoverInfo={{
                         paint: {
                             'circle-color': '#f37123',
-                            'circle-radius': 9,
-                            'circle-opacity': 0.7,
+                            'circle-radius': 10,
+                            'circle-opacity': 1,
                         },
                         showTooltip: true,
                         tooltipProperty: 'name',
@@ -238,11 +249,52 @@ export default class Report extends PureComponent {
                         >
                             {this.renderDistrictLayers()}
                         </Map>
-                        <div className={styles.rcContainer}>
+                        <div className={styles.tableContainer} >
+                            <div className={styles.item} >
+                                <h3>Health/Nutrition</h3>
+                                <ListView
+                                    className={styles.table}
+                                    data={healthNutrition}
+                                    rendererParams={this.healthNutritionParams}
+                                    keyExtractor={Report.healthKeySelector}
+                                    renderer={KeyValue}
+                                />
+                            </div>
+                            <div className={styles.item} >
+                                <h3>Child Monitoring</h3>
+                                <div className={styles.vizWrapperWrapper}>
+                                    <ListView
+                                        className={styles.table}
+                                        data={childMonitoring}
+                                        rendererParams={this.healthNutritionParams}
+                                        keyExtractor={Report.childKeySelector}
+                                        renderer={KeyValue}
+                                    />
+                                    <div className={styles.vizWrapper}>
+                                        <DonutChart
+                                            className={styles.viz}
+                                            data={childDonut}
+                                            valueSelector={Report.valueSelector}
+                                            labelSelector={Report.labelSelector}
+                                            labelModifier={Report.labelModifierSelector}
+                                            colorScheme={[
+                                                '#f44336',
+                                                '#ef8c00',
+                                                '#41cf76',
+                                            ]}
+                                        />
+                                        <h5>Child Monitoring</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={styles.lowerContainer}>
+                        <div className={styles.item}>
                             <h3>RC Data</h3>
-                            <div className={styles.horizontalBarContainer}>
+                            <div className={styles.vizContainer}>
                                 <HorizontalBar
-                                    className={styles.horizontalBar}
+                                    className={styles.viz}
                                     data={remoteChildren}
                                     valueSelector={Report.valueSelector}
                                     labelSelector={Report.labelSelector}
@@ -263,8 +315,6 @@ export default class Report extends PureComponent {
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className={styles.lowerContainer}>
                         <div className={styles.item}>
                             <h3>RC Actual Distribution</h3>
                             <div className={styles.vizContainer}>
@@ -285,45 +335,6 @@ export default class Report extends PureComponent {
                                     valueSelector={Report.sizeSelector}
                                     labelSelector={Report.labelSelector}
                                 />
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.tableContainer} >
-                        <div className={styles.item} >
-                            <h3>Health/Nutrition</h3>
-                            <ListView
-                                className={styles.table}
-                                data={healthNutrition}
-                                rendererParams={this.healthNutritionParams}
-                                keyExtractor={Report.healthKeySelector}
-                                renderer={KeyValue}
-                            />
-                        </div>
-                        <div className={styles.item} >
-                            <h3>Child Monitoring</h3>
-                            <div className={styles.vizWrapperWrapper}>
-                                <ListView
-                                    className={styles.table}
-                                    data={childMonitoring}
-                                    rendererParams={this.healthNutritionParams}
-                                    keyExtractor={Report.childKeySelector}
-                                    renderer={KeyValue}
-                                />
-                                <div className={styles.vizWrapper}>
-                                    <DonutChart
-                                        className={styles.viz}
-                                        data={childDonut}
-                                        valueSelector={Report.valueSelector}
-                                        labelSelector={Report.labelSelector}
-                                        labelModifier={Report.labelModifierSelector}
-                                        colorScheme={[
-                                            '#f44336',
-                                            '#ef8c00',
-                                            '#41cf76',
-                                        ]}
-                                    />
-                                    <h5>Child Monitoring</h5>
-                                </div>
                             </div>
                         </div>
                     </div>
