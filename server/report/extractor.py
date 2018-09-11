@@ -169,9 +169,26 @@ def extract_child_monitoring(data):
     return [{'name': _d[0], 'value': _numeral(data.get(_d[1]))} for _d in fields]
 
 
+def extract_correspondence(data):
+    def normalize(_d, fields):
+        return {field[0]: _d[field[1]] for field in fields}
+
+    fields = (
+        ('typeName', '@TypeName'),
+        ('initial', '@Initial'),
+        ('received', '@Received'),
+        ('closed', '@Closed'),
+        ('pendingCurrent', '@PendingCurrent'),
+        ('pendingOverDue', '@PendingOverDue'),
+        ('pendingTotal', '@Textbox370'),
+    )
+    return [normalize(datum, fields) for datum in data]
+
+
 def extract_data(data):
     report = data['Report']
     tablix2 = report['Tablix2']
+    correspondence_data = report['Tablix3']['Details_Collection']['Details']
 
     _report = {
         'rcData': extract_rc_data(tablix2),
@@ -180,7 +197,7 @@ def extract_data(data):
         'healthNutrition': extract_health_nutrition(tablix2),
         'education': extract_education(tablix2),
         'childMonitoring': extract_child_monitoring(tablix2),
-        # TODO: complete remaining
+        'correspondences': extract_correspondence(correspondence_data),
     }
 
     return _report

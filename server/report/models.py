@@ -24,13 +24,16 @@ class Report(models.Model):
             return True
         return False
 
+    def extract_from_file(self):
+        self.data = extract_data(
+            parse_xml(
+                self.file.open().read()
+            )
+        )
+
     def save(self, *args, **kwargs):
         if self.original_file != self.file:
-            self.data = extract_data(
-                parse_xml(
-                    self.file.open().read()
-                )
-            )
+            self.extract_from_file()
         super().save(*args, **kwargs)
 
     def __str__(self):
