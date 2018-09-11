@@ -7,6 +7,10 @@ export const projectsSelector = ({ domainData }) => (
     domainData.projects || emptyArray
 );
 
+export const summarySelector = ({ domainData }) => (
+    domainData.summary || emptyObject
+);
+
 export const pointsSelector = ({ domainData }) => (
     domainData.points || emptyArray
 );

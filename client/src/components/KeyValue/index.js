@@ -8,20 +8,27 @@ import styles from './styles.scss';
 const propTypes = {
     title: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
+    className: PropTypes.string,
+};
+
+const defaultProps = {
+    className: '',
 };
 
 // eslint-disable-next-line
 export default class KeyValue extends PureComponent {
     static propTypes = propTypes;
+    static defaultProps = defaultProps;
 
     render() {
         const {
             title,
             value,
+            className,
         } = this.props;
 
         return (
-            <div className={styles.item} >
+            <div className={`${className} ${styles.item}`} >
                 <span className={styles.title}>{title}</span>
                 <Numeral
                     className={styles.value}

@@ -52,6 +52,7 @@ export default class Report extends PureComponent {
     static sizeSelector = d => d.size;
     static valueSelector = d => d.value;
     static labelSelector = d => d.name;
+    static labelModifierSelector = label => label;
 
     static healthKeySelector = d => d.name;
     static childKeySelector = d => d.name;
@@ -115,10 +116,18 @@ export default class Report extends PureComponent {
         }
     }
 
-    healthNutritionParams = (key, data) => ({
-        title: data.name,
-        value: data.value,
-    });
+    healthNutritionParams = (key, data) => {
+        const classNames = [];
+        if (data.type === 'bad') {
+            classNames.push(styles.flashData);
+        }
+
+        return ({
+            title: data.name,
+            value: data.value,
+            className: classNames.join(' '),
+        });
+    };
 
     renderDistrictLayers = () => (
         <React.Fragment>
@@ -208,6 +217,13 @@ export default class Report extends PureComponent {
         );
         const remoteChildren = mapToList(rcData, modifier);
 
+        const childDonutKeys = [
+            '@NotSighted30Days',
+            '@NotSighted60Days',
+            '@NotSighted90Days',
+        ];
+        const childDonut = childMonitoring.filter(c => childDonutKeys.indexOf(c.key) >= 0);
+
         return (
             <div className={styles.region}>
                 { reportGetPending && <LoadingAnimation /> }
@@ -275,24 +291,6 @@ export default class Report extends PureComponent {
                     <div className={styles.tableContainer} >
                         <div className={styles.item} >
                             <h3>Health/Nutrition</h3>
-                            {/*
-                            <HorizontalBar
-                                className={styles.viz}
-                                data={healthNutrition}
-                                scaleType="log"
-                                valueSelector={Report.valueSelector}
-                                labelSelector={Report.labelSelector}
-                                showGridLines={false}
-                                margins={
-                                    {
-                                        top: 24,
-                                        right: 24,
-                                        bottom: 40,
-                                        left: 300,
-                                    }
-                                }
-                            />
-                            */}
                             <ListView
                                 className={styles.table}
                                 data={healthNutrition}
@@ -303,21 +301,30 @@ export default class Report extends PureComponent {
                         </div>
                         <div className={styles.item} >
                             <h3>Child Monitoring</h3>
-                            <ListView
-                                className={styles.table}
-                                data={childMonitoring}
-                                rendererParams={this.healthNutritionParams}
-                                keyExtractor={Report.childKeySelector}
-                                renderer={KeyValue}
-                            />
-                            {/*
-                            <DonutChart
-                                className={styles.viz}
-                                data={childMonitoring}
-                                valueSelector={Report.valueSelector}
-                                labelSelector={Report.labelSelector}
-                            />
-                            */}
+                            <div className={styles.vizWrapperWrapper}>
+                                <ListView
+                                    className={styles.table}
+                                    data={childMonitoring}
+                                    rendererParams={this.healthNutritionParams}
+                                    keyExtractor={Report.childKeySelector}
+                                    renderer={KeyValue}
+                                />
+                                <div className={styles.vizWrapper}>
+                                    <DonutChart
+                                        className={styles.viz}
+                                        data={childDonut}
+                                        valueSelector={Report.valueSelector}
+                                        labelSelector={Report.labelSelector}
+                                        labelModifier={Report.labelModifierSelector}
+                                        colorScheme={[
+                                            '#f44336',
+                                            '#ef8c00',
+                                            '#41cf76',
+                                        ]}
+                                    />
+                                    <h5>Child Monitoring</h5>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

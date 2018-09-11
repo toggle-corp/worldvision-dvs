@@ -7,6 +7,7 @@ import initialDomainData from '../../initial-state/domainData';
 // TYPE
 
 export const SET_PROJECTS = 'domainData/SET_PROJECTS';
+export const SET_SUMMARY = 'domainData/SET_SUMMARY';
 export const SET_REPORT = 'domainData/SET_REPORT';
 
 // ACTION-CREATOR
@@ -14,6 +15,11 @@ export const SET_REPORT = 'domainData/SET_REPORT';
 export const setProjectsAction = ({ projects }) => ({
     type: SET_PROJECTS,
     projects,
+});
+
+export const setSummaryAction = ({ summary }) => ({
+    type: SET_SUMMARY,
+    summary,
 });
 
 export const setReportAction = ({ projectId, report }) => ({
@@ -68,6 +74,16 @@ const setProject = (state, action) => {
     return update(state, settings);
 };
 
+const setSummary = (state, action) => {
+    const { summary } = action;
+
+    const settings = {
+        summary: { $set: summary },
+    };
+
+    return update(state, settings);
+};
+
 const setReport = (state, action) => {
     const {
         projectId,
@@ -86,6 +102,7 @@ const setReport = (state, action) => {
 const reducers = {
     [SET_PROJECTS]: setProject,
     [SET_REPORT]: setReport,
+    [SET_SUMMARY]: setSummary,
 };
 
 

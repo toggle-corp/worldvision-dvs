@@ -6,15 +6,12 @@ $color-text-on-primary: get-text-color($color-primary);
 .navbar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     box-shadow: 0 $spacing-extra-small $spacing-small (-$spacing-extra-small) $color-shadow-medium;
     background-color: $color-navbar;
     padding: 0 $spacing-medium-alt;
     color: $color-text-on-navbar;
 
     .header {
-        margin: auto;
-        width: 70%;
         text-transform: uppercase;
         font-size: $font-size-large;
         font-weight: $font-weight-bold;
