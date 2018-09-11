@@ -1,11 +1,16 @@
-def _numeral(value):
+def _numeral(value, ignore=False):
     """
     Change to integer/float
     """
     try:
-        return int(value)
-    except ValueError:
-        return float(value)
+        try:
+            return int(value)
+        except ValueError:
+            return float(value)
+    except ValueError as e:
+        if not ignore:
+            raise e
+    return value
 
 
 def _percentage(value):
@@ -37,6 +42,7 @@ def extract_rc_data(data):
         'sponsered': _numeral(data['@Sponsored']),
         'available': _numeral(data['@Available']),
         'hold': _numeral(data['@TotalHold']),
+        'death': _numeral(data['@TotalDeath']),
     }
 
 
@@ -53,7 +59,10 @@ def extract_health_nutrition(data):
        ('MUAC Acute Malnutrition', '@MUACModerateMalnutrition', 'bad'),
        ('Partially Immunized and with No Vaccination in Last 12 Months', '@MUACPartiallyImmunized', 'normal'),  # noqa E501
     )
-    return [{'name': _d[0], 'value': _numeral(data.get(_d[1])), 'type': _d[2]} for _d in fields]
+    return [
+        {'name': _d[0], 'value': _numeral(data.get(_d[1])), 'type': _d[2], 'key': _d[1]}
+        for _d in fields
+    ]
 
 
 def extract_rc_pie_chart(data):
@@ -172,7 +181,10 @@ def extract_child_monitoring(data):
 
 def extract_correspondence(data):
     def normalize(_d, fields):
-        return {field[0]: _d[field[1]] for field in fields}
+        return {
+            field[0]: _numeral(_d[field[1]], ignore=True)
+            for field in fields
+        }
 
     fields = (
         ('typeName', '@TypeName'),
