@@ -45,22 +45,33 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
             'pendingCurrent': 0,
             'pendingOverDue': 0,
         }
+        rc = {
+            'planned': 0,
+            'sponsered': 0,
+            'available': 0,
+            'hold': 0,
+            'death': 0,
+        }
         for project in Project.objects.all():
             report = project.selected_report
             if report and report.data:
-                for datum in report.data['childMonitoring']:
+                data = report.data
+                for datum in data['childMonitoring']:
                     key = datum['key']
                     if key in child_monitoring:
                         child_monitoring[key] += datum['value']
-                for datum in report.data['healthNutrition']:
+                for datum in data['healthNutrition']:
                     key = datum['key']
                     if key in health_nutrition:
                         health_nutrition[key] += datum['value']
-                for datum in report.data['correspondences']:
+                for datum in data['correspondences']:
                     for key in correspondences.keys():
                         correspondences[key] += datum[key]
+                for key in rc.keys():
+                    rc[key] += data['rcData'][key]
         return response.Response({
             'childMonitoring': child_monitoring,
             'healthNutrition': health_nutrition,
             'correspondences': correspondences,
+            'rc': rc,
         })

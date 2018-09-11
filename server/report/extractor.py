@@ -170,9 +170,9 @@ def extract_education(data):
 
 def extract_child_monitoring(data):
     fields = (
-       ('Not Sighted More than 90 Days', '@NotSighted90Days'),
-       ('Not Sighted More than 60 Days & Less than 90 Days', '@NotSighted60Days'),
        ('Not Sighted More than 30 Days & Less than 60 Days', '@NotSighted30Days'),
+       ('Not Sighted More than 60 Days & Less than 90 Days', '@NotSighted60Days'),
+       ('Not Sighted More than 90 Days', '@NotSighted90Days'),
        ('Visits Completed in Report Period', '@VisitCompleted'),
        ('Sponsor Visits Completed in Report Period', '@SponsorVisitCompleted'),
     )
@@ -204,6 +204,7 @@ def extract_data(data):
     correspondence_data = report['Tablix3']['Details_Collection']['Details']
 
     _report = {
+        'reportDate': tablix2['@Textbox55'].split(':', 1)[1].strip(),
         'rcData': extract_rc_data(tablix2),
         'rcPieChart': extract_rc_pie_chart(tablix2),
 
