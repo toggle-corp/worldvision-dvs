@@ -120,64 +120,58 @@ export default class Report extends PureComponent {
         value: data.value,
     });
 
-    renderDistrictLayers = ({ map }) => (
+    renderDistrictLayers = () => (
         <React.Fragment>
             <MapSource
-                map={map}
+                sourceKey="districts"
                 geoJson={districts}
-                sourceKey="districts"
                 supportHover
-            />
+            >
+                <MapLayer
+                    layerKey="line"
+                    type="line"
+                    filter={['==', 'OCHA_PCODE', this.state.code]}
+                    paint={{
+                        'line-color': '#ffffff',
+                        'line-opacity': 1,
+                        'line-width': 2,
+                    }}
+                />
+                <MapLayer
+                    layerKey="fill"
+                    type="fill"
+                    filter={['==', 'OCHA_PCODE', this.state.code]}
+                    paint={{
+                        'fill-color': '#00897B',
+                        'fill-opacity': 0.3,
+                    }}
+                />
+            </MapSource>
             <MapSource
-                map={map}
+                sourceKey="points"
                 geoJson={this.state.location}
-                sourceKey="points"
                 supportHover
-            />
-            <MapLayer
-                map={map}
-                type="line"
-                filter={['==', 'OCHA_PCODE', this.state.code]}
-                paint={{
-                    'line-color': '#ffffff',
-                    'line-opacity': 1,
-                    'line-width': 2,
-                }}
-                sourceKey="districts"
-                layerKey="line"
-            />
-            <MapLayer
-                map={map}
-                type="fill"
-                filter={['==', 'OCHA_PCODE', this.state.code]}
-                paint={{
-                    'fill-color': '#00897B',
-                    'fill-opacity': 0.3,
-                }}
-                sourceKey="districts"
-                layerKey="fill"
-            />
-            <MapLayer
-                map={map}
-                type="circle"
-                paint={{
-                    'circle-color': '#f37123',
-                    'circle-radius': 7,
-                    'circle-opacity': 1,
-                }}
-                sourceKey="points"
-                layerKey="points"
-                property="id"
-                hoverInfo={{
-                    paint: {
+            >
+                <MapLayer
+                    layerKey="points"
+                    type="circle"
+                    paint={{
                         'circle-color': '#f37123',
-                        'circle-radius': 9,
-                        'circle-opacity': 0.7,
-                    },
-                    showTooltip: true,
-                    tooltipProperty: 'name',
-                }}
-            />
+                        'circle-radius': 7,
+                        'circle-opacity': 1,
+                    }}
+                    property="id"
+                    hoverInfo={{
+                        paint: {
+                            'circle-color': '#f37123',
+                            'circle-radius': 9,
+                            'circle-opacity': 0.7,
+                        },
+                        showTooltip: true,
+                        tooltipProperty: 'name',
+                    }}
+                />
+            </MapSource>
         </React.Fragment>
     )
 
@@ -224,9 +218,10 @@ export default class Report extends PureComponent {
                     <div className={styles.upperContainer}>
                         <Map
                             className={styles.map}
-                            childRenderer={this.renderDistrictLayers}
                             bounds={bounds}
-                        />
+                        >
+                            {this.renderDistrictLayers()}
+                        </Map>
                         <div className={styles.rcContainer}>
                             <h3>RC Data</h3>
                             <div className={styles.horizontalBarContainer}>

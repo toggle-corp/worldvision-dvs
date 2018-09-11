@@ -104,62 +104,56 @@ export default class Dashboard extends PureComponent {
         setHashToBrowser(`#/${id}`);
     }
 
-    renderMapLayers = ({ map }) => (
+    renderMapLayers = () => (
         <React.Fragment>
             <MapSource
-                map={map}
+                sourceKey="bounds"
                 geoJson={nepalGeoJson}
-                sourceKey="bounds"
-            />
+            >
+                <MapLayer
+                    layerKey="bounds-fill"
+                    type="fill"
+                    paint={{
+                        'fill-color': '#00897B',
+                        'fill-opacity': 0.4,
+                    }}
+                />
+                <MapLayer
+                    layerKey="bounds-outline"
+                    type="line"
+                    paint={{
+                        'line-color': '#ffffff',
+                        'line-opacity': 1,
+                        'line-width': 1,
+                    }}
+                />
+            </MapSource>
             <MapSource
-                map={map}
+                sourceKey="points"
                 geoJson={this.props.points}
-                sourceKey="points"
                 supportHover
-            />
-            <MapLayer
-                map={map}
-                type="fill"
-                paint={{
-                    'fill-color': '#00897B',
-                    'fill-opacity': 0.4,
-                }}
-                sourceKey="bounds"
-                layerKey="bounds-fill"
-            />
-            <MapLayer
-                map={map}
-                type="line"
-                paint={{
-                    'line-color': '#ffffff',
-                    'line-opacity': 1,
-                    'line-width': 1,
-                }}
-                sourceKey="bounds"
-                layerKey="bounds-outline"
-            />
-            <MapLayer
-                map={map}
-                type="circle"
-                paint={{
-                    'circle-color': '#f37123',
-                    'circle-radius': 7,
-                    'circle-opacity': 1,
-                }}
-                sourceKey="points"
-                layerKey="points"
-                property="id"
-                onClick={this.handlePointClick}
-                hoverInfo={{
-                    paint: {
+            >
+                <MapLayer
+                    layerKey="points"
+                    type="circle"
+                    paint={{
                         'circle-color': '#f37123',
-                        'circle-radius': 9,
-                        'circle-opacity': 0.7,
-                    },
-                    showTooltip: true,
-                    tooltipProperty: 'name',
-                }}
-            />
+                        'circle-radius': 7,
+                        'circle-opacity': 1,
+                    }}
+                    property="id"
+                    onClick={this.handlePointClick}
+                    hoverInfo={{
+                        paint: {
+                            'circle-color': '#f37123',
+                            'circle-radius': 9,
+                            'circle-opacity': 0.7,
+                        },
+                        showTooltip: true,
+                        tooltipProperty: 'name',
+                    }}
+                />
+            </MapSource>
         </React.Fragment>
     )
 
@@ -174,7 +168,6 @@ export default class Dashboard extends PureComponent {
         }
 
         const { selectedView } = this.state;
-
         const { projectsGetPending } = this.state;
 
         const views = {
@@ -183,9 +176,10 @@ export default class Dashboard extends PureComponent {
                     <div className={styles.dashboardContent} >
                         <Map
                             className={styles.map}
-                            childRenderer={this.renderMapLayers}
                             bounds={this.nepalBounds}
-                        />
+                        >
+                            {this.renderMapLayers()}
+                        </Map>
                         <div className={styles.barchartContainer}>
                             <BarChart
                                 data={rcData}
