@@ -28,7 +28,14 @@ export default class Summary extends PureComponent {
 
     static valueSelector = d => d.value;
     static labelSelector = d => d.label;
-    static labelModifierSelector = (label, value) => `${label}: ${value}`;
+    static labelModifierSelector = (label, value) => (`
+        <div class=${styles.tooltip} >
+            ${label}:
+            <span class=${styles.value}>
+                ${value}
+            </span>
+        </div>
+    `);
     static tableKeySelector = d => d.key;
 
     tableParams = (key, data) => {
@@ -69,6 +76,7 @@ export default class Summary extends PureComponent {
                 </header>
                 <section className={styles.content}>
                     <span className={styles.info}>
+                        <span className={`${styles.infoIcon} ion-information-circled`} />
                         {infoText}
                         <FormattedDate
                             className={styles.date}
@@ -89,13 +97,6 @@ export default class Summary extends PureComponent {
                     <div className={styles.item}>
                         <h3>Child Monitoring</h3>
                         <div className={styles.itemTableViz}>
-                            <ListView
-                                className={styles.table}
-                                data={childMonitoring}
-                                rendererParams={this.tableParams}
-                                keyExtractor={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
                             <DonutChart
                                 className={styles.viz}
                                 data={childMonitoring}
@@ -108,18 +109,18 @@ export default class Summary extends PureComponent {
                                     '#f44336',
                                 ]}
                             />
+                            <ListView
+                                className={styles.table}
+                                data={childMonitoring}
+                                rendererParams={this.tableParams}
+                                keyExtractor={Summary.tableKeySelector}
+                                renderer={KeyValue}
+                            />
                         </div>
                     </div>
                     <div className={styles.item}>
                         <h3>Health / Nutrition</h3>
                         <div className={styles.itemTableViz}>
-                            <ListView
-                                className={styles.table}
-                                data={healthNutrition}
-                                rendererParams={this.tableParams}
-                                keyExtractor={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
                             <DonutChart
                                 className={styles.viz}
                                 data={healthNutrition}
@@ -130,6 +131,13 @@ export default class Summary extends PureComponent {
                                     '#41cf76',
                                     '#f44336',
                                 ]}
+                            />
+                            <ListView
+                                className={styles.table}
+                                data={healthNutrition}
+                                rendererParams={this.tableParams}
+                                keyExtractor={Summary.tableKeySelector}
+                                renderer={KeyValue}
                             />
                         </div>
                     </div>

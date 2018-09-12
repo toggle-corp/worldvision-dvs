@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import turf from 'turf';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
+import PrimaryButton from '#rsca/Button/PrimaryButton';
 import MultiViewContainer from '#rscv/MultiViewContainer';
 
 import Map from '#rscz/Map/index';
@@ -95,6 +96,7 @@ export default class Dashboard extends PureComponent {
                                 <Map
                                     className={styles.map}
                                     bounds={this.nepalBounds}
+                                    fitBoundsDuration={10}
                                 >
                                     {this.renderMapLayers()}
                                 </Map>
@@ -216,9 +218,9 @@ export default class Dashboard extends PureComponent {
                         layerKey="points-red"
                         type="circle"
                         paint={{
-                            'circle-color': '#ffffff',
+                            'circle-color': '#000',
                             'circle-radius': 14,
-                            'circle-opacity': 0.6,
+                            'circle-opacity': 0.4,
                         }}
                         property="id"
                         onClick={this.handlePointClick}

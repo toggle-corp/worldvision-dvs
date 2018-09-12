@@ -8,11 +8,13 @@
         display: table-cell;
         padding: $spacing-small $spacing-medium;
         text-transform: capitalize;
+        color: $color-text-label;
     }
 
     .value {
         display: table-cell;
         padding: $spacing-small $spacing-medium;
         text-align: right;
+        font-size: $font-size-medium-alt;
     }
 }

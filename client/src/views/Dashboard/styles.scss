@@ -45,11 +45,12 @@ $width-aggregated-data: 480px;
                         font-size: $font-size-large;
                         font-weight: $font-weight-bold;
                     }
+                }
 
-                    .rc-data-hover {
-                        display: table;
-                        border-collapse: collapse;
-                    }
+                .info-bar {
+                    position: absolute;
+                    top: $spacing-large;
+                    right: $spacing-large;
                 }
             }
 

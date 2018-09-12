@@ -28,10 +28,12 @@ export default class KeyValue extends PureComponent {
         } = this.props;
 
         return (
-            <div className={`${className} ${styles.item}`} >
-                <span className={styles.title}>{title}</span>
+            <div className={styles.item} >
+                <span className={`${className} ${styles.title}`}>
+                    {title}
+                </span>
                 <Numeral
-                    className={styles.value}
+                    className={`${className} ${styles.value}`}
                     value={value}
                     precision={0}
                 />

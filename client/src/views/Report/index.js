@@ -21,6 +21,7 @@ import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
+import PercentLine from '#components/PercentLine';
 
 import districts from '../../resources/districts.json';
 
@@ -52,8 +53,17 @@ export default class Report extends PureComponent {
     static sizeSelector = d => d.size;
     static valueSelector = d => d.value;
     static labelSelector = d => d.name;
-    static labelModifierSelector = label => label;
 
+    static labelModifierSelector = (label, value) => (`
+        <div class=${styles.tooltip} >
+            ${label}:
+            <span class=${styles.value}>
+                ${value}
+            </span>
+        </div>
+    `);
+
+    static tableKeySelector = d => d.name;
     static healthKeySelector = d => d.name;
     static childKeySelector = d => d.name;
 
@@ -152,7 +162,7 @@ export default class Report extends PureComponent {
                     filter={['==', 'OCHA_PCODE', this.state.code]}
                     paint={{
                         'fill-color': '#00897B',
-                        'fill-opacity': 0.3,
+                        'fill-opacity': 0.4,
                     }}
                 />
             </MapSource>
@@ -165,9 +175,9 @@ export default class Report extends PureComponent {
                     layerKey="points-red"
                     type="circle"
                     paint={{
-                        'circle-color': '#ffffff',
+                        'circle-color': '#000',
                         'circle-radius': 14,
-                        'circle-opacity': 0.6,
+                        'circle-opacity': 0.4,
                     }}
                     property="id"
                     onClick={this.handlePointClick}
@@ -218,6 +228,7 @@ export default class Report extends PureComponent {
             healthNutrition,
             rcPieChart,
             rcData,
+            correspondences,
         } = report.data;
 
         const modifier = (element, key) => (
@@ -233,7 +244,31 @@ export default class Report extends PureComponent {
             '@NotSighted60Days',
             '@NotSighted90Days',
         ];
+
+        const healthDonutKeys = [
+            '@HealthSatisfactory',
+            '@HealthNotSatisfactory',
+        ];
+
+        const correspondenceKeys = [
+            'pendingCurrent',
+            'pendingOverDue',
+        ];
+
         const childDonut = childMonitoring.filter(c => childDonutKeys.indexOf(c.key) >= 0);
+        const healthDonut = healthNutrition.filter(c => healthDonutKeys.indexOf(c.key) >= 0);
+        const correspondencesTotal = correspondences.reduce((acc, d) => ({
+            pendingCurrent: acc.pendingCurrent + d.pendingCurrent,
+            pendingOverDue: acc.pendingOverDue + d.pendingOverDue,
+        }), {
+            pendingCurrent: 0,
+            pendingOverDue: 0,
+        });
+        const finalTotal = Object.keys(correspondencesTotal).map(m => ({
+            name: m,
+            value: correspondencesTotal[m],
+        }));
+
 
         return (
             <div className={styles.region}>
@@ -252,17 +287,30 @@ export default class Report extends PureComponent {
                         <div className={styles.tableContainer} >
                             <div className={styles.item} >
                                 <h3>Health/Nutrition</h3>
-                                <ListView
-                                    className={styles.table}
-                                    data={healthNutrition}
-                                    rendererParams={this.healthNutritionParams}
-                                    keyExtractor={Report.healthKeySelector}
-                                    renderer={KeyValue}
-                                />
+                                <div className={styles.vizWrapper}>
+                                    <ListView
+                                        className={styles.table}
+                                        data={healthNutrition}
+                                        rendererParams={this.healthNutritionParams}
+                                        keyExtractor={Report.healthKeySelector}
+                                        renderer={KeyValue}
+                                    />
+                                    <DonutChart
+                                        className={styles.viz}
+                                        data={healthDonut}
+                                        valueSelector={Report.valueSelector}
+                                        labelSelector={Report.labelSelector}
+                                        labelModifier={Report.labelModifierSelector}
+                                        colorScheme={[
+                                            '#41cf76',
+                                            '#f44336',
+                                        ]}
+                                    />
+                                </div>
                             </div>
                             <div className={styles.item} >
                                 <h3>Child Monitoring</h3>
-                                <div className={styles.vizWrapperWrapper}>
+                                <div className={styles.vizWrapper}>
                                     <ListView
                                         className={styles.table}
                                         data={childMonitoring}
@@ -270,21 +318,18 @@ export default class Report extends PureComponent {
                                         keyExtractor={Report.childKeySelector}
                                         renderer={KeyValue}
                                     />
-                                    <div className={styles.vizWrapper}>
-                                        <DonutChart
-                                            className={styles.viz}
-                                            data={childDonut}
-                                            valueSelector={Report.valueSelector}
-                                            labelSelector={Report.labelSelector}
-                                            labelModifier={Report.labelModifierSelector}
-                                            colorScheme={[
-                                                '#f44336',
-                                                '#ef8c00',
-                                                '#41cf76',
-                                            ]}
-                                        />
-                                        <h5>Child Monitoring</h5>
-                                    </div>
+                                    <DonutChart
+                                        className={styles.viz}
+                                        data={childDonut}
+                                        valueSelector={Report.valueSelector}
+                                        labelSelector={Report.labelSelector}
+                                        labelModifier={Report.labelModifierSelector}
+                                        colorScheme={[
+                                            '#41cf76',
+                                            '#ef8c00',
+                                            '#f44336',
+                                        ]}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -323,6 +368,13 @@ export default class Report extends PureComponent {
                                     data={rcPieChart}
                                     labelSelector={Report.labelSelector}
                                     valueSelector={Report.sizeSelector}
+                                    colorScheme={[
+                                        '#FF7725',
+                                        '#BF591C',
+                                        '#7F3B12',
+                                        '#401E09',
+                                        '#E56B21',
+                                    ]}
                                 />
                             </div>
                         </div>
@@ -334,9 +386,30 @@ export default class Report extends PureComponent {
                                     data={education}
                                     valueSelector={Report.sizeSelector}
                                     labelSelector={Report.labelSelector}
+                                    colorScheme={[
+                                        '#FF7725',
+                                        '#BF591C',
+                                        '#7F3B12',
+                                        '#401E09',
+                                        '#E56B21',
+                                    ]}
                                 />
                             </div>
                         </div>
+                        <div className={styles.item} >
+                            <h3>Correspondence</h3>
+                            <ListView
+                                className={styles.table}
+                                data={finalTotal}
+                                rendererParams={this.healthNutritionParams}
+                                keyExtractor={Report.healthKeySelector}
+                                renderer={KeyValue}
+                            />
+                        </div>
+                        <div className={styles.item} >
+                            <h3>Participation / Support</h3>
+                        </div>
+                        <div className={styles.item} />
                     </div>
                 </div>
             </div>

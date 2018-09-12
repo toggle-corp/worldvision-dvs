@@ -12,13 +12,13 @@
         align-items: center;
         flex-shrink: 0;
         border-bottom: $width-separator-thin solid $color-separator;
-        background-color: $color-background-header;
+        background-color: $color-foreground;
         padding: $spacing-small $spacing-medium;
 
         h2 {
             color: $color-accent;
             font-size: $font-size-super-large;
-            font-weight: bold;
+            font-weight: $font-weight-medium;
         }
     }
 
@@ -31,7 +31,7 @@
             text-transform: initial;
             color: $color-accent;
             font-size: $font-size-large-alt;
-            font-weight: $font-weight-bold;
+            font-weight: $font-weight-medium;
         }
 
         .item {
@@ -50,20 +50,36 @@
                     flex-grow: 1;
                 }
             }
+
+            .table {
+                display: table;
+                border-collapse: collapse;
+            }
         }
 
         .lower-container {
             display: flex;
-            height: 70vh;
+            flex-wrap: wrap;
 
             .item {
-                flex-basis: 33%;
+                flex-basis: calc(100% / 3);
+                height: 60vh;
+
+                h3 {
+                    padding-top: $spacing-extra-large;
+                    text-align: center;
+                }
+
+                &:nth-child(even) {
+                    background-color: $color-foreground-alt;
+                }
             }
         }
 
         .upper-container {
             display: flex;
             flex-shrink: 0;
+            border-bottom: $width-separator-thin solid $color-separator;
 
             .map {
                 flex-basis: 50%;
@@ -73,7 +89,6 @@
             .table-container {
                 flex-basis: 50%;
                 flex-grow: 1;
-                padding: $spacing-large;
 
                 .item {
                     flex-basis: 50%;
@@ -89,17 +104,15 @@
                         }
                     }
 
-                    .viz-wrapper-wrapper {
+                    .viz-wrapper {
                         display: flex;
 
                         .table {
                             flex-grow: 1;
                         }
 
-                        .viz-wrapper {
-                            display: flex;
-                            align-items: center;
-                            flex-direction: column;
+                        .viz {
+                            height: 180px;
                         }
                     }
                 }
