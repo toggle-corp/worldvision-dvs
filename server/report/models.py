@@ -1,10 +1,12 @@
+import logging
+
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
-import logging
+from django.dispatch import receiver
 
 from project.models import Project
-from .utils import parse_xml
+from .utils import parse_xml, delete_file
 from .extractor import extract_data
 from .validators import validate_file_extension
 
@@ -40,3 +42,10 @@ class Report(models.Model):
 
     def __str__(self):
         return self.name
+
+
+@receiver(models.signals.post_delete, sender=Report)
+def delete_report_file(sender, instance, *args, **kwargs):
+    """ Deletes report file on `post_delete` """
+    if instance.file:
+        delete_file(instance.file.path)

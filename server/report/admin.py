@@ -36,7 +36,7 @@ class ReportAdmin(admin.ModelAdmin):
         response = json.dumps(instance.data, sort_keys=True, indent=2)
 
         # Truncate the data. Alter as needed
-        response = response[:5000]
+        # response = response[:5000]
 
         # Get the Pygments formatter
         formatter = HtmlFormatter(style='colorful')
