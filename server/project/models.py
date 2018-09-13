@@ -19,7 +19,7 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     district = models.ForeignKey(
         District, on_delete=models.CASCADE, related_name='projects',
-        blank=True, null=True,
+        null=True,
     )
     selected_report = models.OneToOneField(
         'report.Report', related_name='+',

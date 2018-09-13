@@ -13,5 +13,5 @@ export const createParamsForGet = () => ({
 });
 
 export const createUrlForReport = projectId => (
-    `${wsEndpoint}/projects-report/${projectId}`
+    `${wsEndpoint}/projects-report/${projectId}/`
 );

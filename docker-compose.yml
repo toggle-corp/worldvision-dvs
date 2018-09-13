@@ -7,7 +7,11 @@ services:
             - postgres-data:/var/lib/postgresql/data
 
     server:
-        build: ./server/
+        image: devtc/worldvision-dvs:server-latest
+        build:
+          context: ./server/
+          cache_from:
+            - devtc/worldvision-dvs:server-latest
         env_file:
             - .env
         command: bash -c '/code/scripts/wait-for-it.sh db:5432 && /code/scripts/run_develop.sh'
@@ -20,7 +24,11 @@ services:
             - db
 
     client:
-        build: ./client/
+        image: devtc/worldvision-dvs:client-latest
+        build:
+          context: ./client/
+          cache_from:
+            - devtc/worldvision-dvs:client-latest
         env_file:
             - .env
         command: bash -c '/code/scripts/run_develop.sh'

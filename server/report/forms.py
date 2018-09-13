@@ -21,6 +21,7 @@ class ReportAdminForm(forms.ModelForm):
     def save(self, *args, **kwargs):
         if self.cleaned_data.get('data'):
             self.instance.data = self.cleaned_data.get('data')
-            delete_file(self.original_report_file.path)
+            if self.original_report_file:
+                delete_file(self.original_report_file.path)
         report = super().save(*args, **kwargs)
         return report
