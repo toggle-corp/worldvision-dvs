@@ -7,30 +7,39 @@ export const projectsSelector = ({ domainData }) => (
     domainData.projects || emptyArray
 );
 
-export const regionsSelector = ({ domainData }) => (
-    domainData.regions || emptyObject
+export const summarySelector = ({ domainData }) => (
+    domainData.summary || emptyObject
 );
 
-export const selectedProjectSelector = ({ domainData }) => domainData.selectedProject;
+export const pointsSelector = ({ domainData }) => (
+    domainData.points || emptyArray
+);
+
+export const rcDataSelector = ({ domainData }) => (
+    domainData.rcData || emptyArray
+);
+
+export const reportsSelector = ({ domainData }) => (
+    domainData.reports || emptyObject
+);
+
 export const projectIdFromPropsSelector = (state, props) => props.projectId;
 
-export const regionSelector = createSelector(
-    regionsSelector,
+export const reportSelector = createSelector(
+    reportsSelector,
     projectIdFromPropsSelector,
-    selectedProjectSelector,
-    (regions, projectIdFromProps, projectId) => (
+    (reports, projectIdFromProps) => (
         projectIdFromProps ?
-            regions[projectIdFromProps] :
-            regions[projectId] || emptyObject
+            reports[projectIdFromProps] : emptyObject
     ),
 );
 
 /*
-export const regionSelector = createSelector(
-    regionsSelector,
-    projectIdSelector,
-    (regions, projectId) => (
-        regionsSelector[projectId] || emptyObject
-    ),
-);
-*/
+   export const regionSelector = createSelector(
+   regionsSelector,
+   projectIdSelector,
+   (regions, projectId) => (
+   regionsSelector[projectId] || emptyObject
+   ),
+   );
+ */

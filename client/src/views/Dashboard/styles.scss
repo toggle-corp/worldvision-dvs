@@ -1,9 +1,63 @@
 @import '~base-scss/base';
 
+$width-aggregated-data: 480px;
+
 .dashboard {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    @extend %main-content;
+    margin: auto;
+    border: 0;
+    width: 100%;
+
+    .content {
+        display: flex;
+        height: 100%;
+
+        &:not(.active) {
+            display: none;
+        }
+
+        .dashboard-content {
+            display: flex;
+            width: 100%;
+            height: 100%;
+
+            .map-container {
+                position: relative;
+                width: calc(100% - #{$width-aggregated-data});
+                height: 100%;
+
+                .map {
+                    margin-bottom: $spacing-small;
+                    border: $width-separator-thin solid $color-separator;
+                    height: 100%;
+                }
+
+                .hover-info {
+                    @include shadow-medium;
+                    border: $width-separator-thin solid $color-separator;
+                    background-color: $color-foreground;
+
+                    h4 {
+                        border-bottom: $width-separator-thin solid $color-separator;
+                        padding: $spacing-small $spacing-medium;
+                        text-transform: capitalize;
+                        color: $color-accent;
+                        font-size: $font-size-large;
+                        font-weight: $font-weight-bold;
+                    }
+                }
+
+                .info-bar {
+                    position: absolute;
+                    top: $spacing-large;
+                    right: $spacing-large;
+                }
+            }
+
+            .aggregated-container {
+                border: $width-separator-thin solid $color-separator;
+                width: $width-aggregated-data;
+            }
+        }
+    }
 }

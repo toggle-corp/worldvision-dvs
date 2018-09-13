@@ -19,7 +19,7 @@ export default class ProjectsGetRequest {
     }
 
     success = (response) => {
-        this.setProjects(response);
+        this.setProjects({ projects: response });
     }
 
     create = () => {
@@ -27,10 +27,10 @@ export default class ProjectsGetRequest {
             .url(urlForProjects)
             .params(createParamsForGet)
             .preLoad(() => {
-                this.setState({ projectsPending: true });
+                this.setState({ projectsGetPending: true });
             })
             .postLoad(() => {
-                this.setState({ projectsPending: false });
+                this.setState({ projectsGetPending: false });
             })
             .success(this.success)
             .build();

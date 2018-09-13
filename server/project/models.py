@@ -1,4 +1,5 @@
 from django.db import models
+from report.report_fields import LABELS
 
 # Create your models here.
 
@@ -32,11 +33,14 @@ class Project(models.Model):
 
     def get_rc_data(self):
         if self.selected_report:
-            data = self.selected_report.data
-            return {
-                'rcData': data.get('rcData'),
-                'reportDate': data.get('reportDate'),
-            }
+            fields = ['planned', 'sponsored', 'available', 'hold', 'death']
+            rc_data = self.selected_report.data.get('rcData')
+            return [
+                {
+                    'name': LABELS[field],
+                    'value': rc_data[field],
+                } for field in fields
+            ]
 
     def __str__(self):
         return self.name
