@@ -17,4 +17,20 @@
         text-align: right;
         font-size: $font-size-medium-alt;
     }
+
+    .percent-container {
+        display: table-cell;
+        padding: $spacing-small $spacing-medium;
+        text-align: right;
+        font-size: $font-size-medium-alt;
+
+        .percent {
+            display: block;
+        }
+
+        .percent-value {
+            color: $color-text-disabled;
+            font-size: $font-size-small-alt;
+        }
+    }
 }

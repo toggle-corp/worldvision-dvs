@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
 
 import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
@@ -22,6 +23,14 @@ const defaultProps = {
     noOfProjects: 0,
 };
 
+const getPercent = memoize((data) => {
+    const total = data.reduce((acc, d) => (acc + d.value), 0);
+    return data.map(d => ({
+        percent: (d.value / total) * 100,
+        ...d,
+    }));
+});
+
 export default class Summary extends PureComponent {
     static propTypes = propTypes;
     static defaultProps = defaultProps;
@@ -38,18 +47,17 @@ export default class Summary extends PureComponent {
     `);
     static tableKeySelector = d => d.key;
 
-    tableParams = (key, data) => {
-        const classNames = [];
-        if (data.type === 'bad') {
-            classNames.push(styles.flashData);
-        }
+    percentTableParams = (key, data) => ({
+        title: data.label,
+        value: data.value,
+        percent: data.percent,
+        isPercent: true,
+    });
 
-        return ({
-            title: data.label,
-            value: data.value,
-            className: classNames.join(' '),
-        });
-    };
+    tableParams = (key, data) => ({
+        title: data.label,
+        value: data.value,
+    });
 
     render() {
         const {
@@ -63,6 +71,11 @@ export default class Summary extends PureComponent {
             },
             noOfProjects,
         } = this.props;
+
+        const percentChild = getPercent(childMonitoring);
+        const percentCorr = getPercent(correspondences);
+        const percentHealth = getPercent(healthNutrition);
+
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -111,8 +124,8 @@ export default class Summary extends PureComponent {
                             />
                             <ListView
                                 className={styles.table}
-                                data={childMonitoring}
-                                rendererParams={this.tableParams}
+                                data={percentChild}
+                                rendererParams={this.percentTableParams}
                                 keyExtractor={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
@@ -134,8 +147,8 @@ export default class Summary extends PureComponent {
                             />
                             <ListView
                                 className={styles.table}
-                                data={healthNutrition}
-                                rendererParams={this.tableParams}
+                                data={percentHealth}
+                                rendererParams={this.percentTableParams}
                                 keyExtractor={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
@@ -146,8 +159,8 @@ export default class Summary extends PureComponent {
                         <div className={styles.itemTableViz}>
                             <ListView
                                 className={styles.table}
-                                data={correspondences}
-                                rendererParams={this.tableParams}
+                                data={percentCorr}
+                                rendererParams={this.percentTableParams}
                                 keyExtractor={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />

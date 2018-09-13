@@ -16,14 +16,16 @@ import SunBurst from '#rscz/SunBurst';
 import HorizontalBar from '#rscz/HorizontalBar';
 import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
+import List from '#rscv/List';
 import KeyValue from '#components/KeyValue';
 import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
-import PercentLine from '#components/PercentLine';
+import districts from '#resources/districts.json';
+// import PercentLine from '#components/PercentLine';
 
-import districts from '../../resources/districts.json';
+import CorrespondenceItem from './CorrespondenceItem';
 
 import styles from './styles.scss';
 
@@ -35,7 +37,6 @@ const propTypes = {
     report: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     project: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
-
 
 const mapStateToProps = (state, props) => ({
     report: reportSelector(state, props),
@@ -66,6 +67,8 @@ export default class Report extends PureComponent {
     static tableKeySelector = d => d.name;
     static healthKeySelector = d => d.name;
     static childKeySelector = d => d.name;
+
+    static correspondenceKeySelector = d => d.typeName;
 
     constructor(props) {
         super(props);
@@ -139,6 +142,11 @@ export default class Report extends PureComponent {
         });
     };
 
+    correspoodencesParams = (key, data) => ({
+        title: data.typeName,
+        data,
+    });
+
     renderDistrictLayers = () => (
         <React.Fragment>
             <MapSource
@@ -205,6 +213,49 @@ export default class Report extends PureComponent {
         </React.Fragment>
     )
 
+    renderCorrespondenceItems = () => {
+        const {
+            report: {
+                data: {
+                    correspondences = [],
+                } = {},
+            } = {},
+        } = this.props;
+
+        const correspondencesTotal = correspondences.reduce((acc, d) => ({
+            pendingCurrent: acc.pendingCurrent + d.pendingCurrent,
+            pendingOverDue: acc.pendingOverDue + d.pendingOverDue,
+        }), {
+            pendingCurrent: 0,
+            pendingOverDue: 0,
+        });
+        const finalTotal = Object.keys(correspondencesTotal).map(m => ({
+            name: m,
+            value: correspondencesTotal[m],
+        }));
+
+        return (
+            <div className={styles.tables}>
+                <div className={styles.heading}>
+                    Total
+                </div>
+                <ListView
+                    className={styles.table}
+                    data={finalTotal}
+                    rendererParams={this.healthNutritionParams}
+                    keyExtractor={Report.healthKeySelector}
+                    renderer={KeyValue}
+                />
+                <List
+                    data={correspondences}
+                    rendererParams={this.correspoodencesParams}
+                    keyExtractor={Report.correspondenceKeySelector}
+                    renderer={CorrespondenceItem}
+                />
+            </div>
+        );
+    }
+
     render() {
         const {
             report,
@@ -228,7 +279,6 @@ export default class Report extends PureComponent {
             healthNutrition,
             rcPieChart,
             rcData,
-            correspondences,
         } = report.data;
 
         const modifier = (element, key) => (
@@ -250,25 +300,10 @@ export default class Report extends PureComponent {
             '@HealthNotSatisfactory',
         ];
 
-        const correspondenceKeys = [
-            'pendingCurrent',
-            'pendingOverDue',
-        ];
-
         const childDonut = childMonitoring.filter(c => childDonutKeys.indexOf(c.key) >= 0);
         const healthDonut = healthNutrition.filter(c => healthDonutKeys.indexOf(c.key) >= 0);
-        const correspondencesTotal = correspondences.reduce((acc, d) => ({
-            pendingCurrent: acc.pendingCurrent + d.pendingCurrent,
-            pendingOverDue: acc.pendingOverDue + d.pendingOverDue,
-        }), {
-            pendingCurrent: 0,
-            pendingOverDue: 0,
-        });
-        const finalTotal = Object.keys(correspondencesTotal).map(m => ({
-            name: m,
-            value: correspondencesTotal[m],
-        }));
 
+        const CorrespondenceItems = this.renderCorrespondenceItems;
 
         return (
             <div className={styles.region}>
@@ -368,13 +403,6 @@ export default class Report extends PureComponent {
                                     data={rcPieChart}
                                     labelSelector={Report.labelSelector}
                                     valueSelector={Report.sizeSelector}
-                                    colorScheme={[
-                                        '#FF7725',
-                                        '#BF591C',
-                                        '#7F3B12',
-                                        '#401E09',
-                                        '#E56B21',
-                                    ]}
                                 />
                             </div>
                         </div>
@@ -386,25 +414,12 @@ export default class Report extends PureComponent {
                                     data={education}
                                     valueSelector={Report.sizeSelector}
                                     labelSelector={Report.labelSelector}
-                                    colorScheme={[
-                                        '#FF7725',
-                                        '#BF591C',
-                                        '#7F3B12',
-                                        '#401E09',
-                                        '#E56B21',
-                                    ]}
                                 />
                             </div>
                         </div>
                         <div className={styles.item} >
                             <h3>Correspondence</h3>
-                            <ListView
-                                className={styles.table}
-                                data={finalTotal}
-                                rendererParams={this.healthNutritionParams}
-                                keyExtractor={Report.healthKeySelector}
-                                renderer={KeyValue}
-                            />
+                            <CorrespondenceItems />
                         </div>
                         <div className={styles.item} >
                             <h3>Participation / Support</h3>
