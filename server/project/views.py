@@ -73,8 +73,16 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
                         correspondences[key] += datum[key]
                 for key in rc.keys():
                     rc[key] += data['rcData'][key]
+
+        reportDate = None
+        for project in Project.objects.all():
+            report = project.selected_report  # Latest Report
+            if report:
+                reportDate = report.data.get('reportDate')
+                break
+
         return response.Response({
-            'reportDate': Project.objects.first().selected_report.data.get('reportDate'),
+            'reportDate': reportDate,
             'childMonitoring': self.normalize(child_monitoring_fields, child_monitoring),
             'healthNutrition': self.normalize(health_nutrition_fields, health_nutrition),
             'correspondences': self.normalize(correspondences_fields, correspondences),
