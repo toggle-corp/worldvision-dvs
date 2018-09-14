@@ -21,3 +21,18 @@ docker build --cache-from devtc/worldvision-dvs:server-latest\
 # Build client image
 docker build --cache-from devtc/worldvision-dvs:client-latest\
     --tag devtc/worldvision-dvs:client-latest ./client/
+
+set -xe;
+echo "::::::  >> Generating React Builds"
+    python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
+
+    echo "
+    REACT_APP_MAPBOX_ACCESS_TOKEN=${REACT_APP_MAPBOX_ACCESS_TOKEN}
+    REACT_APP_MAPBOX_STYLE=${REACT_APP_MAPBOX_STYLE}
+    " > ${CLIENT_DIR}/.env
+
+    docker run -t -v ${CLIENT_DIR}/build:/code/build --env-file=${CLIENT_DIR}/.env \
+        devtc/worldvision-dvs:client-latest bash -c 'yarn install && CI=false yarn build'
+
+    rm ${CLIENT_DIR}/.env
+set +xe;

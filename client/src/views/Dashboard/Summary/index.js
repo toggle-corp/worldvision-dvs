@@ -6,6 +6,7 @@ import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
 import KeyValue from '#components/KeyValue';
 import DonutChart from '#rscz/DonutChart';
+import { isFalsy } from '#rsu/common';
 
 import PercentLine from '#components/PercentLine';
 
@@ -24,6 +25,9 @@ const defaultProps = {
 };
 
 const getPercent = memoize((data) => {
+    if (isFalsy(data)) {
+        return [];
+    }
     const total = data.reduce((acc, d) => (acc + d.value), 0);
     return data.map(d => ({
         percent: (d.value / total) * 100,
@@ -75,7 +79,6 @@ export default class Summary extends PureComponent {
         const percentChild = getPercent(childMonitoring);
         const percentCorr = getPercent(correspondences);
         const percentHealth = getPercent(healthNutrition);
-
 
         const infoText = `The data below is
             aggregated from sponsorship

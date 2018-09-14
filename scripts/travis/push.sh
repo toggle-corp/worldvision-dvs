@@ -29,7 +29,11 @@ fi
 
 echo "Detect RC Branch"
 
-docker tag devtc/worldvision-dvs:client-latest devtc/worldvision-dvs:client-release
+# Build client Release
+docker build --cache-from devtc/worldvision-dvs:client-latest\
+    --tag devtc/worldvision-dvs:client-release ./client/
+
+# Tag Server Release
 docker tag devtc/worldvision-dvs:server-latest devtc/worldvision-dvs:server-release
 
 docker push devtc/worldvision-dvs:client-release
