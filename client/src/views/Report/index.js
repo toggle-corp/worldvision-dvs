@@ -23,7 +23,6 @@ import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
 import districts from '#resources/districts.json';
-// import PercentLine from '#components/PercentLine';
 
 import CorrespondenceItem from './CorrespondenceItem';
 
@@ -34,8 +33,12 @@ import ReportGetRequest from './requests/ReportGetRequest';
 const propTypes = {
     setReport: PropTypes.func.isRequired,
     projectId: PropTypes.number.isRequired,
-    report: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    report: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     project: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+};
+
+const defaultProps = {
+    report: {},
 };
 
 const mapStateToProps = (state, props) => ({
@@ -47,9 +50,12 @@ const mapDispatchToProps = dispatch => ({
     setSelectedProject: params => dispatch(setSelectedProjectAction(params)),
 });
 
+const setHashToBrowser = (hash) => { window.location.hash = hash; };
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Report extends PureComponent {
     static propTypes = propTypes;
+    static defaultProps = defaultProps;
 
     static sizeSelector = d => d.size;
     static valueSelector = d => d.value;
@@ -146,6 +152,10 @@ export default class Report extends PureComponent {
         title: data.typeName,
         data,
     });
+
+    handleGoBack = () => {
+        setHashToBrowser('/');
+    };
 
     renderDistrictLayers = () => (
         <React.Fragment>
@@ -264,7 +274,17 @@ export default class Report extends PureComponent {
 
         if (!report) {
             return (
-                <div />
+                <div className={`${styles.region} ${styles.noRegionFound}`} >
+                    <div className={styles.heading}>
+                        The report you are looking for does not exist.
+                        <button
+                            className={styles.goBack}
+                            onClick={this.handleGoBack}
+                        >
+                            Click here to go back
+                        </button>
+                    </div>
+                </div>
             );
         }
 
@@ -274,12 +294,14 @@ export default class Report extends PureComponent {
         } = this.state;
 
         const {
-            education,
-            childMonitoring,
-            healthNutrition,
-            rcPieChart,
-            rcData,
-        } = report.data;
+            data: {
+                education = {},
+                childMonitoring = [],
+                healthNutrition = [],
+                rcPieChart = {},
+                rcData = {},
+            } = {},
+        } = report;
 
         const modifier = (element, key) => (
             {
@@ -309,7 +331,15 @@ export default class Report extends PureComponent {
             <div className={styles.region}>
                 { reportGetPending && <LoadingAnimation /> }
                 <div className={styles.header} >
-                    <h2>{project.name}</h2>
+                    <div className={styles.heading} >
+                        <button
+                            className={styles.goBack}
+                            onClick={this.handleGoBack}
+                        >
+                            <span className="ion-android-arrow-back" />
+                        </button>
+                        {project.name}
+                    </div>
                 </div>
                 <div className={styles.container}>
                     <div className={styles.upperContainer}>

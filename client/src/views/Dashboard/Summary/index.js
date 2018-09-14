@@ -8,8 +8,6 @@ import KeyValue from '#components/KeyValue';
 import DonutChart from '#rscz/DonutChart';
 import { isFalsy } from '#rsu/common';
 
-import PercentLine from '#components/PercentLine';
-
 import styles from './styles.scss';
 
 const propTypes = {
@@ -167,31 +165,6 @@ export default class Summary extends PureComponent {
                                 keyExtractor={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
-                            {/*
-                            <PercentLine
-                                className={styles.viz}
-                                data={correspondences}
-                                valueSelector={Summary.valueSelector}
-                                labelSelector={Summary.labelSelector}
-                                keySelector={Summary.tableKeySelector}
-                                labelModifier={Summary.labelModifierSelector}
-                                colorScheme={[
-                                    '#41cf76',
-                                    '#f44336',
-                                ]}
-                            />
-                            <DonutChart
-                                className={styles.viz}
-                                data={healthNutrition}
-                                valueSelector={Summary.valueSelector}
-                                labelSelector={Summary.labelSelector}
-                                labelModifier={Summary.labelModifierSelector}
-                                colorScheme={[
-                                    '#41cf76',
-                                    '#f44336',
-                                ]}
-                            />
-                            */}
                         </div>
                     </div>
                 </section>
