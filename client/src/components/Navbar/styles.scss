@@ -13,18 +13,27 @@ $color-text-on-primary: get-text-color($color-primary);
 
     .header {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
+        flex-grow: 1;
+        justify-content: space-between;
         text-transform: capitalize;
-        font-size: $font-size-large;
 
         .logo {
-            margin: 0 $spacing-medium;
-            height: 20px;
+            height: 28px;
             object-fit: contain;
         }
 
-        span {
+        .button {
+            outline: none;
+            border: 0;
+            background-color: transparent;
+            cursor: pointer;
+            text-transform: capitalize;
+            text-decoration: none;
             line-height: 0.9;
+            color: inherit;
+            font-family: inherit;
+            font-size: $font-size-large-alt;
             font-weight: $font-weight-normal;
         }
     }

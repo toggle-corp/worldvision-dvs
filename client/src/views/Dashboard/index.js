@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import turf from 'turf';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
-import PrimaryButton from '#rsca/Button/PrimaryButton';
 import MultiViewContainer from '#rscv/MultiViewContainer';
 
 import Map from '#rscz/Map/index';
