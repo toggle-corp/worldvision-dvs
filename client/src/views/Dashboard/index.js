@@ -162,8 +162,12 @@ export default class Dashboard extends PureComponent {
         }
     }
 
-    handlePointClick = (id) => {
-        setHashToBrowser(`#/${id}`);
+    handlePointClick = (id, e) => {
+        if (e.originalEvent.ctrlKey) {
+            window.open(`#/${id}`, '_blank');
+        } else {
+            setHashToBrowser(`#/${id}`);
+        }
     }
 
     handleMapPointHover = (data) => {

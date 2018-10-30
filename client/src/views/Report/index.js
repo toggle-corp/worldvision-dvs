@@ -22,7 +22,9 @@ import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
+
 import districts from '#resources/districts.json';
+import gaupalika from '#resources/gaupalika.json';
 
 import CorrespondenceItem from './CorrespondenceItem';
 
@@ -159,6 +161,21 @@ export default class Report extends PureComponent {
 
     renderDistrictLayers = () => (
         <React.Fragment>
+            <MapSource
+                sourceKey="gaupalika"
+                geoJson={gaupalika}
+                supportHover
+            >
+                <MapLayer
+                    layerKey="line"
+                    type="line"
+                    paint={{
+                        'line-color': '#ff0000',
+                        'line-opacity': 1,
+                        'line-width': 2,
+                    }}
+                />
+            </MapSource>
             <MapSource
                 sourceKey="districts"
                 geoJson={districts}
