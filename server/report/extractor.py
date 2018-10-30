@@ -42,6 +42,7 @@ def generate_hierarchy(obj, data):
 def extract_rc_data(data):
     fields = (
         '@PlannedRC', '@Sponsored', '@Available', '@TotalHold', '@TotalDeath',
+        '@TotalMale', '@TotalFemale',
     )
     return {
         CAMEL_CASES[field]: _numeral(data[field])

@@ -12,6 +12,9 @@ CAMEL_CASES = {
     '@Available': 'available',
     '@TotalHold': 'hold',
     '@TotalDeath': 'death',
+
+    '@TotalMale': 'totalMale',
+    '@TotalFemale': 'totalFemale',
 }
 
 LABELS = {
@@ -70,4 +73,7 @@ LABELS = {
 
     CAMEL_CASES['@PendingCurrent']: 'Pending Current',
     CAMEL_CASES['@PendingOverDue']: 'Pending Overdue',
+
+    CAMEL_CASES['@TotalMale']: 'Total Male',
+    CAMEL_CASES['@TotalFemale']: 'Total Female',
 }
