@@ -159,86 +159,104 @@ export default class Report extends PureComponent {
         setHashToBrowser('/');
     };
 
-    renderDistrictLayers = () => (
-        <React.Fragment>
-            <MapSource
-                sourceKey="gaupalika"
-                geoJson={gaupalika}
-                supportHover
-            >
-                <MapLayer
-                    layerKey="line"
-                    type="line"
-                    paint={{
-                        'line-color': '#ff0000',
-                        'line-opacity': 1,
-                        'line-width': 2,
-                    }}
-                />
-            </MapSource>
-            <MapSource
-                sourceKey="districts"
-                geoJson={districts}
-                supportHover
-            >
-                <MapLayer
-                    layerKey="line"
-                    type="line"
-                    filter={['==', 'OCHA_PCODE', this.state.code]}
-                    paint={{
-                        'line-color': '#ffffff',
-                        'line-opacity': 1,
-                        'line-width': 2,
-                    }}
-                />
-                <MapLayer
-                    layerKey="fill"
-                    type="fill"
-                    filter={['==', 'OCHA_PCODE', this.state.code]}
-                    paint={{
-                        'fill-color': '#00897B',
-                        'fill-opacity': 0.4,
-                    }}
-                />
-            </MapSource>
-            <MapSource
-                sourceKey="points"
-                geoJson={this.state.location}
-                supportHover
-            >
-                <MapLayer
-                    layerKey="points-red"
-                    type="circle"
-                    paint={{
-                        'circle-color': '#000',
-                        'circle-radius': 14,
-                        'circle-opacity': 0.4,
-                    }}
-                    property="id"
-                    onClick={this.handlePointClick}
-                />
-                <MapLayer
-                    layerKey="points"
-                    type="circle"
-                    paint={{
-                        'circle-color': '#f37123',
-                        'circle-radius': 10,
-                        'circle-opacity': 1,
-                    }}
-                    property="id"
-                    hoverInfo={{
-                        paint: {
+    renderDistrictLayers = () => {
+        const {
+            project: {
+                municipalities = [],
+            },
+        } = this.props;
+        const mids = municipalities.map(m => m.code);
+
+        return (
+            <React.Fragment>
+                <MapSource
+                    sourceKey="districts"
+                    geoJson={districts}
+                    supportHover
+                >
+                    <MapLayer
+                        layerKey="line"
+                        type="line"
+                        filter={['==', 'OCHA_PCODE', this.state.code]}
+                        paint={{
+                            'line-color': '#ffffff',
+                            'line-opacity': 1,
+                            'line-width': 2,
+                        }}
+                    />
+                    <MapLayer
+                        layerKey="fill"
+                        type="fill"
+                        filter={['==', 'OCHA_PCODE', this.state.code]}
+                        paint={{
+                            'fill-color': '#00897B',
+                            'fill-opacity': 0.4,
+                        }}
+                    />
+                </MapSource>
+                <MapSource
+                    sourceKey="gaupalika"
+                    geoJson={gaupalika}
+                    supportHover
+                >
+                    <MapLayer
+                        layerKey="gaupalika-outline"
+                        type="line"
+                        paint={{
+                            'line-color': '#919191',
+                            'line-opacity': 0.4,
+                            'line-width': 1,
+                        }}
+                    />
+                    <MapLayer
+                        layerKey="selected-fill"
+                        type="fill"
+                        filter={['in', 'N_ID', ...mids]}
+                        paint={{
+                            'fill-color': '#f37123',
+                            'fill-opacity': 0.6,
+                        }}
+                    />
+                </MapSource>
+                <MapSource
+                    sourceKey="points"
+                    geoJson={this.state.location}
+                    supportHover
+                >
+                    <MapLayer
+                        layerKey="points-red"
+                        type="circle"
+                        paint={{
+                            'circle-color': '#000',
+                            'circle-radius': 14,
+                            'circle-opacity': 0.4,
+                        }}
+                        property="id"
+                        onClick={this.handlePointClick}
+                    />
+                    <MapLayer
+                        layerKey="points"
+                        type="circle"
+                        paint={{
                             'circle-color': '#f37123',
                             'circle-radius': 10,
                             'circle-opacity': 1,
-                        },
-                        showTooltip: true,
-                        tooltipProperty: 'name',
-                    }}
-                />
-            </MapSource>
-        </React.Fragment>
-    )
+                        }}
+                        property="id"
+                        hoverInfo={{
+                            paint: {
+                                'circle-color': '#f37123',
+                                'circle-radius': 10,
+                                'circle-opacity': 1,
+                            },
+                            showTooltip: true,
+                            tooltipProperty: 'name',
+                        }}
+                    />
+                </MapSource>
+            </React.Fragment>
+        );
+    }
 
     renderCorrespondenceItems = () => {
         const {
