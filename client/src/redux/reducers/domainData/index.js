@@ -7,6 +7,7 @@ import initialDomainData from '../../initial-state/domainData';
 // TYPE
 
 export const SET_PROJECTS = 'domainData/SET_PROJECTS';
+export const SET_SITE_SETTINGS = 'domainData/SET_SITE_SETTINGS';
 export const SET_SUMMARY = 'domainData/SET_SUMMARY';
 export const SET_REPORT = 'domainData/SET_REPORT';
 
@@ -20,6 +21,11 @@ export const setProjectsAction = ({ projects }) => ({
 export const setSummaryAction = ({ summary }) => ({
     type: SET_SUMMARY,
     summary,
+});
+
+export const setSiteSettingsAction = ({ siteSettings }) => ({
+    type: SET_SITE_SETTINGS,
+    siteSettings,
 });
 
 export const setReportAction = ({ projectId, report }) => ({
@@ -84,6 +90,16 @@ const setSummary = (state, action) => {
     return update(state, settings);
 };
 
+const setSiteSettings = (state, action) => {
+    const { siteSettings } = action;
+
+    const settings = {
+        siteSettings: { $set: siteSettings },
+    };
+
+    return update(state, settings);
+};
+
 const setReport = (state, action) => {
     const {
         projectId,
@@ -103,6 +119,7 @@ const reducers = {
     [SET_PROJECTS]: setProject,
     [SET_REPORT]: setReport,
     [SET_SUMMARY]: setSummary,
+    [SET_SITE_SETTINGS]: setSiteSettings,
 };
 
 

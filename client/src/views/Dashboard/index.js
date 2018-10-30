@@ -13,36 +13,44 @@ import KeyValue from '#components/KeyValue';
 import ListView from '#rscv/List/ListView';
 
 import {
+    siteSettingsSelector,
     projectsSelector,
     summarySelector,
     pointsSelector,
     setProjectsAction,
     setSummaryAction,
+    setSiteSettingsAction,
 } from '#redux';
+
 import nepalGeoJson from '#resources/districts.json';
 
 import styles from './styles.scss';
 import ProjectsGetRequest from './requests/ProjectsGetRequest';
 import SummaryGetRequest from './requests/ProjectsSummaryGetRequest';
+import SiteSettingsRequest from './requests/SiteSettingsRequest';
 import Report from '../Report';
 import Summary from './Summary';
 
 const propTypes = {
     projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     summary: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    siteSettings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     points: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     setProjects: PropTypes.func.isRequired,
     setSummary: PropTypes.func.isRequired,
+    setSiteSettings: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     projects: projectsSelector(state),
     summary: summarySelector(state),
+    siteSettings: siteSettingsSelector(state),
     points: pointsSelector(state),
 });
 const mapDispatchToProps = dispatch => ({
     setProjects: params => dispatch(setProjectsAction(params)),
     setSummary: params => dispatch(setSummaryAction(params)),
+    setSiteSettings: params => dispatch(setSiteSettingsAction(params)),
 });
 
 // NOTE: hash should be similar to '#/metadata'
@@ -79,6 +87,11 @@ export default class Dashboard extends PureComponent {
             setSummary: this.props.setSummary,
         }).create();
 
+        this.siteSettingsRequest = new SiteSettingsRequest({
+            setState: params => this.setState(params),
+            setSiteSettings: this.props.setSiteSettings,
+        }).create();
+
         this.nepalBounds = turf.bbox(nepalGeoJson);
 
         this.views = {
@@ -87,6 +100,7 @@ export default class Dashboard extends PureComponent {
                     const {
                         summary,
                         projects,
+                        siteSettings,
                     } = this.props;
 
                     return (
@@ -104,6 +118,7 @@ export default class Dashboard extends PureComponent {
                                 className={styles.aggregatedContainer}
                                 summary={summary}
                                 noOfProjects={projects.length}
+                                siteSettings={siteSettings}
                             />
                         </div>
                     );
@@ -132,6 +147,7 @@ export default class Dashboard extends PureComponent {
     componentDidMount() {
         this.projectsRequest.start();
         this.summaryRequest.start();
+        this.siteSettingsRequest.start();
 
         window.addEventListener('hashchange', this.handleHashChange);
     }
@@ -142,6 +158,9 @@ export default class Dashboard extends PureComponent {
         }
         if (this.summaryRequest) {
             this.summaryRequest.stop();
+        }
+        if (this.siteSettingsRequest) {
+            this.siteSettingsRequest.stop();
         }
 
         window.removeEventListener('hashchange', this.handleHashChange);

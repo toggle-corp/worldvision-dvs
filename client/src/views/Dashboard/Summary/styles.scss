@@ -44,9 +44,9 @@
             }
 
             .date {
-                padding: 0 $spacing-extra-small-alt;
+                padding: 0 $spacing-smaller;
 
-                &:after {
+                &:last-child :after {
                     content: '.';
                 }
             }

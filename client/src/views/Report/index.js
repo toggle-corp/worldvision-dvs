@@ -25,6 +25,7 @@ import { mapToList } from '#rsu/common';
 
 import districts from '#resources/districts.json';
 import gaupalika from '#resources/gaupalika.json';
+import { camelToNormalCase } from '#utils/common';
 
 import CorrespondenceItem from './CorrespondenceItem';
 
@@ -274,25 +275,19 @@ export default class Report extends PureComponent {
             pendingCurrent: 0,
             pendingOverDue: 0,
         });
-        const finalTotal = Object.keys(correspondencesTotal).map(m => ({
-            name: m,
-            value: correspondencesTotal[m],
-        }));
+
+        const finalCorr = [
+            {
+                ...correspondencesTotal,
+                typeName: 'Total',
+            },
+            ...correspondences,
+        ];
 
         return (
             <div className={styles.tables}>
-                <div className={styles.heading}>
-                    Total
-                </div>
-                <ListView
-                    className={styles.table}
-                    data={finalTotal}
-                    rendererParams={this.healthNutritionParams}
-                    keyExtractor={Report.healthKeySelector}
-                    renderer={KeyValue}
-                />
                 <List
-                    data={correspondences}
+                    data={finalCorr}
                     rendererParams={this.correspoodencesParams}
                     keyExtractor={Report.correspondenceKeySelector}
                     renderer={CorrespondenceItem}
@@ -340,7 +335,7 @@ export default class Report extends PureComponent {
 
         const modifier = (element, key) => (
             {
-                name: key,
+                name: camelToNormalCase(key),
                 value: element,
             }
         );

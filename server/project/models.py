@@ -53,7 +53,11 @@ class Project(models.Model):
 
     def get_rc_data(self):
         if self.selected_report:
-            fields = ['planned', 'sponsored', 'available', 'hold', 'death']
+            fields = [
+                'planned', 'sponsored',
+                'available', 'hold', 'death',
+                'totalMale', 'totalFemale'
+            ]
             rc_data = self.selected_report.data.get('rcData')
             return [
                 {

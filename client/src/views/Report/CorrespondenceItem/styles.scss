@@ -5,12 +5,21 @@
     padding: $spacing-small 0;
 
     .header {
-        color: $color-accent;
+        color: $color-text-label;
+        font-weight: $font-weight-bold;
     }
 
     .table {
         display: table;
         width: 100%;
         border-collapse: collapse;
+    }
+
+    .red {
+        color: $color-danger;
+    }
+
+    .green {
+        color: $color-success;
     }
 }

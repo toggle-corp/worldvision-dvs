@@ -6,6 +6,7 @@ import {
 
 export const urlForProjects = `${wsEndpoint}/projects/`;
 export const urlForSummary = `${wsEndpoint}/projects-summary/`;
+export const urlForSiteSettings = `${wsEndpoint}/site-settings/`;
 
 export const createParamsForGet = () => ({
     method: GET,

@@ -13,12 +13,14 @@ import styles from './styles.scss';
 const propTypes = {
     className: PropTypes.string,
     summary: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    siteSettings: PropTypes.object,
     noOfProjects: PropTypes.number,
 };
 
 const defaultProps = {
     className: '',
     summary: {},
+    siteSettings: {},
     noOfProjects: 0,
 };
 
@@ -69,9 +71,9 @@ export default class Summary extends PureComponent {
                 childMonitoring,
                 correspondences,
                 healthNutrition,
-                reportDate,
             },
             noOfProjects,
+            siteSettings,
         } = this.props;
 
         const percentChild = getPercent(childMonitoring);
@@ -94,8 +96,14 @@ export default class Summary extends PureComponent {
                         {infoText}
                         <FormattedDate
                             className={styles.date}
-                            date={reportDate}
-                            mode="MMM-yyyy"
+                            date={siteSettings.startDate}
+                            mode="dd-MMM-yyyy"
+                        />
+                        to
+                        <FormattedDate
+                            className={styles.date}
+                            date={siteSettings.endDate}
+                            mode="dd-MMM-yyyy"
                         />
                     </span>
                     <div className={styles.item}>
