@@ -4,7 +4,7 @@ from django.urls import reverse
 
 from report.admin import ReportAdmin
 from report.models import Report
-from .models import Project, District
+from .models import Project, District, Municipality
 from .forms import ProjectAdminForm
 
 
@@ -61,4 +61,20 @@ class ProjectAdmin(admin.ModelAdmin):
 class DistrictAdmin(admin.ModelAdmin):
     search_fields = ('name', 'code')
     list_display = ('name', 'code')
-    ordering = ('name',)
+    ordering = ('name', 'code')
+
+
+@admin.register(Municipality)
+class MunicipalityAdmin(admin.ModelAdmin):
+    search_fields = ('name', 'code', 'get_district')
+    list_display = ('name', 'code', 'get_district')
+    ordering = ('name', 'code')
+    list_filter = ('district',)
+
+    def get_district(self, instance):
+        district = instance.district
+        if district:
+            link = reverse('admin:project_district_change', args=(district.id,))
+            return mark_safe('<a href="%s">%s</a>' % (link, district))
+
+    get_district.short_description = 'District'
