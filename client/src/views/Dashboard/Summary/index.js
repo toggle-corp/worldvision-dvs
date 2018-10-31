@@ -126,7 +126,7 @@ export default class Summary extends PureComponent {
                             className={styles.table}
                             data={rc}
                             rendererParams={this.tableParams}
-                            keyExtractor={Summary.tableKeySelector}
+                            keySelector={Summary.tableKeySelector}
                             renderer={KeyValue}
                         />
                     </div>
@@ -149,7 +149,7 @@ export default class Summary extends PureComponent {
                                 className={styles.table}
                                 data={percentChild}
                                 rendererParams={this.percentTableParams}
-                                keyExtractor={Summary.tableKeySelector}
+                                keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
                         </div>
@@ -172,7 +172,7 @@ export default class Summary extends PureComponent {
                                 className={styles.table}
                                 data={percentHealth}
                                 rendererParams={this.percentTableParams}
-                                keyExtractor={Summary.tableKeySelector}
+                                keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
                         </div>
@@ -184,7 +184,7 @@ export default class Summary extends PureComponent {
                                 className={styles.table}
                                 data={percentCorr}
                                 rendererParams={this.percentTableParams}
-                                keyExtractor={Summary.tableKeySelector}
+                                keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
                         </div>

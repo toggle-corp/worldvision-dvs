@@ -10,7 +10,7 @@ RAVL_DIR=${VENDOR_DIR}/ravl
 
 mkdir -p ${VENDOR_DIR}
 
-git clone https://github.com/toggle-corp/react-store ${REACT_STORE_DIR}
+git clone --single-branch -b wvs-release-1.0 https://github.com/toggle-corp/react-store ${REACT_STORE_DIR}
 cp ${REACT_STORE_DIR}/stylesheets/_user-imports-sample.scss ${REACT_STORE_DIR}/stylesheets/_user-imports.scss
 git clone https://github.com/toggle-corp/ravl ${RAVL_DIR}
 

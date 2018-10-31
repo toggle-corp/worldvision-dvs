@@ -63,7 +63,7 @@ export default class CorrespondenceItem extends PureComponent {
                         className={styles.table}
                         data={itemList}
                         rendererParams={this.rendererParams}
-                        keyExtractor={CorrespondenceItem.keySelector}
+                        keySelector={CorrespondenceItem.keySelector}
                         renderer={KeyValue}
                     />
                 </div>

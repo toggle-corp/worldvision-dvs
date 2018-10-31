@@ -289,7 +289,7 @@ export default class Report extends PureComponent {
                 <List
                     data={finalCorr}
                     rendererParams={this.correspoodencesParams}
-                    keyExtractor={Report.correspondenceKeySelector}
+                    keySelector={Report.correspondenceKeySelector}
                     renderer={CorrespondenceItem}
                 />
             </div>
@@ -387,7 +387,7 @@ export default class Report extends PureComponent {
                                         className={styles.table}
                                         data={healthNutrition}
                                         rendererParams={this.healthNutritionParams}
-                                        keyExtractor={Report.healthKeySelector}
+                                        keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
                                     />
                                     <DonutChart
@@ -410,7 +410,7 @@ export default class Report extends PureComponent {
                                         className={styles.table}
                                         data={childMonitoring}
                                         rendererParams={this.healthNutritionParams}
-                                        keyExtractor={Report.childKeySelector}
+                                        keySelector={Report.childKeySelector}
                                         renderer={KeyValue}
                                     />
                                     <DonutChart

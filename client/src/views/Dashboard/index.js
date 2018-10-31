@@ -272,7 +272,7 @@ export default class Dashboard extends PureComponent {
                                         data={project.rcData}
                                         className={styles.rcDataHover}
                                         rendererParams={this.rcDataParams}
-                                        keyExtractor={Report.healthKeySelector}
+                                        keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
                                     />
                                 </div>
