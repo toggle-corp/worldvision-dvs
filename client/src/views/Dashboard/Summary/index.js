@@ -51,12 +51,26 @@ export default class Summary extends PureComponent {
     `);
     static tableKeySelector = d => d.key;
 
-    percentTableParams = (key, data) => ({
-        title: data.label,
-        value: data.value,
-        percent: data.percent,
-        isPercent: true,
-    });
+    percentTableParams = (key, data) => {
+        const classNames = [];
+
+        if (key === '@NotSighted30Days' || key === '@HealthSatisfactory') {
+            classNames.push(styles.success);
+        } else if (key === '@NotSighted60Days') {
+            classNames.push(styles.warning);
+        } else if (key === '@NotSighted90Days' || key === '@HealthNotSatisfactory') {
+            classNames.push(styles.danger);
+        }
+
+        return ({
+            title: data.label,
+            value: data.value,
+            percent: data.percent,
+            isPercent: true,
+            colorOnlyNumber: true,
+            className: classNames.join(' '),
+        });
+    }
 
     tableParams = (key, data) => ({
         title: data.label,

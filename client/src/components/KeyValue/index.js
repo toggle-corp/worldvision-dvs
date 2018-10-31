@@ -11,12 +11,14 @@ const propTypes = {
     percent: PropTypes.number,
     isPercent: PropTypes.bool,
     className: PropTypes.string,
+    colorOnlyNumber: PropTypes.bool,
 };
 
 const defaultProps = {
     className: '',
     isPercent: false,
     percent: 0,
+    colorOnlyNumber: false,
 };
 
 // eslint-disable-next-line
@@ -31,30 +33,40 @@ export default class KeyValue extends PureComponent {
             percent,
             isPercent,
             className,
+            colorOnlyNumber,
         } = this.props;
+
+        const titleClassNames = [styles.title];
+        const percentClassName = [styles.percent, className];
+        const percentValueClassName = [styles.percentValue, className];
+        const valueClassName = [styles.value, className];
+
+        if (!colorOnlyNumber) {
+            titleClassNames.push(className);
+        }
 
         return (
             <div className={styles.item} >
-                <span className={`${className} ${styles.title}`}>
+                <span className={titleClassNames.join(' ')}>
                     {title}
                 </span>
                 {isPercent ? (
                     <div className={styles.percentContainer} >
                         <Numeral
-                            className={`${className} ${styles.percent}`}
+                            className={percentClassName.join(' ')}
                             value={percent}
                             precision={percent ? 2 : 0}
                             suffix={percent ? '%' : ''}
                         />
                         <Numeral
-                            className={`${className} ${styles.percentValue}`}
+                            className={percentValueClassName.join(' ')}
                             value={value}
                             precision={0}
                         />
                     </div>
                 ) : (
                     <Numeral
-                        className={`${className} ${styles.value}`}
+                        className={valueClassName.join(' ')}
                         value={value}
                         precision={0}
                     />

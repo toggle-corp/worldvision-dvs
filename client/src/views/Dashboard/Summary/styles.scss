@@ -81,6 +81,18 @@
                     margin-left: -$spacing-medium;
                     width: 180px;
                 }
+
+                .success {
+                    color: $color-success;
+                }
+
+                .warning {
+                    color: $color-warning;
+                }
+
+                .danger {
+                    color: $color-danger;
+                }
             }
 
             .item-table-viz-alt {

@@ -484,7 +484,9 @@ export default class Report extends PureComponent {
                         <div className={styles.item} >
                             <h3>Participation / Support</h3>
                         </div>
-                        <div className={styles.item} />
+                        <div className={styles.item} >
+                            <h3>RC Distribution Based on Language & People Group</h3>
+                        </div>
                     </div>
                 </div>
             </div>
