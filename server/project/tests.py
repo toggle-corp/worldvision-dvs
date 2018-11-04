@@ -1,3 +1,10 @@
 from django.test import TestCase
 
-# Create your tests here.
+import logging
+logger = logging.getLogger(__name__)
+
+
+class ProjectTest(TestCase):
+
+    def test_fake(self):
+        logger.info('This is a fake test')

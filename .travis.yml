@@ -6,12 +6,13 @@ services:
 before_install:
     - docker pull devtc/worldvision-dvs:client-latest || true
     - docker pull devtc/worldvision-dvs:server-latest || true
+    - touch .env
 
 before_script:
     - ./scripts/travis/build.sh
 
 script:
-    - echo 'run_test'
+    - docker-compose run --rm server bash /code/scripts/run_tests.sh
 
 after_success:
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
