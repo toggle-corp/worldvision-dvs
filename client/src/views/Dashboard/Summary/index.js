@@ -13,12 +13,14 @@ import styles from './styles.scss';
 const propTypes = {
     className: PropTypes.string,
     summary: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    siteSettings: PropTypes.object,
     noOfProjects: PropTypes.number,
 };
 
 const defaultProps = {
     className: '',
     summary: {},
+    siteSettings: {},
     noOfProjects: 0,
 };
 
@@ -49,12 +51,26 @@ export default class Summary extends PureComponent {
     `);
     static tableKeySelector = d => d.key;
 
-    percentTableParams = (key, data) => ({
-        title: data.label,
-        value: data.value,
-        percent: data.percent,
-        isPercent: true,
-    });
+    percentTableParams = (key, data) => {
+        const classNames = [];
+
+        if (key === '@NotSighted30Days' || key === '@HealthSatisfactory') {
+            classNames.push(styles.success);
+        } else if (key === '@NotSighted60Days') {
+            classNames.push(styles.warning);
+        } else if (key === '@NotSighted90Days' || key === '@HealthNotSatisfactory') {
+            classNames.push(styles.danger);
+        }
+
+        return ({
+            title: data.label,
+            value: data.value,
+            percent: data.percent,
+            isPercent: true,
+            colorOnlyNumber: true,
+            className: classNames.join(' '),
+        });
+    }
 
     tableParams = (key, data) => ({
         title: data.label,
@@ -69,9 +85,9 @@ export default class Summary extends PureComponent {
                 childMonitoring,
                 correspondences,
                 healthNutrition,
-                reportDate,
             },
             noOfProjects,
+            siteSettings,
         } = this.props;
 
         const percentChild = getPercent(childMonitoring);
@@ -86,7 +102,7 @@ export default class Summary extends PureComponent {
         return (
             <div className={`${styles.summary} ${className}`}>
                 <header className={styles.header}>
-                    <h2>Overview of Sponsorship data</h2>
+                    <h2>Overview of Sponsorship Data</h2>
                 </header>
                 <section className={styles.content}>
                     <span className={styles.info}>
@@ -94,8 +110,14 @@ export default class Summary extends PureComponent {
                         {infoText}
                         <FormattedDate
                             className={styles.date}
-                            date={reportDate}
-                            mode="MMM-yyyy"
+                            date={siteSettings.startDate}
+                            mode="dd-MMM-yyyy"
+                        />
+                        to
+                        <FormattedDate
+                            className={styles.date}
+                            date={siteSettings.endDate}
+                            mode="dd-MMM-yyyy"
                         />
                     </span>
                     <div className={styles.item}>
@@ -104,7 +126,7 @@ export default class Summary extends PureComponent {
                             className={styles.table}
                             data={rc}
                             rendererParams={this.tableParams}
-                            keyExtractor={Summary.tableKeySelector}
+                            keySelector={Summary.tableKeySelector}
                             renderer={KeyValue}
                         />
                     </div>
@@ -127,7 +149,7 @@ export default class Summary extends PureComponent {
                                 className={styles.table}
                                 data={percentChild}
                                 rendererParams={this.percentTableParams}
-                                keyExtractor={Summary.tableKeySelector}
+                                keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
                         </div>
@@ -150,7 +172,7 @@ export default class Summary extends PureComponent {
                                 className={styles.table}
                                 data={percentHealth}
                                 rendererParams={this.percentTableParams}
-                                keyExtractor={Summary.tableKeySelector}
+                                keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
                         </div>
@@ -162,7 +184,7 @@ export default class Summary extends PureComponent {
                                 className={styles.table}
                                 data={percentCorr}
                                 rendererParams={this.percentTableParams}
-                                keyExtractor={Summary.tableKeySelector}
+                                keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />
                         </div>

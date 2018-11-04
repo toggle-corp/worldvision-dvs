@@ -22,7 +22,10 @@ import Map from '#rscz/Map';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 import { mapToList } from '#rsu/common';
+
 import districts from '#resources/districts.json';
+import gaupalika from '#resources/gaupalika.json';
+import { camelToNormalCase } from '#utils/common';
 
 import CorrespondenceItem from './CorrespondenceItem';
 
@@ -157,71 +160,104 @@ export default class Report extends PureComponent {
         setHashToBrowser('/');
     };
 
-    renderDistrictLayers = () => (
-        <React.Fragment>
-            <MapSource
-                sourceKey="districts"
-                geoJson={districts}
-                supportHover
-            >
-                <MapLayer
-                    layerKey="line"
-                    type="line"
-                    filter={['==', 'OCHA_PCODE', this.state.code]}
-                    paint={{
-                        'line-color': '#ffffff',
-                        'line-opacity': 1,
-                        'line-width': 2,
-                    }}
-                />
-                <MapLayer
-                    layerKey="fill"
-                    type="fill"
-                    filter={['==', 'OCHA_PCODE', this.state.code]}
-                    paint={{
-                        'fill-color': '#00897B',
-                        'fill-opacity': 0.4,
-                    }}
-                />
-            </MapSource>
-            <MapSource
-                sourceKey="points"
-                geoJson={this.state.location}
-                supportHover
-            >
-                <MapLayer
-                    layerKey="points-red"
-                    type="circle"
-                    paint={{
-                        'circle-color': '#000',
-                        'circle-radius': 14,
-                        'circle-opacity': 0.4,
-                    }}
-                    property="id"
-                    onClick={this.handlePointClick}
-                />
-                <MapLayer
-                    layerKey="points"
-                    type="circle"
-                    paint={{
-                        'circle-color': '#f37123',
-                        'circle-radius': 10,
-                        'circle-opacity': 1,
-                    }}
-                    property="id"
-                    hoverInfo={{
-                        paint: {
+    renderDistrictLayers = () => {
+        const {
+            project: {
+                municipalities = [],
+            },
+        } = this.props;
+        const mids = municipalities.map(m => m.code);
+
+        return (
+            <React.Fragment>
+                <MapSource
+                    sourceKey="districts"
+                    geoJson={districts}
+                    supportHover
+                >
+                    <MapLayer
+                        layerKey="line"
+                        type="line"
+                        filter={['==', 'OCHA_PCODE', this.state.code]}
+                        paint={{
+                            'line-color': '#ffffff',
+                            'line-opacity': 1,
+                            'line-width': 2,
+                        }}
+                    />
+                    <MapLayer
+                        layerKey="fill"
+                        type="fill"
+                        filter={['==', 'OCHA_PCODE', this.state.code]}
+                        paint={{
+                            'fill-color': '#00897B',
+                            'fill-opacity': 0.4,
+                        }}
+                    />
+                </MapSource>
+                <MapSource
+                    sourceKey="gaupalika"
+                    geoJson={gaupalika}
+                    supportHover
+                >
+                    <MapLayer
+                        layerKey="gaupalika-outline"
+                        type="line"
+                        paint={{
+                            'line-color': '#919191',
+                            'line-opacity': 0.4,
+                            'line-width': 1,
+                        }}
+                    />
+                    <MapLayer
+                        layerKey="selected-fill"
+                        type="fill"
+                        filter={['in', 'N_ID', ...mids]}
+                        paint={{
+                            'fill-color': '#f37123',
+                            'fill-opacity': 0.6,
+                        }}
+                    />
+                </MapSource>
+                <MapSource
+                    sourceKey="points"
+                    geoJson={this.state.location}
+                    supportHover
+                >
+                    <MapLayer
+                        layerKey="points-red"
+                        type="circle"
+                        paint={{
+                            'circle-color': '#000',
+                            'circle-radius': 14,
+                            'circle-opacity': 0.4,
+                        }}
+                        property="id"
+                        onClick={this.handlePointClick}
+                    />
+                    <MapLayer
+                        layerKey="points"
+                        type="circle"
+                        paint={{
                             'circle-color': '#f37123',
                             'circle-radius': 10,
                             'circle-opacity': 1,
-                        },
-                        showTooltip: true,
-                        tooltipProperty: 'name',
-                    }}
-                />
-            </MapSource>
-        </React.Fragment>
-    )
+                        }}
+                        property="id"
+                        hoverInfo={{
+                            paint: {
+                                'circle-color': '#f37123',
+                                'circle-radius': 10,
+                                'circle-opacity': 1,
+                            },
+                            showTooltip: true,
+                            tooltipProperty: 'name',
+                        }}
+                    />
+                </MapSource>
+            </React.Fragment>
+        );
+    }
 
     renderCorrespondenceItems = () => {
         const {
@@ -239,27 +275,21 @@ export default class Report extends PureComponent {
             pendingCurrent: 0,
             pendingOverDue: 0,
         });
-        const finalTotal = Object.keys(correspondencesTotal).map(m => ({
-            name: m,
-            value: correspondencesTotal[m],
-        }));
+
+        const finalCorr = [
+            {
+                ...correspondencesTotal,
+                typeName: 'Total',
+            },
+            ...correspondences,
+        ];
 
         return (
             <div className={styles.tables}>
-                <div className={styles.heading}>
-                    Total
-                </div>
-                <ListView
-                    className={styles.table}
-                    data={finalTotal}
-                    rendererParams={this.healthNutritionParams}
-                    keyExtractor={Report.healthKeySelector}
-                    renderer={KeyValue}
-                />
                 <List
-                    data={correspondences}
+                    data={finalCorr}
                     rendererParams={this.correspoodencesParams}
-                    keyExtractor={Report.correspondenceKeySelector}
+                    keySelector={Report.correspondenceKeySelector}
                     renderer={CorrespondenceItem}
                 />
             </div>
@@ -305,7 +335,7 @@ export default class Report extends PureComponent {
 
         const modifier = (element, key) => (
             {
-                name: key,
+                name: camelToNormalCase(key),
                 value: element,
             }
         );
@@ -357,7 +387,7 @@ export default class Report extends PureComponent {
                                         className={styles.table}
                                         data={healthNutrition}
                                         rendererParams={this.healthNutritionParams}
-                                        keyExtractor={Report.healthKeySelector}
+                                        keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
                                     />
                                     <DonutChart
@@ -380,7 +410,7 @@ export default class Report extends PureComponent {
                                         className={styles.table}
                                         data={childMonitoring}
                                         rendererParams={this.healthNutritionParams}
-                                        keyExtractor={Report.childKeySelector}
+                                        keySelector={Report.childKeySelector}
                                         renderer={KeyValue}
                                     />
                                     <DonutChart
@@ -454,7 +484,9 @@ export default class Report extends PureComponent {
                         <div className={styles.item} >
                             <h3>Participation / Support</h3>
                         </div>
-                        <div className={styles.item} />
+                        <div className={styles.item} >
+                            <h3>RC Distribution Based on Language & People Group</h3>
+                        </div>
                     </div>
                 </div>
             </div>

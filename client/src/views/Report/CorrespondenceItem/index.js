@@ -24,12 +24,14 @@ export default class CorrespondenceItem extends PureComponent {
 
     rendererParams = (key, data) => {
         const classNames = [];
-        if (data.type === 'bad') {
-            classNames.push(styles.flashData);
+        if (data.name === 'pendingOverDue') {
+            classNames.push(styles.red);
+        } else {
+            classNames.push(styles.green);
         }
 
         return ({
-            title: data.name,
+            title: data.name === 'pendingOverDue' ? 'Pending Overdue' : 'Pending Current',
             value: data.value,
             className: classNames.join(' '),
         });
@@ -51,19 +53,22 @@ export default class CorrespondenceItem extends PureComponent {
             value: data[m],
         }));
 
-        return (
-            <div className={styles.tableWrapper}>
-                <div className={styles.header}>
-                    {title}
+        if (itemList.filter(i => i.value > 0).length > 0) {
+            return (
+                <div className={styles.tableWrapper}>
+                    <div className={styles.header}>
+                        {title}
+                    </div>
+                    <ListView
+                        className={styles.table}
+                        data={itemList}
+                        rendererParams={this.rendererParams}
+                        keySelector={CorrespondenceItem.keySelector}
+                        renderer={KeyValue}
+                    />
                 </div>
-                <ListView
-                    className={styles.table}
-                    data={itemList}
-                    rendererParams={this.rendererParams}
-                    keyExtractor={CorrespondenceItem.keySelector}
-                    renderer={KeyValue}
-                />
-            </div>
-        );
+            );
+        }
+        return null;
     }
 }

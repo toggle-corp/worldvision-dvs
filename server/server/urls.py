@@ -8,6 +8,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.conf import settings
 from rest_framework import routers
 
+from site_setting.views import SiteSettingsViewSet
 from project.views import (
     ProjectViewSet,
     ProjectReportViewSet,
@@ -18,6 +19,7 @@ from project.views import (
 router = routers.DefaultRouter()
 
 # Project routers
+router.register(r'site-settings', SiteSettingsViewSet, base_name='site-settings')
 router.register(r'projects', ProjectViewSet, base_name='project')
 router.register(
     r'projects-report', ProjectReportViewSet, base_name='project-report'

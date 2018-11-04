@@ -49,7 +49,10 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
         child_monitoring_fields = ['@NotSighted30Days', '@NotSighted60Days', '@NotSighted90Days']
         health_nutrition_fields = ['@HealthSatisfactory', '@HealthNotSatisfactory']
         correspondences_fields = ['pendingCurrent', 'pendingOverDue']
-        rc_fields = ['planned', 'sponsored', 'available', 'hold', 'death']
+        rc_fields = [
+            'planned', 'sponsored', 'available', 'hold',
+            'death', 'totalMale', 'totalFemale'
+        ]
 
         child_monitoring = self.initial_dict(child_monitoring_fields)
         health_nutrition = self.initial_dict(health_nutrition_fields)

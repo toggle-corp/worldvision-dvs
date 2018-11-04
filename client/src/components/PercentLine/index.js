@@ -51,7 +51,7 @@ export default class PercentLine extends PureComponent {
             <div className={`${styles.percentLine} ${className}`}>
                 <List
                     data={data}
-                    keyExtractor={keySelector}
+                    keySelector={keySelector}
                     rendererParams={this.rendererParams}
                     renderer={Segment}
                 />

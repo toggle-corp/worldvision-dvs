@@ -12,7 +12,7 @@
         padding: $spacing-medium;
 
         h2 {
-            text-transform: capitalize;
+            text-transform: none;
             color: $color-foreground;
             font-weight: $font-weight-medium;
         }
@@ -44,9 +44,9 @@
             }
 
             .date {
-                padding: 0 $spacing-extra-small-alt;
+                padding: 0 $spacing-smaller;
 
-                &:after {
+                &:last-child :after {
                     content: '.';
                 }
             }
@@ -80,6 +80,18 @@
                 .viz {
                     margin-left: -$spacing-medium;
                     width: 180px;
+                }
+
+                .success {
+                    color: $color-success;
+                }
+
+                .warning {
+                    color: $color-warning;
+                }
+
+                .danger {
+                    color: $color-danger;
                 }
             }
 

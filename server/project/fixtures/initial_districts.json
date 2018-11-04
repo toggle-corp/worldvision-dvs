@@ -3,7 +3,7 @@
         "model": "project.District",
         "pk": 1,
         "fields": {
-            "name": "Sindhupalchok",
+            "name": "Sindhupalchowk",
             "code": "C-BAG-23"
         }
     },
@@ -11,7 +11,7 @@
         "model": "project.District",
         "pk": 2,
         "fields": {
-            "name": "Kabhrepalanchok",
+            "name": "Kavrepalanchok",
             "code": "C-BAG-24"
         }
     },
@@ -67,7 +67,7 @@
         "model": "project.District",
         "pk": 9,
         "fields": {
-            "name": "Dhanusha",
+            "name": "Dhanusa",
             "code": "C-JAN-17"
         }
     },
@@ -115,7 +115,7 @@
         "model": "project.District",
         "pk": 15,
         "fields": {
-            "name": "Makawanpur",
+            "name": "Makwanpur",
             "code": "C-NAR-31"
         }
     },
@@ -147,7 +147,7 @@
         "model": "project.District",
         "pk": 19,
         "fields": {
-            "name": "Chitawan",
+            "name": "Chitwan",
             "code": "C-NAR-35"
         }
     },
@@ -523,7 +523,7 @@
         "model": "project.District",
         "pk": 66,
         "fields": {
-            "name": "Tanahu",
+            "name": "Tanahun",
             "code": "W-GAN-38"
         }
     },

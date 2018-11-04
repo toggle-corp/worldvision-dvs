@@ -18,7 +18,7 @@ export default ({ className }) => (
                 className={styles.button}
                 onClick={handleGoBack}
             >
-                Sponsorship Management Report
+                WVIN - Sponsorship
             </button>
             <img
                 src={logo}

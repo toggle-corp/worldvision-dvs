@@ -19,6 +19,10 @@ export const rcDataSelector = ({ domainData }) => (
     domainData.rcData || emptyArray
 );
 
+export const siteSettingsSelector = ({ domainData }) => (
+    domainData.siteSettings || emptyArray
+);
+
 export const reportsSelector = ({ domainData }) => (
     domainData.reports || emptyObject
 );
