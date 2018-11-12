@@ -9,7 +9,7 @@ export default ({ name, ...otherProps }) => (
         <Helmet>
             <meta charSet="utf-8" />
             <title>
-                World Vision DVS - { name }
+                WVIN - Sponsorship - { name }
             </title>
         </Helmet>
         <Bundle name={name} {...otherProps} />
