@@ -60,9 +60,20 @@ export default class Report extends PureComponent {
     static propTypes = propTypes;
     static defaultProps = defaultProps;
 
-    static sizeSelector = d => d.size;
+    static sizeSelector = (d) => {
+        if (d.name !== 'RC Supply') {
+            return d.size;
+        }
+        return null;
+    };
+
     static valueSelector = d => d.value;
-    static labelSelector = d => d.name;
+    static labelSelector = (d) => {
+        if (d.name !== 'RC Supply') {
+            return d.name;
+        }
+        return null;
+    };
 
     static labelModifierSelector = (label, value) => (`
         <div class=${styles.tooltip} >
@@ -341,6 +352,20 @@ export default class Report extends PureComponent {
         );
         const remoteChildren = mapToList(rcData, modifier);
 
+        const sortKeys = [
+            'Total Female',
+            'Total Male',
+            'Death',
+            'Hold',
+            'Available',
+            'Sponsored',
+            'Actual',
+            'Planned',
+        ];
+        const sortedRemoteChildren = [...remoteChildren].sort(
+            (c1, c2) => sortKeys.indexOf(c1.name) - sortKeys.indexOf(c2.name),
+        );
+
         const childDonutKeys = [
             '@NotSighted30Days',
             '@NotSighted60Days',
@@ -435,16 +460,19 @@ export default class Report extends PureComponent {
                             <div className={styles.vizContainer}>
                                 <HorizontalBar
                                     className={styles.viz}
-                                    data={remoteChildren}
+                                    data={sortedRemoteChildren}
                                     valueSelector={Report.valueSelector}
                                     labelSelector={Report.labelSelector}
                                     showGridLines={false}
                                     colorScheme={[
-                                        '#FF7725',
-                                        '#BF591C',
-                                        '#7F3B12',
-                                        '#401E09',
-                                        '#E56B21',
+                                        '#41c9a2',
+                                        '#3ec0a1',
+                                        '#39b4a1',
+                                        '#36aba0',
+                                        '#2f98a0',
+                                        '#28859f',
+                                        '#22769e',
+                                        '#1e699e',
                                     ]}
                                     margins={{
                                         top: 0,
