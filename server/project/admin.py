@@ -66,8 +66,8 @@ class DistrictAdmin(admin.ModelAdmin):
 
 @admin.register(Municipality)
 class MunicipalityAdmin(admin.ModelAdmin):
-    search_fields = ('name', 'code', 'get_district')
     list_display = ('name', 'code', 'get_district')
+    search_fields = ('name', 'code')
     ordering = ('name', 'code')
     list_filter = ('district',)
 
