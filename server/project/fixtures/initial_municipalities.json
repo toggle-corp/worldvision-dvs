@@ -3,6 +3,114 @@
         "model": "project.Municipality",
         "pk": 1,
         "fields": {
+            "name": "Bhaktapur",
+            "code": "bhaktapur-bhaktapur",
+            "district": 4
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 2,
+        "fields": {
+            "name": "Madhyapur Thimi",
+            "code": "madhyapur -thimi-bhaktap",
+            "district": 4
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 3,
+        "fields": {
+            "name": "Kathmandu",
+            "code": "kathmandu-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 4,
+        "fields": {
+            "name": "Kirtipur",
+            "code": "kirtipur-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 5,
+        "fields": {
+            "name": "Chitwan National Park",
+            "code": "chitwan -national -park-",
+            "district": 15
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 6,
+        "fields": {
+            "name": "Koshi Tappu",
+            "code": "koshi -tappu-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 7,
+        "fields": {
+            "name": "Damak",
+            "code": "damak-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 8,
+        "fields": {
+            "name": "Koshi Tappu",
+            "code": "koshi -tappu-udayapur",
+            "district": 33
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 9,
+        "fields": {
+            "name": "Amargadhi",
+            "code": "amargadhi-dadeldhura",
+            "district": 37
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 10,
+        "fields": {
+            "name": "Bhimdatta",
+            "code": "bhimdatta-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 11,
+        "fields": {
+            "name": "Khaptad National Park",
+            "code": "khaptad -national -park-",
+            "district": 43
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 12,
+        "fields": {
+            "name": "Bardiya",
+            "code": "bardiya-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 13,
+        "fields": {
             "name": "Adanchuli",
             "code": "adanchuli-humla",
             "district": 54
@@ -10,7 +118,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 2,
+        "pk": 14,
         "fields": {
             "name": "Tanjakot",
             "code": "tanjakot-humla",
@@ -19,7 +127,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 3,
+        "pk": 15,
         "fields": {
             "name": "Chankheli",
             "code": "chankheli-humla",
@@ -28,7 +136,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 4,
+        "pk": 16,
         "fields": {
             "name": "Sarkegad",
             "code": "sarkegad-humla",
@@ -37,7 +145,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 5,
+        "pk": 17,
         "fields": {
             "name": "Kharpunath",
             "code": "kharpunath-humla",
@@ -46,7 +154,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 6,
+        "pk": 18,
         "fields": {
             "name": "Namkha",
             "code": "namkha-humla",
@@ -55,7 +163,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 7,
+        "pk": 19,
         "fields": {
             "name": "Simkot",
             "code": "simkot-humla",
@@ -64,7 +172,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 8,
+        "pk": 20,
+        "fields": {
+            "name": "Chhayanath Rara",
+            "code": "chhayanath -rara-mugu",
+            "district": 53
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 21,
         "fields": {
             "name": "Mugum Karmarong",
             "code": "mugum -karmarong-mugu",
@@ -73,7 +190,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 9,
+        "pk": 22,
         "fields": {
             "name": "Khatyad",
             "code": "khatyad-mugu",
@@ -82,7 +199,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 10,
+        "pk": 23,
         "fields": {
             "name": "Soru",
             "code": "soru-mugu",
@@ -91,7 +208,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 11,
+        "pk": 24,
         "fields": {
             "name": "Jagadulla",
             "code": "jagadulla-dolpa",
@@ -100,7 +217,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 12,
+        "pk": 25,
         "fields": {
             "name": "She Foksundo",
             "code": "she -foksundo-dolpa",
@@ -109,7 +226,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 13,
+        "pk": 26,
         "fields": {
             "name": "Dolpo Buddha",
             "code": "dolpo -buddha-dolpa",
@@ -118,7 +235,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 14,
+        "pk": 27,
         "fields": {
             "name": "Chharka Tangsong",
             "code": "chharka -tangsong-dolpa",
@@ -127,7 +244,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 15,
+        "pk": 28,
         "fields": {
             "name": "Kaike",
             "code": "kaike-dolpa",
@@ -136,7 +253,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 16,
+        "pk": 29,
+        "fields": {
+            "name": "Thuli Bheri",
+            "code": "thuli -bheri-dolpa",
+            "district": 50
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 30,
+        "fields": {
+            "name": "Tripurasundari",
+            "code": "tripurasundari-dolpa",
+            "district": 50
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 31,
         "fields": {
             "name": "Mudkechula",
             "code": "mudkechula-dolpa",
@@ -145,7 +280,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 17,
+        "pk": 32,
         "fields": {
             "name": "Kankasundari Gaunpalika",
             "code": "kankasundari -gaunpalika",
@@ -154,7 +289,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 18,
+        "pk": 33,
         "fields": {
             "name": "Patarasi",
             "code": "patarasi-jumla",
@@ -163,7 +298,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 19,
+        "pk": 34,
+        "fields": {
+            "name": "Chandannath",
+            "code": "chandannath-jumla",
+            "district": 51
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 35,
         "fields": {
             "name": "Tatopani",
             "code": "tatopani-jumla",
@@ -172,7 +316,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 20,
+        "pk": 36,
         "fields": {
             "name": "Hima",
             "code": "hima-jumla",
@@ -181,7 +325,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 21,
+        "pk": 37,
         "fields": {
             "name": "Sinja",
             "code": "sinja-jumla",
@@ -190,7 +334,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 22,
+        "pk": 38,
         "fields": {
             "name": "Guthichaur",
             "code": "guthichaur-jumla",
@@ -199,7 +343,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 23,
+        "pk": 39,
         "fields": {
             "name": "Mahawai",
             "code": "mahawai-kalikot",
@@ -208,7 +352,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 24,
+        "pk": 40,
+        "fields": {
+            "name": "Tilagufa",
+            "code": "tilagufa-kalikot",
+            "district": 52
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 41,
         "fields": {
             "name": "Naraharinath",
             "code": "naraharinath-kalikot",
@@ -217,7 +370,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 25,
+        "pk": 42,
         "fields": {
             "name": "Sanni Tribeni",
             "code": "sanni -tribeni-kalikot",
@@ -226,7 +379,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 26,
+        "pk": 43,
+        "fields": {
+            "name": "Raskot",
+            "code": "raskot-kalikot",
+            "district": 52
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 44,
         "fields": {
             "name": "Palata",
             "code": "palata-kalikot",
@@ -235,7 +397,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 27,
+        "pk": 45,
         "fields": {
             "name": "Pachaljharana",
             "code": "pachaljharana-kalikot",
@@ -244,7 +406,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 28,
+        "pk": 46,
+        "fields": {
+            "name": "Khandachakra",
+            "code": "khandachakra-kalikot",
+            "district": 52
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 47,
         "fields": {
             "name": "Kalika",
             "code": "kalika-kalikot",
@@ -253,7 +424,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 29,
+        "pk": 48,
         "fields": {
             "name": "Barekot Gaunpalika",
             "code": "barekot -gaunpalika-jaja",
@@ -262,7 +433,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 30,
+        "pk": 49,
+        "fields": {
+            "name": "Tribeni Nalagad",
+            "code": "tribeni -nalagad-jajarko",
+            "district": 49
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 50,
         "fields": {
             "name": "Junichande",
             "code": "junichande-jajarkot",
@@ -271,7 +451,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 31,
+        "pk": 51,
         "fields": {
             "name": "Shiwalaya",
             "code": "shiwalaya-jajarkot",
@@ -280,7 +460,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 32,
+        "pk": 52,
+        "fields": {
+            "name": "Bheri",
+            "code": "bheri-jajarkot",
+            "district": 49
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 53,
         "fields": {
             "name": "Kuse",
             "code": "kuse-jajarkot",
@@ -289,7 +478,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 33,
+        "pk": 54,
+        "fields": {
+            "name": "Chhedagad",
+            "code": "chhedagad-jajarkot",
+            "district": 49
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 55,
+        "fields": {
+            "name": "Aathbis Nagarpalika",
+            "code": "aathbis -nagarpalika-dai",
+            "district": 48
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 56,
         "fields": {
             "name": "Naumule",
             "code": "naumule-dailekh",
@@ -298,7 +505,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 34,
+        "pk": 57,
         "fields": {
             "name": "Bhagawatimai",
             "code": "bhagawatimai-dailekh",
@@ -307,7 +514,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 35,
+        "pk": 58,
         "fields": {
             "name": "Dungeshwor",
             "code": "dungeshwor-dailekh",
@@ -316,7 +523,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 36,
+        "pk": 59,
         "fields": {
             "name": "Gurans",
             "code": "gurans-dailekh",
@@ -325,7 +532,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 37,
+        "pk": 60,
+        "fields": {
+            "name": "Dullu",
+            "code": "dullu-dailekh",
+            "district": 48
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 61,
         "fields": {
             "name": "Thantikandh Gaunpalika",
             "code": "thantikandh -gaunpalika-",
@@ -334,7 +550,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 38,
+        "pk": 62,
+        "fields": {
+            "name": "Chamunda Bindrasaini",
+            "code": "chamunda -bindrasaini-da",
+            "district": 48
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 63,
+        "fields": {
+            "name": "Narayan",
+            "code": "narayan-dailekh",
+            "district": 48
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 64,
         "fields": {
             "name": "Bhairabi",
             "code": "bhairabi-dailekh",
@@ -343,7 +577,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 39,
+        "pk": 65,
         "fields": {
             "name": "Mahabu",
             "code": "mahabu-dailekh",
@@ -352,7 +586,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 40,
+        "pk": 66,
         "fields": {
             "name": "Banfikot",
             "code": "banfikot-rukum",
@@ -361,7 +595,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 41,
+        "pk": 67,
+        "fields": {
+            "name": "Aathbiskot",
+            "code": "aathbiskot-rukum",
+            "district": 57
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 68,
+        "fields": {
+            "name": "Musikot",
+            "code": "musikot-rukum",
+            "district": 57
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 69,
         "fields": {
             "name": "Tribeni",
             "code": "tribeni-rukum",
@@ -370,7 +622,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 42,
+        "pk": 70,
+        "fields": {
+            "name": "Chaurjahari",
+            "code": "chaurjahari-rukum",
+            "district": 57
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 71,
         "fields": {
             "name": "Sani Veri",
             "code": "sani -veri-rukum",
@@ -379,7 +640,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 43,
+        "pk": 72,
+        "fields": {
+            "name": "Bangad Kupinde",
+            "code": "bangad -kupinde-salyan",
+            "district": 58
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 73,
         "fields": {
             "name": "Kalimati",
             "code": "kalimati-salyan",
@@ -388,7 +658,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 44,
+        "pk": 74,
+        "fields": {
+            "name": "Sarada",
+            "code": "sarada-salyan",
+            "district": 58
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 75,
         "fields": {
             "name": "Dhorchaur",
             "code": "dhorchaur-salyan",
@@ -397,7 +676,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 45,
+        "pk": 76,
         "fields": {
             "name": "Kumakh Malika",
             "code": "kumakh -malika-salyan",
@@ -406,7 +685,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 46,
+        "pk": 77,
+        "fields": {
+            "name": "Bagchaur",
+            "code": "bagchaur-salyan",
+            "district": 58
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 78,
         "fields": {
             "name": "Darma",
             "code": "darma-salyan",
@@ -415,7 +703,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 47,
+        "pk": 79,
         "fields": {
             "name": "Chhatreswari",
             "code": "chhatreswari-salyan",
@@ -424,7 +712,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 48,
+        "pk": 80,
         "fields": {
             "name": "Kapurkot",
             "code": "kapurkot-salyan",
@@ -433,7 +721,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 49,
+        "pk": 81,
         "fields": {
             "name": "Tribeni",
             "code": "tribeni-salyan",
@@ -442,7 +730,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 50,
+        "pk": 82,
         "fields": {
             "name": "Simta",
             "code": "simta-surkhet",
@@ -451,7 +739,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 51,
+        "pk": 83,
         "fields": {
             "name": "Chingad",
             "code": "chingad-surkhet",
@@ -460,7 +748,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 52,
+        "pk": 84,
+        "fields": {
+            "name": "Gurbhakot",
+            "code": "gurbhakot-surkhet",
+            "district": 47
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 85,
+        "fields": {
+            "name": "Bheriganga",
+            "code": "bheriganga-surkhet",
+            "district": 47
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 86,
+        "fields": {
+            "name": "Lekbeshi",
+            "code": "lekbeshi-surkhet",
+            "district": 47
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 87,
         "fields": {
             "name": "Barahtaal",
             "code": "barahtaal-surkhet",
@@ -469,7 +784,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 53,
+        "pk": 88,
+        "fields": {
+            "name": "Panchpuri",
+            "code": "panchpuri-surkhet",
+            "district": 47
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 89,
         "fields": {
             "name": "Chaukune",
             "code": "chaukune-surkhet",
@@ -478,7 +802,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 54,
+        "pk": 90,
+        "fields": {
+            "name": "Birendranagar",
+            "code": "birendranagar-surkhet",
+            "district": 47
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 91,
         "fields": {
             "name": "Lomanthang",
             "code": "lomanthang-mustang",
@@ -487,7 +820,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 55,
+        "pk": 92,
         "fields": {
             "name": "Dalome",
             "code": "dalome-mustang",
@@ -496,7 +829,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 56,
+        "pk": 93,
         "fields": {
             "name": "Barhagaun Muktichhetra",
             "code": "barhagaun -muktichhetra-",
@@ -505,7 +838,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 57,
+        "pk": 94,
         "fields": {
             "name": "Gharapjhong",
             "code": "gharapjhong-mustang",
@@ -514,7 +847,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 58,
+        "pk": 95,
         "fields": {
             "name": "Thasang",
             "code": "thasang-mustang",
@@ -523,7 +856,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 59,
+        "pk": 96,
         "fields": {
             "name": "Annapurna",
             "code": "annapurna-myagdi",
@@ -532,7 +865,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 60,
+        "pk": 97,
+        "fields": {
+            "name": "Beni",
+            "code": "beni-myagdi",
+            "district": 61
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 98,
         "fields": {
             "name": "Malika",
             "code": "malika-myagdi",
@@ -541,7 +883,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 61,
+        "pk": 99,
         "fields": {
             "name": "Mangala",
             "code": "mangala-myagdi",
@@ -550,7 +892,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 62,
+        "pk": 100,
         "fields": {
             "name": "Raghuganga",
             "code": "raghuganga-myagdi",
@@ -559,7 +901,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 63,
+        "pk": 101,
+        "fields": {
+            "name": "Dhorpatan Hunting Reserve",
+            "code": "dhorpatan -hunting -rese",
+            "district": 61
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 102,
         "fields": {
             "name": "Dhawalagiri Gaunpalika",
             "code": "dhawalagiri -gaunpalika-",
@@ -568,7 +919,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 64,
+        "pk": 103,
         "fields": {
             "name": "Badigad",
             "code": "badigad-baglung",
@@ -577,7 +928,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 65,
+        "pk": 104,
+        "fields": {
+            "name": "Galkot",
+            "code": "galkot-baglung",
+            "district": 63
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 105,
         "fields": {
             "name": "Tarakhola",
             "code": "tarakhola-baglung",
@@ -586,7 +946,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 66,
+        "pk": 106,
         "fields": {
             "name": "Woreng",
             "code": "woreng-baglung",
@@ -595,7 +955,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 67,
+        "pk": 107,
         "fields": {
             "name": "Kathekhola",
             "code": "kathekhola-baglung",
@@ -604,7 +964,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 68,
+        "pk": 108,
+        "fields": {
+            "name": "Baglung",
+            "code": "baglung-baglung",
+            "district": 63
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 109,
         "fields": {
             "name": "Tamankhola",
             "code": "tamankhola-baglung",
@@ -613,7 +982,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 69,
+        "pk": 110,
+        "fields": {
+            "name": "Dhorpatan",
+            "code": "dhorpatan-baglung",
+            "district": 63
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 111,
         "fields": {
             "name": "Nisikhola",
             "code": "nisikhola-baglung",
@@ -622,7 +1000,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 70,
+        "pk": 112,
+        "fields": {
+            "name": "Jaimuni",
+            "code": "jaimuni-baglung",
+            "district": 63
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 113,
         "fields": {
             "name": "Jaljala",
             "code": "jaljala-parbat",
@@ -631,7 +1018,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 71,
+        "pk": 114,
         "fields": {
             "name": "Modi",
             "code": "modi-parbat",
@@ -640,7 +1027,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 72,
+        "pk": 115,
+        "fields": {
+            "name": "Kushma",
+            "code": "kushma-parbat",
+            "district": 62
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 116,
         "fields": {
             "name": "Bihadi",
             "code": "bihadi-parbat",
@@ -649,7 +1045,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 73,
+        "pk": 117,
         "fields": {
             "name": "Painyu",
             "code": "painyu-parbat",
@@ -658,7 +1054,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 74,
+        "pk": 118,
+        "fields": {
+            "name": "Falebas",
+            "code": "falebas-parbat",
+            "district": 62
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 119,
         "fields": {
             "name": "Mahashila",
             "code": "mahashila-parbat",
@@ -667,7 +1072,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 75,
+        "pk": 120,
         "fields": {
             "name": "Neshang",
             "code": "neshang-manag",
@@ -676,7 +1081,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 76,
+        "pk": 121,
         "fields": {
             "name": "Narphu",
             "code": "narphu-manag",
@@ -685,7 +1090,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 77,
+        "pk": 122,
         "fields": {
             "name": "Chame",
             "code": "chame-manag",
@@ -694,7 +1099,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 78,
+        "pk": 123,
         "fields": {
             "name": "Nashong",
             "code": "nashong-manag",
@@ -703,7 +1108,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 79,
+        "pk": 124,
         "fields": {
             "name": "Rupa",
             "code": "rupa-kaski",
@@ -712,7 +1117,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 80,
+        "pk": 125,
+        "fields": {
+            "name": "Pokhara Lekhnath",
+            "code": "pokhara -lekhnath-kaski",
+            "district": 68
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 126,
         "fields": {
             "name": "Madi",
             "code": "madi-kaski",
@@ -721,7 +1135,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 81,
+        "pk": 127,
         "fields": {
             "name": "Annapurna",
             "code": "annapurna-kaski",
@@ -730,7 +1144,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 82,
+        "pk": 128,
         "fields": {
             "name": "Machhapuchchhre",
             "code": "machhapuchchhre-kaski",
@@ -739,7 +1153,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 83,
+        "pk": 129,
         "fields": {
             "name": "Kaligandagkii",
             "code": "kaligandagkii-syangja",
@@ -748,7 +1162,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 84,
+        "pk": 130,
+        "fields": {
+            "name": "Putalibazar",
+            "code": "putalibazar-syangja",
+            "district": 67
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 131,
         "fields": {
             "name": "Arjunchaupri",
             "code": "arjunchaupri-syangja",
@@ -757,7 +1180,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 85,
+        "pk": 132,
+        "fields": {
+            "name": "Bhirkot",
+            "code": "bhirkot-syangja",
+            "district": 67
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 133,
+        "fields": {
+            "name": "Galyang",
+            "code": "galyang-syangja",
+            "district": 67
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 134,
+        "fields": {
+            "name": "Chapakot",
+            "code": "chapakot-syangja",
+            "district": 67
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 135,
         "fields": {
             "name": "Biruwa",
             "code": "biruwa-syangja",
@@ -766,7 +1216,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 86,
+        "pk": 136,
         "fields": {
             "name": "Aandhikhola",
             "code": "aandhikhola-syangja",
@@ -775,7 +1225,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 87,
+        "pk": 137,
+        "fields": {
+            "name": "Waling",
+            "code": "waling-syangja",
+            "district": 67
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 138,
         "fields": {
             "name": "Phedikhola",
             "code": "phedikhola-syangja",
@@ -784,7 +1243,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 88,
+        "pk": 139,
         "fields": {
             "name": "Harinas",
             "code": "harinas-syangja",
@@ -793,7 +1252,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 89,
+        "pk": 140,
         "fields": {
             "name": "Dudhpokhar",
             "code": "dudhpokhar-lamjung",
@@ -802,7 +1261,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 90,
+        "pk": 141,
+        "fields": {
+            "name": "Rainas",
+            "code": "rainas-lamjung",
+            "district": 65
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 142,
+        "fields": {
+            "name": "Madhyanepal",
+            "code": "madhyanepal-lamjung",
+            "district": 65
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 143,
+        "fields": {
+            "name": "Sundarbazar",
+            "code": "sundarbazar-lamjung",
+            "district": 65
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 144,
         "fields": {
             "name": "Kwholasothar",
             "code": "kwholasothar-lamjung",
@@ -811,7 +1297,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 91,
+        "pk": 145,
+        "fields": {
+            "name": "Besishahar",
+            "code": "besishahar-lamjung",
+            "district": 65
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 146,
         "fields": {
             "name": "Marsyangdi Gaunpalika",
             "code": "marsyangdi -gaunpalika-l",
@@ -820,7 +1315,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 92,
+        "pk": 147,
         "fields": {
             "name": "Dordi",
             "code": "dordi-lamjung",
@@ -829,7 +1324,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 93,
+        "pk": 148,
+        "fields": {
+            "name": "Shuklagandaki",
+            "code": "shuklagandaki-tanahun",
+            "district": 66
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 149,
         "fields": {
             "name": "Rhising",
             "code": "rhising-tanahun",
@@ -838,7 +1342,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 94,
+        "pk": 150,
         "fields": {
             "name": "Ghiring",
             "code": "ghiring-tanahun",
@@ -847,7 +1351,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 95,
+        "pk": 151,
+        "fields": {
+            "name": "Bhimad",
+            "code": "bhimad-tanahun",
+            "district": 66
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 152,
         "fields": {
             "name": "Myagde",
             "code": "myagde-tanahun",
@@ -856,7 +1369,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 96,
+        "pk": 153,
+        "fields": {
+            "name": "Byas",
+            "code": "byas-tanahun",
+            "district": 66
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 154,
+        "fields": {
+            "name": "Bhanu",
+            "code": "bhanu-tanahun",
+            "district": 66
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 155,
         "fields": {
             "name": "Bandipur",
             "code": "bandipur-tanahun",
@@ -865,7 +1396,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 97,
+        "pk": 156,
         "fields": {
             "name": "Aabunkhareni",
             "code": "aabunkhareni-tanahun",
@@ -874,7 +1405,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 98,
+        "pk": 157,
         "fields": {
             "name": "Devghat",
             "code": "devghat-tanahun",
@@ -883,7 +1414,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 99,
+        "pk": 158,
         "fields": {
             "name": "Bungdikali",
             "code": "bungdikali-nawalparasi",
@@ -892,7 +1423,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 100,
+        "pk": 159,
         "fields": {
             "name": "Bulingtar",
             "code": "bulingtar-nawalparasi",
@@ -901,7 +1432,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 101,
+        "pk": 160,
+        "fields": {
+            "name": "Gaidakot",
+            "code": "gaidakot-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 161,
+        "fields": {
+            "name": "Devchuli",
+            "code": "devchuli-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 162,
         "fields": {
             "name": "Hupsekot",
             "code": "hupsekot-nawalparasi",
@@ -910,7 +1459,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 102,
+        "pk": 163,
+        "fields": {
+            "name": "Kawasoti",
+            "code": "kawasoti-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 164,
+        "fields": {
+            "name": "Madhyabindu",
+            "code": "madhyabindu-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 165,
+        "fields": {
+            "name": "Sunwal",
+            "code": "sunwal-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 166,
         "fields": {
             "name": "Palhinandan",
             "code": "palhinandan-nawalparasi",
@@ -919,7 +1495,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 103,
+        "pk": 167,
         "fields": {
             "name": "Pratappur",
             "code": "pratappur-nawalparasi",
@@ -928,7 +1504,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 104,
+        "pk": 168,
+        "fields": {
+            "name": "Ramgram",
+            "code": "ramgram-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 169,
         "fields": {
             "name": "Sarawal",
             "code": "sarawal-nawalparasi",
@@ -937,7 +1522,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 105,
+        "pk": 170,
         "fields": {
             "name": "Tribenisusta",
             "code": "tribenisusta-nawalparasi",
@@ -946,7 +1531,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 106,
+        "pk": 171,
+        "fields": {
+            "name": "Bardaghat",
+            "code": "bardaghat-nawalparasi",
+            "district": 72
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 172,
         "fields": {
             "name": "Chumnuwri",
             "code": "chumnuwri-gorkha",
@@ -955,7 +1549,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 107,
+        "pk": 173,
         "fields": {
             "name": "Dharche",
             "code": "dharche-gorkha",
@@ -964,7 +1558,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 108,
+        "pk": 174,
         "fields": {
             "name": "Ajirkot",
             "code": "ajirkot-gorkha",
@@ -973,7 +1567,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 109,
+        "pk": 175,
+        "fields": {
+            "name": "Palungtar",
+            "code": "palungtar-gorkha",
+            "district": 64
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 176,
         "fields": {
             "name": "Siranchok",
             "code": "siranchok-gorkha",
@@ -982,7 +1585,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 110,
+        "pk": 177,
         "fields": {
             "name": "Gandaki",
             "code": "gandaki-gorkha",
@@ -991,7 +1594,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 111,
+        "pk": 178,
         "fields": {
             "name": "Bhimsen",
             "code": "bhimsen-gorkha",
@@ -1000,7 +1603,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 112,
+        "pk": 179,
         "fields": {
             "name": "Aarughat",
             "code": "aarughat-gorkha",
@@ -1009,7 +1612,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 113,
+        "pk": 180,
         "fields": {
             "name": "Sulikot",
             "code": "sulikot-gorkha",
@@ -1018,7 +1621,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 114,
+        "pk": 181,
+        "fields": {
+            "name": "Gorkha",
+            "code": "gorkha-gorkha",
+            "district": 64
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 182,
         "fields": {
             "name": "Sahid Lakhan",
             "code": "sahid -lakhan-gorkha",
@@ -1027,7 +1639,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 115,
+        "pk": 183,
         "fields": {
             "name": "Ichchhyakamana",
             "code": "ichchhyakamana-chitwan",
@@ -1036,7 +1648,61 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 116,
+        "pk": 184,
+        "fields": {
+            "name": "Ratnanagar",
+            "code": "ratnanagar-chitwan",
+            "district": 19
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 185,
+        "fields": {
+            "name": "Khairahani",
+            "code": "khairahani-chitwan",
+            "district": 19
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 186,
+        "fields": {
+            "name": "Rapti",
+            "code": "rapti-chitwan",
+            "district": 19
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 187,
+        "fields": {
+            "name": "Kalika",
+            "code": "kalika-chitwan",
+            "district": 19
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 188,
+        "fields": {
+            "name": "Bharatpur",
+            "code": "bharatpur-chitwan",
+            "district": 19
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 189,
+        "fields": {
+            "name": "Madi",
+            "code": "madi-chitwan",
+            "district": 19
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 190,
         "fields": {
             "name": "Khaniyabas",
             "code": "khaniyabas-dhading",
@@ -1045,7 +1711,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 117,
+        "pk": 191,
         "fields": {
             "name": "Gangajamuna",
             "code": "gangajamuna-dhading",
@@ -1054,7 +1720,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 118,
+        "pk": 192,
         "fields": {
             "name": "Jwalamukhi",
             "code": "jwalamukhi-dhading",
@@ -1063,7 +1729,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 119,
+        "pk": 193,
         "fields": {
             "name": "Siddhalek",
             "code": "siddhalek-dhading",
@@ -1072,7 +1738,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 120,
+        "pk": 194,
         "fields": {
             "name": "Benighat Rorang",
             "code": "benighat -rorang-dhading",
@@ -1081,7 +1747,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 121,
+        "pk": 195,
         "fields": {
             "name": "Gajuri",
             "code": "gajuri-dhading",
@@ -1090,7 +1756,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 122,
+        "pk": 196,
         "fields": {
             "name": "Netrawati",
             "code": "netrawati-dhading",
@@ -1099,7 +1765,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 123,
+        "pk": 197,
         "fields": {
             "name": "Tripurasundari",
             "code": "tripurasundari-dhading",
@@ -1108,7 +1774,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 124,
+        "pk": 198,
         "fields": {
             "name": "Thakre",
             "code": "thakre-dhading",
@@ -1117,7 +1783,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 125,
+        "pk": 199,
         "fields": {
             "name": "Galchi",
             "code": "galchi-dhading",
@@ -1126,7 +1792,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 126,
+        "pk": 200,
+        "fields": {
+            "name": "Nilkantha",
+            "code": "nilkantha-dhading",
+            "district": 8
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 201,
         "fields": {
             "name": "Rubi Valley",
             "code": "rubi -valley-dhading",
@@ -1135,7 +1810,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 127,
+        "pk": 202,
+        "fields": {
+            "name": "Dhunibesi",
+            "code": "dhunibesi-dhading",
+            "district": 8
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 203,
         "fields": {
             "name": "Gosaikunda",
             "code": "gosaikunda-rasuwa",
@@ -1144,7 +1828,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 128,
+        "pk": 204,
         "fields": {
             "name": "Parwatikunda",
             "code": "parwatikunda-rasuwa",
@@ -1153,7 +1837,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 129,
+        "pk": 205,
         "fields": {
             "name": "Uttargaya",
             "code": "uttargaya-rasuwa",
@@ -1162,7 +1846,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 130,
+        "pk": 206,
         "fields": {
             "name": "Kalika",
             "code": "kalika-rasuwa",
@@ -1171,7 +1855,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 131,
+        "pk": 207,
         "fields": {
             "name": "Naukunda",
             "code": "naukunda-rasuwa",
@@ -1180,7 +1864,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 132,
+        "pk": 208,
         "fields": {
             "name": "Kispang",
             "code": "kispang-nuwakot",
@@ -1189,7 +1873,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 133,
+        "pk": 209,
         "fields": {
             "name": "Meghang",
             "code": "meghang-nuwakot",
@@ -1198,7 +1882,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 134,
+        "pk": 210,
         "fields": {
             "name": "Tarkeshwar",
             "code": "tarkeshwar-nuwakot",
@@ -1207,7 +1891,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 135,
+        "pk": 211,
+        "fields": {
+            "name": "Bidur",
+            "code": "bidur-nuwakot",
+            "district": 6
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 212,
         "fields": {
             "name": "Tadi",
             "code": "tadi-nuwakot",
@@ -1216,7 +1909,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 136,
+        "pk": 213,
         "fields": {
             "name": "Dupcheshwar",
             "code": "dupcheshwar-nuwakot",
@@ -1225,7 +1918,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 137,
+        "pk": 214,
         "fields": {
             "name": "Panchakanya",
             "code": "panchakanya-nuwakot",
@@ -1234,7 +1927,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 138,
+        "pk": 215,
         "fields": {
             "name": "Kakani",
             "code": "kakani-nuwakot",
@@ -1243,7 +1936,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 139,
+        "pk": 216,
         "fields": {
             "name": "Shivapuri",
             "code": "shivapuri-nuwakot",
@@ -1252,7 +1945,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 140,
+        "pk": 217,
         "fields": {
             "name": "Jugal",
             "code": "jugal-sindhupalchowk",
@@ -1261,7 +1954,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 141,
+        "pk": 218,
         "fields": {
             "name": "Bhotekoshi",
             "code": "bhotekoshi-sindhupalchow",
@@ -1270,7 +1963,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 142,
+        "pk": 219,
         "fields": {
             "name": "Panchpokhari Thangpal",
             "code": "panchpokhari -thangpal-s",
@@ -1279,7 +1972,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 143,
+        "pk": 220,
         "fields": {
             "name": "Helambu",
             "code": "helambu-sindhupalchowk",
@@ -1288,7 +1981,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 144,
+        "pk": 221,
+        "fields": {
+            "name": "Barhabise",
+            "code": "barhabise-sindhupalchowk",
+            "district": 1
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 222,
         "fields": {
             "name": "Balefi",
             "code": "balefi-sindhupalchowk",
@@ -1297,7 +1999,106 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 145,
+        "pk": 223,
+        "fields": {
+            "name": "Chautara Sangachokgadhi",
+            "code": "chautara -sangachokgadhi",
+            "district": 1
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 224,
+        "fields": {
+            "name": "Chandragiri",
+            "code": "chandragiri-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 225,
+        "fields": {
+            "name": "Nagarjun",
+            "code": "nagarjun-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 226,
+        "fields": {
+            "name": "Tarakeshwor",
+            "code": "tarakeshwor-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 227,
+        "fields": {
+            "name": "Tokha",
+            "code": "tokha-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 228,
+        "fields": {
+            "name": "Budhanilakantha",
+            "code": "budhanilakantha-kathmand",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 229,
+        "fields": {
+            "name": "Gokarneshwor",
+            "code": "gokarneshwor-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 230,
+        "fields": {
+            "name": "Kageshwori Manahora",
+            "code": "kageshwori -manahora-kat",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 231,
+        "fields": {
+            "name": "Shankharapur",
+            "code": "shankharapur-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 232,
+        "fields": {
+            "name": "Melamchi",
+            "code": "melamchi-sindhupalchowk",
+            "district": 1
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 233,
+        "fields": {
+            "name": "Dakshinkali",
+            "code": "dakshinkali-kathmandu",
+            "district": 5
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 234,
         "fields": {
             "name": "Indrawati",
             "code": "indrawati-sindhupalchowk",
@@ -1306,7 +2107,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 146,
+        "pk": 235,
         "fields": {
             "name": "Lisangkhu Pakhar",
             "code": "lisangkhu -pakhar-sindhu",
@@ -1315,7 +2116,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 147,
+        "pk": 236,
         "fields": {
             "name": "Tripurasundari",
             "code": "tripurasundari-sindhupal",
@@ -1324,7 +2125,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 148,
+        "pk": 237,
         "fields": {
             "name": "Sunkoshi",
             "code": "sunkoshi-sindhupalchowk",
@@ -1333,7 +2134,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 149,
+        "pk": 238,
         "fields": {
             "name": "Rakshirang",
             "code": "rakshirang-makwanpur",
@@ -1342,7 +2143,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 150,
+        "pk": 239,
         "fields": {
             "name": "Manahari",
             "code": "manahari-makwanpur",
@@ -1351,7 +2152,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 151,
+        "pk": 240,
+        "fields": {
+            "name": "Hetauda",
+            "code": "hetauda-makwanpur",
+            "district": 15
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 241,
         "fields": {
             "name": "Makwanpurgadhi",
             "code": "makwanpurgadhi-makwanpur",
@@ -1360,7 +2170,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 152,
+        "pk": 242,
         "fields": {
             "name": "Bhimphedi",
             "code": "bhimphedi-makwanpur",
@@ -1369,7 +2179,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 153,
+        "pk": 243,
         "fields": {
             "name": "Kailash",
             "code": "kailash-makwanpur",
@@ -1378,7 +2188,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 154,
+        "pk": 244,
+        "fields": {
+            "name": "Thaha",
+            "code": "thaha-makwanpur",
+            "district": 15
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 245,
         "fields": {
             "name": "Indrasarawor",
             "code": "indrasarawor-makwanpur",
@@ -1387,7 +2206,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 155,
+        "pk": 246,
         "fields": {
             "name": "Bakaiya",
             "code": "bakaiya-makwanpur",
@@ -1396,7 +2215,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 156,
+        "pk": 247,
+        "fields": {
+            "name": "Parsa Wildlife Reserve",
+            "code": "parsa -wildlife -reserve",
+            "district": 15
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 248,
         "fields": {
             "name": "Bagmati",
             "code": "bagmati-makwanpur",
@@ -1405,7 +2233,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 157,
+        "pk": 249,
         "fields": {
             "name": "Bagmati",
             "code": "bagmati-lalitpur",
@@ -1414,7 +2242,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 158,
+        "pk": 250,
         "fields": {
             "name": "Konjyosom",
             "code": "konjyosom-lalitpur",
@@ -1423,7 +2251,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 159,
+        "pk": 251,
         "fields": {
             "name": "Mahankal",
             "code": "mahankal-lalitpur",
@@ -1432,7 +2260,52 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 160,
+        "pk": 252,
+        "fields": {
+            "name": "Lalitpur",
+            "code": "lalitpur-lalitpur",
+            "district": 3
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 253,
+        "fields": {
+            "name": "Mahalaxmi",
+            "code": "mahalaxmi-lalitpur",
+            "district": 3
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 254,
+        "fields": {
+            "name": "Godawari",
+            "code": "godawari-lalitpur",
+            "district": 3
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 255,
+        "fields": {
+            "name": "Changunarayan",
+            "code": "changunarayan-bhaktapur",
+            "district": 4
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 256,
+        "fields": {
+            "name": "Suryabinayak",
+            "code": "suryabinayak-bhaktapur",
+            "district": 4
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 257,
         "fields": {
             "name": "Chaurideurali",
             "code": "chaurideurali-kavrepalan",
@@ -1441,7 +2314,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 161,
+        "pk": 258,
         "fields": {
             "name": "Temal",
             "code": "temal-kavrepalanchok",
@@ -1450,7 +2323,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 162,
+        "pk": 259,
         "fields": {
             "name": "Bhumlu",
             "code": "bhumlu-kavrepalanchok",
@@ -1459,7 +2332,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 163,
+        "pk": 260,
+        "fields": {
+            "name": "Mandandeupur",
+            "code": "mandandeupur-kavrepalanc",
+            "district": 2
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 261,
+        "fields": {
+            "name": "Panauti",
+            "code": "panauti-kavrepalanchok",
+            "district": 2
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 262,
         "fields": {
             "name": "Bethanchowk",
             "code": "bethanchowk-kavrepalanch",
@@ -1468,7 +2359,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 164,
+        "pk": 263,
         "fields": {
             "name": "Khanikhola",
             "code": "khanikhola-kavrepalancho",
@@ -1477,7 +2368,43 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 165,
+        "pk": 264,
+        "fields": {
+            "name": "Banepa",
+            "code": "banepa-kavrepalanchok",
+            "district": 2
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 265,
+        "fields": {
+            "name": "Dhulikhel",
+            "code": "dhulikhel-kavrepalanchok",
+            "district": 2
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 266,
+        "fields": {
+            "name": "Panchkhal",
+            "code": "panchkhal-kavrepalanchok",
+            "district": 2
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 267,
+        "fields": {
+            "name": "Namobuddha",
+            "code": "namobuddha-kavrepalancho",
+            "district": 2
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 268,
         "fields": {
             "name": "Roshi",
             "code": "roshi-kavrepalanchok",
@@ -1486,7 +2413,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 166,
+        "pk": 269,
         "fields": {
             "name": "Mahabharat",
             "code": "mahabharat-kavrepalancho",
@@ -1495,7 +2422,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 167,
+        "pk": 270,
         "fields": {
             "name": "Bigu",
             "code": "bigu-dolakha",
@@ -1504,7 +2431,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 168,
+        "pk": 271,
         "fields": {
             "name": "Gaurishankar",
             "code": "gaurishankar-dolakha",
@@ -1513,7 +2440,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 169,
+        "pk": 272,
+        "fields": {
+            "name": "Jiri",
+            "code": "jiri-dolakha",
+            "district": 14
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 273,
         "fields": {
             "name": "Kalinchok",
             "code": "kalinchok-dolakha",
@@ -1522,7 +2458,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 170,
+        "pk": 274,
+        "fields": {
+            "name": "Bhimeshwor",
+            "code": "bhimeshwor-dolakha",
+            "district": 14
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 275,
         "fields": {
             "name": "Sailung",
             "code": "sailung-dolakha",
@@ -1531,7 +2476,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 171,
+        "pk": 276,
         "fields": {
             "name": "Melung",
             "code": "melung-dolakha",
@@ -1540,7 +2485,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 172,
+        "pk": 277,
         "fields": {
             "name": "Tamakoshi",
             "code": "tamakoshi-dolakha",
@@ -1549,7 +2494,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 173,
+        "pk": 278,
         "fields": {
             "name": "Baiteshwor",
             "code": "baiteshwor-dolakha",
@@ -1558,7 +2503,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 174,
+        "pk": 279,
         "fields": {
             "name": "Umakunda",
             "code": "umakunda-ramechhap",
@@ -1567,7 +2512,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 175,
+        "pk": 280,
         "fields": {
             "name": "Likhu",
             "code": "likhu-ramechhap",
@@ -1576,7 +2521,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 176,
+        "pk": 281,
+        "fields": {
+            "name": "Ramechhap",
+            "code": "ramechhap-ramechhap",
+            "district": 13
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 282,
+        "fields": {
+            "name": "Manthali",
+            "code": "manthali-ramechhap",
+            "district": 13
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 283,
         "fields": {
             "name": "Khadadevi",
             "code": "khadadevi-ramechhap",
@@ -1585,7 +2548,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 177,
+        "pk": 284,
         "fields": {
             "name": "Sunapati",
             "code": "sunapati-ramechhap",
@@ -1594,7 +2557,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 178,
+        "pk": 285,
         "fields": {
             "name": "Gokulganga",
             "code": "gokulganga-ramechhap",
@@ -1603,7 +2566,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 179,
+        "pk": 286,
         "fields": {
             "name": "Doraamba",
             "code": "doraamba-ramechhap",
@@ -1612,7 +2575,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 180,
+        "pk": 287,
         "fields": {
             "name": "Hariharpurgadhi",
             "code": "hariharpurgadhi-sindhuli",
@@ -1621,7 +2584,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 181,
+        "pk": 288,
         "fields": {
             "name": "Marin",
             "code": "marin-sindhuli",
@@ -1630,7 +2593,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 182,
+        "pk": 289,
         "fields": {
             "name": "Ghyanglekh",
             "code": "ghyanglekh-sindhuli",
@@ -1639,7 +2602,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 183,
+        "pk": 290,
+        "fields": {
+            "name": "Kamalamai",
+            "code": "kamalamai-sindhuli",
+            "district": 12
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 291,
         "fields": {
             "name": "Sunkoshi",
             "code": "sunkoshi-sindhuli",
@@ -1648,7 +2620,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 184,
+        "pk": 292,
         "fields": {
             "name": "Golanjor",
             "code": "golanjor-sindhuli",
@@ -1657,7 +2629,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 185,
+        "pk": 293,
+        "fields": {
+            "name": "Dudhouli",
+            "code": "dudhouli-sindhuli",
+            "district": 12
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 294,
         "fields": {
             "name": "Tinpatan",
             "code": "tinpatan-sindhuli",
@@ -1666,7 +2647,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 186,
+        "pk": 295,
         "fields": {
             "name": "Phikkal",
             "code": "phikkal-sindhuli",
@@ -1675,7 +2656,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 187,
+        "pk": 296,
         "fields": {
             "name": "Putha Uttarganga",
             "code": "putha -uttarganga-rukum",
@@ -1684,7 +2665,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 188,
+        "pk": 297,
         "fields": {
             "name": "Bhume",
             "code": "bhume-rukum",
@@ -1693,7 +2674,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 189,
+        "pk": 298,
         "fields": {
             "name": "Sisne Gaunpalika",
             "code": "sisne -gaunpalika-rukum",
@@ -1702,7 +2683,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 190,
+        "pk": 299,
         "fields": {
             "name": "Byas",
             "code": "byas-darchula",
@@ -1711,7 +2692,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 191,
+        "pk": 300,
         "fields": {
             "name": "Naugad",
             "code": "naugad-darchula",
@@ -1720,7 +2701,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 192,
+        "pk": 301,
+        "fields": {
+            "name": "Mahakali",
+            "code": "mahakali-darchula",
+            "district": 39
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 302,
         "fields": {
             "name": "Dunhu",
             "code": "dunhu-darchula",
@@ -1729,7 +2719,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 193,
+        "pk": 303,
+        "fields": {
+            "name": "Malikarjun",
+            "code": "malikarjun-darchula",
+            "district": 39
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 304,
         "fields": {
             "name": "Lekam",
             "code": "lekam-darchula",
@@ -1738,7 +2737,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 194,
+        "pk": 305,
+        "fields": {
+            "name": "Shailyashikhar",
+            "code": "shailyashikhar-darchula",
+            "district": 39
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 306,
         "fields": {
             "name": "Marma",
             "code": "marma-darchula",
@@ -1747,7 +2755,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 195,
+        "pk": 307,
         "fields": {
             "name": "Apihimal",
             "code": "apihimal-darchula",
@@ -1756,7 +2764,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 196,
+        "pk": 308,
         "fields": {
             "name": "Surma",
             "code": "surma-bajhang",
@@ -1765,7 +2773,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 197,
+        "pk": 309,
+        "fields": {
+            "name": "Bungal",
+            "code": "bungal-bajhang",
+            "district": 41
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 310,
         "fields": {
             "name": "Bithadchir",
             "code": "bithadchir-bajhang",
@@ -1774,7 +2791,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 198,
+        "pk": 311,
         "fields": {
             "name": "Thalara",
             "code": "thalara-bajhang",
@@ -1783,7 +2800,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 199,
+        "pk": 312,
         "fields": {
             "name": "Kedarseu",
             "code": "kedarseu-bajhang",
@@ -1792,7 +2809,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 200,
+        "pk": 313,
         "fields": {
             "name": "Durgathali",
             "code": "durgathali-bajhang",
@@ -1801,7 +2818,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 201,
+        "pk": 314,
         "fields": {
             "name": "Chabispathivera",
             "code": "chabispathivera-bajhang",
@@ -1810,7 +2827,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 202,
+        "pk": 315,
+        "fields": {
+            "name": "Jayaprithivi",
+            "code": "jayaprithivi-bajhang",
+            "district": 41
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 316,
         "fields": {
             "name": "Masta",
             "code": "masta-bajhang",
@@ -1819,7 +2845,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 203,
+        "pk": 317,
         "fields": {
             "name": "Talkot",
             "code": "talkot-bajhang",
@@ -1828,7 +2854,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 204,
+        "pk": 318,
         "fields": {
             "name": "Khaptachhanna",
             "code": "khaptachhanna-bajhang",
@@ -1837,7 +2863,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 205,
+        "pk": 319,
         "fields": {
             "name": "Chhededaha",
             "code": "chhededaha-bajura",
@@ -1846,7 +2872,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 206,
+        "pk": 320,
+        "fields": {
+            "name": "Budhiganga",
+            "code": "budhiganga-bajura",
+            "district": 40
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 321,
+        "fields": {
+            "name": "Tribeni",
+            "code": "tribeni-bajura",
+            "district": 40
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 322,
+        "fields": {
+            "name": "Badimalika",
+            "code": "badimalika-bajura",
+            "district": 40
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 323,
         "fields": {
             "name": "Pandav Ghupa",
             "code": "pandav -ghupa-bajura",
@@ -1855,7 +2908,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 207,
+        "pk": 324,
         "fields": {
             "name": "Swami Kartik",
             "code": "swami -kartik-bajura",
@@ -1864,7 +2917,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 208,
+        "pk": 325,
         "fields": {
             "name": "Himali",
             "code": "himali-bajura",
@@ -1873,7 +2926,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 209,
+        "pk": 326,
+        "fields": {
+            "name": "Budhinanda",
+            "code": "budhinanda-bajura",
+            "district": 40
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 327,
         "fields": {
             "name": "Gaumul",
             "code": "gaumul-bajura",
@@ -1882,7 +2944,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 210,
+        "pk": 328,
         "fields": {
             "name": "Chure",
             "code": "chure-kailali",
@@ -1891,7 +2953,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 211,
+        "pk": 329,
         "fields": {
             "name": "Mohanyal",
             "code": "mohanyal-kailali",
@@ -1900,7 +2962,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 212,
+        "pk": 330,
+        "fields": {
+            "name": "Ghodaghodi",
+            "code": "ghodaghodi-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 331,
+        "fields": {
+            "name": "Karnali",
+            "code": "karnali-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 332,
         "fields": {
             "name": "Bardagariya",
             "code": "bardagariya-kailali",
@@ -1909,7 +2989,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 213,
+        "pk": 333,
+        "fields": {
+            "name": "Tikapur",
+            "code": "tikapur-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 334,
         "fields": {
             "name": "Janaki",
             "code": "janaki-kailali",
@@ -1918,7 +3007,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 214,
+        "pk": 335,
+        "fields": {
+            "name": "Bhajani",
+            "code": "bhajani-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 336,
         "fields": {
             "name": "Joshipur",
             "code": "joshipur-kailali",
@@ -1927,7 +3025,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 215,
+        "pk": 337,
+        "fields": {
+            "name": "Dhangadhi",
+            "code": "dhangadhi-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 338,
+        "fields": {
+            "name": "Gadawari",
+            "code": "gadawari-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 339,
+        "fields": {
+            "name": "Gauriganga",
+            "code": "gauriganga-kailali",
+            "district": 44
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 340,
         "fields": {
             "name": "Kailari",
             "code": "kailari-kailali",
@@ -1936,7 +3061,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 216,
+        "pk": 341,
+        "fields": {
+            "name": "Bedkot",
+            "code": "bedkot-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 342,
+        "fields": {
+            "name": "Mahakali",
+            "code": "mahakali-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 343,
         "fields": {
             "name": "Beldandi",
             "code": "beldandi-kanchanpur",
@@ -1945,7 +3088,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 217,
+        "pk": 344,
+        "fields": {
+            "name": "Belauri",
+            "code": "belauri-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 345,
         "fields": {
             "name": "Laljhadi",
             "code": "laljhadi-kanchanpur",
@@ -1954,7 +3106,43 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 218,
+        "pk": 346,
+        "fields": {
+            "name": "Suklaphat",
+            "code": "suklaphat-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 347,
+        "fields": {
+            "name": "Suklaphata",
+            "code": "suklaphata-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 348,
+        "fields": {
+            "name": "Krishnapur",
+            "code": "krishnapur-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 349,
+        "fields": {
+            "name": "Punarbas",
+            "code": "punarbas-kanchanpur",
+            "district": 36
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 350,
         "fields": {
             "name": "Ganyapadhura",
             "code": "ganyapadhura-dadeldhura",
@@ -1963,7 +3151,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 219,
+        "pk": 351,
         "fields": {
             "name": "Nawadurga",
             "code": "nawadurga-dadeldhura",
@@ -1972,7 +3160,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 220,
+        "pk": 352,
         "fields": {
             "name": "Ajaymeru",
             "code": "ajaymeru-dadeldhura",
@@ -1981,7 +3169,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 221,
+        "pk": 353,
         "fields": {
             "name": "Bhageshwar",
             "code": "bhageshwar-dadeldhura",
@@ -1990,7 +3178,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 222,
+        "pk": 354,
         "fields": {
             "name": "Alital",
             "code": "alital-dadeldhura",
@@ -1999,7 +3187,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 223,
+        "pk": 355,
+        "fields": {
+            "name": "Parashuram",
+            "code": "parashuram-dadeldhura",
+            "district": 37
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 356,
         "fields": {
             "name": "Jorayal",
             "code": "jorayal-doti",
@@ -2008,7 +3205,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 224,
+        "pk": 357,
         "fields": {
             "name": "Badikedar",
             "code": "badikedar-doti",
@@ -2017,7 +3214,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 225,
+        "pk": 358,
         "fields": {
             "name": "Bogtan",
             "code": "bogtan-doti",
@@ -2026,7 +3223,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 226,
+        "pk": 359,
         "fields": {
             "name": "k i Singh",
             "code": "k -i -singh-doti",
@@ -2035,7 +3232,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 227,
+        "pk": 360,
+        "fields": {
+            "name": "Shikhar",
+            "code": "shikhar-doti",
+            "district": 43
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 361,
         "fields": {
             "name": "Adharsha",
             "code": "adharsha-doti",
@@ -2044,7 +3250,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 228,
+        "pk": 362,
         "fields": {
             "name": "Purbichauki",
             "code": "purbichauki-doti",
@@ -2053,7 +3259,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 229,
+        "pk": 363,
+        "fields": {
+            "name": "Dipayal Silgadi",
+            "code": "dipayal -silgadi-doti",
+            "district": 43
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 364,
         "fields": {
             "name": "Sayal",
             "code": "sayal-doti",
@@ -2062,7 +3277,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 230,
+        "pk": 365,
+        "fields": {
+            "name": "Purchaudi",
+            "code": "purchaudi-baitadi",
+            "district": 38
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 366,
         "fields": {
             "name": "Dilasaini",
             "code": "dilasaini-baitadi",
@@ -2071,7 +3295,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 231,
+        "pk": 367,
+        "fields": {
+            "name": "Patan",
+            "code": "patan-baitadi",
+            "district": 38
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 368,
         "fields": {
             "name": "Shivanath",
             "code": "shivanath-baitadi",
@@ -2080,7 +3313,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 232,
+        "pk": 369,
+        "fields": {
+            "name": "Dasarathchand",
+            "code": "dasarathchand-baitadi",
+            "district": 38
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 370,
         "fields": {
             "name": "Dogadakedar",
             "code": "dogadakedar-baitadi",
@@ -2089,7 +3331,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 233,
+        "pk": 371,
         "fields": {
             "name": "Surnaya",
             "code": "surnaya-baitadi",
@@ -2098,7 +3340,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 234,
+        "pk": 372,
         "fields": {
             "name": "Sigas",
             "code": "sigas-baitadi",
@@ -2107,7 +3349,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 235,
+        "pk": 373,
         "fields": {
             "name": "Pancheswar",
             "code": "pancheswar-baitadi",
@@ -2116,7 +3358,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 236,
+        "pk": 374,
+        "fields": {
+            "name": "Melauli",
+            "code": "melauli-baitadi",
+            "district": 38
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 375,
+        "fields": {
+            "name": "Sanphebagar",
+            "code": "sanphebagar-achham",
+            "district": 42
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 376,
         "fields": {
             "name": "Bannigadi Jayagadh",
             "code": "bannigadi -jayagadh-achh",
@@ -2125,7 +3385,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 237,
+        "pk": 377,
         "fields": {
             "name": "Mellekh",
             "code": "mellekh-achham",
@@ -2134,7 +3394,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 238,
+        "pk": 378,
         "fields": {
             "name": "Ramaroshan",
             "code": "ramaroshan-achham",
@@ -2143,7 +3403,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 239,
+        "pk": 379,
         "fields": {
             "name": "Chaurpati",
             "code": "chaurpati-achham",
@@ -2152,7 +3412,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 240,
+        "pk": 380,
+        "fields": {
+            "name": "Mangalsen",
+            "code": "mangalsen-achham",
+            "district": 42
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 381,
         "fields": {
             "name": "Dhakari",
             "code": "dhakari-achham",
@@ -2161,7 +3430,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 241,
+        "pk": 382,
+        "fields": {
+            "name": "Panchadewal Binayak",
+            "code": "panchadewal -binayak-ach",
+            "district": 42
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 383,
+        "fields": {
+            "name": "Kamalbazar",
+            "code": "kamalbazar-achham",
+            "district": 42
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 384,
         "fields": {
             "name": "Turmakhad",
             "code": "turmakhad-achham",
@@ -2170,7 +3457,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 242,
+        "pk": 385,
         "fields": {
             "name": "Kanda",
             "code": "kanda-bajhang",
@@ -2179,7 +3466,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 243,
+        "pk": 386,
         "fields": {
             "name": "Baijanath",
             "code": "baijanath-banke",
@@ -2188,7 +3475,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 244,
+        "pk": 387,
         "fields": {
             "name": "Khajura",
             "code": "khajura-banke",
@@ -2197,7 +3484,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 245,
+        "pk": 388,
         "fields": {
             "name": "Janaki",
             "code": "janaki-banke",
@@ -2206,7 +3493,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 246,
+        "pk": 389,
         "fields": {
             "name": "Narainapur",
             "code": "narainapur-banke",
@@ -2215,7 +3502,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 247,
+        "pk": 390,
+        "fields": {
+            "name": "Kohalpur",
+            "code": "kohalpur-banke",
+            "district": 45
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 391,
         "fields": {
             "name": "Raptisonari",
             "code": "raptisonari-banke",
@@ -2224,7 +3520,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 248,
+        "pk": 392,
+        "fields": {
+            "name": "Nepalganj",
+            "code": "nepalganj-banke",
+            "district": 45
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 393,
         "fields": {
             "name": "Duduwa",
             "code": "duduwa-banke",
@@ -2233,7 +3538,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 249,
+        "pk": 394,
         "fields": {
             "name": "Rajpur",
             "code": "rajpur-dang",
@@ -2242,7 +3547,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 250,
+        "pk": 395,
         "fields": {
             "name": "Gadwa",
             "code": "gadwa-dang",
@@ -2251,7 +3556,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 251,
+        "pk": 396,
         "fields": {
             "name": "Babai",
             "code": "babai-dang",
@@ -2260,7 +3565,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 252,
+        "pk": 397,
         "fields": {
             "name": "Shantinagar",
             "code": "shantinagar-dang",
@@ -2269,7 +3574,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 253,
+        "pk": 398,
         "fields": {
             "name": "Dangisharan",
             "code": "dangisharan-dang",
@@ -2278,7 +3583,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 254,
+        "pk": 399,
+        "fields": {
+            "name": "Tulsipur",
+            "code": "tulsipur-dang",
+            "district": 59
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 400,
+        "fields": {
+            "name": "Ghorahi",
+            "code": "ghorahi-dang",
+            "district": 59
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 401,
+        "fields": {
+            "name": "Lamhi",
+            "code": "lamhi-dang",
+            "district": 59
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 402,
         "fields": {
             "name": "Banglachuli",
             "code": "banglachuli-dang",
@@ -2287,7 +3619,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 255,
+        "pk": 403,
         "fields": {
             "name": "Rapti",
             "code": "rapti-dang",
@@ -2296,7 +3628,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 256,
+        "pk": 404,
         "fields": {
             "name": "Thawang",
             "code": "thawang-rolpa",
@@ -2305,7 +3637,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 257,
+        "pk": 405,
         "fields": {
             "name": "Duikholi",
             "code": "duikholi-rolpa",
@@ -2314,7 +3646,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 258,
+        "pk": 406,
         "fields": {
             "name": "Triveni",
             "code": "triveni-rolpa",
@@ -2323,7 +3655,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 259,
+        "pk": 407,
         "fields": {
             "name": "Lungri",
             "code": "lungri-rolpa",
@@ -2332,7 +3664,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 260,
+        "pk": 408,
         "fields": {
             "name": "Sukidaha",
             "code": "sukidaha-rolpa",
@@ -2341,7 +3673,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 261,
+        "pk": 409,
         "fields": {
             "name": "Madi",
             "code": "madi-rolpa",
@@ -2350,7 +3682,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 262,
+        "pk": 410,
         "fields": {
             "name": "Runtigadhi",
             "code": "runtigadhi-rolpa",
@@ -2359,7 +3691,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 263,
+        "pk": 411,
+        "fields": {
+            "name": "Rolpa",
+            "code": "rolpa-rolpa",
+            "district": 56
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 412,
         "fields": {
             "name": "Sunchhahari",
             "code": "sunchhahari-rolpa",
@@ -2368,7 +3709,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 264,
+        "pk": 413,
         "fields": {
             "name": "Suwarnabati",
             "code": "suwarnabati-rolpa",
@@ -2377,7 +3718,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 265,
+        "pk": 414,
+        "fields": {
+            "name": "Sworgadwari",
+            "code": "sworgadwari-pyuthan",
+            "district": 55
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 415,
         "fields": {
             "name": "Naubahini",
             "code": "naubahini-pyuthan",
@@ -2386,7 +3736,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 266,
+        "pk": 416,
         "fields": {
             "name": "Gaumukhi",
             "code": "gaumukhi-pyuthan",
@@ -2395,7 +3745,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 267,
+        "pk": 417,
         "fields": {
             "name": "Mandawi",
             "code": "mandawi-pyuthan",
@@ -2404,7 +3754,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 268,
+        "pk": 418,
         "fields": {
             "name": "Sarumarani",
             "code": "sarumarani-pyuthan",
@@ -2413,7 +3763,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 269,
+        "pk": 419,
         "fields": {
             "name": "Mallarani",
             "code": "mallarani-pyuthan",
@@ -2422,7 +3772,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 270,
+        "pk": 420,
         "fields": {
             "name": "Airawati",
             "code": "airawati-pyuthan",
@@ -2431,7 +3781,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 271,
+        "pk": 421,
+        "fields": {
+            "name": "Pyuthan",
+            "code": "pyuthan-pyuthan",
+            "district": 55
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 422,
         "fields": {
             "name": "Jhimruk",
             "code": "jhimruk-pyuthan",
@@ -2440,7 +3799,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 272,
+        "pk": 423,
         "fields": {
             "name": "Madane",
             "code": "madane-gulmi",
@@ -2449,7 +3808,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 273,
+        "pk": 424,
         "fields": {
             "name": "Chatrakot",
             "code": "chatrakot-gulmi",
@@ -2458,7 +3817,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 274,
+        "pk": 425,
         "fields": {
             "name": "Ruru",
             "code": "ruru-gulmi",
@@ -2467,7 +3826,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 275,
+        "pk": 426,
         "fields": {
             "name": "Chandrakot",
             "code": "chandrakot-gulmi",
@@ -2476,7 +3835,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 276,
+        "pk": 427,
         "fields": {
             "name": "Satyawati",
             "code": "satyawati-gulmi",
@@ -2485,7 +3844,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 277,
+        "pk": 428,
         "fields": {
             "name": "Kaligandaki",
             "code": "kaligandaki-gulmi",
@@ -2494,7 +3853,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 278,
+        "pk": 429,
         "fields": {
             "name": "Gulmidarbar",
             "code": "gulmidarbar-gulmi",
@@ -2503,7 +3862,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 279,
+        "pk": 430,
         "fields": {
             "name": "Isma",
             "code": "isma-gulmi",
@@ -2512,7 +3871,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 280,
+        "pk": 431,
+        "fields": {
+            "name": "Musikot",
+            "code": "musikot-gulmi",
+            "district": 70
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 432,
         "fields": {
             "name": "Malika",
             "code": "malika-gulmi",
@@ -2521,7 +3889,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 281,
+        "pk": 433,
         "fields": {
             "name": "Dhurkot",
             "code": "dhurkot-gulmi",
@@ -2530,7 +3898,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 282,
+        "pk": 434,
+        "fields": {
+            "name": "Resunga",
+            "code": "resunga-gulmi",
+            "district": 70
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 435,
+        "fields": {
+            "name": "Bhumikasthan",
+            "code": "bhumikasthan-arghakhanch",
+            "district": 75
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 436,
         "fields": {
             "name": "Malarani",
             "code": "malarani-arghakhanchi",
@@ -2539,7 +3925,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 283,
+        "pk": 437,
         "fields": {
             "name": "Chattradev",
             "code": "chattradev-arghakhanchi",
@@ -2548,7 +3934,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 284,
+        "pk": 438,
         "fields": {
             "name": "Panini",
             "code": "panini-arghakhanchi",
@@ -2557,7 +3943,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 285,
+        "pk": 439,
+        "fields": {
+            "name": "Sitaganga",
+            "code": "sitaganga-arghakhanchi",
+            "district": 75
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 440,
+        "fields": {
+            "name": "Sandhikharka",
+            "code": "sandhikharka-arghakhanch",
+            "district": 75
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 441,
         "fields": {
             "name": "Bijayanagar",
             "code": "bijayanagar-kapilbastu",
@@ -2566,7 +3970,43 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 286,
+        "pk": 442,
+        "fields": {
+            "name": "Shivraj",
+            "code": "shivraj-kapilbastu",
+            "district": 74
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 443,
+        "fields": {
+            "name": "Buddhabhumi",
+            "code": "buddhabhumi-kapilbastu",
+            "district": 74
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 444,
+        "fields": {
+            "name": "Banganga",
+            "code": "banganga-kapilbastu",
+            "district": 74
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 445,
+        "fields": {
+            "name": "Kapilvastu",
+            "code": "kapilvastu-kapilbastu",
+            "district": 74
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 446,
         "fields": {
             "name": "Mayadevi",
             "code": "mayadevi-kapilbastu",
@@ -2575,7 +4015,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 287,
+        "pk": 447,
         "fields": {
             "name": "Suddhodhan",
             "code": "suddhodhan-kapilbastu",
@@ -2584,7 +4024,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 288,
+        "pk": 448,
         "fields": {
             "name": "Yashodhara",
             "code": "yashodhara-kapilbastu",
@@ -2593,7 +4033,52 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 289,
+        "pk": 449,
+        "fields": {
+            "name": "Maharajgunj",
+            "code": "maharajgunj-kapilbastu",
+            "district": 74
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 450,
+        "fields": {
+            "name": "Krishnanagar",
+            "code": "krishnanagar-kapilbastu",
+            "district": 74
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 451,
+        "fields": {
+            "name": "Sainamaina",
+            "code": "sainamaina-rupandehi",
+            "district": 73
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 452,
+        "fields": {
+            "name": "Butwal",
+            "code": "butwal-rupandehi",
+            "district": 73
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 453,
+        "fields": {
+            "name": "Devdaha",
+            "code": "devdaha-rupandehi",
+            "district": 73
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 454,
         "fields": {
             "name": "Rohini",
             "code": "rohini-rupandehi",
@@ -2602,7 +4087,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 290,
+        "pk": 455,
         "fields": {
             "name": "Omsatiya",
             "code": "omsatiya-rupandehi",
@@ -2611,7 +4096,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 291,
+        "pk": 456,
         "fields": {
             "name": "Kanchan",
             "code": "kanchan-rupandehi",
@@ -2620,7 +4105,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 292,
+        "pk": 457,
         "fields": {
             "name": "Gaidahawa",
             "code": "gaidahawa-rupandehi",
@@ -2629,7 +4114,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 293,
+        "pk": 458,
         "fields": {
             "name": "Suddhodhan",
             "code": "suddhodhan-rupandehi",
@@ -2638,7 +4123,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 294,
+        "pk": 459,
         "fields": {
             "name": "Siyari",
             "code": "siyari-rupandehi",
@@ -2647,7 +4132,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 295,
+        "pk": 460,
+        "fields": {
+            "name": "Tillotama",
+            "code": "tillotama-rupandehi",
+            "district": 73
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 461,
         "fields": {
             "name": "Sammarimai",
             "code": "sammarimai-rupandehi",
@@ -2656,7 +4150,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 296,
+        "pk": 462,
         "fields": {
             "name": "Marchawari",
             "code": "marchawari-rupandehi",
@@ -2665,7 +4159,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 297,
+        "pk": 463,
         "fields": {
             "name": "Mayadevi",
             "code": "mayadevi-rupandehi",
@@ -2674,7 +4168,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 298,
+        "pk": 464,
+        "fields": {
+            "name": "Lumbini Sanskritik",
+            "code": "lumbini -sanskritik-rupa",
+            "district": 73
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 465,
+        "fields": {
+            "name": "Siddharthanagar",
+            "code": "siddharthanagar-rupandeh",
+            "district": 73
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 466,
         "fields": {
             "name": "Rainadevi Chahara",
             "code": "rainadevi -chahara-palpa",
@@ -2683,7 +4195,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 299,
+        "pk": 467,
         "fields": {
             "name": "Ribdikot",
             "code": "ribdikot-palpa",
@@ -2692,7 +4204,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 300,
+        "pk": 468,
         "fields": {
             "name": "Tinau",
             "code": "tinau-palpa",
@@ -2701,7 +4213,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 301,
+        "pk": 469,
+        "fields": {
+            "name": "Tansen",
+            "code": "tansen-palpa",
+            "district": 71
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 470,
         "fields": {
             "name": "Bagnaskali",
             "code": "bagnaskali-palpa",
@@ -2710,7 +4231,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 302,
+        "pk": 471,
         "fields": {
             "name": "Mathagadhi",
             "code": "mathagadhi-palpa",
@@ -2719,7 +4240,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 303,
+        "pk": 472,
+        "fields": {
+            "name": "Rampur",
+            "code": "rampur-palpa",
+            "district": 71
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 473,
         "fields": {
             "name": "Nisdi",
             "code": "nisdi-palpa",
@@ -2728,7 +4258,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 304,
+        "pk": 474,
         "fields": {
             "name": "Rambha",
             "code": "rambha-palpa",
@@ -2737,7 +4267,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 305,
+        "pk": 475,
         "fields": {
             "name": "Purbakhola",
             "code": "purbakhola-palpa",
@@ -2746,7 +4276,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 306,
+        "pk": 476,
         "fields": {
             "name": "Binayee",
             "code": "binayee-nawalparasi",
@@ -2755,7 +4285,43 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 307,
+        "pk": 477,
+        "fields": {
+            "name": "Chainpur",
+            "code": "chainpur-sankhuwasabha",
+            "district": 24
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 478,
+        "fields": {
+            "name": "Dharmadevi",
+            "code": "dharmadevi-sankhuwasabha",
+            "district": 24
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 479,
+        "fields": {
+            "name": "Madi",
+            "code": "madi-sankhuwasabha",
+            "district": 24
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 480,
+        "fields": {
+            "name": "Panchakhapan",
+            "code": "panchakhapan-sankhuwasab",
+            "district": 24
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 481,
         "fields": {
             "name": "Sabhapokhari",
             "code": "sabhapokhari-sankhuwasab",
@@ -2764,7 +4330,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 308,
+        "pk": 482,
+        "fields": {
+            "name": "Khandbari",
+            "code": "khandbari-sankhuwasabha",
+            "district": 24
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 483,
         "fields": {
             "name": "Chichila",
             "code": "chichila-sankhuwasabha",
@@ -2773,7 +4348,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 309,
+        "pk": 484,
         "fields": {
             "name": "Silichong",
             "code": "silichong-sankhuwasabha",
@@ -2782,16 +4357,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 310,
-        "fields": {
-            "name": "Bhotkhola",
-            "code": "bhotkhola-sankhuwasabha",
-            "district": 24
-        }
-    },
-    {
-        "model": "project.Municipality",
-        "pk": 311,
+        "pk": 485,
         "fields": {
             "name": "Makalu",
             "code": "makalu-sankhuwasabha",
@@ -2800,7 +4366,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 312,
+        "pk": 486,
+        "fields": {
+            "name": "Bhotkhola",
+            "code": "bhotkhola-sankhuwasabha",
+            "district": 24
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 487,
         "fields": {
             "name": "Miklajung",
             "code": "miklajung-panchthar",
@@ -2809,7 +4384,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 313,
+        "pk": 488,
         "fields": {
             "name": "Tumbewa",
             "code": "tumbewa-panchthar",
@@ -2818,7 +4393,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 314,
+        "pk": 489,
         "fields": {
             "name": "Kummayak",
             "code": "kummayak-panchthar",
@@ -2827,7 +4402,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 315,
+        "pk": 490,
         "fields": {
             "name": "Galgunanda",
             "code": "galgunanda-panchthar",
@@ -2836,7 +4411,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 316,
+        "pk": 491,
+        "fields": {
+            "name": "Phidim",
+            "code": "phidim-panchthar",
+            "district": 27
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 492,
         "fields": {
             "name": "Falelung",
             "code": "falelung-panchthar",
@@ -2845,7 +4429,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 317,
+        "pk": 493,
         "fields": {
             "name": "Hilihang",
             "code": "hilihang-panchthar",
@@ -2854,7 +4438,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 318,
+        "pk": 494,
         "fields": {
             "name": "Yangwarak",
             "code": "yangwarak-panchthar",
@@ -2863,7 +4447,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 319,
+        "pk": 495,
         "fields": {
             "name": "Meringden",
             "code": "meringden-taplejung",
@@ -2872,7 +4456,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 320,
+        "pk": 496,
         "fields": {
             "name": "Maiwakhola",
             "code": "maiwakhola-taplejung",
@@ -2881,7 +4465,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 321,
+        "pk": 497,
         "fields": {
             "name": "Menchhayam",
             "code": "menchhayam-terathum",
@@ -2890,7 +4474,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 322,
+        "pk": 498,
         "fields": {
             "name": "Phedap",
             "code": "phedap-terathum",
@@ -2899,7 +4483,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 323,
+        "pk": 499,
         "fields": {
             "name": "Aathrai",
             "code": "aathrai-terathum",
@@ -2908,7 +4492,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 324,
+        "pk": 500,
+        "fields": {
+            "name": "Myanglung",
+            "code": "myanglung-terathum",
+            "district": 23
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 501,
+        "fields": {
+            "name": "Laliguras",
+            "code": "laliguras-terathum",
+            "district": 23
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 502,
         "fields": {
             "name": "Chhathar",
             "code": "chhathar-terathum",
@@ -2917,7 +4519,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 325,
+        "pk": 503,
         "fields": {
             "name": "Chulachuli",
             "code": "chulachuli-ilam",
@@ -2926,7 +4528,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 326,
+        "pk": 504,
         "fields": {
             "name": "Mangsebung",
             "code": "mangsebung-ilam",
@@ -2935,7 +4537,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 327,
+        "pk": 505,
         "fields": {
             "name": "Rong",
             "code": "rong-ilam",
@@ -2944,7 +4546,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 328,
+        "pk": 506,
         "fields": {
             "name": "Sandakpur",
             "code": "sandakpur-ilam",
@@ -2953,7 +4555,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 329,
+        "pk": 507,
+        "fields": {
+            "name": "Deumai",
+            "code": "deumai-ilam",
+            "district": 28
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 508,
         "fields": {
             "name": "Maijogmai",
             "code": "maijogmai-ilam",
@@ -2962,7 +4573,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 330,
+        "pk": 509,
+        "fields": {
+            "name": "Mai",
+            "code": "mai-ilam",
+            "district": 28
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 510,
+        "fields": {
+            "name": "Ilam",
+            "code": "ilam-ilam",
+            "district": 28
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 511,
+        "fields": {
+            "name": "Suryodaya",
+            "code": "suryodaya-ilam",
+            "district": 28
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 512,
         "fields": {
             "name": "Fakphokthum",
             "code": "fakphokthum-ilam",
@@ -2971,7 +4609,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 331,
+        "pk": 513,
+        "fields": {
+            "name": "Gauradhaha",
+            "code": "gauradhaha-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 514,
         "fields": {
             "name": "Gauriganj",
             "code": "gauriganj-jhapa",
@@ -2980,7 +4627,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 332,
+        "pk": 515,
         "fields": {
             "name": "Jhapa",
             "code": "jhapa-jhapa",
@@ -2989,7 +4636,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 333,
+        "pk": 516,
+        "fields": {
+            "name": "Shivasataxi",
+            "code": "shivasataxi-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 517,
         "fields": {
             "name": "Kachankawal",
             "code": "kachankawal-jhapa",
@@ -2998,7 +4654,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 334,
+        "pk": 518,
+        "fields": {
+            "name": "Bhadrapur",
+            "code": "bhadrapur-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 519,
         "fields": {
             "name": "Haldibari",
             "code": "haldibari-jhapa",
@@ -3007,7 +4672,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 335,
+        "pk": 520,
+        "fields": {
+            "name": "Birtamod",
+            "code": "birtamod-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 521,
+        "fields": {
+            "name": "Arjundhara",
+            "code": "arjundhara-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 522,
+        "fields": {
+            "name": "Mechinagar",
+            "code": "mechinagar-jhapa",
+            "district": 29
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 523,
         "fields": {
             "name": "Buddhashanti",
             "code": "buddhashanti-jhapa",
@@ -3016,7 +4708,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 336,
+        "pk": 524,
         "fields": {
             "name": "Kankai",
             "code": "kankai-jhapa",
@@ -3025,7 +4717,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 337,
+        "pk": 525,
         "fields": {
             "name": "Kamal",
             "code": "kamal-jhapa",
@@ -3034,7 +4726,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 338,
+        "pk": 526,
         "fields": {
             "name": "Garhadashi",
             "code": "garhadashi-jhapa",
@@ -3043,7 +4735,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 339,
+        "pk": 527,
+        "fields": {
+            "name": "Sundarharicha",
+            "code": "sundarharicha-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 528,
+        "fields": {
+            "name": "Belbari",
+            "code": "belbari-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 529,
         "fields": {
             "name": "Kanepokhari",
             "code": "kanepokhari-morang",
@@ -3052,7 +4762,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 340,
+        "pk": 530,
         "fields": {
             "name": "Budhiganga",
             "code": "budhiganga-morang",
@@ -3061,7 +4771,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 341,
+        "pk": 531,
         "fields": {
             "name": "Gramthan",
             "code": "gramthan-morang",
@@ -3070,7 +4780,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 342,
+        "pk": 532,
         "fields": {
             "name": "Katahari",
             "code": "katahari-morang",
@@ -3079,7 +4789,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 343,
+        "pk": 533,
         "fields": {
             "name": "Dhanpalthan",
             "code": "dhanpalthan-morang",
@@ -3088,7 +4798,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 344,
+        "pk": 534,
+        "fields": {
+            "name": "Rangeli",
+            "code": "rangeli-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 535,
+        "fields": {
+            "name": "Pathrisanishchare",
+            "code": "pathrisanishchare-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 536,
         "fields": {
             "name": "Miklajunga",
             "code": "miklajunga-morang",
@@ -3097,7 +4825,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 345,
+        "pk": 537,
+        "fields": {
+            "name": "Sunawarshi",
+            "code": "sunawarshi-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 538,
+        "fields": {
+            "name": "Ratuwamai",
+            "code": "ratuwamai-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 539,
         "fields": {
             "name": "Jahada",
             "code": "jahada-morang",
@@ -3106,7 +4852,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 346,
+        "pk": 540,
+        "fields": {
+            "name": "Uralabari",
+            "code": "uralabari-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 541,
+        "fields": {
+            "name": "Biratnagar",
+            "code": "biratnagar-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 542,
         "fields": {
             "name": "Kerabari",
             "code": "kerabari-morang",
@@ -3115,7 +4879,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 347,
+        "pk": 543,
+        "fields": {
+            "name": "Letang",
+            "code": "letang-morang",
+            "district": 20
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 544,
         "fields": {
             "name": "Aathrai Tribeni",
             "code": "aathrai -tribeni-tapleju",
@@ -3124,7 +4897,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 348,
+        "pk": 545,
         "fields": {
             "name": "Sidingba",
             "code": "sidingba-taplejung",
@@ -3133,7 +4906,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 349,
+        "pk": 546,
         "fields": {
             "name": "Yangwarak",
             "code": "yangwarak-taplejung",
@@ -3142,7 +4915,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 350,
+        "pk": 547,
+        "fields": {
+            "name": "Phungling",
+            "code": "phungling-taplejung",
+            "district": 26
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 548,
         "fields": {
             "name": "Sirijangha",
             "code": "sirijangha-taplejung",
@@ -3151,7 +4933,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 351,
+        "pk": 549,
         "fields": {
             "name": "Phaktanglung",
             "code": "phaktanglung-taplejung",
@@ -3160,7 +4942,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 352,
+        "pk": 550,
         "fields": {
             "name": "Mikwakhola",
             "code": "mikwakhola-taplejung",
@@ -3169,7 +4951,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 353,
+        "pk": 551,
         "fields": {
             "name": "Koshi",
             "code": "koshi-sunsari",
@@ -3178,7 +4960,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 354,
+        "pk": 552,
+        "fields": {
+            "name": "Barah",
+            "code": "barah-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 553,
+        "fields": {
+            "name": "Dharan",
+            "code": "dharan-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 554,
+        "fields": {
+            "name": "Itahari",
+            "code": "itahari-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 555,
         "fields": {
             "name": "Barju",
             "code": "barju-sunsari",
@@ -3187,7 +4996,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 355,
+        "pk": 556,
         "fields": {
             "name": "Gadhi",
             "code": "gadhi-sunsari",
@@ -3196,7 +5005,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 356,
+        "pk": 557,
         "fields": {
             "name": "Harinagara",
             "code": "harinagara-sunsari",
@@ -3205,7 +5014,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 357,
+        "pk": 558,
+        "fields": {
+            "name": "Duhabi",
+            "code": "duhabi-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 559,
+        "fields": {
+            "name": "Ramdhuni",
+            "code": "ramdhuni-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 560,
+        "fields": {
+            "name": "Inaruwa",
+            "code": "inaruwa-sunsari",
+            "district": 21
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 561,
         "fields": {
             "name": "Bhokraha",
             "code": "bhokraha-sunsari",
@@ -3214,7 +5050,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 358,
+        "pk": 562,
+        "fields": {
+            "name": "Pakhribas",
+            "code": "pakhribas-dhankuta",
+            "district": 22
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 563,
         "fields": {
             "name": "Sagurigadhi",
             "code": "sagurigadhi-dhankuta",
@@ -3223,7 +5068,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 359,
+        "pk": 564,
+        "fields": {
+            "name": "Dhankuta",
+            "code": "dhankuta-dhankuta",
+            "district": 22
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 565,
         "fields": {
             "name": "Khalsa Chhintang Shahidbhumi",
             "code": "khalsa -chhintang -shahi",
@@ -3232,7 +5086,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 360,
+        "pk": 566,
         "fields": {
             "name": "Chhathar Jorpati",
             "code": "chhathar -jorpati-dhanku",
@@ -3241,7 +5095,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 361,
+        "pk": 567,
+        "fields": {
+            "name": "Mahalaxmi",
+            "code": "mahalaxmi-dhankuta",
+            "district": 22
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 568,
         "fields": {
             "name": "Chaubise",
             "code": "chaubise-dhankuta",
@@ -3250,7 +5113,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 362,
+        "pk": 569,
         "fields": {
             "name": "Likhupike",
             "code": "likhupike-solukhumbu",
@@ -3259,7 +5122,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 363,
+        "pk": 570,
+        "fields": {
+            "name": "Solududhkunda",
+            "code": "solududhkunda-solukhumbu",
+            "district": 30
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 571,
         "fields": {
             "name": "Nechasalyan",
             "code": "nechasalyan-solukhumbu",
@@ -3268,7 +5140,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 364,
+        "pk": 572,
         "fields": {
             "name": "Dudhkaushika",
             "code": "dudhkaushika-solukhumbu",
@@ -3277,7 +5149,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 365,
+        "pk": 573,
         "fields": {
             "name": "Khumbu Pasanglamhu",
             "code": "khumbu -pasanglamhu-solu",
@@ -3286,7 +5158,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 366,
+        "pk": 574,
         "fields": {
             "name": "Dudhkoshi",
             "code": "dudhkoshi-solukhumbu",
@@ -3295,7 +5167,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 367,
+        "pk": 575,
         "fields": {
             "name": "Mahakulung",
             "code": "mahakulung-solukhumbu",
@@ -3304,7 +5176,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 368,
+        "pk": 576,
         "fields": {
             "name": "Sotang",
             "code": "sotang-solukhumbu",
@@ -3313,7 +5185,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 369,
+        "pk": 577,
         "fields": {
             "name": "Champadevi",
             "code": "champadevi-okhaldhunga",
@@ -3322,7 +5194,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 370,
+        "pk": 578,
         "fields": {
             "name": "Sukoshi",
             "code": "sukoshi-okhaldhunga",
@@ -3331,7 +5203,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 371,
+        "pk": 579,
         "fields": {
             "name": "Manebhanjyang",
             "code": "manebhanjyang-okhaldhung",
@@ -3340,7 +5212,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 372,
+        "pk": 580,
         "fields": {
             "name": "Chisankhugadi",
             "code": "chisankhugadi-okhaldhung",
@@ -3349,7 +5221,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 373,
+        "pk": 581,
         "fields": {
             "name": "Molung",
             "code": "molung-okhaldhunga",
@@ -3358,7 +5230,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 374,
+        "pk": 582,
         "fields": {
             "name": "Likhu",
             "code": "likhu-okhaldhunga",
@@ -3367,7 +5239,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 375,
+        "pk": 583,
         "fields": {
             "name": "Khijidemba",
             "code": "khijidemba-okhaldhunga",
@@ -3376,7 +5248,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 376,
+        "pk": 584,
+        "fields": {
+            "name": "Siddhicharan",
+            "code": "siddhicharan-okhaldhunga",
+            "district": 31
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 585,
+        "fields": {
+            "name": "Halesi Tuwachung",
+            "code": "halesi -tuwachung-khotan",
+            "district": 32
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 586,
+        "fields": {
+            "name": "Rupakot Majhuwagadhi",
+            "code": "rupakot -majhuwagadhi-kh",
+            "district": 32
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 587,
         "fields": {
             "name": "Kepilasgadhi",
             "code": "kepilasgadhi-khotang",
@@ -3385,7 +5284,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 377,
+        "pk": 588,
         "fields": {
             "name": "Lamidanda",
             "code": "lamidanda-khotang",
@@ -3394,7 +5293,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 378,
+        "pk": 589,
         "fields": {
             "name": "Ainselukharka",
             "code": "ainselukharka-khotang",
@@ -3403,7 +5302,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 379,
+        "pk": 590,
         "fields": {
             "name": "Diprung",
             "code": "diprung-khotang",
@@ -3412,7 +5311,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 380,
+        "pk": 591,
         "fields": {
             "name": "Sakela",
             "code": "sakela-khotang",
@@ -3421,7 +5320,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 381,
+        "pk": 592,
         "fields": {
             "name": "Khotehang",
             "code": "khotehang-khotang",
@@ -3430,7 +5329,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 382,
+        "pk": 593,
         "fields": {
             "name": "Barahapokhari",
             "code": "barahapokhari-khotang",
@@ -3439,7 +5338,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 383,
+        "pk": 594,
         "fields": {
             "name": "Jantedhunga",
             "code": "jantedhunga-khotang",
@@ -3448,7 +5347,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 384,
+        "pk": 595,
         "fields": {
             "name": "Salpasilichho",
             "code": "salpasilichho-bhojpur",
@@ -3457,7 +5356,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 385,
+        "pk": 596,
+        "fields": {
+            "name": "Shadananda",
+            "code": "shadananda-bhojpur",
+            "district": 25
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 597,
         "fields": {
             "name": "Arun",
             "code": "arun-bhojpur",
@@ -3466,7 +5374,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 386,
+        "pk": 598,
         "fields": {
             "name": "Ramprasad Rai",
             "code": "ramprasad -rai-bhojpur",
@@ -3475,7 +5383,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 387,
+        "pk": 599,
         "fields": {
             "name": "Aamchowk",
             "code": "aamchowk-bhojpur",
@@ -3484,7 +5392,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 388,
+        "pk": 600,
         "fields": {
             "name": "Hatuwagadhi",
             "code": "hatuwagadhi-bhojpur",
@@ -3493,7 +5401,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 389,
+        "pk": 601,
+        "fields": {
+            "name": "Bhojpur",
+            "code": "bhojpur-bhojpur",
+            "district": 25
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 602,
         "fields": {
             "name": "Tyamkemaiyung",
             "code": "tyamkemaiyung-bhojpur",
@@ -3502,7 +5419,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 390,
+        "pk": 603,
         "fields": {
             "name": "Pauwadungma",
             "code": "pauwadungma-bhojpur",
@@ -3511,7 +5428,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 391,
+        "pk": 604,
+        "fields": {
+            "name": "Katari",
+            "code": "katari-udayapur",
+            "district": 33
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 605,
         "fields": {
             "name": "Udayapurgadhi",
             "code": "udayapurgadhi-udayapur",
@@ -3520,7 +5446,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 392,
+        "pk": 606,
         "fields": {
             "name": "Rautamai",
             "code": "rautamai-udayapur",
@@ -3529,7 +5455,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 393,
+        "pk": 607,
         "fields": {
             "name": "Tapli",
             "code": "tapli-udayapur",
@@ -3538,7 +5464,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 394,
+        "pk": 608,
         "fields": {
             "name": "Sunkoshi",
             "code": "sunkoshi-udayapur",
@@ -3547,7 +5473,61 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 395,
+        "pk": 609,
+        "fields": {
+            "name": "Triyuga",
+            "code": "triyuga-udayapur",
+            "district": 33
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 610,
+        "fields": {
+            "name": "Chaudandigadi",
+            "code": "chaudandigadi-udayapur",
+            "district": 33
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 611,
+        "fields": {
+            "name": "Belaka",
+            "code": "belaka-udayapur",
+            "district": 33
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 612,
+        "fields": {
+            "name": "Surunga",
+            "code": "surunga-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 613,
+        "fields": {
+            "name": "Bode Barsain",
+            "code": "bode -barsain-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 614,
+        "fields": {
+            "name": "Hanumannagar Kankalan",
+            "code": "hanumannagar -kankalan-s",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 615,
         "fields": {
             "name": "Tirahut",
             "code": "tirahut-saptari",
@@ -3556,7 +5536,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 396,
+        "pk": 616,
         "fields": {
             "name": "Saptakoshi",
             "code": "saptakoshi-saptari",
@@ -3565,7 +5545,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 397,
+        "pk": 617,
         "fields": {
             "name": "Krishna Sawaran",
             "code": "krishna -sawaran-saptari",
@@ -3574,7 +5554,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 398,
+        "pk": 618,
+        "fields": {
+            "name": "Kanchanrup",
+            "code": "kanchanrup-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 619,
         "fields": {
             "name": "Rupani",
             "code": "rupani-saptari",
@@ -3583,7 +5572,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 399,
+        "pk": 620,
         "fields": {
             "name": "Bishnupur",
             "code": "bishnupur-saptari",
@@ -3592,7 +5581,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 400,
+        "pk": 621,
         "fields": {
             "name": "Chhinnamasta",
             "code": "chhinnamasta-saptari",
@@ -3601,7 +5590,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 401,
+        "pk": 622,
         "fields": {
             "name": "Tilathi Koiladi",
             "code": "tilathi -koiladi-saptari",
@@ -3610,7 +5599,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 402,
+        "pk": 623,
+        "fields": {
+            "name": "Rajbiraj",
+            "code": "rajbiraj-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 624,
         "fields": {
             "name": "Mahadewa",
             "code": "mahadewa-saptari",
@@ -3619,7 +5617,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 403,
+        "pk": 625,
+        "fields": {
+            "name": "Khadak",
+            "code": "khadak-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 626,
+        "fields": {
+            "name": "Koshi Tappu",
+            "code": "koshi -tappu-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 627,
         "fields": {
             "name": "Karjanha",
             "code": "karjanha-siraha",
@@ -3628,7 +5644,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 404,
+        "pk": 628,
+        "fields": {
+            "name": "Ganeshman Charnath",
+            "code": "ganeshman -charnath-dhan",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 629,
+        "fields": {
+            "name": "Mithila",
+            "code": "mithila-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 630,
         "fields": {
             "name": "Kamala Siddhidatri",
             "code": "kamala -siddhidatri-dhan",
@@ -3637,7 +5671,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 405,
+        "pk": 631,
         "fields": {
             "name": "Janaknandani",
             "code": "janaknandani-dhanusa",
@@ -3646,7 +5680,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 406,
+        "pk": 632,
+        "fields": {
+            "name": "Bideha",
+            "code": "bideha-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 633,
         "fields": {
             "name": "Aaurahi",
             "code": "aaurahi-dhanusa",
@@ -3655,7 +5698,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 407,
+        "pk": 634,
+        "fields": {
+            "name": "Nagarain",
+            "code": "nagarain-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 635,
         "fields": {
             "name": "Mukhiyapatti Musarmiya",
             "code": "mukhiyapatti -musarmiya-",
@@ -3664,7 +5716,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 408,
+        "pk": 636,
         "fields": {
             "name": "Lakshminiya",
             "code": "lakshminiya-dhanusa",
@@ -3673,7 +5725,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 409,
+        "pk": 637,
         "fields": {
             "name": "Mithila Bihari",
             "code": "mithila -bihari-dhanusa",
@@ -3682,7 +5734,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 410,
+        "pk": 638,
         "fields": {
             "name": "Hansapur Kathapulla",
             "code": "hansapur -kathapulla-dha",
@@ -3691,7 +5743,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 411,
+        "pk": 639,
+        "fields": {
+            "name": "Chhireshwornath",
+            "code": "chhireshwornath-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 640,
+        "fields": {
+            "name": "Janakpur",
+            "code": "janakpur-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 641,
         "fields": {
             "name": "Bateshwor",
             "code": "bateshwor-dhanusa",
@@ -3700,7 +5770,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 412,
+        "pk": 642,
+        "fields": {
+            "name": "Sabaila",
+            "code": "sabaila-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 643,
+        "fields": {
+            "name": "Sahidnagar",
+            "code": "sahidnagar-dhanusa",
+            "district": 9
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 644,
         "fields": {
             "name": "Dhanusadham",
             "code": "dhanusadham-dhanusa",
@@ -3709,7 +5797,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 413,
+        "pk": 645,
+        "fields": {
+            "name": "Bardibas",
+            "code": "bardibas-mahottari",
+            "district": 10
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 646,
+        "fields": {
+            "name": "Gaushala",
+            "code": "gaushala-mahottari",
+            "district": 10
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 647,
         "fields": {
             "name": "Sonama",
             "code": "sonama-mahottari",
@@ -3718,7 +5824,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 414,
+        "pk": 648,
         "fields": {
             "name": "Ramgopalpur",
             "code": "ramgopalpur-mahottari",
@@ -3727,7 +5833,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 415,
+        "pk": 649,
         "fields": {
             "name": "Aurahi",
             "code": "aurahi-mahottari",
@@ -3736,7 +5842,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 416,
+        "pk": 650,
         "fields": {
             "name": "Bhangaha",
             "code": "bhangaha-mahottari",
@@ -3745,7 +5851,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 417,
+        "pk": 651,
         "fields": {
             "name": "Manra",
             "code": "manra-mahottari",
@@ -3754,7 +5860,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 418,
+        "pk": 652,
         "fields": {
             "name": "Ekdanra",
             "code": "ekdanra-mahottari",
@@ -3763,7 +5869,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 419,
+        "pk": 653,
         "fields": {
             "name": "Mahottari",
             "code": "mahottari-mahottari",
@@ -3772,7 +5878,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 420,
+        "pk": 654,
+        "fields": {
+            "name": "Jaleswor",
+            "code": "jaleswor-mahottari",
+            "district": 10
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 655,
         "fields": {
             "name": "Pipra",
             "code": "pipra-mahottari",
@@ -3781,7 +5896,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 421,
+        "pk": 656,
         "fields": {
             "name": "Matihani",
             "code": "matihani-mahottari",
@@ -3790,7 +5905,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 422,
+        "pk": 657,
         "fields": {
             "name": "Balwa",
             "code": "balwa-mahottari",
@@ -3799,7 +5914,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 423,
+        "pk": 658,
         "fields": {
             "name": "Loharpatti",
             "code": "loharpatti-mahottari",
@@ -3808,7 +5923,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 424,
+        "pk": 659,
+        "fields": {
+            "name": "Chandrapur",
+            "code": "chandrapur-rautahat",
+            "district": 16
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 660,
         "fields": {
             "name": "Birndaban",
             "code": "birndaban-rautahat",
@@ -3817,7 +5941,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 425,
+        "pk": 661,
         "fields": {
             "name": "Gujara",
             "code": "gujara-rautahat",
@@ -3826,7 +5950,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 426,
+        "pk": 662,
         "fields": {
             "name": "Katahariya",
             "code": "katahariya-rautahat",
@@ -3835,7 +5959,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 427,
+        "pk": 663,
         "fields": {
             "name": "Baudhimal",
             "code": "baudhimal-rautahat",
@@ -3844,7 +5968,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 428,
+        "pk": 664,
         "fields": {
             "name": "Paroha",
             "code": "paroha-rautahat",
@@ -3853,7 +5977,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 429,
+        "pk": 665,
         "fields": {
             "name": "Ishanath",
             "code": "ishanath-rautahat",
@@ -3862,7 +5986,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 430,
+        "pk": 666,
         "fields": {
             "name": "Rajpur",
             "code": "rajpur-rautahat",
@@ -3871,7 +5995,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 431,
+        "pk": 667,
+        "fields": {
+            "name": "Gaur",
+            "code": "gaur-rautahat",
+            "district": 16
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 668,
+        "fields": {
+            "name": "Parsa",
+            "code": "parsa-parsa",
+            "district": 18
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 669,
         "fields": {
             "name": "Parsagadhi",
             "code": "parsagadhi-parsa",
@@ -3880,7 +6022,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 432,
+        "pk": 670,
         "fields": {
             "name": "Belwa",
             "code": "belwa-parsa",
@@ -3889,7 +6031,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 433,
+        "pk": 671,
+        "fields": {
+            "name": "Birgunj",
+            "code": "birgunj-parsa",
+            "district": 18
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 672,
         "fields": {
             "name": "Bahudaramai",
             "code": "bahudaramai-parsa",
@@ -3898,7 +6049,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 434,
+        "pk": 673,
         "fields": {
             "name": "Bindabasini",
             "code": "bindabasini-parsa",
@@ -3907,7 +6058,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 435,
+        "pk": 674,
         "fields": {
             "name": "Pakahamainpur",
             "code": "pakahamainpur-parsa",
@@ -3916,7 +6067,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 436,
+        "pk": 675,
         "fields": {
             "name": "Chhipaharmai",
             "code": "chhipaharmai-parsa",
@@ -3925,7 +6076,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 437,
+        "pk": 676,
         "fields": {
             "name": "Dhobini",
             "code": "dhobini-parsa",
@@ -3934,7 +6085,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 438,
+        "pk": 677,
         "fields": {
             "name": "Jagarnathpur",
             "code": "jagarnathpur-parsa",
@@ -3943,7 +6094,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 439,
+        "pk": 678,
         "fields": {
             "name": "Paterwasugauli",
             "code": "paterwasugauli-parsa",
@@ -3952,7 +6103,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 440,
+        "pk": 679,
         "fields": {
             "name": "Sakhuwa Prasauni",
             "code": "sakhuwa -prasauni-parsa",
@@ -3961,7 +6112,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 441,
+        "pk": 680,
         "fields": {
             "name": "Dewanganj",
             "code": "dewanganj-sunsari",
@@ -3970,7 +6121,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 442,
+        "pk": 681,
+        "fields": {
+            "name": "Dakneshwari",
+            "code": "dakneshwari-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 682,
+        "fields": {
+            "name": "Gulariya",
+            "code": "gulariya-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 683,
         "fields": {
             "name": "Badhaiyatal",
             "code": "badhaiyatal-bardiya",
@@ -3979,7 +6148,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 443,
+        "pk": 684,
+        "fields": {
+            "name": "Madhuwan",
+            "code": "madhuwan-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 685,
+        "fields": {
+            "name": "Thakurbaba",
+            "code": "thakurbaba-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 686,
+        "fields": {
+            "name": "Rajapur",
+            "code": "rajapur-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 687,
         "fields": {
             "name": "Geruwa",
             "code": "geruwa-bardiya",
@@ -3988,7 +6184,34 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 444,
+        "pk": 688,
+        "fields": {
+            "name": "Barbardiya",
+            "code": "barbardiya-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 689,
+        "fields": {
+            "name": "Bansagadhi",
+            "code": "bansagadhi-bardiya",
+            "district": 46
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 690,
+        "fields": {
+            "name": "Balara",
+            "code": "balara-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 691,
         "fields": {
             "name": "Ramnagar",
             "code": "ramnagar-sarlahi",
@@ -3997,7 +6220,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 445,
+        "pk": 692,
+        "fields": {
+            "name": "Gaudeta",
+            "code": "gaudeta-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 693,
         "fields": {
             "name": "Bishnu",
             "code": "bishnu-sarlahi",
@@ -4006,7 +6238,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 446,
+        "pk": 694,
         "fields": {
             "name": "Kabilasi",
             "code": "kabilasi-sarlahi",
@@ -4015,7 +6247,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 447,
+        "pk": 695,
         "fields": {
             "name": "Chandranagar",
             "code": "chandranagar-sarlahi",
@@ -4024,7 +6256,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 448,
+        "pk": 696,
         "fields": {
             "name": "Bramhapuri",
             "code": "bramhapuri-sarlahi",
@@ -4033,7 +6265,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 449,
+        "pk": 697,
+        "fields": {
+            "name": "Haripurwa",
+            "code": "haripurwa-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 698,
         "fields": {
             "name": "Chakraghatta",
             "code": "chakraghatta-sarlahi",
@@ -4042,7 +6283,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 450,
+        "pk": 699,
+        "fields": {
+            "name": "Malangawa",
+            "code": "malangawa-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 700,
         "fields": {
             "name": "Dhankaul",
             "code": "dhankaul-sarlahi",
@@ -4051,7 +6301,61 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 451,
+        "pk": 701,
+        "fields": {
+            "name": "Ishworpur",
+            "code": "ishworpur-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 702,
+        "fields": {
+            "name": "Lalbandi",
+            "code": "lalbandi-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 703,
+        "fields": {
+            "name": "Bagmati",
+            "code": "bagmati-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 704,
+        "fields": {
+            "name": "Hariwan",
+            "code": "hariwan-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 705,
+        "fields": {
+            "name": "Barahathawa",
+            "code": "barahathawa-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 706,
+        "fields": {
+            "name": "Haripur",
+            "code": "haripur-sarlahi",
+            "district": 11
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 707,
         "fields": {
             "name": "Pacharauta",
             "code": "pacharauta-bara",
@@ -4060,7 +6364,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 452,
+        "pk": 708,
+        "fields": {
+            "name": "Simraungadh",
+            "code": "simraungadh-bara",
+            "district": 17
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 709,
         "fields": {
             "name": "Suwarna",
             "code": "suwarna-bara",
@@ -4069,7 +6382,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 453,
+        "pk": 710,
         "fields": {
             "name": "Devtal",
             "code": "devtal-bara",
@@ -4078,7 +6391,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 454,
+        "pk": 711,
+        "fields": {
+            "name": "Mahagadhimai",
+            "code": "mahagadhimai-bara",
+            "district": 17
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 712,
         "fields": {
             "name": "Baragadhi",
             "code": "baragadhi-bara",
@@ -4087,7 +6409,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 455,
+        "pk": 713,
+        "fields": {
+            "name": "Jitpur Simara",
+            "code": "jitpur -simara-bara",
+            "district": 17
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 714,
+        "fields": {
+            "name": "Nijgadh",
+            "code": "nijgadh-bara",
+            "district": 17
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 715,
         "fields": {
             "name": "Karaiyamai",
             "code": "karaiyamai-bara",
@@ -4096,7 +6436,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 456,
+        "pk": 716,
         "fields": {
             "name": "Kolhabi",
             "code": "kolhabi-bara",
@@ -4105,7 +6445,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 457,
+        "pk": 717,
         "fields": {
             "name": "Adarshkotwal",
             "code": "adarshkotwal-bara",
@@ -4114,7 +6454,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 458,
+        "pk": 718,
         "fields": {
             "name": "Parwanipur",
             "code": "parwanipur-bara",
@@ -4123,7 +6463,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 459,
+        "pk": 719,
         "fields": {
             "name": "Prasauni",
             "code": "prasauni-bara",
@@ -4132,7 +6472,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 460,
+        "pk": 720,
         "fields": {
             "name": "Pheta",
             "code": "pheta-bara",
@@ -4141,7 +6481,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 461,
+        "pk": 721,
         "fields": {
             "name": "Samsi",
             "code": "samsi-mahottari",
@@ -4150,7 +6490,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 462,
+        "pk": 722,
+        "fields": {
+            "name": "Pokhariya",
+            "code": "pokhariya-parsa",
+            "district": 18
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 723,
+        "fields": {
+            "name": "Belkotgadhi",
+            "code": "belkotgadhi-nuwakot",
+            "district": 6
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 724,
         "fields": {
             "name": "Suryagadhi",
             "code": "suryagadhi-nuwakot",
@@ -4159,7 +6517,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 463,
+        "pk": 725,
         "fields": {
             "name": "Likhu",
             "code": "likhu-nuwakot",
@@ -4168,7 +6526,43 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 464,
+        "pk": 726,
+        "fields": {
+            "name": "Kaliya",
+            "code": "kaliya-bara",
+            "district": 17
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 727,
+        "fields": {
+            "name": "Shambhunath",
+            "code": "shambhunath-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 728,
+        "fields": {
+            "name": "Belhi Chapena",
+            "code": "belhi -chapena-saptari",
+            "district": 34
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 729,
+        "fields": {
+            "name": "Mirchaiya",
+            "code": "mirchaiya-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 730,
         "fields": {
             "name": "Bishnupur",
             "code": "bishnupur-siraha",
@@ -4177,7 +6571,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 465,
+        "pk": 731,
+        "fields": {
+            "name": "Sukhipur",
+            "code": "sukhipur-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 732,
+        "fields": {
+            "name": "Lahan",
+            "code": "lahan-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 733,
         "fields": {
             "name": "Bhagawanpur",
             "code": "bhagawanpur-siraha",
@@ -4186,7 +6598,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 466,
+        "pk": 734,
+        "fields": {
+            "name": "Siraha",
+            "code": "siraha-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 735,
         "fields": {
             "name": "Aurahi",
             "code": "aurahi-siraha",
@@ -4195,7 +6616,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 467,
+        "pk": 736,
+        "fields": {
+            "name": "Dhangadhimai",
+            "code": "dhangadhimai-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 737,
         "fields": {
             "name": "Laxmi Patari",
             "code": "laxmi -patari-siraha",
@@ -4204,7 +6634,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 468,
+        "pk": 738,
         "fields": {
             "name": "Nawarajpur",
             "code": "nawarajpur-siraha",
@@ -4213,7 +6643,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 469,
+        "pk": 739,
         "fields": {
             "name": "Sakhuwa Nankarkatti",
             "code": "sakhuwa -nankarkatti-sir",
@@ -4222,7 +6652,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 470,
+        "pk": 740,
         "fields": {
             "name": "Bariyarpatti",
             "code": "bariyarpatti-siraha",
@@ -4231,7 +6661,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 471,
+        "pk": 741,
         "fields": {
             "name": "Arnama",
             "code": "arnama-siraha",
@@ -4240,7 +6670,25 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 472,
+        "pk": 742,
+        "fields": {
+            "name": "Kalyanpur",
+            "code": "kalyanpur-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 743,
+        "fields": {
+            "name": "Golbazar",
+            "code": "golbazar-siraha",
+            "district": 35
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 744,
         "fields": {
             "name": "Narha",
             "code": "narha-siraha",
@@ -4249,7 +6697,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 473,
+        "pk": 745,
         "fields": {
             "name": "Phatuwa Bijayapur",
             "code": "phatuwa -bijayapur-rauta",
@@ -4258,7 +6706,16 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 474,
+        "pk": 746,
+        "fields": {
+            "name": "Garuda",
+            "code": "garuda-rautahat",
+            "district": 16
+        }
+    },
+    {
+        "model": "project.Municipality",
+        "pk": 747,
         "fields": {
             "name": "Durga Bagwati",
             "code": "durga -bagwati-rautahat",
@@ -4267,7 +6724,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 475,
+        "pk": 748,
         "fields": {
             "name": "Gadhimai",
             "code": "gadhimai-rautahat",
@@ -4276,7 +6733,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 476,
+        "pk": 749,
         "fields": {
             "name": "Madhav Narayan",
             "code": "madhav -narayan-rautahat",
@@ -4285,7 +6742,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 477,
+        "pk": 750,
         "fields": {
             "name": "Dawahi Gonahi",
             "code": "dawahi -gonahi-rautahat",
@@ -4294,7 +6751,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 478,
+        "pk": 751,
         "fields": {
             "name": "Maulapur",
             "code": "maulapur-rautahat",
@@ -4303,7 +6760,7 @@
     },
     {
         "model": "project.Municipality",
-        "pk": 479,
+        "pk": 752,
         "fields": {
             "name": "Subarnapur",
             "code": "subarnapur-parsa",
