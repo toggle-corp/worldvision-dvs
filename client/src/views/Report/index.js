@@ -406,29 +406,6 @@ export default class Report extends PureComponent {
                         </Map>
                         <div className={styles.tableContainer} >
                             <div className={styles.item} >
-                                <h3>Health/Nutrition</h3>
-                                <div className={styles.vizWrapper}>
-                                    <ListView
-                                        className={styles.table}
-                                        data={healthNutrition}
-                                        rendererParams={this.healthNutritionParams}
-                                        keySelector={Report.healthKeySelector}
-                                        renderer={KeyValue}
-                                    />
-                                    <DonutChart
-                                        className={styles.viz}
-                                        data={healthDonut}
-                                        valueSelector={Report.valueSelector}
-                                        labelSelector={Report.labelSelector}
-                                        labelModifier={Report.labelModifierSelector}
-                                        colorScheme={[
-                                            '#41cf76',
-                                            '#f44336',
-                                        ]}
-                                    />
-                                </div>
-                            </div>
-                            <div className={styles.item} >
                                 <h3>Child Monitoring</h3>
                                 <div className={styles.vizWrapper}>
                                     <ListView
@@ -447,6 +424,29 @@ export default class Report extends PureComponent {
                                         colorScheme={[
                                             '#41cf76',
                                             '#ef8c00',
+                                            '#f44336',
+                                        ]}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.item} >
+                                <h3>Health/Nutrition</h3>
+                                <div className={styles.vizWrapper}>
+                                    <ListView
+                                        className={styles.table}
+                                        data={healthNutrition}
+                                        rendererParams={this.healthNutritionParams}
+                                        keySelector={Report.healthKeySelector}
+                                        renderer={KeyValue}
+                                    />
+                                    <DonutChart
+                                        className={styles.viz}
+                                        data={healthDonut}
+                                        valueSelector={Report.valueSelector}
+                                        labelSelector={Report.labelSelector}
+                                        labelModifier={Report.labelModifierSelector}
+                                        colorScheme={[
+                                            '#41cf76',
                                             '#f44336',
                                         ]}
                                     />

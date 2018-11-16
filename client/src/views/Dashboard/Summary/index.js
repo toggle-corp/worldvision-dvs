@@ -54,11 +54,17 @@ export default class Summary extends PureComponent {
     percentTableParams = (key, data) => {
         const classNames = [];
 
-        if (key === '@NotSighted30Days' || key === '@HealthSatisfactory') {
+        if (key === '@NotSighted30Days' ||
+            key === '@HealthSatisfactory' ||
+            key === 'pendingCurrent'
+        ) {
             classNames.push(styles.success);
         } else if (key === '@NotSighted60Days') {
             classNames.push(styles.warning);
-        } else if (key === '@NotSighted90Days' || key === '@HealthNotSatisfactory') {
+        } else if (key === '@NotSighted90Days' ||
+            key === '@HealthNotSatisfactory' ||
+            key === 'pendingOverDue'
+        ) {
             classNames.push(styles.danger);
         }
 
@@ -102,7 +108,7 @@ export default class Summary extends PureComponent {
         return (
             <div className={`${styles.summary} ${className}`}>
                 <header className={styles.header}>
-                    <h2>Overview of Sponsorship Data</h2>
+                    <h2>Overview</h2>
                 </header>
                 <section className={styles.content}>
                     <span className={styles.info}>
@@ -154,6 +160,7 @@ export default class Summary extends PureComponent {
                             />
                         </div>
                     </div>
+                    {/*
                     <div className={styles.item}>
                         <h3>Health / Nutrition</h3>
                         <div className={styles.itemTableViz}>
@@ -177,9 +184,21 @@ export default class Summary extends PureComponent {
                             />
                         </div>
                     </div>
+                    */}
                     <div className={styles.item}>
-                        <h3>Correspondences</h3>
+                        <h3>SOI Index (Correspondences)</h3>
                         <div className={styles.itemTableViz}>
+                            <DonutChart
+                                className={styles.viz}
+                                data={correspondences}
+                                valueSelector={Summary.valueSelector}
+                                labelSelector={Summary.labelSelector}
+                                labelModifier={Summary.labelModifierSelector}
+                                colorScheme={[
+                                    '#41cf76',
+                                    '#f44336',
+                                ]}
+                            />
                             <ListView
                                 className={styles.table}
                                 data={percentCorr}
