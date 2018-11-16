@@ -7,7 +7,8 @@ import styles from './styles.scss';
 
 const propTypes = {
     title: PropTypes.string.isRequired,
-    value: PropTypes.number.isRequired,
+    titleClassName: PropTypes.string,
+    value: PropTypes.number,
     percent: PropTypes.number,
     isPercent: PropTypes.bool,
     className: PropTypes.string,
@@ -15,9 +16,11 @@ const propTypes = {
 };
 
 const defaultProps = {
+    value: undefined,
     className: '',
+    titleClassName: '',
     isPercent: false,
-    percent: 0,
+    percent: undefined,
     colorOnlyNumber: false,
 };
 
@@ -33,10 +36,11 @@ export default class KeyValue extends PureComponent {
             percent,
             isPercent,
             className,
+            titleClassName,
             colorOnlyNumber,
         } = this.props;
 
-        const titleClassNames = [styles.title];
+        const titleClassNames = [styles.title, titleClassName];
         const percentClassName = [styles.percent, className];
         const percentValueClassName = [styles.percentValue, className];
         const valueClassName = [styles.value, className];
