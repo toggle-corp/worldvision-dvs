@@ -358,7 +358,7 @@ export default class Report extends PureComponent {
 
         const modifier = (element, key) => (
             {
-                name: camelToNormalCase(key),
+                name: key === 'totalRc' ? 'Actual' : camelToNormalCase(key),
                 value: element,
             }
         );
