@@ -161,9 +161,18 @@
                         margin-top: $spacing-medium;
                         border-collapse: collapse;
 
-                        .flash-data {
+                        .success {
+                            color: $color-success;
+                        }
+
+                        .warning {
+                            color: $color-warning;
+                        }
+
+                        .danger {
                             color: $color-danger;
                         }
+
                     }
 
                     .viz-wrapper {
