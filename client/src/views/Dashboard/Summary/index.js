@@ -53,6 +53,7 @@ export default class Summary extends PureComponent {
 
     percentTableParams = (key, data) => {
         const classNames = [];
+        const titleClassName = [];
 
         if (key === '@NotSighted30Days' ||
             key === '@HealthSatisfactory' ||
@@ -66,6 +67,8 @@ export default class Summary extends PureComponent {
             key === 'pendingOverDue'
         ) {
             classNames.push(styles.danger);
+        } else if (key === 'soi') {
+            titleClassName.push(styles.bold);
         }
 
         return ({
@@ -75,6 +78,7 @@ export default class Summary extends PureComponent {
             isPercent: true,
             colorOnlyNumber: true,
             className: classNames.join(' '),
+            titleClassName: titleClassName.join(' '),
         });
     }
 
@@ -99,6 +103,20 @@ export default class Summary extends PureComponent {
         const percentChild = getPercent(childMonitoring);
         const percentCorr = getPercent(correspondences);
         const percentHealth = getPercent(healthNutrition);
+        const soi = [
+            {
+                label: 'Closed in time',
+                key: 'time',
+            },
+            {
+                label: 'Total closed',
+                key: 'total',
+            },
+            {
+                label: 'SOI',
+                key: 'soi',
+            },
+        ];
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -186,7 +204,7 @@ export default class Summary extends PureComponent {
                     </div>
                     */}
                     <div className={styles.item}>
-                        <h3>SOI Index (Correspondences)</h3>
+                        <h3>SOI Index</h3>
                         <div className={styles.itemTableViz}>
                             <DonutChart
                                 className={styles.viz}
@@ -199,13 +217,23 @@ export default class Summary extends PureComponent {
                                     '#f44336',
                                 ]}
                             />
-                            <ListView
-                                className={styles.table}
-                                data={percentCorr}
-                                rendererParams={this.percentTableParams}
-                                keySelector={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
+                            <div className={styles.table}>
+                                <h3>Correspondences</h3>
+                                <ListView
+                                    className={styles.table}
+                                    data={percentCorr}
+                                    rendererParams={this.percentTableParams}
+                                    keySelector={Summary.tableKeySelector}
+                                    renderer={KeyValue}
+                                />
+                                <ListView
+                                    className={styles.table}
+                                    data={soi}
+                                    rendererParams={this.percentTableParams}
+                                    keySelector={Summary.tableKeySelector}
+                                    renderer={KeyValue}
+                                />
+                            </div>
                         </div>
                     </div>
                 </section>
