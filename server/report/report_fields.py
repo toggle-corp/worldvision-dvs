@@ -8,6 +8,7 @@ CAMEL_CASES = {
     '@Textbox370': 'pendingTotal',
 
     '@PlannedRC': 'planned',
+    '@TotalRC': 'totalRc',
     '@Sponsored': 'sponsored',
     '@Available': 'available',
     '@TotalHold': 'hold',
@@ -66,6 +67,7 @@ LABELS = {
     '@SecondarySchoolAgeNoEducation': 'RC of Secondary School Age Not Involved in Education or Vocational Preparation',  # noqa E501
 
     CAMEL_CASES['@PlannedRC']: 'Planned RC',
+    CAMEL_CASES['@TotalRC']: 'Actual RC',
     CAMEL_CASES['@Sponsored']: 'Sponsored',
     CAMEL_CASES['@Available']: 'Available',
     CAMEL_CASES['@TotalHold']: 'Total Hold',

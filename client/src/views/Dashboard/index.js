@@ -62,6 +62,7 @@ const getHashFromBrowser = () => window.location.hash.substr(2);
 export default class Dashboard extends PureComponent {
     static propTypes = propTypes;
     static labelSelector = d => d.project;
+    static keySelector = d => d.name;
 
     constructor(props) {
         super(props);
@@ -273,7 +274,7 @@ export default class Dashboard extends PureComponent {
                                         data={project.rcData}
                                         className={styles.rcDataHover}
                                         rendererParams={this.rcDataParams}
-                                        keySelector={Report.healthKeySelector}
+                                        keySelector={Dashboard.keySelector}
                                         renderer={KeyValue}
                                     />
                                 </div>
