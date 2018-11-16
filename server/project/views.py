@@ -50,7 +50,7 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
         health_nutrition_fields = ['@HealthSatisfactory', '@HealthNotSatisfactory']
         correspondences_fields = ['pendingCurrent', 'pendingOverDue']
         rc_fields = [
-            'planned', 'sponsored', 'available', 'hold',
+            'planned', 'totalRc', 'sponsored', 'available', 'hold',
             'death', 'totalMale', 'totalFemale'
         ]
 
