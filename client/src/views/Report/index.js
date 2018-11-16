@@ -85,8 +85,8 @@ export default class Report extends PureComponent {
     `);
 
     static tableKeySelector = d => d.name;
-    static healthKeySelector = d => d.name;
-    static childKeySelector = d => d.name;
+    static healthKeySelector = d => d.key;
+    static childKeySelector = d => d.key;
 
     static correspondenceKeySelector = d => d.typeName;
 
@@ -151,8 +151,20 @@ export default class Report extends PureComponent {
 
     healthNutritionParams = (key, data) => {
         const classNames = [];
-        if (data.type === 'bad') {
-            classNames.push(styles.flashData);
+        if (key === '@NotSighted30Days' ||
+            key === '@HealthSatisfactory' ||
+            key === 'pendingCurrent' ||
+            key === 'good'
+        ) {
+            classNames.push(styles.success);
+        } else if (key === '@NotSighted60Days') {
+            classNames.push(styles.warning);
+        } else if (key === '@NotSighted90Days' ||
+            key === '@HealthNotSatisfactory' ||
+            key === 'pendingOverDue' ||
+            data.type === 'bad'
+        ) {
+            classNames.push(styles.danger);
         }
 
         return ({
