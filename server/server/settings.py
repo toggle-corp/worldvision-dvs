@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'site_setting',
     'project',
     'report',
+    'summary_group',
 ]
 
 MIDDLEWARE = [

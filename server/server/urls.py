@@ -9,6 +9,7 @@ from django.conf import settings
 from rest_framework import routers
 
 from site_setting.views import SiteSettingsViewSet
+from summary_group.views import SummaryGroupViewSet
 from project.views import (
     ProjectViewSet,
     ProjectReportViewSet,
@@ -27,7 +28,9 @@ router.register(
 router.register(
     r'projects-summary', ProjectSummaryViewSet, base_name='project-summary'
 )
-
+router.register(
+    r'summary-groups', SummaryGroupViewSet, base_name='summary-group'
+)
 
 # Versioning : (v1|v2|v3)
 
