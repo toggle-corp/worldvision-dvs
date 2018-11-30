@@ -10,6 +10,7 @@ export const SET_PROJECTS = 'domainData/SET_PROJECTS';
 export const SET_SITE_SETTINGS = 'domainData/SET_SITE_SETTINGS';
 export const SET_SUMMARY = 'domainData/SET_SUMMARY';
 export const SET_REPORT = 'domainData/SET_REPORT';
+export const SET_SUMMARY_GROUPS = 'domainData/SET_SUMMARY_GROUPS';
 
 // ACTION-CREATOR
 
@@ -32,6 +33,11 @@ export const setReportAction = ({ projectId, report }) => ({
     type: SET_REPORT,
     projectId,
     report,
+});
+
+export const setSummaryGroupsAction = ({ summaryGroups }) => ({
+    type: SET_SUMMARY_GROUPS,
+    summaryGroups,
 });
 
 // REDUCER
@@ -115,11 +121,22 @@ const setReport = (state, action) => {
     return update(state, settings);
 };
 
+const setSummaryGroups = (state, action) => {
+    const { summaryGroups } = action;
+
+    const settings = {
+        summaryGroups: { $set: summaryGroups },
+    };
+
+    return update(state, settings);
+};
+
 const reducers = {
     [SET_PROJECTS]: setProject,
     [SET_REPORT]: setReport,
     [SET_SUMMARY]: setSummary,
     [SET_SITE_SETTINGS]: setSiteSettings,
+    [SET_SUMMARY_GROUPS]: setSummaryGroups,
 };
 
 

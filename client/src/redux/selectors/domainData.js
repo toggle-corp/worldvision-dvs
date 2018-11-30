@@ -27,6 +27,10 @@ export const reportsSelector = ({ domainData }) => (
     domainData.reports || emptyObject
 );
 
+export const summaryGroupsSelector = ({ domainData }) => (
+    domainData.summaryGroups || emptyArray
+);
+
 export const projectIdFromPropsSelector = (state, props) => props.projectId;
 
 export const reportSelector = createSelector(
