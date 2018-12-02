@@ -17,9 +17,11 @@ import {
     projectsSelector,
     summarySelector,
     pointsSelector,
+    summaryGroupsSelector,
     setProjectsAction,
     setSummaryAction,
     setSiteSettingsAction,
+    setSummaryGroupsAction,
 } from '#redux';
 
 import nepalGeoJson from '#resources/districts.json';
@@ -28,14 +30,16 @@ import styles from './styles.scss';
 import ProjectsGetRequest from './requests/ProjectsGetRequest';
 import SummaryGetRequest from './requests/ProjectsSummaryGetRequest';
 import SiteSettingsRequest from './requests/SiteSettingsRequest';
+import SummaryGroupsGetRequest from './requests/SummaryGroupsGetRequest';
 import Report from '../Report';
-import Summary from './Summary';
+import SummaryContainer from './SummaryContainer';
 
 const propTypes = {
     projects: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     summary: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     siteSettings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     points: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    summaryGroups: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     setProjects: PropTypes.func.isRequired,
     setSummary: PropTypes.func.isRequired,
     setSiteSettings: PropTypes.func.isRequired,
@@ -46,11 +50,13 @@ const mapStateToProps = state => ({
     summary: summarySelector(state),
     siteSettings: siteSettingsSelector(state),
     points: pointsSelector(state),
+    summaryGroups: summaryGroupsSelector(state),
 });
 const mapDispatchToProps = dispatch => ({
     setProjects: params => dispatch(setProjectsAction(params)),
     setSummary: params => dispatch(setSummaryAction(params)),
     setSiteSettings: params => dispatch(setSiteSettingsAction(params)),
+    setSummaryGroups: params => dispatch(setSummaryGroupsAction(params)),
 });
 
 // NOTE: hash should be similar to '#/metadata'
@@ -71,6 +77,7 @@ export default class Dashboard extends PureComponent {
 
         this.state = {
             projectsGetPending: true,
+            summaryGroupsPending: true,
 
             selectedView: (hash ? 'report' : 'map'),
             selectedProjectId: +hash,
@@ -93,6 +100,11 @@ export default class Dashboard extends PureComponent {
             setSiteSettings: this.props.setSiteSettings,
         }).create();
 
+        this.summaryGroupsRequest = new SummaryGroupsGetRequest({
+            setState: params => this.setState(params),
+            setSummaryGroups: this.props.setSummaryGroups,
+        }).create();
+
         this.nepalBounds = turf.bbox(nepalGeoJson);
 
         this.views = {
@@ -102,7 +114,14 @@ export default class Dashboard extends PureComponent {
                         summary,
                         projects,
                         siteSettings,
+                        summaryGroups,
                     } = this.props;
+
+                    const overview = {
+                        summary,
+                        noOfProjects: projects.length || 0,
+                        siteSettings,
+                    };
 
                     return (
                         <div className={styles.dashboardContent} >
@@ -115,11 +134,10 @@ export default class Dashboard extends PureComponent {
                                     {this.renderMapLayers()}
                                 </Map>
                             </div>
-                            <Summary
+                            <SummaryContainer
                                 className={styles.aggregatedContainer}
-                                summary={summary}
-                                noOfProjects={projects.length}
-                                siteSettings={siteSettings}
+                                overview={overview}
+                                summaryGroups={summaryGroups}
                             />
                         </div>
                     );
@@ -149,6 +167,7 @@ export default class Dashboard extends PureComponent {
         this.projectsRequest.start();
         this.summaryRequest.start();
         this.siteSettingsRequest.start();
+        this.summaryGroupsRequest.start();
 
         window.addEventListener('hashchange', this.handleHashChange);
     }
@@ -297,11 +316,14 @@ export default class Dashboard extends PureComponent {
         const {
             selectedView,
             projectsGetPending,
+            summaryGroupsPending,
         } = this.state;
+
+        const pending = projectsGetPending || summaryGroupsPending;
 
         return (
             <div className={styles.dashboard}>
-                { projectsGetPending ?
+                { pending ?
                     (<LoadingAnimation />) : (
                         <MultiViewContainer
                             views={this.views}

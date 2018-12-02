@@ -6,7 +6,10 @@ import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
 import KeyValue from '#components/KeyValue';
 import DonutChart from '#rscz/DonutChart';
-import { isFalsy } from '#rsu/common';
+import {
+    isFalsy,
+    randomString,
+} from '#rsu/common';
 
 import styles from './styles.scss';
 
@@ -49,7 +52,8 @@ export default class Summary extends PureComponent {
             </span>
         </div>
     `);
-    static tableKeySelector = d => d.key;
+
+    static tableKeySelector = d => `${d.key}-${randomString()}`;
 
     percentTableParams = (key, data) => {
         const classNames = [];
