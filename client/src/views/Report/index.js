@@ -242,42 +242,6 @@ export default class Report extends PureComponent {
                         }}
                     />
                 </MapSource>
-                <MapSource
-                    sourceKey="points"
-                    geoJson={this.state.location}
-                    supportHover
-                >
-                    <MapLayer
-                        layerKey="points-red"
-                        type="circle"
-                        paint={{
-                            'circle-color': '#000',
-                            'circle-radius': 14,
-                            'circle-opacity': 0.4,
-                        }}
-                        property="id"
-                        onClick={this.handlePointClick}
-                    />
-                    <MapLayer
-                        layerKey="points"
-                        type="circle"
-                        paint={{
-                            'circle-color': '#f37123',
-                            'circle-radius': 10,
-                            'circle-opacity': 1,
-                        }}
-                        property="id"
-                        hoverInfo={{
-                            paint: {
-                                'circle-color': '#f37123',
-                                'circle-radius': 10,
-                                'circle-opacity': 1,
-                            },
-                            showTooltip: true,
-                            tooltipProperty: 'name',
-                        }}
-                    />
-                </MapSource>
             </React.Fragment>
         );
     }
@@ -356,6 +320,23 @@ export default class Report extends PureComponent {
             } = {},
         } = report;
 
+        let monitoring = [];
+        const notSighted30DaysAndVisited = {
+            key: '@NotSighted30DaysAndVisitCompleted',
+            name: '',
+            value: 0,
+        };
+        childMonitoring.forEach((out) => {
+            if (out.key === '@NotSighted30Days' || out.key === '@VisitCompleted') {
+                notSighted30DaysAndVisited.name += ` ${out.name}`;
+                notSighted30DaysAndVisited.value += out.value;
+            } else {
+                monitoring.push(out);
+            }
+        });
+
+        monitoring = [notSighted30DaysAndVisited, ...monitoring];
+
         const modifier = (element, key) => (
             {
                 name: key === 'totalRc' ? 'Actual' : camelToNormalCase(key),
@@ -379,7 +360,7 @@ export default class Report extends PureComponent {
         );
 
         const childDonutKeys = [
-            '@NotSighted30Days',
+            '@NotSighted30DaysAndVisitCompleted',
             '@NotSighted60Days',
             '@NotSighted90Days',
         ];
@@ -389,7 +370,7 @@ export default class Report extends PureComponent {
             '@HealthNotSatisfactory',
         ];
 
-        const childDonut = childMonitoring.filter(c => childDonutKeys.indexOf(c.key) >= 0);
+        const childDonut = monitoring.filter(c => childDonutKeys.indexOf(c.key) >= 0);
         const healthDonut = healthNutrition.filter(c => healthDonutKeys.indexOf(c.key) >= 0);
 
         const CorrespondenceItems = this.renderCorrespondenceItems;

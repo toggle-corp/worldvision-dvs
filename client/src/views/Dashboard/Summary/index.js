@@ -129,9 +129,6 @@ export default class Summary extends PureComponent {
 
         return (
             <div className={`${styles.summary} ${className}`}>
-                <header className={styles.header}>
-                    <h2>Overview</h2>
-                </header>
                 <section className={styles.content}>
                     <span className={styles.info}>
                         <span className={`${styles.infoIcon} ion-information-circled`} />
