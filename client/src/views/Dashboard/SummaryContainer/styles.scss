@@ -1,0 +1,15 @@
+@import '~base-scss/base';
+
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .header {
+        flex-shrink: 0;
+    }
+
+    .container {
+        height: 100%;
+    }
+}

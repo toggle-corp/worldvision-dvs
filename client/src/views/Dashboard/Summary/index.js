@@ -16,7 +16,7 @@ import styles from './styles.scss';
 const propTypes = {
     className: PropTypes.string,
     summary: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    siteSettings: PropTypes.object,
+    siteSettings: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     noOfProjects: PropTypes.number,
 };
 
@@ -98,7 +98,7 @@ export default class Summary extends PureComponent {
                 rc,
                 childMonitoring,
                 correspondences,
-                healthNutrition,
+                // healthNutrition,
             },
             noOfProjects,
             siteSettings,
@@ -106,7 +106,7 @@ export default class Summary extends PureComponent {
 
         const percentChild = getPercent(childMonitoring);
         const percentCorr = getPercent(correspondences);
-        const percentHealth = getPercent(healthNutrition);
+        // const percentHealth = getPercent(healthNutrition);
         const soi = [
             {
                 label: 'Closed in time',
@@ -129,60 +129,56 @@ export default class Summary extends PureComponent {
 
         return (
             <div className={`${styles.summary} ${className}`}>
-                <header className={styles.header}>
-                    <h2>Overview</h2>
-                </header>
-                <section className={styles.content}>
-                    <span className={styles.info}>
-                        <span className={`${styles.infoIcon} ion-information-circled`} />
-                        {infoText}
-                        <FormattedDate
-                            className={styles.date}
-                            date={siteSettings.startDate}
-                            mode="dd-MMM-yyyy"
+                <span className={styles.info}>
+                    <span className={`${styles.infoIcon} ion-information-circled`} />
+                    {infoText}
+                    <FormattedDate
+                        className={styles.date}
+                        date={siteSettings.startDate}
+                        mode="dd-MMM-yyyy"
+                    />
+                    to
+                    <FormattedDate
+                        className={styles.date}
+                        date={siteSettings.endDate}
+                        mode="dd-MMM-yyyy"
+                    />
+                </span>
+                <div className={styles.item}>
+                    <h3>RC Supply</h3>
+                    <ListView
+                        className={styles.table}
+                        data={rc}
+                        rendererParams={this.tableParams}
+                        keySelector={Summary.tableKeySelector}
+                        renderer={KeyValue}
+                    />
+                </div>
+                <div className={styles.item}>
+                    <h3>Child Monitoring</h3>
+                    <div className={styles.itemTableViz}>
+                        <DonutChart
+                            className={styles.viz}
+                            data={childMonitoring}
+                            valueSelector={Summary.valueSelector}
+                            labelSelector={Summary.labelSelector}
+                            labelModifier={Summary.labelModifierSelector}
+                            colorScheme={[
+                                '#41cf76',
+                                '#ef8c00',
+                                '#f44336',
+                            ]}
                         />
-                        to
-                        <FormattedDate
-                            className={styles.date}
-                            date={siteSettings.endDate}
-                            mode="dd-MMM-yyyy"
-                        />
-                    </span>
-                    <div className={styles.item}>
-                        <h3>RC Supply</h3>
                         <ListView
                             className={styles.table}
-                            data={rc}
-                            rendererParams={this.tableParams}
+                            data={percentChild}
+                            rendererParams={this.percentTableParams}
                             keySelector={Summary.tableKeySelector}
                             renderer={KeyValue}
                         />
                     </div>
-                    <div className={styles.item}>
-                        <h3>Child Monitoring</h3>
-                        <div className={styles.itemTableViz}>
-                            <DonutChart
-                                className={styles.viz}
-                                data={childMonitoring}
-                                valueSelector={Summary.valueSelector}
-                                labelSelector={Summary.labelSelector}
-                                labelModifier={Summary.labelModifierSelector}
-                                colorScheme={[
-                                    '#41cf76',
-                                    '#ef8c00',
-                                    '#f44336',
-                                ]}
-                            />
-                            <ListView
-                                className={styles.table}
-                                data={percentChild}
-                                rendererParams={this.percentTableParams}
-                                keySelector={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
-                        </div>
-                    </div>
-                    {/*
+                </div>
+                {/*
                     <div className={styles.item}>
                         <h3>Health / Nutrition</h3>
                         <div className={styles.itemTableViz}>
@@ -207,40 +203,39 @@ export default class Summary extends PureComponent {
                         </div>
                     </div>
                     */}
-                    <div className={styles.item}>
-                        <h3>SOI Index</h3>
-                        <div className={styles.itemTableViz}>
-                            <DonutChart
-                                className={styles.viz}
-                                data={correspondences}
-                                valueSelector={Summary.valueSelector}
-                                labelSelector={Summary.labelSelector}
-                                labelModifier={Summary.labelModifierSelector}
-                                colorScheme={[
-                                    '#41cf76',
-                                    '#f44336',
-                                ]}
+                <div className={styles.item}>
+                    <h3>SOI Index</h3>
+                    <div className={styles.itemTableViz}>
+                        <DonutChart
+                            className={styles.viz}
+                            data={correspondences}
+                            valueSelector={Summary.valueSelector}
+                            labelSelector={Summary.labelSelector}
+                            labelModifier={Summary.labelModifierSelector}
+                            colorScheme={[
+                                '#41cf76',
+                                '#f44336',
+                            ]}
+                        />
+                        <div className={styles.table}>
+                            <h3>Correspondences</h3>
+                            <ListView
+                                className={styles.table}
+                                data={percentCorr}
+                                rendererParams={this.percentTableParams}
+                                keySelector={Summary.tableKeySelector}
+                                renderer={KeyValue}
                             />
-                            <div className={styles.table}>
-                                <h3>Correspondences</h3>
-                                <ListView
-                                    className={styles.table}
-                                    data={percentCorr}
-                                    rendererParams={this.percentTableParams}
-                                    keySelector={Summary.tableKeySelector}
-                                    renderer={KeyValue}
-                                />
-                                <ListView
-                                    className={styles.table}
-                                    data={soi}
-                                    rendererParams={this.percentTableParams}
-                                    keySelector={Summary.tableKeySelector}
-                                    renderer={KeyValue}
-                                />
-                            </div>
+                            <ListView
+                                className={styles.table}
+                                data={soi}
+                                rendererParams={this.percentTableParams}
+                                keySelector={Summary.tableKeySelector}
+                                renderer={KeyValue}
+                            />
                         </div>
                     </div>
-                </section>
+                </div>
             </div>
         );
     }
