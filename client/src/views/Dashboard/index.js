@@ -137,6 +137,7 @@ export default class Dashboard extends PureComponent {
                             <SummaryContainer
                                 className={styles.aggregatedContainer}
                                 overview={overview}
+                                siteSettings={siteSettings}
                                 summaryGroups={summaryGroups}
                             />
                         </div>

@@ -13,10 +13,12 @@ const propTypes = {
     overview: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     summaryGroups: PropTypes.array, // eslint-disable-line react/forbid-prop-types
     className: PropTypes.string,
+    siteSettings: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 const defaultProps = {
     overview: undefined,
+    siteSettings: {},
     summaryGroups: undefined,
     className: '',
 };
@@ -27,8 +29,11 @@ const getTabs = memoize((summaryGroups) => {
     return Object.assign({ overview: 'Overview' }, ...names);
 });
 
-const getViews = memoize((overview, summaryGroups) => {
-    const rendererParams = summaryData => () => ({ ...summaryData });
+const getViews = memoize((overview, summaryGroups, siteSettings) => {
+    const rendererParams = summaryData => () => ({
+        ...summaryData,
+        siteSettings,
+    });
     const view = {
         overview: {
             component: Summary,
@@ -38,7 +43,7 @@ const getViews = memoize((overview, summaryGroups) => {
 
     const getSummary = group => ({
         summary: group.summary,
-        noOfProjects: group.length || 0,
+        noOfProjects: ((group || {}).projects || []).length || 0,
     });
 
     const summaryGroupsViews = summaryGroups.map((group) => {
@@ -76,11 +81,12 @@ export default class SummaryContainer extends React.PureComponent {
             overview,
             summaryGroups,
             className: classNameFromProps,
+            siteSettings,
         } = this.props;
 
         const { activeView } = this.state;
         const tabs = getTabs(summaryGroups);
-        const views = getViews(overview, summaryGroups);
+        const views = getViews(overview, summaryGroups, siteSettings);
 
         const className = `
             ${classNameFromProps}
@@ -95,11 +101,13 @@ export default class SummaryContainer extends React.PureComponent {
                         tabs={tabs}
                         onClick={this.handleTabClick}
                         active={activeView}
+                        itemClassName={styles.tab}
                     />
                 </header>
                 <MultiViewContainer
                     views={views}
                     active={activeView}
+                    containerClassName={styles.container}
                 />
             </div>
         );
