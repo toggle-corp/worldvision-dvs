@@ -1,16 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import turf from 'turf';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import MultiViewContainer from '#rscv/MultiViewContainer';
-
-import Map from '#rscz/Map/index';
-import MapLayer from '#rscz/Map/MapLayer';
-import MapSource from '#rscz/Map/MapSource';
-import KeyValue from '#components/KeyValue';
-import ListView from '#rscv/List/ListView';
 
 import {
     siteSettingsSelector,
@@ -24,13 +17,12 @@ import {
     setSummaryGroupsAction,
 } from '#redux';
 
-import nepalGeoJson from '#resources/districts.json';
-
 import styles from './styles.scss';
 import ProjectsGetRequest from './requests/ProjectsGetRequest';
 import SummaryGetRequest from './requests/ProjectsSummaryGetRequest';
 import SiteSettingsRequest from './requests/SiteSettingsRequest';
 import SummaryGroupsGetRequest from './requests/SummaryGroupsGetRequest';
+import ProjectsMap from './ProjectsMap';
 import Report from '../Report';
 import SummaryContainer from './SummaryContainer';
 
@@ -43,6 +35,7 @@ const propTypes = {
     setProjects: PropTypes.func.isRequired,
     setSummary: PropTypes.func.isRequired,
     setSiteSettings: PropTypes.func.isRequired,
+    setSummaryGroups: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -60,7 +53,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // NOTE: hash should be similar to '#/metadata'
-const setHashToBrowser = (hash) => { window.location.hash = hash; };
+// const setHashToBrowser = (hash) => { window.location.hash = hash; };
 // NOTE: receives data similar to '#/metadata'
 const getHashFromBrowser = () => window.location.hash.substr(2);
 
@@ -81,8 +74,6 @@ export default class Dashboard extends PureComponent {
 
             selectedView: (hash ? 'report' : 'map'),
             selectedProjectId: +hash,
-
-            currentHoverId: undefined,
         };
 
         this.projectsRequest = new ProjectsGetRequest({
@@ -105,14 +96,13 @@ export default class Dashboard extends PureComponent {
             setSummaryGroups: this.props.setSummaryGroups,
         }).create();
 
-        this.nepalBounds = turf.bbox(nepalGeoJson);
-
         this.views = {
             map: {
                 component: () => {
                     const {
                         summary,
                         projects,
+                        points,
                         siteSettings,
                         summaryGroups,
                     } = this.props;
@@ -126,13 +116,11 @@ export default class Dashboard extends PureComponent {
                     return (
                         <div className={styles.dashboardContent} >
                             <div className={styles.mapContainer}>
-                                <Map
+                                <ProjectsMap
                                     className={styles.map}
-                                    bounds={this.nepalBounds}
-                                    fitBoundsDuration={10}
-                                >
-                                    {this.renderMapLayers()}
-                                </Map>
+                                    projects={projects}
+                                    points={points}
+                                />
                             </div>
                             <SummaryContainer
                                 className={styles.aggregatedContainer}
@@ -201,111 +189,6 @@ export default class Dashboard extends PureComponent {
             });
         }
     }
-
-    handlePointClick = (id) => {
-        window.open(`#/${id}`, '_blank');
-        // if (e.originalEvent.ctrlKey) {
-        //   window.open(`#/${id}`, '_blank');
-        // } else {
-        //     setHashToBrowser(`#/${id}`);
-        // }
-    }
-
-    handleMapPointHover = (data) => {
-        this.setState({ currentHoverId: data && data.id });
-    }
-
-    rcDataParams = (key, data) => ({
-        title: data.name,
-        value: data.value,
-    });
-
-    renderMapLayers = () => {
-        const { projects } = this.props;
-        const { currentHoverId } = this.state;
-
-        const project = currentHoverId ? (
-            projects.find(p => (p || {}).id === currentHoverId)
-        ) : (
-            {}
-        );
-        return (
-            <React.Fragment>
-                <MapSource
-                    sourceKey="bounds"
-                    geoJson={nepalGeoJson}
-                >
-                    <MapLayer
-                        layerKey="bounds-fill"
-                        type="fill"
-                        paint={{
-                            'fill-color': '#00897B',
-                            'fill-opacity': 0.4,
-                        }}
-                    />
-                    <MapLayer
-                        layerKey="bounds-outline"
-                        type="line"
-                        paint={{
-                            'line-color': '#ffffff',
-                            'line-opacity': 1,
-                            'line-width': 1,
-                        }}
-                    />
-                </MapSource>
-                <MapSource
-                    sourceKey="points"
-                    geoJson={this.props.points}
-                    supportHover
-                >
-                    <MapLayer
-                        layerKey="points-red"
-                        type="circle"
-                        paint={{
-                            'circle-color': '#000',
-                            'circle-radius': 14,
-                            'circle-opacity': 0.4,
-                        }}
-                        property="id"
-                        onClick={this.handlePointClick}
-                    />
-                    <MapLayer
-                        layerKey="points"
-                        type="circle"
-                        paint={{
-                            'circle-color': '#f37123',
-                            'circle-radius': 10,
-                            'circle-opacity': 1,
-                        }}
-                        property="id"
-                        onClick={this.handlePointClick}
-                        hoverInfo={{
-                            paint: {
-                                'circle-color': '#f37123',
-                                'circle-radius': 10,
-                                'circle-opacity': 1,
-                            },
-                            showTooltip: true,
-                            tooltipProperty: 'name',
-                            tooltipModifier: () => (
-                                <div className={styles.hoverInfo}>
-                                    <h4>{project.name}</h4>
-                                    <ListView
-                                        data={project.rcData}
-                                        className={styles.rcDataHover}
-                                        rendererParams={this.rcDataParams}
-                                        keySelector={Dashboard.keySelector}
-                                        renderer={KeyValue}
-                                    />
-                                </div>
-                            ),
-                            onMouseOver: this.handleMapPointHover,
-                        }}
-                    />
-                </MapSource>
-            </React.Fragment>
-        );
-    };
 
     render() {
         const { projects } = this.props;

@@ -12,4 +12,12 @@
     .container {
         height: 100%;
     }
+
+    .tabs {
+        flex-wrap: wrap;
+
+        .tab {
+            flex-grow: 1;
+        }
+    }
 }
