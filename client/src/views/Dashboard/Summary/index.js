@@ -61,7 +61,8 @@ export default class Summary extends PureComponent {
 
         if (key === '@NotSighted30Days' ||
             key === '@HealthSatisfactory' ||
-            key === 'pendingCurrent'
+            key === 'pendingCurrent' ||
+            key === '@VisitCompleted'
         ) {
             classNames.push(styles.success);
         } else if (key === '@NotSighted60Days') {
@@ -104,7 +105,26 @@ export default class Summary extends PureComponent {
             siteSettings,
         } = this.props;
 
+        let monitoring = [];
+        const notSighted30DaysAndVisited = {
+            key: '@NotSighted30DaysAndVisitCompleted',
+            label: '',
+            value: 0,
+        };
+
+        childMonitoring.forEach((out) => {
+            if (out.key === '@NotSighted30Days' || out.key === '@VisitCompleted') {
+                notSighted30DaysAndVisited.label += ` ${out.label}`;
+                notSighted30DaysAndVisited.value += out.value;
+            } else {
+                monitoring.push(out);
+            }
+        });
+
+        monitoring = [notSighted30DaysAndVisited, ...monitoring];
+
         const percentChild = getPercent(childMonitoring);
+
         const percentCorr = getPercent(correspondences);
         // const percentHealth = getPercent(healthNutrition);
         const soi = [
@@ -159,7 +179,7 @@ export default class Summary extends PureComponent {
                     <div className={styles.itemTableViz}>
                         <DonutChart
                             className={styles.viz}
-                            data={childMonitoring}
+                            data={monitoring}
                             valueSelector={Summary.valueSelector}
                             labelSelector={Summary.labelSelector}
                             labelModifier={Summary.labelModifierSelector}

@@ -11,6 +11,7 @@ import {
     setSelectedProjectAction,
 } from '#redux';
 
+import Numeral from '#rscv/Numeral';
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
 import HorizontalBar from '#rscz/HorizontalBar';
@@ -37,11 +38,12 @@ const propTypes = {
     setReport: PropTypes.func.isRequired,
     projectId: PropTypes.number.isRequired,
     report: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    project: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    project: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 const defaultProps = {
     report: {},
+    project: {},
 };
 
 const mapStateToProps = (state, props) => ({
@@ -149,10 +151,12 @@ export default class Report extends PureComponent {
         }
     }
 
-    healthNutritionParams = (key, data) => {
+    tableRenderParams = (key, data) => {
         const classNames = [];
+
         if (key === '@NotSighted30Days' ||
             key === '@HealthSatisfactory' ||
+            key === '@VisitCompleted' ||
             key === 'pendingCurrent' ||
             key === 'good'
         ) {
@@ -165,6 +169,13 @@ export default class Report extends PureComponent {
             data.type === 'bad'
         ) {
             classNames.push(styles.danger);
+        } else if (key === '@cms') {
+            return ({
+                title: data.name,
+                value: data.value,
+                percent: data.percent,
+                isPercent: true,
+            });
         }
 
         return ({
@@ -313,20 +324,33 @@ export default class Report extends PureComponent {
         const {
             data: {
                 education = {},
-                childMonitoring = [],
                 healthNutrition = [],
                 rcPieChart = {},
                 rcData = {},
             } = {},
         } = report;
 
+        let {
+            data: {
+                childMonitoring = [],
+            } = {},
+        } = report;
+
         let monitoring = [];
+
         const notSighted30DaysAndVisited = {
             key: '@NotSighted30DaysAndVisitCompleted',
             name: '',
             value: 0,
         };
+
+        let total = 0;
+        let notsighted = 0;
         childMonitoring.forEach((out) => {
+            total += +out.value;
+            if (out.key === '@NotSighted90Days') {
+                notsighted = out.value;
+            }
             if (out.key === '@NotSighted30Days' || out.key === '@VisitCompleted') {
                 notSighted30DaysAndVisited.name += ` ${out.name}`;
                 notSighted30DaysAndVisited.value += out.value;
@@ -334,6 +358,18 @@ export default class Report extends PureComponent {
                 monitoring.push(out);
             }
         });
+
+        const percent = total ? (((total - notsighted) / total) * 100) : 0;
+
+        childMonitoring = [
+            ...childMonitoring,
+            {
+                key: '@cms',
+                name: 'CMS',
+                value: (total - notsighted),
+                percent: +percent.toFixed(2),
+            },
+        ];
 
         monitoring = [notSighted30DaysAndVisited, ...monitoring];
 
@@ -404,7 +440,7 @@ export default class Report extends PureComponent {
                                     <ListView
                                         className={styles.table}
                                         data={childMonitoring}
-                                        rendererParams={this.healthNutritionParams}
+                                        rendererParams={this.tableRenderParams}
                                         keySelector={Report.childKeySelector}
                                         renderer={KeyValue}
                                     />
@@ -418,6 +454,7 @@ export default class Report extends PureComponent {
                                             '#41cf76',
                                             '#ef8c00',
                                             '#f44336',
+                                            '#41cf76',
                                         ]}
                                     />
                                 </div>
@@ -428,7 +465,7 @@ export default class Report extends PureComponent {
                                     <ListView
                                         className={styles.table}
                                         data={healthNutrition}
-                                        rendererParams={this.healthNutritionParams}
+                                        rendererParams={this.tableRenderParams}
                                         keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
                                     />
