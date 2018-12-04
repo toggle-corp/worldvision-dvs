@@ -14,7 +14,10 @@ def get_projects_summary(projects):
     def initial_dict(fields):
         return {field: 0 for field in fields}
 
-    child_monitoring_fields = ['@NotSighted30Days', '@NotSighted60Days', '@NotSighted90Days']
+    child_monitoring_fields = [
+        '@NotSighted30Days', '@NotSighted60Days', '@NotSighted90Days',
+        '@VisitCompleted'
+    ]
     health_nutrition_fields = ['@HealthSatisfactory', '@HealthNotSatisfactory']
     correspondences_fields = ['pendingCurrent', 'pendingOverDue']
     rc_fields = [

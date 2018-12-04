@@ -26,7 +26,7 @@ const defaultProps = {
 const getTabs = memoize((summaryGroups) => {
     const names = summaryGroups.map(group => ({ [`${group.name}`]: group.name }));
 
-    return Object.assign({ overview: 'Overview' }, ...names);
+    return Object.assign({ overview: 'NO' }, ...names);
 });
 
 const getViews = memoize((overview, summaryGroups, siteSettings) => {
