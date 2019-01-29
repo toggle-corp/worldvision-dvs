@@ -32,27 +32,6 @@ $width-aggregated-data: 480px;
                     border: $width-separator-thin solid $color-separator;
                     height: 100%;
                 }
-
-                .hover-info {
-                    @include shadow-medium;
-                    border: $width-separator-thin solid $color-separator;
-                    background-color: $color-foreground;
-
-                    h4 {
-                        border-bottom: $width-separator-thin solid $color-separator;
-                        padding: $spacing-small $spacing-medium;
-                        text-transform: capitalize;
-                        color: $color-accent;
-                        font-size: $font-size-large;
-                        font-weight: $font-weight-bold;
-                    }
-                }
-
-                .info-bar {
-                    position: absolute;
-                    top: $spacing-large;
-                    right: $spacing-large;
-                }
             }
 
             .aggregated-container {

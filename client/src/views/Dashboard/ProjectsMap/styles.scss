@@ -1,0 +1,18 @@
+@import '~base-scss/base';
+
+.map {
+    .hover-info {
+        @include shadow-medium;
+        border: $width-separator-thin solid $color-separator;
+        background-color: $color-foreground;
+
+        h4 {
+            border-bottom: $width-separator-thin solid $color-separator;
+            padding: $spacing-small $spacing-medium;
+            text-transform: capitalize;
+            color: $color-accent;
+            font-size: $font-size-large;
+            font-weight: $font-weight-bold;
+        }
+    }
+}
