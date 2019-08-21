@@ -9,7 +9,7 @@ import DonutChart from '#rscz/DonutChart';
 import {
     isFalsy,
     randomString,
-} from '#rsu/common';
+} from '@togglecorp/fujs';
 
 import styles from './styles.scss';
 

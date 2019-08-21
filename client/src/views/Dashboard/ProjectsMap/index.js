@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import turf from 'turf';
 
 import Map from '#rscz/Map/index';
+import MapContainer from '#rscz/Map/MapContainer';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
 
@@ -127,10 +128,10 @@ export default class ProjectsMap extends React.PureComponent {
 
         return (
             <Map
-                className={className}
                 bounds={nepalBounds}
                 fitBoundsDuration={10}
             >
+                <MapContainer className={className} />
                 <MapSource
                     sourceKey="bounds"
                     geoJson={nepalGeoJson}

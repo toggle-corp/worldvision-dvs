@@ -11,7 +11,6 @@ import {
     setSelectedProjectAction,
 } from '#redux';
 
-import Numeral from '#rscv/Numeral';
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
 import HorizontalBar from '#rscz/HorizontalBar';
@@ -20,9 +19,10 @@ import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import KeyValue from '#components/KeyValue';
 import Map from '#rscz/Map';
+import MapContainer from '#rscz/Map/MapContainer';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
-import { mapToList } from '#rsu/common';
+import { mapToList } from '@togglecorp/fujs';
 
 import districts from '#resources/districts.json';
 import gaupalika from '#resources/gaupalika.json';
@@ -98,7 +98,6 @@ export default class Report extends PureComponent {
         this.state = {
             reportGetPending: true,
             code: undefined,
-            location: undefined,
             bounds: [],
         };
     }
@@ -427,10 +426,8 @@ export default class Report extends PureComponent {
                 </div>
                 <div className={styles.container}>
                     <div className={styles.upperContainer}>
-                        <Map
-                            className={styles.map}
-                            bounds={bounds}
-                        >
+                        <Map bounds={bounds}>
+                            <MapContainer className={styles.map} />
                             {this.renderDistrictLayers()}
                         </Map>
                         <div className={styles.tableContainer} >
