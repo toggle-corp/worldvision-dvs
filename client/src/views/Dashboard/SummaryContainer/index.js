@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 
-import FixedTabs from '#rscv/FixedTabs';
+import ScrollTabs from '#rscv/ScrollTabs';
 import MultiViewContainer from '#rscv/MultiViewContainer';
 
 import styles from './styles.scss';
@@ -96,7 +96,7 @@ export default class SummaryContainer extends React.PureComponent {
         return (
             <div className={className}>
                 <header className={styles.header}>
-                    <FixedTabs
+                    <ScrollTabs
                         className={styles.tabs}
                         tabs={tabs}
                         onClick={this.handleTabClick}

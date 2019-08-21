@@ -168,7 +168,7 @@ module.exports = (env) => {
             new HtmlWebpackPlugin({
                 template: appIndexHtml,
                 filename: './index.html',
-                title: '__APP_ID__',
+                title: 'Worldvision Sponsorship Visualization',
                 favicon: path.resolve(appFavicon),
                 chunksSortMode: 'none',
             }),

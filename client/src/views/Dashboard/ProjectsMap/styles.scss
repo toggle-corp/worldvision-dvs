@@ -2,10 +2,6 @@
 
 .map {
     .hover-info {
-        @include shadow-medium;
-        border: $width-separator-thin solid $color-separator;
-        background-color: $color-foreground;
-
         h4 {
             border-bottom: $width-separator-thin solid $color-separator;
             padding: $spacing-small $spacing-medium;

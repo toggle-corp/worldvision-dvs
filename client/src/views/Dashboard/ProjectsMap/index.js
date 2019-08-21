@@ -49,11 +49,14 @@ const pointsInner = {
     'circle-opacity': 1,
 };
 
+/*
 const hoverPaint = {
     'circle-color': '#f37123',
     'circle-radius': 10,
     'circle-opacity': 1,
 };
+*/
+
 const rcDataParams = (key, data) => ({
     title: data.name,
     value: data.value,
@@ -66,39 +69,18 @@ export default class ProjectsMap extends React.PureComponent {
 
     static defaultProps = defaultProps;
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            currentHoverId: undefined,
-        };
-
-        this.hoverInfo = {
-            paint: hoverPaint,
-            showTooltip: true,
-            tooltipProperty: 'name',
-            tooltipModifier: this.renderTooltip,
-            onMouseOver: this.handleMapPointHover,
-        };
-    }
-
-    handleMapPointHover = (data = {}) => {
-        this.setState({ currentHoverId: data.id });
-    }
-
     handlePointClick = (id) => {
         window.open(`#/${id}`, '_blank');
     }
 
-    renderTooltip = () => {
+    rendererParams = id => ({
+        projectId: id,
+    })
+
+    renderTooltip = ({ projectId }) => {
         const { projects } = this.props;
-        const { currentHoverId } = this.state;
 
-        if (!currentHoverId) {
-            return null;
-        }
-
-        const project = projects.find((p = {}) => p.id === currentHoverId);
+        const project = projects.find((p = {}) => p.id === projectId);
 
         return (
             <div className={styles.hoverInfo}>
@@ -151,22 +133,25 @@ export default class ProjectsMap extends React.PureComponent {
                 <MapSource
                     sourceKey="points"
                     geoJson={points}
-                    supportHover
+                    // supportHover
                 >
                     <MapLayer
                         layerKey="points-red"
                         type="circle"
                         paint={pointsOuter}
-                        property="id"
-                        onClick={this.handlePointClick}
+                        // property="id"
+                        // onClick={this.handlePointClick}
                     />
                     <MapLayer
                         layerKey="points"
                         type="circle"
                         paint={pointsInner}
-                        property="id"
+                        // property="id"
                         onClick={this.handlePointClick}
-                        hoverInfo={this.hoverInfo}
+                        showToolTipOnHover
+                        tooltipRenderer={this.renderTooltip}
+                        tooltipRendererParams={this.rendererParams}
+                        // hoverInfo={this.hoverInfo}
                     />
                 </MapSource>
             </Map>

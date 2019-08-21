@@ -115,14 +115,22 @@ export default class Report extends PureComponent {
             });
             const bounds = turf.bbox(turf.featureCollection(selectedFeature));
             const { long, lat, name, id } = project;
-            const point = turf.point(
-                [long, lat],
-                {
-                    name,
+
+            const location = {
+                type: 'FeatureCollection',
+                features: [{
                     id,
-                },
-            );
-            const location = turf.featureCollection([point]);
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [long, lat],
+                    },
+                    properties: {
+                        name,
+                        id,
+                    },
+                }],
+            };
+
             return {
                 code,
                 bounds,
@@ -210,7 +218,7 @@ export default class Report extends PureComponent {
                 <MapSource
                     sourceKey="districts"
                     geoJson={districts}
-                    supportHover
+                    // supportHover
                 >
                     <MapLayer
                         layerKey="line"
@@ -235,7 +243,7 @@ export default class Report extends PureComponent {
                 <MapSource
                     sourceKey="gaupalika"
                     geoJson={gaupalika}
-                    supportHover
+                    // supportHover
                 >
                     <MapLayer
                         layerKey="gaupalika-outline"
