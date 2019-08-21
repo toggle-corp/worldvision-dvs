@@ -1,5 +1,6 @@
-import update from '#rsu/immutable-update';
 import turf from 'turf';
+
+import update from '#rsu/immutable-update';
 
 import createReducerWithMap from '../../../utils/createReducerWithMap';
 import initialDomainData from '../../initial-state/domainData';

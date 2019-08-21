@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import logo from '#resources/images/logo.png';
@@ -13,10 +12,11 @@ const handleGoBack = () => {
 
 export default ({ className }) => (
     <nav className={`${className} ${styles.navbar}`}>
-        <header className={styles.header} >
+        <header className={styles.header}>
             <button
                 className={styles.button}
                 onClick={handleGoBack}
+                type="button"
             >
                 WVIN - Sponsorship
             </button>

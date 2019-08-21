@@ -63,6 +63,7 @@ const keySelector = d => d.name;
 
 export default class ProjectsMap extends React.PureComponent {
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     constructor(props) {

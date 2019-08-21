@@ -3,40 +3,47 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
-
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const StylishPlugin = require('eslint/lib/cli-engine/formatters/stylish');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const dotenv = require('dotenv').config({
+    path: '.env',
+});
 const getEnvVariables = require('./env.js');
 
 const appBase = process.cwd();
+const eslintFile = path.resolve(appBase, '.eslintrc-loader.js');
 const appSrc = path.resolve(appBase, 'src/');
 const appDist = path.resolve(appBase, 'build/');
 const appIndexJs = path.resolve(appBase, 'src/index.js');
 const appIndexHtml = path.resolve(appBase, 'public/index.html');
 const appFavicon = path.resolve(appBase, 'public/favicon.ico');
-const appLogo = path.resolve(appBase, 'public/favicon.png');
 
 module.exports = (env) => {
-    const ENV_VARS = getEnvVariables(env);
+    const ENV_VARS = { ...dotenv.pared, ...getEnvVariables(env) };
 
     return {
         entry: appIndexJs,
         output: {
             path: appDist,
             publicPath: '/',
-            chunkFilename: 'js/[name].[chunkhash].js',
-            filename: 'js/[name].[chunkhash].js',
+            chunkFilename: 'js/[name].[hash].js',
+            filename: 'js/[name].[hash].js',
             sourceMapFilename: 'sourcemaps/[file].map',
+            pathinfo: false,
         },
 
         resolve: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
             alias: {
                 'base-scss': path.resolve(appBase, 'src/stylesheets/'),
                 'rs-scss': path.resolve(appBase, 'src/vendor/react-store/stylesheets/'),
             },
+            symlinks: false,
         },
 
         mode: 'development',
+
         performance: {
             hints: 'warning',
         },
@@ -48,6 +55,10 @@ module.exports = (env) => {
             hash: true,
         },
         devtool: 'cheap-module-eval-source-map',
+        node: {
+            fs: 'empty',
+        },
+
         devServer: {
             host: '0.0.0.0',
             port: 3005,
@@ -57,16 +68,39 @@ module.exports = (env) => {
             },
             // Don't show warnings in browser console
             clientLogLevel: 'none',
+
+            hot: true,
+            liveReload: false,
         },
 
         module: {
             rules: [
                 {
-                    test: /\.(js|jsx)$/,
+                    test: /\.(js|jsx|ts|tsx)$/,
                     include: appSrc,
                     use: [
+                        'cache-loader',
                         'babel-loader',
-                        'eslint-loader',
+                        {
+                            loader: 'eslint-loader',
+                            options: {
+                                configFile: eslintFile,
+                                // NOTE: adding this because eslint 6 cannot find this
+                                // https://github.com/webpack-contrib/eslint-loader/issues/271
+                                formatter: StylishPlugin,
+                            },
+                        },
+                    ],
+                },
+                {
+                    test: /\.(html)$/,
+                    use: [
+                        {
+                            loader: 'html-loader',
+                            options: {
+                                attrs: [':data-src'],
+                            },
+                        },
                     ],
                 },
                 {
@@ -78,9 +112,10 @@ module.exports = (env) => {
                             loader: require.resolve('css-loader'),
                             options: {
                                 importLoaders: 1,
-                                modules: true,
-                                camelCase: true,
-                                localIdentName: '[name]_[local]_[hash:base64]',
+                                modules: {
+                                    localIdentName: '[name]_[local]_[hash:base64]',
+                                },
+                                localsConvention: 'camelCase',
                                 sourceMap: true,
                             },
                         },
@@ -115,11 +150,12 @@ module.exports = (env) => {
                 allowAsyncCycles: false,
                 cwd: appBase,
             }),
-            new CleanWebpackPlugin([appDist], { root: appBase }),
+            // Remove build folder anyway
+            new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: appIndexHtml,
                 filename: './index.html',
-                title: 'DEEP',
+                title: '__APP_ID__',
                 favicon: path.resolve(appFavicon),
                 chunksSortMode: 'none',
             }),
@@ -127,21 +163,10 @@ module.exports = (env) => {
                 filename: 'css/[name].css',
                 chunkFilename: 'css/[id].css',
             }),
-            new WebpackPwaManifest({
-                name: 'DEEP',
-                short_name: 'DEEP',
-                description: 'DEEP is an open source, community driven web application to intelligently collect, tag, analyze and export secondary data.',
-                background_color: '#e0e0e0',
-                start_url: '.',
-                display: 'standalone',
-                theme_color: '#008975',
-                icons: [
-                    {
-                        src: path.resolve(appLogo),
-                        sizes: [96, 128, 192, 256, 384, 512],
-                    },
-                ],
-            }),
+            new webpack.HotModuleReplacementPlugin(),
+            // new BundleAnalyzerPlugin(),
+            // NOTE: could try using react-hot-loader
+            // https://github.com/gaearon/react-hot-loader
         ],
     };
 };

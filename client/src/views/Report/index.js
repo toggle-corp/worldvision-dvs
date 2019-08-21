@@ -4,11 +4,11 @@ import React, {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import turf from 'turf';
+import { mapToList } from '@togglecorp/fujs';
 
 import {
     reportSelector,
     setReportAction,
-    setSelectedProjectAction,
 } from '#redux';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
@@ -22,7 +22,6 @@ import Map from '#rscz/Map';
 import MapContainer from '#rscz/Map/MapContainer';
 import MapLayer from '#rscz/Map/MapLayer';
 import MapSource from '#rscz/Map/MapSource';
-import { mapToList } from '@togglecorp/fujs';
 
 import districts from '#resources/districts.json';
 import gaupalika from '#resources/gaupalika.json';
@@ -52,7 +51,6 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => ({
     setReport: params => dispatch(setReportAction(params)),
-    setSelectedProject: params => dispatch(setSelectedProjectAction(params)),
 });
 
 const setHashToBrowser = (hash) => { window.location.hash = hash; };
@@ -60,6 +58,7 @@ const setHashToBrowser = (hash) => { window.location.hash = hash; };
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Report extends PureComponent {
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     static sizeSelector = (d) => {
@@ -70,6 +69,7 @@ export default class Report extends PureComponent {
     };
 
     static valueSelector = d => d.value;
+
     static labelSelector = (d) => {
         if (d.name !== 'RC Supply') {
             return d.name;
@@ -87,7 +87,9 @@ export default class Report extends PureComponent {
     `);
 
     static tableKeySelector = d => d.name;
+
     static healthKeySelector = d => d.key;
+
     static childKeySelector = d => d.key;
 
     static correspondenceKeySelector = d => d.typeName;
@@ -153,19 +155,21 @@ export default class Report extends PureComponent {
     tableRenderParams = (key, data) => {
         const classNames = [];
 
-        if (key === '@NotSighted30Days' ||
-            key === '@HealthSatisfactory' ||
-            key === '@VisitCompleted' ||
-            key === 'pendingCurrent' ||
-            key === 'good'
+        if (
+            key === '@NotSighted30Days'
+            || key === '@HealthSatisfactory'
+            || key === '@VisitCompleted'
+            || key === 'pendingCurrent'
+            || key === 'good'
         ) {
             classNames.push(styles.success);
         } else if (key === '@NotSighted60Days') {
             classNames.push(styles.warning);
-        } else if (key === '@NotSighted90Days' ||
-            key === '@HealthNotSatisfactory' ||
-            key === 'pendingOverDue' ||
-            data.type === 'bad'
+        } else if (
+            key === '@NotSighted90Days'
+            || key === '@HealthNotSatisfactory'
+            || key === 'pendingOverDue'
+            || data.type === 'bad'
         ) {
             classNames.push(styles.danger);
         } else if (key === '@cms') {
@@ -301,12 +305,13 @@ export default class Report extends PureComponent {
 
         if (!report) {
             return (
-                <div className={`${styles.region} ${styles.noRegionFound}`} >
+                <div className={`${styles.region} ${styles.noRegionFound}`}>
                     <div className={styles.heading}>
                         The report you are looking for does not exist.
                         <button
                             className={styles.goBack}
                             onClick={this.handleGoBack}
+                            type="button"
                         >
                             Click here to go back
                         </button>
@@ -413,11 +418,12 @@ export default class Report extends PureComponent {
         return (
             <div className={styles.region}>
                 { reportGetPending && <LoadingAnimation /> }
-                <div className={styles.header} >
-                    <div className={styles.heading} >
+                <div className={styles.header}>
+                    <div className={styles.heading}>
                         <button
                             className={styles.goBack}
                             onClick={this.handleGoBack}
+                            type="button"
                         >
                             <span className="ion-android-arrow-back" />
                         </button>
@@ -430,8 +436,8 @@ export default class Report extends PureComponent {
                             <MapContainer className={styles.map} />
                             {this.renderDistrictLayers()}
                         </Map>
-                        <div className={styles.tableContainer} >
-                            <div className={styles.item} >
+                        <div className={styles.tableContainer}>
+                            <div className={styles.item}>
                                 <h3>Child Monitoring</h3>
                                 <div className={styles.vizWrapper}>
                                     <ListView
@@ -456,7 +462,7 @@ export default class Report extends PureComponent {
                                     />
                                 </div>
                             </div>
-                            <div className={styles.item} >
+                            <div className={styles.item}>
                                 <h3>Health/Nutrition</h3>
                                 <div className={styles.vizWrapper}>
                                     <ListView
@@ -521,7 +527,7 @@ export default class Report extends PureComponent {
                                 />
                             </div>
                         </div>
-                        <div className={styles.item} >
+                        <div className={styles.item}>
                             <h3>Education</h3>
                             <div className={styles.vizContainer}>
                                 <SunBurst
@@ -532,14 +538,14 @@ export default class Report extends PureComponent {
                                 />
                             </div>
                         </div>
-                        <div className={styles.item} >
+                        <div className={styles.item}>
                             <h3>Correspondence</h3>
                             <CorrespondenceItems />
                         </div>
-                        <div className={styles.item} >
+                        <div className={styles.item}>
                             <h3>Participation / Support</h3>
                         </div>
-                        <div className={styles.item} >
+                        <div className={styles.item}>
                             <h3>RC Distribution Based on Language & People Group</h3>
                         </div>
                     </div>
