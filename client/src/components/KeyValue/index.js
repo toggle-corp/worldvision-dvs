@@ -27,6 +27,7 @@ const defaultProps = {
 // eslint-disable-next-line
 export default class KeyValue extends PureComponent {
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     render() {
@@ -50,12 +51,12 @@ export default class KeyValue extends PureComponent {
         }
 
         return (
-            <div className={styles.item} >
+            <div className={styles.item}>
                 <span className={titleClassNames.join(' ')}>
                     {title}
                 </span>
                 {isPercent ? (
-                    <div className={styles.percentContainer} >
+                    <div className={styles.percentContainer}>
                         <Numeral
                             className={percentClassName.join(' ')}
                             value={percent}

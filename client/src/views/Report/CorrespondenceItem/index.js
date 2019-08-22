@@ -18,6 +18,7 @@ const defaultProps = {
 
 export default class CorrespondenceItem extends PureComponent {
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     static keySelector = d => d.name;

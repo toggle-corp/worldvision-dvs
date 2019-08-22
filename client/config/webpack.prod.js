@@ -3,23 +3,26 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const WebpackPwaManifest = require('webpack-pwa-manifest');
-
+const StylishPlugin = require('eslint/lib/cli-engine/formatters/stylish');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const dotenv = require('dotenv').config({
+    path: '.env',
+});
 const getEnvVariables = require('./env.js');
 
 const appBase = process.cwd();
+const eslintFile = path.resolve(appBase, '.eslintrc-loader.js');
 const appSrc = path.resolve(appBase, 'src/');
 const appDist = path.resolve(appBase, 'build/');
 const appIndexJs = path.resolve(appBase, 'src/index.js');
 const appIndexHtml = path.resolve(appBase, 'public/index.html');
 const appFavicon = path.resolve(appBase, 'public/favicon.ico');
-const appLogo = path.resolve(appBase, 'public/favicon.png');
 
 module.exports = (env) => {
-    const ENV_VARS = getEnvVariables(env);
+    const ENV_VARS = { ...dotenv.pared, ...getEnvVariables(env) };
 
     return {
         entry: appIndexJs,
@@ -27,25 +30,43 @@ module.exports = (env) => {
             path: appDist,
             publicPath: '/',
             chunkFilename: 'js/[name].[chunkhash].js',
-            filename: 'js/[name].[chunkhash].js',
+            filename: 'js/[name].[contenthash].js',
             sourceMapFilename: 'sourcemaps/[file].map',
         },
 
         resolve: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
             alias: {
                 'base-scss': path.resolve(appBase, 'src/stylesheets/'),
                 'rs-scss': path.resolve(appBase, 'src/vendor/react-store/stylesheets/'),
             },
+            symlinks: false,
         },
 
         mode: 'production',
+
         devtool: 'source-map',
+        node: {
+            fs: 'empty',
+        },
+
         optimization: {
             minimizer: [
+                /*
+                // NOTE: Using TerserPlugin instead of UglifyJsPlugin as es6 support deprecated
                 new UglifyJsPlugin({
                     sourceMap: true,
                     parallel: true,
                     uglifyOptions: {
+                        mangle: true,
+                        compress: { typeofs: false },
+                    },
+                }),
+                */
+                new TerserPlugin({
+                    parallel: true,
+                    sourceMap: true,
+                    terserOptions: {
                         mangle: true,
                         compress: { typeofs: false },
                     },
@@ -65,18 +86,36 @@ module.exports = (env) => {
                     },
                 },
             },
-            runtimeChunk: true,
+            runtimeChunk: 'single',
+            moduleIds: 'hashed',
         },
 
         module: {
             rules: [
                 {
-                    test: /\.(js|jsx)$/,
+                    test: /\.(js|jsx|ts|tsx)$/,
                     include: appSrc,
                     use: [
                         'babel-loader',
-                        'eslint-loader',
+                        {
+                            loader: 'eslint-loader',
+                            options: {
+                                configFile: eslintFile,
+                                // NOTE: adding this because eslint 6 cannot find this
+                                // https://github.com/webpack-contrib/eslint-loader/issues/271
+                                formatter: StylishPlugin,
+                            },
+                        },
                     ],
+                },
+                {
+                    test: /\.(html)$/,
+                    use: {
+                        loader: 'html-loader',
+                        options: {
+                            attrs: [':data-src'],
+                        },
+                    },
                 },
                 {
                     test: /\.scss$/,
@@ -87,14 +126,19 @@ module.exports = (env) => {
                             loader: require.resolve('css-loader'),
                             options: {
                                 importLoaders: 1,
-                                modules: true,
-                                camelCase: true,
-                                localIdentName: '[name]_[local]_[hash:base64]',
-                                minimize: true,
+                                modules: {
+                                    localIdentName: '[name]_[local]_[hash:base64]',
+                                },
+                                localsConvention: 'camelCase',
                                 sourceMap: true,
                             },
                         },
-                        require.resolve('sass-loader'),
+                        {
+                            loader: require.resolve('sass-loader'),
+                            options: {
+                                sourceMap: true,
+                            },
+                        },
                     ],
                 },
                 {
@@ -120,33 +164,19 @@ module.exports = (env) => {
                 allowAsyncCycles: false,
                 cwd: appBase,
             }),
-            new CleanWebpackPlugin([appDist], { root: appBase }),
+            new CleanWebpackPlugin(),
             new HtmlWebpackPlugin({
                 template: appIndexHtml,
                 filename: './index.html',
-                title: 'DEEP',
+                title: 'Worldvision Sponsorship Visualization',
                 favicon: path.resolve(appFavicon),
                 chunksSortMode: 'none',
             }),
             new MiniCssExtractPlugin({
-                filename: 'css/[name].[hash].css',
-                chunkFilename: 'css/[id].[hash].css',
+                filename: 'css/[name].css',
+                chunkFilename: 'css/[id].css',
             }),
-            new WebpackPwaManifest({
-                name: 'DEEP',
-                short_name: 'DEEP',
-                description: 'DEEP is an open source, community driven web application to intelligently collect, tag, analyze and export secondary data.',
-                background_color: '#e0e0e0',
-                start_url: '.',
-                display: 'standalone',
-                theme_color: '#008975',
-                icons: [
-                    {
-                        src: path.resolve(appLogo),
-                        sizes: [96, 128, 192, 256, 384, 512],
-                    },
-                ],
-            }),
+            new webpack.HashedModuleIdsPlugin(),
         ],
     };
 };

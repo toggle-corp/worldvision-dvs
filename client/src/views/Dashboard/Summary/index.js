@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
+import {
+    isFalsy,
+    randomString,
+} from '@togglecorp/fujs';
 
 import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
 import KeyValue from '#components/KeyValue';
 import DonutChart from '#rscz/DonutChart';
-import {
-    isFalsy,
-    randomString,
-} from '#rsu/common';
 
 import styles from './styles.scss';
 
@@ -40,10 +40,13 @@ const getPercent = memoize((data) => {
 
 export default class Summary extends PureComponent {
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     static valueSelector = d => d.value;
+
     static labelSelector = d => d.label;
+
     static labelModifierSelector = (label, value) => (`
         <div class=${styles.tooltip} >
             ${label}:
@@ -59,17 +62,19 @@ export default class Summary extends PureComponent {
         const classNames = [];
         const titleClassName = [];
 
-        if (key === '@NotSighted30Days' ||
-            key === '@HealthSatisfactory' ||
-            key === 'pendingCurrent' ||
-            key === '@VisitCompleted'
+        if (
+            key === '@NotSighted30Days'
+            || key === '@HealthSatisfactory'
+            || key === 'pendingCurrent'
+            || key === '@VisitCompleted'
         ) {
             classNames.push(styles.success);
         } else if (key === '@NotSighted60Days') {
             classNames.push(styles.warning);
-        } else if (key === '@NotSighted90Days' ||
-            key === '@HealthNotSatisfactory' ||
-            key === 'pendingOverDue'
+        } else if (
+            key === '@NotSighted90Days'
+            || key === '@HealthNotSatisfactory'
+            || key === 'pendingOverDue'
         ) {
             classNames.push(styles.danger);
         } else if (key === 'soi') {

@@ -37,8 +37,9 @@ export const reportSelector = createSelector(
     reportsSelector,
     projectIdFromPropsSelector,
     (reports, projectIdFromProps) => (
-        projectIdFromProps ?
-            reports[projectIdFromProps] : emptyObject
+        projectIdFromProps
+            ? reports[projectIdFromProps]
+            : emptyObject
     ),
 );
 

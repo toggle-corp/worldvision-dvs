@@ -1,5 +1,4 @@
 import update from '#rsu/immutable-update';
-import turf from 'turf';
 
 import createReducerWithMap from '../../../utils/createReducerWithMap';
 import initialDomainData from '../../initial-state/domainData';
@@ -45,15 +44,20 @@ export const setSummaryGroupsAction = ({ summaryGroups }) => ({
 const setProject = (state, action) => {
     const { projects = [] } = action;
 
-    const points = projects.map(project => turf.point(
-        [project.long, project.lat],
-        {
-            name: project.name,
+    const pointFeatures = {
+        type: 'FeatureCollection',
+        features: projects.map(project => ({
             id: project.id,
-        },
-    ));
-
-    const pointFeatures = turf.featureCollection(points);
+            geometry: {
+                type: 'Point',
+                coordinates: [project.long, project.lat],
+            },
+            properties: {
+                name: project.name,
+                id: project.id,
+            },
+        })),
+    };
 
     const rcData = projects.map((project) => {
         const {

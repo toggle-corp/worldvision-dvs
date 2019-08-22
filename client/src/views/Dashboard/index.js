@@ -60,7 +60,9 @@ const getHashFromBrowser = () => window.location.hash.substr(2);
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Dashboard extends PureComponent {
     static propTypes = propTypes;
+
     static labelSelector = d => d.project;
+
     static keySelector = d => d.name;
 
     constructor(props) {
@@ -114,7 +116,7 @@ export default class Dashboard extends PureComponent {
                     };
 
                     return (
-                        <div className={styles.dashboardContent} >
+                        <div className={styles.dashboardContent}>
                             <div className={styles.mapContainer}>
                                 <ProjectsMap
                                     className={styles.map}
@@ -207,16 +209,16 @@ export default class Dashboard extends PureComponent {
 
         return (
             <div className={styles.dashboard}>
-                { pending ?
-                    (<LoadingAnimation />) : (
-                        <MultiViewContainer
-                            views={this.views}
-                            containerClassName={styles.content}
-                            active={selectedView}
-                            activeClassName={styles.active}
-                        />
-                    )
-                }
+                {pending ? (
+                    <LoadingAnimation />
+                ) : (
+                    <MultiViewContainer
+                        views={this.views}
+                        containerClassName={styles.content}
+                        active={selectedView}
+                        activeClassName={styles.active}
+                    />
+                )}
             </div>
         );
     }

@@ -1,6 +1,4 @@
-import {
-    FgRestBuilder,
-} from '#rsu/rest';
+import { FgRestBuilder } from '#rsu/rest';
 
 import {
     urlForProjects,
