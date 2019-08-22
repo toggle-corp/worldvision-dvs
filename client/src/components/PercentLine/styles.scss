@@ -7,7 +7,7 @@
 .segment {
     @include transition-medium;
     display: inline-block;
-    height: $spacing-large;
+    height: var(--spacing-large);
 
     &:hover {
         @include shadow-small;

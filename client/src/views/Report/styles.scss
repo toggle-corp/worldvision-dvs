@@ -1,9 +1,7 @@
-@import '~base-scss/base';
-
 .region {
     display: flex;
     flex-direction: column;
-    border: $width-separator-thin solid $color-separator;
+    border: var(--width-separator-thin) solid var(--color-separator);
     width: 100%;
     height: 100%;
 
@@ -15,24 +13,24 @@
             display: flex;
             align-items: center;
             flex-direction: column;
-            color: $color-text;
-            font-size: $font-size-super-large;
-            font-weight: $font-weight-medium;
+            color: var(--color-text);
+            font-size: var(--font-size-super-large);
+            font-weight: var(--font-weight-medium);
 
             .go-back {
                 outline: none;
                 border: 0;
                 background-color: transparent;
                 cursor: pointer;
-                padding-top: $spacing-large;
+                padding-top: var(--spacing-large);
                 text-transform: capitalize;
                 text-decoration: none;
                 line-height: 0.9;
                 color: inherit;
-                color: $color-accent;
+                color: var(--color-accent);
                 font-family: inherit;
-                font-size: $font-size-extra-large;
-                font-weight: $font-weight-normal;
+                font-size: var(--font-size-extra-large);
+                font-weight: var(--font-weight-normal);
             }
         }
     }
@@ -41,16 +39,16 @@
         display: flex;
         align-items: center;
         flex-shrink: 0;
-        border-bottom: $width-separator-thin solid $color-separator;
-        background-color: $color-foreground;
-        padding: $spacing-small $spacing-medium;
+        border-bottom: var(--width-separator-thin) solid var(--color-separator);
+        background-color: var(--color-foreground);
+        padding: var(--spacing-small) var(--spacing-medium);
 
         .heading {
             display: flex;
             align-items: center;
-            color: $color-accent;
-            font-size: $font-size-extra-large;
-            font-weight: $font-weight-medium;
+            color: var(--color-accent);
+            font-size: var(--font-size-extra-large);
+            font-weight: var(--font-weight-medium);
 
             .go-back {
                 outline: none;
@@ -62,8 +60,8 @@
                 line-height: 0.9;
                 color: inherit;
                 font-family: inherit;
-                font-size: $font-size-extra-large;
-                font-weight: $font-weight-normal;
+                font-size: var(--font-size-extra-large);
+                font-weight: var(--font-weight-normal);
             }
         }
     }
@@ -75,21 +73,21 @@
 
         h3 {
             text-transform: initial;
-            color: $color-accent;
-            font-size: $font-size-large-alt;
-            font-weight: $font-weight-medium;
+            color: var(--color-accent);
+            font-size: var(--font-size-large-alt);
+            font-weight: var(--font-weight-medium);
         }
 
         .item {
             display: flex;
             flex-direction: column;
             flex-shrink: 0;
-            padding: $spacing-large;
+            padding: var(--spacing-large);
 
             .viz-container {
                 display: flex;
                 flex-grow: 1;
-                padding: $spacing-super-large-alt;
+                padding: var(--spacing-super-large-alt);
                 height: 360px;
 
                 .viz {
@@ -108,7 +106,7 @@
                 overflow-y: auto;
 
                 .heading {
-                    color: $color-accent;
+                    color: var(--color-accent);
                 }
 
                 .table {
@@ -128,12 +126,12 @@
                 height: 60vh;
 
                 h3 {
-                    padding-top: $spacing-extra-large;
+                    padding-top: var(--spacing-extra-large);
                     text-align: center;
                 }
 
                 &:nth-child(even) {
-                    background-color: $color-foreground-alt;
+                    background-color: var(--color-foreground-alt);
                 }
             }
         }
@@ -141,7 +139,7 @@
         .upper-container {
             display: flex;
             flex-shrink: 0;
-            border-bottom: $width-separator-thin solid $color-separator;
+            border-bottom: var(--width-separator-thin) solid var(--color-separator);
 
             .map {
                 flex-basis: 50%;
@@ -158,19 +156,19 @@
                     .table {
                         display: table;
                         flex-grow: 1;
-                        margin-top: $spacing-medium;
+                        margin-top: var(--spacing-medium);
                         border-collapse: collapse;
 
                         .success {
-                            color: $color-success;
+                            color: var(--color-success);
                         }
 
                         .warning {
-                            color: $color-warning;
+                            color: var(--color-warning);
                         }
 
                         .danger {
-                            color: $color-danger;
+                            color: var(--color-danger);
                         }
                     }
 

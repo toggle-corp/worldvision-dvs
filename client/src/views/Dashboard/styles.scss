@@ -1,7 +1,5 @@
 @import '~base-scss/base';
 
-$width-aggregated-data: 480px;
-
 .dashboard {
     @extend %main-content;
     margin: auto;
@@ -24,19 +22,19 @@ $width-aggregated-data: 480px;
 
             .map-container {
                 position: relative;
-                width: calc(100% - #{$width-aggregated-data});
+                width: calc(100% - var(--width-aggregated-data));
                 height: 100%;
 
                 .map {
-                    margin-bottom: $spacing-small;
-                    border: $width-separator-thin solid $color-separator;
+                    margin-bottom: var(--spacing-small);
+                    border: var(--width-separator-thin) solid var(--color-separator);
                     height: 100%;
                 }
             }
 
             .aggregated-container {
-                border: $width-separator-thin solid $color-separator;
-                width: $width-aggregated-data;
+                border: var(--width-separator-thin) solid var(--color-separator);
+                width: var(--width-aggregated-data);
             }
         }
     }

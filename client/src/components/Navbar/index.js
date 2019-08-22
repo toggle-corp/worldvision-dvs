@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { _cs } from '@togglecorp/fujs';
 
 import logo from '#resources/images/logo.png';
-import styles from './styles.scss';
 
+import styles from './styles.scss';
 
 const setHashToBrowser = (hash) => { window.location.hash = hash; };
 
@@ -10,8 +12,8 @@ const handleGoBack = () => {
     setHashToBrowser('/');
 };
 
-export default ({ className }) => (
-    <nav className={`${className} ${styles.navbar}`}>
+const Navbar = ({ className }) => (
+    <nav className={_cs(className, styles.navbar)}>
         <header className={styles.header}>
             <button
                 className={styles.button}
@@ -28,3 +30,13 @@ export default ({ className }) => (
         </header>
     </nav>
 );
+
+Navbar.propTypes = {
+    className: PropTypes.string,
+};
+
+Navbar.defaultProps = {
+    className: undefined,
+};
+
+export default Navbar;

@@ -1,14 +1,12 @@
-@import '~base-scss/base';
-
 .map {
     .hover-info {
         h4 {
-            border-bottom: $width-separator-thin solid $color-separator;
-            padding: $spacing-small $spacing-medium;
+            border-bottom: var(--width-separator-thin) solid var(--color-separator);
+            padding: var(--spacing-small) var(--spacing-medium);
             text-transform: capitalize;
-            color: $color-accent;
-            font-size: $font-size-large;
-            font-weight: $font-weight-bold;
+            color: var(--color-accent);
+            font-size: var(--font-size-large);
+            font-weight: var(--font-weight-bold);
         }
     }
 }

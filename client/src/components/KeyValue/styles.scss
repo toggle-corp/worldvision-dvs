@@ -1,28 +1,26 @@
-@import '~base-scss/base';
-
 .item {
     display: table-row;
-    border-bottom: $width-separator-thin solid $color-separator;
+    border-bottom: var(--width-separator-thin) solid var(--color-separator);
 
     .title {
         display: table-cell;
-        padding: $spacing-small $spacing-medium;
+        padding: var(--spacing-small) var(--spacing-medium);
         text-transform: capitalize;
-        color: $color-text-label;
+        color: var(--color-text-label);
     }
 
     .value {
         display: table-cell;
-        padding: $spacing-small $spacing-medium;
+        padding: var(--spacing-small) var(--spacing-medium);
         text-align: right;
-        font-size: $font-size-medium-alt;
+        font-size: var(--font-size-medium-alt);
     }
 
     .percent-container {
         display: table-cell;
-        padding: $spacing-small $spacing-medium;
+        padding: var(--spacing-small) var(--spacing-medium);
         text-align: right;
-        font-size: $font-size-medium-alt;
+        font-size: var(--font-size-medium-alt);
 
         .percent {
             display: block;
@@ -30,7 +28,7 @@
 
         .percent-value {
             opacity: 0.6;
-            font-size: $font-size-small-alt;
+            font-size: var(--font-size-small-alt);
         }
     }
 }

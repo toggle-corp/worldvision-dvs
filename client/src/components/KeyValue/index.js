@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { _cs } from '@togglecorp/fujs';
 
 import Numeral from '#rscv/Numeral';
 
@@ -24,7 +25,6 @@ const defaultProps = {
     colorOnlyNumber: false,
 };
 
-// eslint-disable-next-line
 export default class KeyValue extends PureComponent {
     static propTypes = propTypes;
 
@@ -41,37 +41,36 @@ export default class KeyValue extends PureComponent {
             colorOnlyNumber,
         } = this.props;
 
-        const titleClassNames = [styles.title, titleClassName];
-        const percentClassName = [styles.percent, className];
-        const percentValueClassName = [styles.percentValue, className];
-        const valueClassName = [styles.value, className];
-
-        if (!colorOnlyNumber) {
-            titleClassNames.push(className);
-        }
-
         return (
             <div className={styles.item}>
-                <span className={titleClassNames.join(' ')}>
+                <span
+                    className={
+                        _cs(
+                            styles.title,
+                            titleClassName,
+                            !colorOnlyNumber && className,
+                        )
+                    }
+                >
                     {title}
                 </span>
                 {isPercent ? (
                     <div className={styles.percentContainer}>
                         <Numeral
-                            className={percentClassName.join(' ')}
+                            className={_cs(styles.percent, className)}
                             value={percent}
                             precision={percent ? 2 : 0}
                             suffix={percent ? '%' : ''}
                         />
                         <Numeral
-                            className={percentValueClassName.join(' ')}
+                            className={_cs(styles.percentValue, className)}
                             value={value}
                             precision={0}
                         />
                     </div>
                 ) : (
                     <Numeral
-                        className={valueClassName.join(' ')}
+                        className={_cs(styles.value, className)}
                         value={value}
                         precision={0}
                     />

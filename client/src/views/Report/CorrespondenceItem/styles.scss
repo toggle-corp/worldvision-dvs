@@ -1,12 +1,10 @@
-@import '~base-scss/base';
-
 .table-wrapper {
     flex-shrink: 0;
-    padding: $spacing-small 0;
+    padding: var(--spacing-small) 0;
 
     .header {
-        color: $color-text-label;
-        font-weight: $font-weight-bold;
+        color: var(--color-text-label);
+        font-weight: var(--font-weight-bold);
     }
 
     .table {
@@ -16,10 +14,10 @@
     }
 
     .red {
-        color: $color-danger;
+        color: var(--color-danger);
     }
 
     .green {
-        color: $color-success;
+        color: var(--color-success);
     }
 }
