@@ -25,8 +25,7 @@ const ROUTE = {
 
 // NOTE: withRouter is required here so that link change are updated
 
-@withRouter
-export default class Multiplexer extends React.PureComponent {
+class Multiplexer extends React.PureComponent {
     renderRoutes = () => (
         routesOrder.map((routeId) => {
             const view = views[routeId];
@@ -92,3 +91,5 @@ export default class Multiplexer extends React.PureComponent {
         );
     }
 }
+
+export default withRouter(Multiplexer);

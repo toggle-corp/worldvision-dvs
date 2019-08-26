@@ -57,8 +57,7 @@ const mapDispatchToProps = dispatch => ({
 // NOTE: receives data similar to '#/metadata'
 const getHashFromBrowser = () => window.location.hash.substr(2);
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Dashboard extends PureComponent {
+class Dashboard extends PureComponent {
     static propTypes = propTypes;
 
     static labelSelector = d => d.project;
@@ -70,6 +69,13 @@ export default class Dashboard extends PureComponent {
 
         const hash = getHashFromBrowser();
 
+        const {
+            setProjects,
+            setSummary,
+            setSiteSettings,
+            setSummaryGroups,
+        } = this.props;
+
         this.state = {
             projectsGetPending: true,
             summaryGroupsPending: true,
@@ -80,22 +86,22 @@ export default class Dashboard extends PureComponent {
 
         this.projectsRequest = new ProjectsGetRequest({
             setState: params => this.setState(params),
-            setProjects: this.props.setProjects,
+            setProjects,
         }).create();
 
         this.summaryRequest = new SummaryGetRequest({
             setState: params => this.setState(params),
-            setSummary: this.props.setSummary,
+            setSummary,
         }).create();
 
         this.siteSettingsRequest = new SiteSettingsRequest({
             setState: params => this.setState(params),
-            setSiteSettings: this.props.setSiteSettings,
+            setSiteSettings,
         }).create();
 
         this.summaryGroupsRequest = new SummaryGroupsGetRequest({
             setState: params => this.setState(params),
-            setSummaryGroups: this.props.setSummaryGroups,
+            setSummaryGroups,
         }).create();
 
         this.views = {
@@ -143,7 +149,7 @@ export default class Dashboard extends PureComponent {
 
                     return (
                         <Report
-                            projectId={this.state.selectedProjectId}
+                            projectId={selectedProjectId}
                             project={project}
                             location={this.projectLocation}
                         />
@@ -223,3 +229,5 @@ export default class Dashboard extends PureComponent {
         );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

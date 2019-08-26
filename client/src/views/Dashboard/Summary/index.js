@@ -185,6 +185,8 @@ export default class Summary extends PureComponent {
                         <DonutChart
                             className={styles.viz}
                             data={monitoring}
+                            hideLabel
+                            sideLengthRatio={0.2}
                             valueSelector={Summary.valueSelector}
                             labelSelector={Summary.labelSelector}
                             labelModifier={Summary.labelModifierSelector}
@@ -203,39 +205,16 @@ export default class Summary extends PureComponent {
                         />
                     </div>
                 </div>
-                {/*
-                    <div className={styles.item}>
-                        <h3>Health / Nutrition</h3>
-                        <div className={styles.itemTableViz}>
-                            <DonutChart
-                                className={styles.viz}
-                                data={healthNutrition}
-                                valueSelector={Summary.valueSelector}
-                                labelSelector={Summary.labelSelector}
-                                labelModifier={Summary.labelModifierSelector}
-                                colorScheme={[
-                                    '#41cf76',
-                                    '#f44336',
-                                ]}
-                            />
-                            <ListView
-                                className={styles.table}
-                                data={percentHealth}
-                                rendererParams={this.percentTableParams}
-                                keySelector={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
-                        </div>
-                    </div>
-                    */}
                 <div className={styles.item}>
                     <h3>SOI Index</h3>
                     <div className={styles.itemTableViz}>
                         <DonutChart
                             className={styles.viz}
                             data={correspondences}
+                            hideLabel
                             valueSelector={Summary.valueSelector}
                             labelSelector={Summary.labelSelector}
+                            sideLengthRatio={0.2}
                             labelModifier={Summary.labelModifierSelector}
                             colorScheme={[
                                 '#41cf76',

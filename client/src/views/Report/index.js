@@ -55,8 +55,7 @@ const mapDispatchToProps = dispatch => ({
 
 const setHashToBrowser = (hash) => { window.location.hash = hash; };
 
-@connect(mapStateToProps, mapDispatchToProps)
-export default class Report extends PureComponent {
+class Report extends PureComponent {
     static propTypes = propTypes;
 
     static defaultProps = defaultProps;
@@ -211,6 +210,8 @@ export default class Report extends PureComponent {
                 municipalities = [],
             },
         } = this.props;
+        const { code } = this.state;
+
         const mids = municipalities.map(m => m.code);
 
         return (
@@ -223,7 +224,7 @@ export default class Report extends PureComponent {
                     <MapLayer
                         layerKey="line"
                         type="line"
-                        filter={['==', 'OCHA_PCODE', this.state.code]}
+                        filter={['==', 'OCHA_PCODE', code]}
                         paint={{
                             'line-color': '#ffffff',
                             'line-opacity': 1,
@@ -233,7 +234,7 @@ export default class Report extends PureComponent {
                     <MapLayer
                         layerKey="fill"
                         type="fill"
-                        filter={['==', 'OCHA_PCODE', this.state.code]}
+                        filter={['==', 'OCHA_PCODE', code]}
                         paint={{
                             'fill-color': '#00897B',
                             'fill-opacity': 0.4,
@@ -457,7 +458,9 @@ export default class Report extends PureComponent {
                                     />
                                     <DonutChart
                                         className={styles.viz}
+                                        sideLengthRatio={0.2}
                                         data={childDonut}
+                                        hideLabel
                                         valueSelector={Report.valueSelector}
                                         labelSelector={Report.labelSelector}
                                         labelModifier={Report.labelModifierSelector}
@@ -482,6 +485,8 @@ export default class Report extends PureComponent {
                                     />
                                     <DonutChart
                                         className={styles.viz}
+                                        hideLabel
+                                        sideLengthRatio={0.2}
                                         data={healthDonut}
                                         valueSelector={Report.valueSelector}
                                         labelSelector={Report.labelSelector}
@@ -562,3 +567,5 @@ export default class Report extends PureComponent {
         );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Report);

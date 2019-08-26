@@ -18,6 +18,7 @@ const defaultProps = {
 
 export default class PercentLine extends PureComponent {
     static propTypes = propTypes;
+
     static defaultProps = defaultProps;
 
     rendererParams = (key, segment, i) => {
