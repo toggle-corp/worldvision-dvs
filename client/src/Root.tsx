@@ -14,25 +14,34 @@ import { initializeStyles } from '#rsu/styles';
 import store from '#store';
 import App from './App';
 
+interface State {
+    rehydrated: boolean;
+}
+
+interface Props {
+}
+
 // Add icons
 Object.keys(iconNames).forEach((key) => {
-    addIcon('font', key, iconNames[key]);
+    const myKey = key as keyof (typeof iconNames);
+    addIcon('font', key, iconNames[myKey]);
 });
 
 Object.keys(svgPaths).forEach((key) => {
-    addIcon('svg', key, svgPaths[key]);
+    const myKey = key as keyof (typeof svgPaths);
+    addIcon('svg', key, svgPaths[myKey]);
 });
 
 Object.keys(imagePaths).forEach((key) => {
-    addIcon('image', key, imagePaths[key]);
+    const myKey = key as keyof (typeof imagePaths);
+    addIcon('image', key, imagePaths[myKey]);
 });
 
-export default class Root extends React.Component {
-    constructor(props) {
+export default class Root extends React.Component<Props, State> {
+    public constructor(props: Props) {
         super(props);
 
         this.state = { rehydrated: false };
-        this.store = store;
 
         initializeStyles({
             ...styleProperties.colors,
@@ -42,13 +51,15 @@ export default class Root extends React.Component {
         console.info('React version:', React.version);
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         const afterRehydrateCallback = () => this.setState({ rehydrated: true });
         // NOTE: We can also use PersistGate instead of callback to wait for rehydration
         persistStore(this.store, undefined, afterRehydrateCallback);
     }
 
-    render() {
+    private store = store;
+
+    public render() {
         const { rehydrated } = this.state;
 
         if (!rehydrated) {

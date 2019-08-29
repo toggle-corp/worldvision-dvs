@@ -10,18 +10,15 @@ module.exports = {
         '@babel/preset-typescript',
         '@babel/preset-react',
         ['@babel/preset-env', {
-            'useBuiltIns': "usage",
-            'corejs': 3,
-            'debug': true,
+            useBuiltIns: "usage",
+            corejs: 3,
+            debug: true,
         }],
     ],
 
     'plugins': [
         // Reuse babel's injected headers
-        ['@babel/plugin-transform-runtime', {
-            'corejs': 3,
-            'regenerator': true,
-        }],
+        ['@babel/plugin-transform-runtime', { 'regenerator': true }],
 
         // Stage 2
         ['@babel/plugin-proposal-decorators', { 'legacy': true }],
@@ -62,6 +59,8 @@ module.exports = {
                     '#rsk': './src/vendor/react-store/constants',
                     '#rsu': './src/vendor/react-store/utils',
                     '#views': './src/views',
+                    '#redux': './src/redux',
+                    '#rest': './src/rest',
                 },
             },
         ],

@@ -15,7 +15,7 @@ const appBase = process.cwd();
 const eslintFile = path.resolve(appBase, '.eslintrc-loader.js');
 const appSrc = path.resolve(appBase, 'src/');
 const appDist = path.resolve(appBase, 'build/');
-const appIndexJs = path.resolve(appBase, 'src/index.js');
+const appIndexJs = path.resolve(appBase, 'src/index.tsx');
 const appIndexHtml = path.resolve(appBase, 'public/index.html');
 const appFavicon = path.resolve(appBase, 'public/favicon.ico');
 

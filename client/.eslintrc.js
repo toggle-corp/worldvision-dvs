@@ -40,6 +40,8 @@ module.exports = {
                     '#rsk': './src/vendor/react-store/constants',
                     '#rsu': './src/vendor/react-store/utils',
                     '#views': './src/views',
+                    '#redux': './src/redux',
+                    '#rest': './src/rest',
                 },
             },
         },
