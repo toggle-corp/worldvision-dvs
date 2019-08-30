@@ -1,6 +1,6 @@
 from django import forms
 
-from server.widgets import RelatedFieldWidgetWrapper
+from wv_dvs.widgets import RelatedFieldWidgetWrapper
 from report.models import Report
 
 

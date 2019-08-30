@@ -14,7 +14,7 @@ services:
             - devtc/worldvision-dvs:server-latest
         env_file:
             - .env
-        command: bash -c '/code/scripts/wait-for-it.sh db:5432 && /code/scripts/run_develop.sh'
+        command: /code/scripts/run_develop.sh
         volumes:
             - ./server/:/code
             - media:/media

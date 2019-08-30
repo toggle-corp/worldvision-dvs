@@ -1,43 +1,34 @@
-FROM ubuntu:16.04
+FROM python:3.7.3-alpine
 
 MAINTAINER togglecorp info@togglecorp.com
 
-# Clean apt
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm -rf /var/lib/apt/lists/partial/* && \
-    rm -rf /var/cache/apt/*
-
-# Update and install common packages with apt
-RUN apt-get update -y ; \
-    apt-get install -y \
-        # Basic Packages
-        git \
-        locales \
-        vim \
-        curl \
-        cron \
-        unzip \
-        python3 \
-        python3-dev \
-        python3-setuptools \
-        python3-pip
-
-# Support utf-8
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-
-# Install uwsgi for django
-RUN pip3 install uwsgi
+ENV PYTHONUNBUFFERED 1
+ENV PYTHON3 /usr/bin/python3
+ENV PIP3 /usr/bin/pip3
 
 WORKDIR /code
 
-RUN pip3 install virtualenv
-RUN virtualenv /venv
-
 COPY ./requirements.txt /code/requirements.txt
-RUN . /venv/bin/activate && \
-    pip install -r requirements.txt
+
+RUN apk add --no-cache --virtual .app-deps \
+        git bash gcc \
+        libxslt libpq coreutils \
+        uwsgi-python3 uwsgi-http \
+    && apk add --no-cache --virtual .build-deps \
+        gcc \
+        subversion \
+        python3-dev \
+        musl-dev \
+        postgresql-dev \
+        ca-certificates \
+        libxml2-dev \
+        libxslt-dev \
+        zlib-dev \
+    && $PIP3 install --upgrade pip \
+    && $PIP3 install --no-cache-dir -r requirements.txt \
+    && apk del --no-cache .build-deps \
+    && printf "alias python3=$PYTHON3\nalias python=$PYTHON3\nalias pip=$PIP3\nalias pip3=$PIP3" >> ~/.bashrc \
+    && cp ~/.bashrc ~/.profile
 
 COPY . /code/
 

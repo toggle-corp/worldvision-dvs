@@ -2,19 +2,19 @@ from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django.urls import reverse
 
-from report.admin import ReportAdmin
 from report.models import Report
 from .models import Project, District, Municipality
 from .forms import ProjectAdminForm
 
 
-class ReportInline(ReportAdmin, admin.TabularInline):
+class ReportInline(admin.TabularInline):
+    exclude = ('data',)
+    show_change_link = True
     model = Report
-    max_num = 1
-    data_styles = 'overflow:scroll;height:500px'
+    extra = 0
 
-    def __init__(self, *args, **kwargs):
-        super(admin.TabularInline, self).__init__(*args, **kwargs)
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Project)
@@ -27,6 +27,9 @@ class ProjectAdmin(admin.ModelAdmin):
     )
     list_select_related = ('selected_report',)
     list_filter = ('district',)
+    autocomplete_fields = ('district',)  # selected_report filtering is not working right now
+    filter_horizontal = ('municipalities',)
+    save_on_top = True
 
     def get_district(self, instance):
         district = instance.district
@@ -70,6 +73,7 @@ class MunicipalityAdmin(admin.ModelAdmin):
     search_fields = ('name', 'code')
     ordering = ('name', 'code')
     list_filter = ('district',)
+    autocomplete_fields = ('district',)
 
     def get_district(self, instance):
         district = instance.district

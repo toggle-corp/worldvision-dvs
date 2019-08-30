@@ -1,0 +1,76 @@
+:root {
+  --bb-primary-color: #343a40;
+  --bb-primary-light-color: #343a40aa;
+  --bb-text-color: white;
+}
+
+#header, #header a:link {
+    background: var(--bb-primary-color);
+    color: var(--bb-text-color) !important;
+}
+
+input[type=submit], input[type=button], input[type=submit].default{
+    background: var(--bb-primary-color);
+}
+
+#branding h1 {
+    color: var(--bb-text-color);
+}
+
+#user-tools, #branding h1, #branding h1 a:link, #branding h1 a:visited {
+    color: var(--bb-text-color);
+}
+
+.breadcrumbs, #changelist-filter h2, .selector-chosen h2, .module caption, .inline-group h2 {
+    background: var(--bb-primary-light-color) !important;
+    color: var(--bb-text-color);
+}
+
+#content-related .module h2 {
+    color: black;
+}
+
+.logo {
+    margin: auto;
+    margin-bottom: 24px;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.goto-url {
+    padding: 10px;
+    margin-left: 10px;
+    box-shadow: 0 1px 3px -1px rgba(0, 0, 0, .5);
+    background-color: #1676d3;
+    display: inline-block;
+    color: #ffffff!important;
+    border-radius: 2px;
+    padding: 6px 8px;
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+    transition: .2s all ease-in-out;
+}
+
+.goto-url:active {
+    box-shadow: 0 1px 2px -1px rgba(0, 0, 0, .5);
+    transform: translateY(1px);
+}
+
+.goto-url:hover {
+    background-color: #005DBA;
+}
+
+.actions-container {
+    display: flex;
+}
+
+#changelist-filter select {
+    margin: 5px;
+    width: calc(100% - 10px);
+}
