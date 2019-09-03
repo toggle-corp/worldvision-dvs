@@ -1,6 +1,7 @@
 #!/bin/bash -x
 
-. /venv/bin/activate
-pip3 install -r requirements.txt
-python manage.py migrate --no-input
-python manage.py runserver 0.0.0.0:8005
+PYTHON3=${PYTHON3:-python3}
+
+/code/scripts/wait-for-it.sh db:5432
+$PYTHON3 manage.py migrate --no-input
+$PYTHON3 manage.py runserver 0.0.0.0:8005

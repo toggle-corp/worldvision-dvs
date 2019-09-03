@@ -30,8 +30,11 @@ class Report(models.Model):
                     file.open().read()
                 )
             )
-        except (IndexError, ValueError, KeyError) as e:
-            logger.exception('{0} XML Extraction Failed: "{1}" {0}'.format('*' * 22, file))
+        except (IndexError, ValueError, KeyError):
+            logger.exception(
+                '{0} XML Extraction Failed: "{1}" {0}'.format('*' * 22, file),
+                exc_info=True,
+            )
             raise ValidationError(u'Unsupported xml file')
 
     def is_selected(self):
@@ -41,7 +44,7 @@ class Report(models.Model):
         return False
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.is_selected() and ':- (Selected)'}"
 
 
 @receiver(models.signals.post_delete, sender=Report)

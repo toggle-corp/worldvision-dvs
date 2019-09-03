@@ -20,6 +20,7 @@ class ReportAdmin(admin.ModelAdmin):
     search_fields = ('name', 'project__name', 'file')
     list_display = ('name', 'get_project', 'file', 'is_selected')
     list_filter = (SelectedReportListFilter,)
+    autocomplete_fields = ('project',)
     form = ReportAdminForm
 
     def get_project(self, instance):
