@@ -4,7 +4,10 @@ import React, {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import turf from 'turf';
-import { mapToList } from '@togglecorp/fujs';
+import {
+    mapToList,
+    camelToNormal,
+} from '@togglecorp/fujs';
 
 import {
     reportSelector,
@@ -30,7 +33,6 @@ import MapSource from '#rscz/Map/MapSource';
 
 import districts from '#resources/districts.json';
 import gaupalika from '#resources/gaupalika.json';
-import { camelToNormalCase } from '#utils/common';
 
 import CorrespondenceItem from './CorrespondenceItem';
 
@@ -386,7 +388,7 @@ class Report extends PureComponent {
 
         const modifier = (element, key) => (
             {
-                name: key === 'totalRc' ? 'Actual' : camelToNormalCase(key),
+                name: key === 'totalRc' ? 'Actual' : camelToNormal(key),
                 value: element,
             }
         );
