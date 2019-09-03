@@ -17,11 +17,13 @@ import {
     setSummaryGroupsAction,
 } from '#redux';
 
+import {
+    createConnectedRequestCoordinator,
+    createRequestClient,
+} from '#request';
+
 import styles from './styles.scss';
-import ProjectsGetRequest from './requests/ProjectsGetRequest';
-import SummaryGetRequest from './requests/ProjectsSummaryGetRequest';
-import SiteSettingsRequest from './requests/SiteSettingsRequest';
-import SummaryGroupsGetRequest from './requests/SummaryGroupsGetRequest';
+
 import ProjectsMap from './ProjectsMap';
 import Report from '../Report';
 import SummaryContainer from './SummaryContainer';
@@ -32,10 +34,11 @@ const propTypes = {
     siteSettings: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     points: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
     summaryGroups: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
-    setProjects: PropTypes.func.isRequired,
-    setSummary: PropTypes.func.isRequired,
-    setSiteSettings: PropTypes.func.isRequired,
-    setSummaryGroups: PropTypes.func.isRequired,
+    setProjects: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    setSummary: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    setSiteSettings: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    setSummaryGroups: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    requests: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const mapStateToProps = state => ({
@@ -57,6 +60,37 @@ const mapDispatchToProps = dispatch => ({
 // NOTE: receives data similar to '#/metadata'
 const getHashFromBrowser = () => window.location.hash.substr(2);
 
+const requests = {
+    projectsGetRequest: {
+        url: '/projects/',
+        onMount: true,
+        onSuccess: ({ response, props: { setProjects } }) => {
+            setProjects({ projects: response });
+        },
+    },
+    summaryGetRequest: {
+        url: '/projects-summary/',
+        onMount: true,
+        onSuccess: ({ response, props: { setSummary } }) => {
+            setSummary({ summary: response });
+        },
+    },
+    siteSettingsGetRequest: {
+        url: '/site-settings/',
+        onMount: true,
+        onSuccess: ({ response, props: { setSiteSettings } }) => {
+            setSiteSettings({ siteSettings: response });
+        },
+    },
+    summaryGroupsGetRequest: {
+        url: '/summary-groups/',
+        onMount: true,
+        onSuccess: ({ response, props: { setSummaryGroups } }) => {
+            setSummaryGroups({ summaryGroups: response });
+        },
+    },
+};
+
 class Dashboard extends PureComponent {
     static propTypes = propTypes;
 
@@ -69,40 +103,10 @@ class Dashboard extends PureComponent {
 
         const hash = getHashFromBrowser();
 
-        const {
-            setProjects,
-            setSummary,
-            setSiteSettings,
-            setSummaryGroups,
-        } = this.props;
-
         this.state = {
-            projectsGetPending: true,
-            summaryGroupsPending: true,
-
             selectedView: (hash ? 'report' : 'map'),
             selectedProjectId: +hash,
         };
-
-        this.projectsRequest = new ProjectsGetRequest({
-            setState: params => this.setState(params),
-            setProjects,
-        }).create();
-
-        this.summaryRequest = new SummaryGetRequest({
-            setState: params => this.setState(params),
-            setSummary,
-        }).create();
-
-        this.siteSettingsRequest = new SiteSettingsRequest({
-            setState: params => this.setState(params),
-            setSiteSettings,
-        }).create();
-
-        this.summaryGroupsRequest = new SummaryGroupsGetRequest({
-            setState: params => this.setState(params),
-            setSummaryGroups,
-        }).create();
 
         this.views = {
             map: {
@@ -161,25 +165,10 @@ class Dashboard extends PureComponent {
     }
 
     componentDidMount() {
-        this.projectsRequest.start();
-        this.summaryRequest.start();
-        this.siteSettingsRequest.start();
-        this.summaryGroupsRequest.start();
-
         window.addEventListener('hashchange', this.handleHashChange);
     }
 
     componentWillUnmount() {
-        if (this.projectsRequest) {
-            this.projectsRequest.stop();
-        }
-        if (this.summaryRequest) {
-            this.summaryRequest.stop();
-        }
-        if (this.siteSettingsRequest) {
-            this.siteSettingsRequest.stop();
-        }
-
         window.removeEventListener('hashchange', this.handleHashChange);
     }
 
@@ -199,7 +188,17 @@ class Dashboard extends PureComponent {
     }
 
     render() {
-        const { projects } = this.props;
+        const {
+            projects,
+            requests: {
+                projectsGetRequest: {
+                    pending: projectsGetPending,
+                },
+                summaryGroupsGetRequest: {
+                    pending: summaryGroupsGetPending,
+                },
+            },
+        } = this.props;
 
         if (!projects) {
             return <div />;
@@ -207,11 +206,9 @@ class Dashboard extends PureComponent {
 
         const {
             selectedView,
-            projectsGetPending,
-            summaryGroupsPending,
         } = this.state;
 
-        const pending = projectsGetPending || summaryGroupsPending;
+        const pending = projectsGetPending || summaryGroupsGetPending;
 
         return (
             <div className={styles.dashboard}>
@@ -230,4 +227,8 @@ class Dashboard extends PureComponent {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    createConnectedRequestCoordinator()(
+        createRequestClient(requests)(Dashboard),
+    ),
+);

@@ -4,12 +4,20 @@ import React, {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import turf from 'turf';
-import { mapToList } from '@togglecorp/fujs';
+import {
+    mapToList,
+    camelToNormal,
+} from '@togglecorp/fujs';
 
 import {
     reportSelector,
     setReportAction,
 } from '#redux';
+
+import {
+    createConnectedRequestCoordinator,
+    createRequestClient,
+} from '#request';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
@@ -25,19 +33,18 @@ import MapSource from '#rscz/Map/MapSource';
 
 import districts from '#resources/districts.json';
 import gaupalika from '#resources/gaupalika.json';
-import { camelToNormalCase } from '#utils/common';
 
 import CorrespondenceItem from './CorrespondenceItem';
 
 import styles from './styles.scss';
 
-import ReportGetRequest from './requests/ReportGetRequest';
-
 const propTypes = {
-    setReport: PropTypes.func.isRequired,
-    projectId: PropTypes.number.isRequired,
+    setReport: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
+    projectId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
     report: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     project: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    // eslint-disable-next-line  react/no-unused-prop-types, react/forbid-prop-types
+    requests: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
@@ -54,6 +61,16 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const setHashToBrowser = (hash) => { window.location.hash = hash; };
+
+const requests = {
+    reportGetRequest: {
+        url: ({ props: { projectId } }) => `/projects-report/${projectId}/`,
+        onMount: true,
+        onSuccess: ({ response, props: { setReport, projectId } }) => {
+            setReport({ projectId, report: response });
+        },
+    },
+};
 
 class Report extends PureComponent {
     static propTypes = propTypes;
@@ -97,7 +114,6 @@ class Report extends PureComponent {
         super(props);
 
         this.state = {
-            reportGetPending: true,
             code: undefined,
             bounds: [],
         };
@@ -137,26 +153,6 @@ class Report extends PureComponent {
             };
         }
         return null;
-    }
-
-    componentDidMount() {
-        const {
-            projectId,
-            setReport,
-        } = this.props;
-
-        this.reportRequest = new ReportGetRequest({
-            setState: params => this.setState(params),
-            setReport,
-        }).create(projectId);
-
-        this.reportRequest.start();
-    }
-
-    componentWillUnmount() {
-        if (this.reportRequest) {
-            this.reportRequest.stop();
-        }
     }
 
     tableRenderParams = (key, data) => {
@@ -310,6 +306,11 @@ class Report extends PureComponent {
         const {
             report,
             project,
+            requests: {
+                reportGetRequest: {
+                    pending: reportGetPending,
+                },
+            },
         } = this.props;
 
         if (!report) {
@@ -331,7 +332,6 @@ class Report extends PureComponent {
 
         const {
             bounds,
-            reportGetPending,
         } = this.state;
 
         const {
@@ -388,7 +388,7 @@ class Report extends PureComponent {
 
         const modifier = (element, key) => (
             {
-                name: key === 'totalRc' ? 'Actual' : camelToNormalCase(key),
+                name: key === 'totalRc' ? 'Actual' : camelToNormal(key),
                 value: element,
             }
         );
@@ -568,4 +568,8 @@ class Report extends PureComponent {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Report);
+export default connect(mapStateToProps, mapDispatchToProps)(
+    createConnectedRequestCoordinator()(
+        createRequestClient(requests)(Report),
+    ),
+);

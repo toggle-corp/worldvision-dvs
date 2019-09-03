@@ -1,7 +1,4 @@
-import dict from '#ravl/schema';
-import attachValidator from '#ravl/attachValidator';
-
-attachValidator(dict);
+import Dict from '@togglecorp/ravl';
 
 const userDefinedSchemas = [];
 
@@ -18,6 +15,12 @@ const userDefinedSchemas = [];
 
     userDefinedSchemas.push({ name, schema });
 }
+
+const enableLogging = process.env.REACT_APP_RAVL_WARNING !== 'disable';
+
+const dict = new Dict({
+    warning: enableLogging,
+});
 
 userDefinedSchemas.forEach(({ name, schema }) => dict.put(name, schema));
 

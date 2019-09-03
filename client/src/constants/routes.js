@@ -1,7 +1,7 @@
 import {
-    mapObjectToObject,
-    mapObjectToArray,
-} from '#utils/common';
+    mapToMap,
+    mapToList,
+} from '@togglecorp/fujs';
 
 export const ROUTE = {
     exclusivelyPublic: 'exclusively-public',
@@ -20,8 +20,12 @@ export const routes = {
     },
 };
 
-export const pathNames = mapObjectToObject(routes, route => route.path);
-export const routesOrder = mapObjectToArray(
+export const pathNames = mapToMap(
+    routes,
+    (route, data) => data.path,
+);
+
+export const routesOrder = mapToList(
     routes,
     (route, key) => ({
         key,
