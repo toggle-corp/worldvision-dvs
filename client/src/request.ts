@@ -44,6 +44,21 @@ export function createConnectedRequestCoordinator<OwnProps>() {
                 extras: requestOptions,
             } = request;
             const sanitizedResponse = sanitizeResponse(body);
+            const extras = requestOptions as { schemaName?: string };
+
+            if (!extras || extras.schemaName === undefined) {
+                // NOTE: usually there is no response body for DELETE
+                if (method !== methods.DELETE) {
+                    console.error(`Schema is not defined for ${url} ${method}`);
+                }
+            } else {
+                try {
+                    schema.validate(sanitizedResponse, extras.schemaName);
+                } catch (e) {
+                    console.error(url, method, sanitizedResponse, e.message);
+                    throw (e);
+                }
+            }
 
             return sanitizedResponse;
         },
