@@ -21,13 +21,12 @@ class ReportInline(admin.TabularInline):
 class ProjectAdmin(admin.ModelAdmin):
     inlines = (ReportInline,)
     form = ProjectAdminForm
-    search_fields = ('name', 'long', 'lat', 'selected_report__name')
+    search_fields = ('name', 'number',)
     list_display = (
-        'name', 'long', 'lat', 'get_selected_report', 'get_district',
+        'name', 'number', 'long', 'lat', 'recent_report', 'get_district',
     )
-    list_select_related = ('selected_report',)
     list_filter = ('district',)
-    autocomplete_fields = ('district',)  # selected_report filtering is not working right now
+    autocomplete_fields = ('district',)
     filter_horizontal = ('municipalities',)
     save_on_top = True
 
@@ -39,13 +38,13 @@ class ProjectAdmin(admin.ModelAdmin):
 
     get_district.short_description = 'District'
 
-    def get_selected_report(self, instance):
+    def recent_report(self, instance):
         report = instance.selected_report
         if report:
             link = reverse('admin:report_report_change', args=(report.id,))
             return mark_safe('<a href="%s">%s</a>' % (link, report.name))
 
-    get_selected_report.short_description = 'Selected Report'
+    recent_report.short_description = 'Recent Report'
 
     def get_exclude(self, request, obj=None):
         if not obj:

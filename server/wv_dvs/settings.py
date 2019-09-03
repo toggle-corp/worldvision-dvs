@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'rest_framework',
+    'django_filters',
     'djangorestframework_camel_case',
 ] + [
     '{}.{}.apps.{}Config'.format(
