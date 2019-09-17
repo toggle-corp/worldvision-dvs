@@ -1,19 +1,28 @@
 import json
 
+from django.urls import path
 from django.urls import reverse
 from django.contrib import admin
+from django.contrib.admin import helpers
 from django.utils.safestring import mark_safe
-from django.contrib import messages
+from django.shortcuts import redirect, render
 
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import JsonLexer
 
-from .models import Report
+from .models import (
+    Report,
+    ProjectSOI,
+    RegisterChildByAgeAndGender,
+    PresenceAndParticipation,
+    ChildFamilyParticipation,
+)
 from .filters import SelectedReportListFilter
-from .forms import ReportAdminForm
+from .forms import ReportAdminForm, BulkImportForm
 
 
+@admin.register(Report)
 class ReportAdmin(admin.ModelAdmin):
     exclude = ('data',)
     readonly_fields = ('data_prettified',)
@@ -59,29 +68,64 @@ class ReportAdmin(admin.ModelAdmin):
 
     data_prettified.short_description = 'data'
 
-    def check_integrity_for_delete(self, request, obj):
-        project = obj.project
-        if project.selected_report == obj:
-            self.message_user(
-                request,
-                ('Can\'t Delete %(report)s, because it\'s selected by Project: %(project)s') % {
-                    'report': obj.name,
-                    'project': project.name,
-                },
-                messages.ERROR,
+
+class ProjectSummaryAdmin(admin.ModelAdmin):
+    autocomplete_fields = ('project',)
+
+    def get_list_display(self, request):
+        return [
+            field.name for field in self.model._meta.fields if field.name != 'id'
+        ]
+
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['additional_addlinks'] = [{
+            'url': self.get_import_namespace(),
+            'label': 'Bulk Import',
+        }]
+        return super().changelist_view(request, extra_context=extra_context)
+
+    def get_import_namespace(self, absolute=True):
+        info = self.model._meta.app_label, self.model._meta.model_name
+        return '{}{}_{}_import'.format('admin:' if absolute else '', *info)
+
+    def get_urls(self):
+        return [
+            path(
+                'import/', self.admin_site.admin_view(self.import_data),
+                name=self.get_import_namespace(False),
+            ),
+        ] + super().get_urls()
+
+    def import_data(self, request):
+        if request.method == 'POST':
+            form = BulkImportForm(request.POST, request.FILES, bulk_model=self.model)
+            if form.is_valid():
+                generated_on = form.data.get('generated_on')
+                BulkImportForm.handle_uploaded_file(request, generated_on, self.model)
+                return redirect(
+                    'admin:{}_{}_changelist'.format(
+                        self.model._meta.app_label, self.model._meta.model_name,
+                    )
+                )
+        form = BulkImportForm(bulk_model=self.model)
+
+        context = {
+            **self.admin_site.each_context(request),
+            'has_view_permission': self.has_view_permission(request),
+            'app_label': self.model._meta.app_label,
+            'opts': self.model._meta,
+            'form': form,
+            'adminform': helpers.AdminForm(
+                form,
+                list([(None, {'fields': form.base_fields})]),
+                self.get_prepopulated_fields(request),
             )
-            return False
-        return True
-
-    def delete_queryset(self, request, queryset):
-        for obj in queryset.all():
-            if not self.check_integrity_for_delete(request, obj):
-                return
-        super().delete_queryset(request, queryset)
-
-    def delete_model(self, request, obj):
-        if self.check_integrity_for_delete(request, obj):
-            super().delete_model(request, obj)
+        }
+        return render(request, "admin/bulk_import_form.html", context)
 
 
-admin.register(Report)(ReportAdmin)
+admin.register(ProjectSOI)(ProjectSummaryAdmin)
+admin.register(RegisterChildByAgeAndGender)(ProjectSummaryAdmin)
+admin.register(PresenceAndParticipation)(ProjectSummaryAdmin)
+admin.register(ChildFamilyParticipation)(ProjectSummaryAdmin)

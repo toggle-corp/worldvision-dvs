@@ -22,4 +22,4 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        exclude = ('selected_report',)
+        fields = '__all__'
