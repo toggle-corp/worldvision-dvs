@@ -7,7 +7,7 @@ services:
             - postgres-data:/var/lib/postgresql/data
 
     server:
-        image: devtc/worldvision-dvs:server-latest
+        image: docker.pkg.github.com/toggle-corp/worldvision-dvs/server:latest
         build:
           context: ./server/
           cache_from:
@@ -24,7 +24,7 @@ services:
             - db
 
     client:
-        image: devtc/worldvision-dvs:client-latest
+        image: docker.pkg.github.com/toggle-corp/worldvision-dvs/client:latest
         build:
           context: ./client/
           cache_from:
