@@ -6,7 +6,9 @@ from django.conf.urls import url, include, static
 from django.views.static import serve
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.conf import settings
-from rest_framework import routers
+from rest_framework import routers, permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 from site_setting.views import SiteSettingsViewSet
 from summary_group.views import SummaryGroupViewSet
@@ -23,6 +25,16 @@ from report.views import (
     ChildFamilyParticipationViewSet,
 )
 
+api_schema_view = get_schema_view(
+    openapi.Info(
+        title="DEEP API",
+        default_version='v1',
+        description="DEEP API",
+        contact=openapi.Contact(email="admin@thedeep.io"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 # Rest Routers
 router = routers.DefaultRouter()
@@ -60,6 +72,14 @@ def get_api_path(path):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # API Documentation
+    url(
+        r'^api-docs(?P<format>\.json|\.yaml)$',
+        api_schema_view.without_ui(cache_timeout=0), name='schema-json'
+    ),
+    url(r'^api-docs/$', api_schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', api_schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 
     url(get_api_path(''), include(router.urls)),
 ] + static.static(

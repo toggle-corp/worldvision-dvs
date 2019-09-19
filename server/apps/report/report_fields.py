@@ -6,6 +6,7 @@ CAMEL_CASES = {
     '@PendingCurrent': 'pendingCurrent',
     '@PendingOverDue': 'pendingOverDue',
     '@Textbox370': 'pendingTotal',
+    '@TotalLeft': 'totalLeft',
 
     '@PlannedRC': 'planned',
     '@TotalRC': 'totalRc',
@@ -72,6 +73,7 @@ LABELS = {
     CAMEL_CASES['@Available']: 'Available',
     CAMEL_CASES['@TotalHold']: 'Total Hold',
     CAMEL_CASES['@TotalDeath']: 'Total Death',
+    CAMEL_CASES['@TotalLeft']: 'Total Left',
 
     CAMEL_CASES['@PendingCurrent']: 'Pending Current',
     CAMEL_CASES['@PendingOverDue']: 'Pending Overdue',

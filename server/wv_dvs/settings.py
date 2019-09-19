@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'djangorestframework_camel_case',
+    'drf_yasg',  # API Documentation
 ] + [
     '{}.{}.apps.{}Config'.format(
         APPS_DIR.split('/')[-1],
@@ -173,4 +174,11 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+}
+
+REDOC_SETTINGS = {
+    'LAZY_RENDERING': True,
+    'HIDE_HOSTNAME': True,
+    'NATIVE_SCROLLBARS': True,
+    'EXPAND_RESPONSES': [],
 }

@@ -5,6 +5,12 @@ from .models import SummaryGroup
 
 
 def get_projects_summary(projects):
+    def map_normalize(fields, data):
+        return {
+            key: {'value': data[key], 'label': LABELS[key]}
+            for key in fields
+        }
+
     def normalize(fields, data):
         return [
             {'key': key, 'value': data[key], 'label': LABELS[key]}
@@ -20,14 +26,20 @@ def get_projects_summary(projects):
     ]
     health_nutrition_fields = ['@HealthSatisfactory', '@HealthNotSatisfactory']
     correspondences_fields = ['pendingCurrent', 'pendingOverDue']
+    education_fields = [
+        '@PrimarySchoolAge', '@SecondarySchoolAge',
+        '@PrimarySchoolAgeNonFormal', '@PrimarySchoolAgeNoEducation',
+        '@SecondarySchoolAgeNonFormal', '@SecondarySchoolAgeVocational', '@SecondarySchoolAgeNoEducation',
+    ]
     rc_fields = [
         'planned', 'totalRc', 'sponsored', 'available', 'hold',
-        'death', 'totalMale', 'totalFemale'
+        'death', 'totalMale', 'totalFemale', 'totalLeft',
     ]
 
     child_monitoring = initial_dict(child_monitoring_fields)
     health_nutrition = initial_dict(health_nutrition_fields)
     correspondences = initial_dict(correspondences_fields)
+    education = initial_dict(education_fields)
     rc = initial_dict(rc_fields)
 
     for project in projects:
@@ -45,8 +57,16 @@ def get_projects_summary(projects):
             for datum in data['correspondences']:
                 for key in correspondences.keys():
                     correspondences[key] += datum[key]
+            for datum in data['education']['children']:
+                for key in education_fields[:2]:
+                    if key == datum.get('key'):
+                        education[key] += datum.get('size')
+                for c_datum in datum['children']:
+                    for key in education_fields[2:]:
+                        if key == c_datum.get('key'):
+                            education[key] += c_datum.get('size')
             for key in rc.keys():
-                rc[key] += data['rcData'][key]
+                rc[key] += data['rcData'].get(key) or 0
 
     reportDate = None
     for project in projects:
@@ -60,6 +80,7 @@ def get_projects_summary(projects):
         'childMonitoring': normalize(child_monitoring_fields, child_monitoring),
         'healthNutrition': normalize(health_nutrition_fields, health_nutrition),
         'correspondences': normalize(correspondences_fields, correspondences),
+        'education': map_normalize(education_fields, education),
         'rc': normalize(rc_fields, rc),
     }
 
