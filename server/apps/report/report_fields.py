@@ -80,4 +80,9 @@ LABELS = {
 
     CAMEL_CASES['@TotalMale']: 'Total Male',
     CAMEL_CASES['@TotalFemale']: 'Total Female',
+
+    'total_closed': 'Total Closed',
+    'closed_on': 'Closed On',
+    'total_rc_temporarily_away': 'Total RC Temporarily Away',
+    'total_no_of_rc_records_dropped_during_the_month': 'Total no of RC Records Dropped During The Month',
 }

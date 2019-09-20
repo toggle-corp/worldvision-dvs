@@ -1,5 +1,4 @@
 from django.db import models
-from report.report_fields import LABELS
 
 # Create your models here.
 
@@ -51,22 +50,6 @@ class Project(models.Model):
     def selected_report(self):
         if self.reports.count():
             return self.reports.order_by('-id').first()
-
-    def get_rc_data(self):
-        report = self.selected_report
-        if report and report.data:
-            fields = [
-                'planned', 'totalRc', 'sponsored',
-                'available', 'hold', 'death',
-                'totalMale', 'totalFemale'
-            ]
-            rc_data = report.data.get('rcData')
-            return [
-                {
-                    'name': LABELS[field],
-                    'value': rc_data[field],
-                } for field in fields
-            ]
 
     def __str__(self):
         return f'{self.name} - {self.number}'

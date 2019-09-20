@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from report.report_fields import LABELS
 from .models import Project, District
 
 
@@ -16,10 +17,27 @@ class MunicipalitySerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    rcData = serializers.JSONField(source='get_rc_data')
+    rc_data = serializers.SerializerMethodField()
     district = DistrictSerializer()
     municipalities = MunicipalitySerializer(many=True)
 
     class Meta:
         model = Project
         fields = '__all__'
+
+    def get_rc_data(self, instance):
+        # NOTE: Make sure the reports are sorted correctly
+        report = instance.reports.first()
+        if report and report.data:
+            fields = [
+                'planned', 'totalRc', 'sponsored',
+                'available', 'hold', 'death',
+                'totalMale', 'totalFemale'
+            ]
+            rc_data = report.data.get('rcData')
+            return [
+                {
+                    'name': LABELS[field],
+                    'value': rc_data[field],
+                } for field in fields
+            ]

@@ -174,6 +174,9 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'JSON_UNDERSCOREIZE': {
+        'no_underscore_before_number': True,
+    },
 }
 
 REDOC_SETTINGS = {
@@ -182,3 +185,9 @@ REDOC_SETTINGS = {
     'NATIVE_SCROLLBARS': True,
     'EXPAND_RESPONSES': [],
 }
+
+if DEBUG and os.environ.get('DJANGO_USE_SILK', 'False').lower() == 'true':
+    INSTALLED_APPS += ['silk']
+    MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
+    SILKY_META = True
+    SILKY_PYTHON_PROFILER = True
