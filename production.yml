@@ -7,7 +7,7 @@ services:
           - ./data/postgres-data:/var/lib/postgresql/data
 
     server:
-        image: devtc/worldvision-dvs:server-release
+        image: docker.pkg.github.com/toggle-corp/worldvision-dvs/server:release
         env_file:
           - .env-prod
         volumes:
@@ -17,7 +17,7 @@ services:
           - db
 
     client:
-        image: devtc/worldvision-dvs:client-release
+        image: docker.pkg.github.com/toggle-corp/worldvision-dvs/client:release
         volumes:
           - client-static:/build/
         env_file:

@@ -27,12 +27,16 @@ def generate_hierarchy(obj, data):
     result = {}
 
     result['name'] = obj['name'] if 'name' in obj else LABELS[obj['key']]
+    result['key'] = obj['key']
 
     children = obj.get('children')
     if children:
         result['children'] = []
+        result['size'] = 0
         for child in children:
-            result['children'].append(generate_hierarchy(child, data))
+            child_result = generate_hierarchy(child, data)
+            result['children'].append(child_result)
+            result['size'] += child_result['size']
     elif obj.get('key'):
         result['size'] = _numeral(data[obj['key']])
 
@@ -42,7 +46,7 @@ def generate_hierarchy(obj, data):
 def extract_rc_data(data):
     fields = (
         '@PlannedRC', '@TotalRC', '@Sponsored', '@Available', '@TotalHold', '@TotalDeath',
-        '@TotalMale', '@TotalFemale',
+        '@TotalMale', '@TotalFemale', '@TotalLeft',
     )
     return {
         CAMEL_CASES[field]: _numeral(data[field])
@@ -110,6 +114,7 @@ def extract_rc_pie_chart(data):
 
     return generate_hierarchy({
         'name': 'RC Supply',
+        'key': 'rc_supply',
         'children': fields,
     }, data)
 
@@ -152,6 +157,7 @@ def extract_education(data):
 
     return generate_hierarchy({
         'name': 'Education',
+        'key': 'education',
         'children': fields,
     }, data)
 

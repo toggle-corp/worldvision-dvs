@@ -30,6 +30,9 @@ class Report(models.Model):
     data = JSONField(default=None, blank=True, null=True)
     file = models.FileField(upload_to='reports/', validators=[validate_file_extension])
 
+    class Meta:
+        ordering = ('-id',)
+
     @staticmethod
     def extract_from_file(file):
         try:
@@ -64,6 +67,7 @@ class ProjectSummaryModel(models.Model):
 
     class Meta:
         abstract = True
+        ordering = ('-date',)
         unique_together = ('project', 'date',)
 
 

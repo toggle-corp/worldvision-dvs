@@ -1,10 +1,12 @@
-from rest_framework import viewsets, response
 from django.shortcuts import get_object_or_404
+from django.db.models import Prefetch
+from rest_framework import viewsets, response
 
+from summary_group.serializers import get_projects_summary
+from report.models import Report
+from report.serializers import ReportSerializer
 from .models import Project
 from .serializers import ProjectSerializer
-from summary_group.serializers import get_projects_summary
-from report.serializers import ReportSerializer
 
 
 class ProjectViewSet(viewsets.ViewSet):
@@ -12,7 +14,10 @@ class ProjectViewSet(viewsets.ViewSet):
     A simple ViewSet for listing or retrieving projects.
     """
     def list(self, request, version):
-        queryset = Project.objects.all()
+        queryset = Project.objects.prefetch_related(
+            Prefetch('reports', queryset=Report.objects.order_by('-id')),
+            'district', 'municipalities',
+        ).all()
         serializer = ProjectSerializer(queryset, many=True)
         return response.Response(serializer.data)
 

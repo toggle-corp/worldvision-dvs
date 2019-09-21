@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'djangorestframework_camel_case',
+    'drf_yasg',  # API Documentation
 ] + [
     '{}.{}.apps.{}Config'.format(
         APPS_DIR.split('/')[-1],
@@ -173,4 +174,20 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'JSON_UNDERSCOREIZE': {
+        'no_underscore_before_number': True,
+    },
 }
+
+REDOC_SETTINGS = {
+    'LAZY_RENDERING': True,
+    'HIDE_HOSTNAME': True,
+    'NATIVE_SCROLLBARS': True,
+    'EXPAND_RESPONSES': [],
+}
+
+if DEBUG and os.environ.get('DJANGO_USE_SILK', 'False').lower() == 'true':
+    INSTALLED_APPS += ['silk']
+    MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
+    SILKY_META = True
+    SILKY_PYTHON_PROFILER = True
