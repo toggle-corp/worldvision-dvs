@@ -5,14 +5,18 @@ services:
   - docker
 
 before_install:
+  - echo "$GP_PASSWORD" | docker login docker.pkg.github.com -u "$GP_USERNAME" --password-stdin
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /tmp/cc-test-reporter
+  - chmod +x /tmp/cc-test-reporter
   - if [[ "$WV_BRANCH_NAME" = "develop" ]] ; then export WV_BRANCH_NAME=; fi
   - touch .env
-  - docker-compose pull || true
+  - docker-compose pull || WV_BRANCH_NAME= docker-compose pull || true
 
 before_script:
   - mkdir -p $(dirname "$REACT_STORE_DIR")
   - git clone https://github.com/toggle-corp/react-store ${REACT_STORE_DIR}
   - docker-compose build
+  - /tmp/cc-test-reporter before-build
 
 script:
   - docker-compose run --rm server bash /code/scripts/run_tests.sh
@@ -20,12 +24,20 @@ script:
     REACT_APP_MAPBOX_ACCESS_TOKEN=${REACT_APP_MAPBOX_ACCESS_TOKEN}
     REACT_APP_MAPBOX_STYLE=${REACT_APP_MAPBOX_STYLE}
     " > .env
-  - docker-compose run --rm client bash -c 'yarn install && CI=false yarn build'
+  - docker-compose run --rm client-build
 
 after_success:
-  - echo "$GP_PASSWORD" | docker login docker.pkg.github.com -u "$GP_USERNAME" --password-stdin
-  - docker-compose build client  # With Build Files
   - docker-compose push
+  - cd server && /tmp/cc-test-reporter after-build --prefix ./server -t coverage.py --exit-code $TRAVIS_TEST_RESULT && cd ../
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GP_PASSWORD
+  keep_history: true
+  local_dir: ./server/htmlcov
+  on:
+    branch: develop
 
 env:
   global:

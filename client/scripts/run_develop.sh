@@ -1,4 +1,5 @@
 #!/bin/bash -x
 
-yarn add --force node-sass@4.7.2
+# Copy yarn node_modules from Image
+rsync -a --stats --ignore-existing /node_modules /code/
 yarn start
