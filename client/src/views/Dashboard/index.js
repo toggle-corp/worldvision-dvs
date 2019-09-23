@@ -120,12 +120,6 @@ class Dashboard extends PureComponent {
                         summaryGroups,
                     } = this.props;
 
-                    const overview = {
-                        summary,
-                        noOfProjects: projects.length || 0,
-                        siteSettings,
-                    };
-
                     const summaryGroupsMap = listToMap(
                         summaryGroups,
                         d => d.name,

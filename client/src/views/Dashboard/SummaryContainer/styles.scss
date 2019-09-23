@@ -20,6 +20,13 @@
 
             .summary-list {
                 flex-grow: 1;
+                font-size: var(--font-size-large);
+
+                :global {
+                    input {
+                        text-transform: capitalize;
+                    }
+                }
             }
         }
     }

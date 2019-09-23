@@ -2,9 +2,10 @@ import React, {
     PureComponent,
 } from 'react';
 import PropTypes from 'prop-types';
+import memoize from 'memoize-one';
 import { connect } from 'react-redux';
-import turf from 'turf';
 import {
+    _cs,
     mapToList,
     camelToNormal,
 } from '@togglecorp/fujs';
@@ -26,15 +27,15 @@ import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import KeyValue from '#components/KeyValue';
-import Map from '#rscz/Map';
-import MapContainer from '#rscz/Map/MapContainer';
-import MapLayer from '#rscz/Map/MapLayer';
-import MapSource from '#rscz/Map/MapSource';
-
-import districts from '#resources/districts.json';
-import gaupalika from '#resources/gaupalika.json';
 
 import CorrespondenceItem from './CorrespondenceItem';
+import ReportMap from './ReportMap';
+import {
+    horizontalBarColorScheme,
+    horizontalBarMargin,
+    triColorScheme,
+    biColorScheme,
+} from './report-utils';
 
 import styles from './styles.scss';
 
@@ -61,6 +62,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const setHashToBrowser = (hash) => { window.location.hash = hash; };
+
+const modifier = (element, key) => (
+    {
+        name: key === 'totalRc' ? 'Actual' : camelToNormal(key),
+        value: element,
+    }
+);
 
 const requests = {
     reportGetRequest: {
@@ -94,9 +102,9 @@ class Report extends PureComponent {
     };
 
     static labelModifierSelector = (label, value) => (`
-        <div class=${styles.tooltip} >
+        <div>
             ${label}:
-            <span class=${styles.value}>
+            <span>
                 ${value}
             </span>
         </div>
@@ -110,72 +118,8 @@ class Report extends PureComponent {
 
     static correspondenceKeySelector = d => d.typeName;
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            code: undefined,
-            bounds: [],
-        };
-    }
-
-    static getDerivedStateFromProps(props, state) {
-        const { project = {} } = props;
-        const { district: { code = '' } = {} } = project;
-
-        if (code !== state.code) {
-            const selectedFeature = districts.features.filter((feature) => {
-                const { OCHA_PCODE } = feature.properties;
-                return code === OCHA_PCODE;
-            });
-            const bounds = turf.bbox(turf.featureCollection(selectedFeature));
-            const { long, lat, name, id } = project;
-
-            const location = {
-                type: 'FeatureCollection',
-                features: [{
-                    id,
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [long, lat],
-                    },
-                    properties: {
-                        name,
-                        id,
-                    },
-                }],
-            };
-
-            return {
-                code,
-                bounds,
-                location,
-            };
-        }
-        return null;
-    }
-
     tableRenderParams = (key, data) => {
-        const classNames = [];
-
-        if (
-            key === '@NotSighted30Days'
-            || key === '@HealthSatisfactory'
-            || key === '@VisitCompleted'
-            || key === 'pendingCurrent'
-            || key === 'good'
-        ) {
-            classNames.push(styles.success);
-        } else if (key === '@NotSighted60Days') {
-            classNames.push(styles.warning);
-        } else if (
-            key === '@NotSighted90Days'
-            || key === '@HealthNotSatisfactory'
-            || key === 'pendingOverDue'
-            || data.type === 'bad'
-        ) {
-            classNames.push(styles.danger);
-        } else if (key === '@cms') {
+        if (key === '@cms') {
             return ({
                 title: data.name,
                 value: data.value,
@@ -184,14 +128,31 @@ class Report extends PureComponent {
             });
         }
 
+        const isSuccess = key === '@NotSighted30Days'
+            || key === '@HealthSatisfactory'
+            || key === '@VisitCompleted'
+            || key === 'pendingCurrent'
+            || key === 'good';
+
+        const isWarning = key === '@NotSighted60Days';
+
+        const isDanger = key === '@NotSighted90Days'
+            || key === '@HealthNotSatisfactory'
+            || key === 'pendingOverDue'
+            || data.type === 'bad';
+
         return ({
             title: data.name,
             value: data.value,
-            className: classNames.join(' '),
+            className: _cs(
+                isSuccess && styles.success,
+                isWarning && styles.warning,
+                isDanger && styles.danger,
+            ),
         });
     };
 
-    correspoodencesParams = (key, data) => ({
+    correspondencesParams = (key, data) => ({
         title: data.typeName,
         data,
     });
@@ -200,165 +161,22 @@ class Report extends PureComponent {
         setHashToBrowser('/');
     };
 
-    renderDistrictLayers = () => {
-        const {
-            project: {
-                municipalities = [],
-            },
-        } = this.props;
-        const { code } = this.state;
-
-        const mids = municipalities.map(m => m.code);
-
-        return (
-            <React.Fragment>
-                <MapSource
-                    sourceKey="districts"
-                    geoJson={districts}
-                    // supportHover
-                >
-                    <MapLayer
-                        layerKey="line"
-                        type="line"
-                        filter={['==', 'OCHA_PCODE', code]}
-                        paint={{
-                            'line-color': '#ffffff',
-                            'line-opacity': 1,
-                            'line-width': 2,
-                        }}
-                    />
-                    <MapLayer
-                        layerKey="fill"
-                        type="fill"
-                        filter={['==', 'OCHA_PCODE', code]}
-                        paint={{
-                            'fill-color': '#00897B',
-                            'fill-opacity': 0.4,
-                        }}
-                    />
-                </MapSource>
-                <MapSource
-                    sourceKey="gaupalika"
-                    geoJson={gaupalika}
-                    // supportHover
-                >
-                    <MapLayer
-                        layerKey="gaupalika-outline"
-                        type="line"
-                        paint={{
-                            'line-color': '#919191',
-                            'line-opacity': 0.4,
-                            'line-width': 1,
-                        }}
-                    />
-                    <MapLayer
-                        layerKey="selected-fill"
-                        type="fill"
-                        filter={['in', 'N_ID', ...mids]}
-                        paint={{
-                            'fill-color': '#f37123',
-                            'fill-opacity': 0.6,
-                        }}
-                    />
-                </MapSource>
-            </React.Fragment>
-        );
-    }
-
-    renderCorrespondenceItems = () => {
-        const {
-            report: {
-                data: {
-                    correspondences = [],
-                } = {},
-            } = {},
-        } = this.props;
-
-        const correspondencesTotal = correspondences.reduce((acc, d) => ({
-            pendingCurrent: acc.pendingCurrent + d.pendingCurrent,
-            pendingOverDue: acc.pendingOverDue + d.pendingOverDue,
-        }), {
-            pendingCurrent: 0,
-            pendingOverDue: 0,
-        });
-
-        const finalCorr = [
-            {
-                ...correspondencesTotal,
-                typeName: 'Total',
-            },
-            ...correspondences,
+    getChildMonitoringData = memoize((childMonitoring = []) => {
+        const childDonutKeys = [
+            '@NotSighted30DaysAndVisitCompleted',
+            '@NotSighted60Days',
+            '@NotSighted90Days',
         ];
-
-        return (
-            <div className={styles.tables}>
-                <List
-                    data={finalCorr}
-                    rendererParams={this.correspoodencesParams}
-                    keySelector={Report.correspondenceKeySelector}
-                    renderer={CorrespondenceItem}
-                />
-            </div>
-        );
-    }
-
-    render() {
-        const {
-            report,
-            project,
-            requests: {
-                reportGetRequest: {
-                    pending: reportGetPending,
-                },
-            },
-        } = this.props;
-
-        if (!report) {
-            return (
-                <div className={`${styles.region} ${styles.noRegionFound}`}>
-                    <div className={styles.heading}>
-                        The report you are looking for does not exist.
-                        <button
-                            className={styles.goBack}
-                            onClick={this.handleGoBack}
-                            type="button"
-                        >
-                            Click here to go back
-                        </button>
-                    </div>
-                </div>
-            );
-        }
-
-        const {
-            bounds,
-        } = this.state;
-
-        const {
-            data: {
-                education = {},
-                healthNutrition = [],
-                rcPieChart = {},
-                rcData = {},
-            } = {},
-        } = report;
-
-        let {
-            data: {
-                childMonitoring = [],
-            } = {},
-        } = report;
-
-        let monitoring = [];
-
         const notSighted30DaysAndVisited = {
             key: '@NotSighted30DaysAndVisitCompleted',
             name: '',
             value: 0,
         };
 
+        const monitoring = [];
         let total = 0;
         let notsighted = 0;
+
         childMonitoring.forEach((out) => {
             total += +out.value;
             if (out.key === '@NotSighted90Days') {
@@ -374,7 +192,7 @@ class Report extends PureComponent {
 
         const percent = total ? (((total - notsighted) / total) * 100) : 0;
 
-        childMonitoring = [
+        const newChildMonitoring = [
             ...childMonitoring,
             {
                 key: '@cms',
@@ -384,14 +202,20 @@ class Report extends PureComponent {
             },
         ];
 
-        monitoring = [notSighted30DaysAndVisited, ...monitoring];
+        const finalMonitoringData = [
+            notSighted30DaysAndVisited,
+            ...monitoring,
+        ];
 
-        const modifier = (element, key) => (
-            {
-                name: key === 'totalRc' ? 'Actual' : camelToNormal(key),
-                value: element,
-            }
-        );
+        const childDonutData = finalMonitoringData.filter(c => childDonutKeys.indexOf(c.key) >= 0);
+
+        return ({
+            childMonitoring: newChildMonitoring,
+            childDonutData,
+        });
+    })
+
+    getSortedRemoteChildren = memoize((rcData = {}) => {
         const remoteChildren = mapToList(rcData, modifier);
 
         const sortKeys = [
@@ -404,25 +228,87 @@ class Report extends PureComponent {
             'Actual',
             'Planned',
         ];
-        const sortedRemoteChildren = [...remoteChildren].sort(
+
+        return [...remoteChildren].sort(
             (c1, c2) => sortKeys.indexOf(c1.name) - sortKeys.indexOf(c2.name),
         );
+    })
 
-        const childDonutKeys = [
-            '@NotSighted30DaysAndVisitCompleted',
-            '@NotSighted60Days',
-            '@NotSighted90Days',
-        ];
-
+    getHealthDonutData = memoize((healthNutrition = []) => {
         const healthDonutKeys = [
             '@HealthSatisfactory',
             '@HealthNotSatisfactory',
         ];
 
-        const childDonut = monitoring.filter(c => childDonutKeys.indexOf(c.key) >= 0);
         const healthDonut = healthNutrition.filter(c => healthDonutKeys.indexOf(c.key) >= 0);
+        return healthDonut;
+    })
 
-        const CorrespondenceItems = this.renderCorrespondenceItems;
+    getCorrespondenceData = memoize((correspondences = []) => {
+        const correspondencesTotal = correspondences.reduce((acc, d) => ({
+            pendingCurrent: acc.pendingCurrent + d.pendingCurrent,
+            pendingOverDue: acc.pendingOverDue + d.pendingOverDue,
+        }), {
+            pendingCurrent: 0,
+            pendingOverDue: 0,
+        });
+
+        return [
+            {
+                ...correspondencesTotal,
+                typeName: 'Total',
+            },
+            ...correspondences,
+        ];
+    })
+
+    render() {
+        const {
+            report,
+            project,
+            requests: {
+                reportGetRequest: {
+                    pending: reportGetPending,
+                },
+            },
+        } = this.props;
+
+        if (!report) {
+            return (
+                <div className={_cs(styles.region, styles.noRegionFound)}>
+                    <div className={styles.heading}>
+                        The report you are looking for does not exist.
+                        <button
+                            className={styles.goBack}
+                            onClick={this.handleGoBack}
+                            type="button"
+                        >
+                            Click here to go back
+                        </button>
+                    </div>
+                </div>
+            );
+        }
+
+        const {
+            data: {
+                education = {},
+                healthNutrition,
+                rcData,
+                childMonitoring: childMonitoringFromProps,
+                correspondences: correspondencesFromProps,
+            } = {},
+        } = report;
+
+        const remoteChildren = this.getSortedRemoteChildren(rcData);
+
+        const {
+            childMonitoring,
+            childDonutData,
+        } = this.getChildMonitoringData(childMonitoringFromProps);
+
+        const healthDonut = this.getHealthDonutData(healthNutrition);
+        const correspondences = this.getCorrespondenceData(correspondencesFromProps);
 
         return (
             <div className={styles.region}>
@@ -441,10 +327,10 @@ class Report extends PureComponent {
                 </div>
                 <div className={styles.container}>
                     <div className={styles.upperContainer}>
-                        <Map bounds={bounds}>
-                            <MapContainer className={styles.map} />
-                            {this.renderDistrictLayers()}
-                        </Map>
+                        <ReportMap
+                            className={styles.map}
+                            project={project}
+                        />
                         <div className={styles.tableContainer}>
                             <div className={styles.item}>
                                 <h3>Child Monitoring</h3>
@@ -459,17 +345,12 @@ class Report extends PureComponent {
                                     <DonutChart
                                         className={styles.viz}
                                         sideLengthRatio={0.2}
-                                        data={childDonut}
+                                        data={childDonutData}
                                         hideLabel
                                         valueSelector={Report.valueSelector}
                                         labelSelector={Report.labelSelector}
                                         labelModifier={Report.labelModifierSelector}
-                                        colorScheme={[
-                                            '#41cf76',
-                                            '#ef8c00',
-                                            '#f44336',
-                                            '#41cf76',
-                                        ]}
+                                        colorScheme={triColorScheme}
                                     />
                                 </div>
                             </div>
@@ -491,10 +372,7 @@ class Report extends PureComponent {
                                         valueSelector={Report.valueSelector}
                                         labelSelector={Report.labelSelector}
                                         labelModifier={Report.labelModifierSelector}
-                                        colorScheme={[
-                                            '#41cf76',
-                                            '#f44336',
-                                        ]}
+                                        colorScheme={biColorScheme}
                                     />
                                 </div>
                             </div>
@@ -506,26 +384,12 @@ class Report extends PureComponent {
                             <div className={styles.vizContainer}>
                                 <HorizontalBar
                                     className={styles.viz}
-                                    data={sortedRemoteChildren}
+                                    data={remoteChildren}
                                     valueSelector={Report.valueSelector}
                                     labelSelector={Report.labelSelector}
                                     showGridLines={false}
-                                    colorScheme={[
-                                        '#41c9a2',
-                                        '#3ec0a1',
-                                        '#39b4a1',
-                                        '#36aba0',
-                                        '#2f98a0',
-                                        '#28859f',
-                                        '#22769e',
-                                        '#1e699e',
-                                    ]}
-                                    margins={{
-                                        top: 0,
-                                        right: 0,
-                                        bottom: 0,
-                                        left: 64,
-                                    }}
+                                    colorScheme={horizontalBarColorScheme}
+                                    margins={horizontalBarMargin}
                                 />
                             </div>
                         </div>
@@ -542,7 +406,14 @@ class Report extends PureComponent {
                         </div>
                         <div className={styles.item}>
                             <h3>Correspondence</h3>
-                            <CorrespondenceItems />
+                            <div className={styles.tables}>
+                                <List
+                                    data={correspondences}
+                                    rendererParams={this.correspondencesParams}
+                                    keySelector={Report.correspondenceKeySelector}
+                                    renderer={CorrespondenceItem}
+                                />
+                            </div>
                         </div>
                         <div className={styles.item}>
                             <h3>Participation / Support</h3>
