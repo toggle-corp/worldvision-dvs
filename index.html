@@ -1,0 +1,524 @@
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Coverage report</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.ba-throttle-debounce.min.js"></script>
+    <script type="text/javascript" src="jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(coverage.index_ready);
+    </script>
+</head>
+<body class="indexfile">
+
+<div id="header">
+    <div class="content">
+        <h1>Coverage report:
+            <span class="pc_cov">81%</span>
+        </h1>
+
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+
+        <form id="filter_container">
+            <input id="filter" type="text" value="" placeholder="filter..." />
+        </form>
+    </div>
+</div>
+
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
+    <div>
+    <p class="keyhelp">
+        <span class="key">n</span>
+        <span class="key">s</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
+        
+        <span class="key">b</span>
+        <span class="key">p</span>
+        
+        <span class="key">c</span> &nbsp; change column sorting
+    </p>
+    </div>
+</div>
+
+<div id="index">
+    <table class="index">
+        <thead>
+            
+            <tr class="tablehead" title="Click to sort">
+                <th class="name left headerSortDown shortkey_n">Module</th>
+                <th class="shortkey_s">statements</th>
+                <th class="shortkey_m">missing</th>
+                <th class="shortkey_x">excluded</th>
+                
+                <th class="shortkey_b">branches</th>
+                <th class="shortkey_p">partial</th>
+                
+                <th class="right shortkey_c">coverage</th>
+            </tr>
+        </thead>
+        
+        <tfoot>
+            <tr class="total">
+                <td class="name left">Total</td>
+                <td>796</td>
+                <td>126</td>
+                <td>0</td>
+                
+                <td>183</td>
+                <td>17</td>
+                
+                <td class="right" data-ratio="796 979">81%</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_project___init___py.html">apps/project/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_project_admin_py.html">apps/project/admin.py</a></td>
+                <td>67</td>
+                <td>22</td>
+                <td>0</td>
+                
+                <td>16</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="51 83">61%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_project_forms_py.html">apps/project/forms.py</a></td>
+                <td>11</td>
+                <td>6</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="5 13">38%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_project_models_py.html">apps/project/models.py</a></td>
+                <td>28</td>
+                <td>3</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="26 30">87%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_project_serializers_py.html">apps/project/serializers.py</a></td>
+                <td>24</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>4</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="27 28">96%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_project_views_py.html">apps/project/views.py</a></td>
+                <td>23</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="23 23">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report___init___py.html">apps/report/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_admin_py.html">apps/report/admin.py</a></td>
+                <td>62</td>
+                <td>22</td>
+                <td>0</td>
+                
+                <td>8</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="42 70">60%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_bulk_import_SOI_py.html">apps/report/bulk_import/SOI.py</a></td>
+                <td>22</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>4</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="25 26">96%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_bulk_import___init___py.html">apps/report/bulk_import/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_bulk_import_child_family_participation_py.html">apps/report/bulk_import/child_family_participation.py</a></td>
+                <td>36</td>
+                <td>1</td>
+                <td>0</td>
+                
+                <td>20</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="54 56">96%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_bulk_import_presence_and_participation_py.html">apps/report/bulk_import/presence_and_participation.py</a></td>
+                <td>17</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>4</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="21 21">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_bulk_import_register_child_by_age_and_gender_py.html">apps/report/bulk_import/register_child_by_age_and_gender.py</a></td>
+                <td>37</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>16</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="52 53">98%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_extractor_py.html">apps/report/extractor.py</a></td>
+                <td>54</td>
+                <td>2</td>
+                <td>0</td>
+                
+                <td>18</td>
+                <td>2</td>
+                
+                <td class="right" data-ratio="68 72">94%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_filters_py.html">apps/report/filters.py</a></td>
+                <td>14</td>
+                <td>6</td>
+                <td>0</td>
+                
+                <td>4</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="8 18">44%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_forms_py.html">apps/report/forms.py</a></td>
+                <td>53</td>
+                <td>15</td>
+                <td>0</td>
+                
+                <td>10</td>
+                <td>4</td>
+                
+                <td class="right" data-ratio="42 63">67%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_models_py.html">apps/report/models.py</a></td>
+                <td>85</td>
+                <td>13</td>
+                <td>0</td>
+                
+                <td>10</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="76 95">80%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_report_fields_py.html">apps/report/report_fields.py</a></td>
+                <td>2</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="2 2">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_serializers_py.html">apps/report/serializers.py</a></td>
+                <td>22</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="22 22">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_utils_py.html">apps/report/utils.py</a></td>
+                <td>12</td>
+                <td>3</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="9 14">64%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_validators_py.html">apps/report/validators.py</a></td>
+                <td>7</td>
+                <td>1</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="7 9">78%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_report_views_py.html">apps/report/views.py</a></td>
+                <td>25</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="25 25">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_site_setting___init___py.html">apps/site_setting/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_site_setting_admin_py.html">apps/site_setting/admin.py</a></td>
+                <td>8</td>
+                <td>3</td>
+                <td>0</td>
+                
+                <td>4</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="7 12">58%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_site_setting_models_py.html">apps/site_setting/models.py</a></td>
+                <td>21</td>
+                <td>8</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="13 23">57%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_site_setting_serializers_py.html">apps/site_setting/serializers.py</a></td>
+                <td>6</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="6 6">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_site_setting_views_py.html">apps/site_setting/views.py</a></td>
+                <td>8</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="8 8">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_summary_group___init___py.html">apps/summary_group/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_summary_group_admin_py.html">apps/summary_group/admin.py</a></td>
+                <td>10</td>
+                <td>1</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="11 12">92%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_summary_group_models_py.html">apps/summary_group/models.py</a></td>
+                <td>9</td>
+                <td>1</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="8 9">89%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_summary_group_serializers_py.html">apps/summary_group/serializers.py</a></td>
+                <td>81</td>
+                <td>8</td>
+                <td>0</td>
+                
+                <td>46</td>
+                <td>4</td>
+                
+                <td class="right" data-ratio="113 127">89%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="apps_summary_group_views_py.html">apps/summary_group/views.py</a></td>
+                <td>6</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="6 6">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="wv_dvs___init___py.html">wv_dvs/__init__.py</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                
+                <td>0</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="0 0">100%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="wv_dvs_settings_py.html">wv_dvs/settings.py</a></td>
+                <td>35</td>
+                <td>4</td>
+                <td>0</td>
+                
+                <td>5</td>
+                <td>1</td>
+                
+                <td class="right" data-ratio="35 40">88%</td>
+            </tr>
+            
+            <tr class="file">
+                <td class="name left"><a href="wv_dvs_widgets_py.html">wv_dvs/widgets.py</a></td>
+                <td>11</td>
+                <td>7</td>
+                <td>0</td>
+                
+                <td>2</td>
+                <td>0</td>
+                
+                <td class="right" data-ratio="4 13">31%</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <p id="no_rows">
+        No items found using the specified filter.
+    </p>
+</div>
+
+<div id="footer">
+    <div class="content">
+        <p>
+            <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.4</a>,
+            created at 2019-09-23 18:34
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
