@@ -1,63 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
+import {
+    mapToList,
+    _cs,
+} from '@togglecorp/fujs';
 
+import SelectInput from '#rsci/SelectInput';
 import ScrollTabs from '#rscv/ScrollTabs';
 import MultiViewContainer from '#rscv/MultiViewContainer';
 
 import styles from './styles.scss';
 
 import Summary from '../Summary';
+import TrendSummary from './TrendSummary';
 
 const propTypes = {
-    overview: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-    summaryGroups: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+    summaryGroups: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     className: PropTypes.string,
     siteSettings: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 const defaultProps = {
-    overview: undefined,
     siteSettings: {},
-    summaryGroups: undefined,
+    summaryGroups: {},
     className: '',
 };
 
-const getTabs = memoize((summaryGroups) => {
-    const names = summaryGroups.map(group => ({ [`${group.name}`]: group.name }));
+const summaryKeySelector = d => d.name;
 
-    return Object.assign({ overview: 'Overview' }, ...names);
-});
+const summaryLabelSelector = d => d.name;
 
-const getViews = memoize((overview, summaryGroups, siteSettings) => {
-    const rendererParams = summaryData => () => ({
-        ...summaryData,
-        siteSettings,
-    });
-    const view = {
-        overview: {
-            component: Summary,
-            rendererParams: rendererParams(overview),
-        },
-    };
-
-    const getSummary = group => ({
-        summary: group.summary,
-        noOfProjects: ((group || {}).projects || []).length || 0,
-    });
-
-    const summaryGroupsViews = summaryGroups.map((group) => {
-        const summary = getSummary(group);
-        return {
-            [group.name]: {
-                component: Summary,
-                rendererParams: rendererParams(summary),
-            },
-        };
-    });
-
-    return Object.assign(view, ...summaryGroupsViews);
-});
+const tabs = {
+    generalSummary: 'Summary',
+    trendSummary: 'Trend',
+};
 
 export default class SummaryContainer extends React.PureComponent {
     static propTypes = propTypes;
@@ -68,46 +45,94 @@ export default class SummaryContainer extends React.PureComponent {
         super(props);
 
         this.state = {
-            activeView: 'overview',
+            activeSummary: 'overview',
+            activeTab: 'generalSummary',
+        };
+
+        this.views = {
+            generalSummary: {
+                component: Summary,
+                rendererParams: this.summaryRendererParams,
+            },
+            trendSummary: {
+                component: TrendSummary,
+            },
         };
     }
 
-    handleTabClick = (tabId) => {
-        this.setState({ activeView: tabId });
+    summaryRendererParams = () => {
+        const { activeSummary } = this.state;
+        const {
+            siteSettings,
+            summaryGroups,
+        } = this.props;
+
+        const {
+            summary,
+            projects,
+        } = summaryGroups[activeSummary];
+
+        return ({
+            summary,
+            noOfProjects: projects.length,
+            siteSettings,
+        });
+    }
+
+    getSummaryList = memoize(summaryGroups => (
+        mapToList(
+            summaryGroups,
+            d => d,
+        )
+    ));
+
+    handleSummaryInputClick = (activeSummary) => {
+        this.setState({ activeSummary });
+    }
+
+    handleTabClick = (activeTab) => {
+        this.setState({ activeTab });
     }
 
     render() {
         const {
-            overview,
             summaryGroups,
-            className: classNameFromProps,
-            siteSettings,
+            className,
         } = this.props;
 
-        const { activeView } = this.state;
-        const tabs = getTabs(summaryGroups);
-        const views = getViews(overview, summaryGroups, siteSettings);
+        const {
+            activeSummary,
+            activeTab,
+        } = this.state;
 
-        const className = `
-            ${classNameFromProps}
-            ${styles.summaryContainer}
-        `;
+        const summaryList = this.getSummaryList(summaryGroups);
 
         return (
-            <div className={className}>
+            <div className={_cs(className, styles.summaryContainer)}>
                 <header className={styles.header}>
+                    <div className={styles.topContainer}>
+                        <h3 className={styles.heading}>
+                            Summary of:
+                        </h3>
+                        <SelectInput
+                            className={styles.summaryList}
+                            options={summaryList}
+                            value={activeSummary}
+                            onChange={this.handleSummaryInputClick}
+                            labelSelector={summaryLabelSelector}
+                            keySelector={summaryKeySelector}
+                            hideClearButton
+                        />
+                    </div>
                     <ScrollTabs
-                        className={styles.tabs}
                         tabs={tabs}
                         onClick={this.handleTabClick}
-                        active={activeView}
-                        itemClassName={styles.tab}
+                        active={activeTab}
                     />
                 </header>
                 <MultiViewContainer
-                    views={views}
-                    active={activeView}
-                    containerClassName={styles.container}
+                    active={activeTab}
+                    views={this.views}
                 />
             </div>
         );

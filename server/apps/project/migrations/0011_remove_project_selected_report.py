@@ -6,10 +6,13 @@ from django.db import migrations, models
 def extract_project_id(apps, schema_editor):
     Project = apps.get_model('project', 'Project')
     for project in Project.objects.all():
-        name_query = project.name.split('-')
-        project.number = str(int(name_query[1]))
-        project.name = name_query[0].strip()
-        project.save(update_fields=['number', 'name'])
+        try:
+            name_query = project.name.split('-')
+            project.number = str(int(name_query[1]))
+            project.name = name_query[0].strip()
+            project.save(update_fields=['number', 'name'])
+        except IndexError:
+            pass
 
 
 class Migration(migrations.Migration):

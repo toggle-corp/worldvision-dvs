@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 import {
+    _cs,
     isFalsy,
     randomString,
 } from '@togglecorp/fujs';
@@ -153,9 +154,9 @@ export default class Summary extends PureComponent {
             projects of Nepal as of`;
 
         return (
-            <div className={`${styles.summary} ${className}`}>
+            <div className={_cs(styles.summary, className)}>
                 <span className={styles.info}>
-                    <span className={`${styles.infoIcon} ion-information-circled`} />
+                    <span className={_cs(styles.infoIcon, 'ion-information-circled')} />
                     {infoText}
                     <FormattedDate
                         className={styles.date}

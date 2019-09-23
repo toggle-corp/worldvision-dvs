@@ -105,6 +105,7 @@ def get_projects_summary(qs):
         project__in=projects
     ).order_by('-date').values_list('date', flat=True)[:1]
 
+    registerchildbyageandgender = []
     if registerchildbyageandgenderdates:
         date = registerchildbyageandgenderdates[0]
         fields = ('age_range', 'gender',)
@@ -113,6 +114,7 @@ def get_projects_summary(qs):
             .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
         )
 
+    childfamilyparticipation = []
     if childfamilyparticipationdates:
         date = childfamilyparticipationdates[0]
         fields = ('type', 'participation', 'gender')

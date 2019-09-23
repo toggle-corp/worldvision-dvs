@@ -530,17 +530,6 @@ class Report extends PureComponent {
                             </div>
                         </div>
                         <div className={styles.item}>
-                            <h3>RC Actual Distribution</h3>
-                            <div className={styles.vizContainer}>
-                                <SunBurst
-                                    className={styles.viz}
-                                    data={rcPieChart}
-                                    labelSelector={Report.labelSelector}
-                                    valueSelector={Report.sizeSelector}
-                                />
-                            </div>
-                        </div>
-                        <div className={styles.item}>
                             <h3>Education</h3>
                             <div className={styles.vizContainer}>
                                 <SunBurst
