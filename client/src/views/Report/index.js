@@ -291,11 +291,14 @@ class Report extends PureComponent {
                     groupKey: ch.key,
                 },
             };
-            ch.children.forEach((c) => {
-                if (c.key.includes('NoEducation')) {
-                    newMap.noEducation.value += c.size;
+            ch.children.forEach(({
+                key = '',
+                size = 0,
+            } = {}) => {
+                if (key.includes('NoEducation')) {
+                    newMap.noEducation.value += size;
                 } else {
-                    newMap.education.value += c.size;
+                    newMap.education.value += size;
                 }
             });
             educationData = [
