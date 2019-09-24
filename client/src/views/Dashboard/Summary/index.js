@@ -4,11 +4,14 @@ import memoize from 'memoize-one';
 import {
     _cs,
     isFalsy,
+    listToGroupList,
+    mapToList,
 } from '@togglecorp/fujs';
 
 import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
 import KeyValue from '#components/KeyValue';
+import ParticipationItem from '#components/ParticipationItem';
 import DonutChart from '#rscz/DonutChart';
 
 import styles from './styles.scss';
@@ -38,6 +41,7 @@ const getPercent = (data) => {
     }));
 };
 
+const getParticipationKey = p => (p > 3 ? '3+' : String(p));
 
 export default class Summary extends PureComponent {
     static propTypes = propTypes;
@@ -47,6 +51,8 @@ export default class Summary extends PureComponent {
     static valueSelector = d => d.value;
 
     static labelSelector = d => d.label;
+
+    static groupKeySelector = d => d.type;
 
     static labelModifierSelector = (label, value) => (`
         <div class=${styles.tooltip} >
@@ -93,6 +99,18 @@ export default class Summary extends PureComponent {
         value: data.value,
     });
 
+    childFamilyGroupParams = groupKey => ({
+        children: groupKey.split('_').join(' '),
+    });
+
+    childFamilyParams = (key, data) => ({
+        groupKey: data.type,
+        male: data.male,
+        female: data.female,
+        total: data.total,
+        participation: data.participation,
+    });
+
     getPercentSoi = memoize(getPercent);
 
     getPercentChild = memoize(getPercent);
@@ -121,6 +139,35 @@ export default class Summary extends PureComponent {
         return [notSighted30DaysAndVisited, ...monitoring];
     })
 
+    getChildFamilyGrouped = memoize((childFamilyParticipation = []) => {
+        const a = listToGroupList(
+            childFamilyParticipation,
+            item => `${item.type}-${getParticipationKey(item.participation)}`,
+        );
+        return mapToList(
+            a,
+            (data, key) => {
+                const newObj = {
+                    key,
+                    male: 0,
+                    female: 0,
+                    total: 0,
+                };
+                data.forEach((d) => {
+                    if (d.gender === 'male') {
+                        newObj.male += d.countSum;
+                    } else {
+                        newObj.female += d.countSum;
+                    }
+                    newObj.total += d.countSum;
+                    newObj.type = d.type;
+                    newObj.participation = getParticipationKey(d.participation);
+                });
+                return newObj;
+            },
+        );
+    })
+
     render() {
         const {
             className,
@@ -130,17 +177,18 @@ export default class Summary extends PureComponent {
                 correspondences,
                 soi,
                 healthNutrition,
+                childFamilyParticipation,
             },
             noOfProjects,
             siteSettings,
         } = this.props;
-
 
         const percentChild = this.getPercentChild(childMonitoring);
         const percentCorr = this.getPercentCorr(correspondences);
         const percentSoi = this.getPercentSoi(soi);
         const percentHealth = this.getPercentHealth(healthNutrition);
         const childMonitoringVizData = this.getChildMonitoringDataForViz(childMonitoring);
+        const childFamily = this.getChildFamilyGrouped(childFamilyParticipation);
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -258,6 +306,21 @@ export default class Summary extends PureComponent {
                                 renderer={KeyValue}
                             />
                         </div>
+                    </div>
+                </div>
+                <div className={styles.item}>
+                    <h3>Child Family Participation</h3>
+                    <div className={styles.itemTableViz}>
+                        <ListView
+                            className={_cs(styles.table, styles.childFamily)}
+                            data={childFamily}
+                            rendererParams={this.childFamilyParams}
+                            groupRendererParams={this.childFamilyGroupParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={ParticipationItem}
+                            groupKeySelector={Summary.groupKeySelector}
+                            groupRendererClassName={styles.childFamilyGroup}
+                        />
                     </div>
                 </div>
             </div>
