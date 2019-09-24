@@ -59,6 +59,13 @@
                 flex-grow: 1;
             }
 
+            .child-family {
+                .child-family-group {
+                    padding: var(--spacing-small) var(--spacing-medium);
+                    text-transform: capitalize;
+                }
+            }
+
             .viz {
                 margin-left: -var(--spacing-medium);
                 width: 180px;

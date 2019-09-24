@@ -1,0 +1,38 @@
+.participation-item {
+    display: flex;
+    padding: var(--spacing-extra-small);
+
+    .left {
+        flex-grow: 1;
+        padding: var(--spacing-small) var(--spacing-medium);
+        text-transform: capitalize;
+        color: var(--color-text-label);
+    }
+
+    .right {
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column;
+        justify-content: right;
+        font-size: var(--font-size-medium-alt);
+
+        .total {
+            margin-left: var(--spacing-extra-small);
+            font-size: var(--font-size-medium);
+        }
+
+        .bottom-right {
+            padding-top: var(--spacing-extra-small);
+            color: var(--color-text-label);
+            font-size: var(--font-size-small);
+
+            .count {
+                margin: 0 var(--spacing-extra-small);
+            }
+        }
+    }
+
+    &:hover {
+        background-color: var(--color-background-accent-hint);
+    }
+}
