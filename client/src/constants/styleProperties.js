@@ -1,6 +1,8 @@
 const styleProperties = {
     colors: {
         colorAccent: '#f69338',
+        colorBackgroundAccentHint: '#fff7f0',
+        colorNavbarMenuItemHover: '#f69338',
     },
 
     dimens: {

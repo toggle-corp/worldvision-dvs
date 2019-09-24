@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { listToMap } from '@togglecorp/fujs';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import MultiViewContainer from '#rscv/MultiViewContainer';
@@ -119,10 +120,16 @@ class Dashboard extends PureComponent {
                         summaryGroups,
                     } = this.props;
 
-                    const overview = {
+                    const summaryGroupsMap = listToMap(
+                        summaryGroups,
+                        d => d.name,
+                        d => d,
+                    );
+
+                    summaryGroupsMap.overview = {
                         summary,
-                        noOfProjects: projects.length || 0,
-                        siteSettings,
+                        projects,
+                        name: 'overview',
                     };
 
                     return (
@@ -136,9 +143,8 @@ class Dashboard extends PureComponent {
                             </div>
                             <SummaryContainer
                                 className={styles.aggregatedContainer}
-                                overview={overview}
                                 siteSettings={siteSettings}
-                                summaryGroups={summaryGroups}
+                                summaryGroups={summaryGroupsMap}
                             />
                         </div>
                     );

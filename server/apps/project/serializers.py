@@ -32,12 +32,12 @@ class ProjectSerializer(serializers.ModelSerializer):
             fields = [
                 'planned', 'totalRc', 'sponsored',
                 'available', 'hold', 'death',
-                'totalMale', 'totalFemale'
+                'totalMale', 'totalFemale', 'totalLeft',
             ]
-            rc_data = report.data.get('rcData')
+            rc_data = report.data.get('rcData') or {}
             return [
                 {
                     'name': LABELS[field],
-                    'value': rc_data[field],
+                    'value': rc_data.get(field),
                 } for field in fields
             ]

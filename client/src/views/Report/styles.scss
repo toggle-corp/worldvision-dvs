@@ -1,3 +1,15 @@
+.success {
+    color: var(--color-success);
+}
+
+.warning {
+    color: var(--color-warning);
+}
+
+.danger {
+    color: var(--color-danger);
+}
+
 .region {
     display: flex;
     flex-direction: column;
@@ -95,6 +107,11 @@
                 }
             }
 
+            .viz-table-container {
+                align-items: center;
+                flex-direction: column;
+            }
+
             .table {
                 display: table;
                 border-collapse: collapse;
@@ -158,18 +175,6 @@
                         flex-grow: 1;
                         margin-top: var(--spacing-medium);
                         border-collapse: collapse;
-
-                        .success {
-                            color: var(--color-success);
-                        }
-
-                        .warning {
-                            color: var(--color-warning);
-                        }
-
-                        .danger {
-                            color: var(--color-danger);
-                        }
                     }
 
                     .viz-wrapper {

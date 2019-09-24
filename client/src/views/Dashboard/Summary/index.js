@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 import {
+    _cs,
     isFalsy,
-    randomString,
 } from '@togglecorp/fujs';
 
 import ListView from '#rscv/List/ListView';
@@ -27,7 +27,7 @@ const defaultProps = {
     noOfProjects: 0,
 };
 
-const getPercent = memoize((data) => {
+const getPercent = (data) => {
     if (isFalsy(data)) {
         return [];
     }
@@ -36,7 +36,8 @@ const getPercent = memoize((data) => {
         percent: (d.value / total) * 100,
         ...d,
     }));
-});
+};
+
 
 export default class Summary extends PureComponent {
     static propTypes = propTypes;
@@ -56,30 +57,21 @@ export default class Summary extends PureComponent {
         </div>
     `);
 
-    static tableKeySelector = d => `${d.key}-${randomString()}`;
+    static tableKeySelector = d => d.key;
 
     percentTableParams = (key, data) => {
-        const classNames = [];
-        const titleClassName = [];
-
-        if (
-            key === '@NotSighted30Days'
+        const isSuccess = key === '@NotSighted30Days'
             || key === '@HealthSatisfactory'
             || key === 'pendingCurrent'
-            || key === '@VisitCompleted'
-        ) {
-            classNames.push(styles.success);
-        } else if (key === '@NotSighted60Days') {
-            classNames.push(styles.warning);
-        } else if (
-            key === '@NotSighted90Days'
+            || key === '@VisitCompleted';
+
+        const isWarning = key === '@NotSighted60Days';
+
+        const isDanger = key === '@NotSighted90Days'
             || key === '@HealthNotSatisfactory'
-            || key === 'pendingOverDue'
-        ) {
-            classNames.push(styles.danger);
-        } else if (key === 'soi') {
-            titleClassName.push(styles.bold);
-        }
+            || key === 'pendingOverDue';
+
+        const isSoi = key === 'soi';
 
         return ({
             title: data.label,
@@ -87,8 +79,12 @@ export default class Summary extends PureComponent {
             percent: data.percent,
             isPercent: true,
             colorOnlyNumber: true,
-            className: classNames.join(' '),
-            titleClassName: titleClassName.join(' '),
+            className: _cs(
+                isSuccess && styles.success,
+                isWarning && styles.warning,
+                isDanger && styles.danger,
+            ),
+            titleClassName: _cs(isSoi && styles.bold),
         });
     }
 
@@ -97,20 +93,16 @@ export default class Summary extends PureComponent {
         value: data.value,
     });
 
-    render() {
-        const {
-            className,
-            summary: {
-                rc,
-                childMonitoring,
-                correspondences,
-                // healthNutrition,
-            },
-            noOfProjects,
-            siteSettings,
-        } = this.props;
+    getPercentSoi = memoize(getPercent);
 
-        let monitoring = [];
+    getPercentChild = memoize(getPercent);
+
+    getPercentCorr = memoize(getPercent);
+
+    getPercentHealth = memoize(getPercent);
+
+    getChildMonitoringDataForViz = memoize((childMonitoring) => {
+        const monitoring = [];
         const notSighted30DaysAndVisited = {
             key: '@NotSighted30DaysAndVisitCompleted',
             label: '',
@@ -126,26 +118,29 @@ export default class Summary extends PureComponent {
             }
         });
 
-        monitoring = [notSighted30DaysAndVisited, ...monitoring];
+        return [notSighted30DaysAndVisited, ...monitoring];
+    })
 
-        const percentChild = getPercent(childMonitoring);
+    render() {
+        const {
+            className,
+            summary: {
+                rc,
+                childMonitoring,
+                correspondences,
+                soi,
+                healthNutrition,
+            },
+            noOfProjects,
+            siteSettings,
+        } = this.props;
 
-        const percentCorr = getPercent(correspondences);
-        // const percentHealth = getPercent(healthNutrition);
-        const soi = [
-            {
-                label: 'Closed in time',
-                key: 'time',
-            },
-            {
-                label: 'Total closed',
-                key: 'total',
-            },
-            {
-                label: 'SOI',
-                key: 'soi',
-            },
-        ];
+
+        const percentChild = this.getPercentChild(childMonitoring);
+        const percentCorr = this.getPercentCorr(correspondences);
+        const percentSoi = this.getPercentSoi(soi);
+        const percentHealth = this.getPercentHealth(healthNutrition);
+        const childMonitoringVizData = this.getChildMonitoringDataForViz(childMonitoring);
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -153,9 +148,9 @@ export default class Summary extends PureComponent {
             projects of Nepal as of`;
 
         return (
-            <div className={`${styles.summary} ${className}`}>
+            <div className={_cs(styles.summary, className)}>
                 <span className={styles.info}>
-                    <span className={`${styles.infoIcon} ion-information-circled`} />
+                    <span className={_cs(styles.infoIcon, 'ion-information-circled')} />
                     {infoText}
                     <FormattedDate
                         className={styles.date}
@@ -180,11 +175,36 @@ export default class Summary extends PureComponent {
                     />
                 </div>
                 <div className={styles.item}>
+                    <h3>Health / Nutrition</h3>
+                    <div className={styles.itemTableViz}>
+                        <DonutChart
+                            className={styles.viz}
+                            data={healthNutrition}
+                            sideLengthRatio={0.2}
+                            hideLabel
+                            valueSelector={Summary.valueSelector}
+                            labelSelector={Summary.labelSelector}
+                            labelModifier={Summary.labelModifierSelector}
+                            colorScheme={[
+                                '#41cf76',
+                                '#f44336',
+                            ]}
+                        />
+                        <ListView
+                            className={styles.table}
+                            data={percentHealth}
+                            rendererParams={this.percentTableParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={KeyValue}
+                        />
+                    </div>
+                </div>
+                <div className={styles.item}>
                     <h3>Child Monitoring</h3>
                     <div className={styles.itemTableViz}>
                         <DonutChart
                             className={styles.viz}
-                            data={monitoring}
+                            data={childMonitoringVizData}
                             hideLabel
                             sideLengthRatio={0.2}
                             valueSelector={Summary.valueSelector}
@@ -232,7 +252,7 @@ export default class Summary extends PureComponent {
                             />
                             <ListView
                                 className={styles.table}
-                                data={soi}
+                                data={percentSoi}
                                 rendererParams={this.percentTableParams}
                                 keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}

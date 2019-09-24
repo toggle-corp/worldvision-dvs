@@ -60,6 +60,10 @@ const setProject = (state, action) => {
     };
 
     const rcData = projects.map((project) => {
+        if (!project.rcData) {
+            return null;
+        }
+
         const {
             planned,
             sponsered,
