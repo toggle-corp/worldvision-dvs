@@ -116,6 +116,10 @@ class Report extends PureComponent {
 
     static childKeySelector = d => d.key;
 
+    static educationKeySelector = d => d.key;
+
+    static educationGroupKeySelector = d => d.groupKey;
+
     static correspondenceKeySelector = d => d.typeName;
 
     tableRenderParams = (key, data) => {
@@ -132,6 +136,7 @@ class Report extends PureComponent {
             || key === '@HealthSatisfactory'
             || key === '@VisitCompleted'
             || key === 'pendingCurrent'
+            || key.includes('rcEducation')
             || key === 'good';
 
         const isWarning = key === '@NotSighted60Days';
@@ -139,6 +144,7 @@ class Report extends PureComponent {
         const isDanger = key === '@NotSighted90Days'
             || key === '@HealthNotSatisfactory'
             || key === 'pendingOverDue'
+            || key.includes('rcNoEducation')
             || data.type === 'bad';
 
         return ({
@@ -151,6 +157,12 @@ class Report extends PureComponent {
             ),
         });
     };
+
+    educationGroupRendererParams = (groupKey) => {
+        const children = groupKey === '@PrimarySchoolAge'
+            ? 'Primary School Age' : 'Secondary School Age';
+        return ({ children });
+    }
 
     correspondencesParams = (key, data) => ({
         title: data.typeName,
@@ -262,6 +274,38 @@ class Report extends PureComponent {
         ];
     })
 
+    getFlatEducationData = memoize(({ children = [] } = {}) => {
+        let educationData = [];
+        children.forEach((ch) => {
+            const newMap = {
+                education: {
+                    value: 0,
+                    name: 'RC involved in Education',
+                    key: `${ch.key}-rcEducation`,
+                    groupKey: ch.key,
+                },
+                noEducation: {
+                    value: 0,
+                    name: 'RC not involved in Education',
+                    key: `${ch.key}-rcNoEducation`,
+                    groupKey: ch.key,
+                },
+            };
+            ch.children.forEach((c) => {
+                if (c.key.includes('NoEducation')) {
+                    newMap.noEducation.value += c.size;
+                } else {
+                    newMap.education.value += c.size;
+                }
+            });
+            educationData = [
+                ...educationData,
+                ...mapToList(newMap, d => d),
+            ];
+        });
+        return educationData;
+    })
+
     render() {
         const {
             report,
@@ -309,6 +353,7 @@ class Report extends PureComponent {
 
         const healthDonut = this.getHealthDonutData(healthNutrition);
         const correspondences = this.getCorrespondenceData(correspondencesFromProps);
+        const flatEducationData = this.getFlatEducationData(education);
 
         return (
             <div className={styles.region}>
@@ -395,12 +440,20 @@ class Report extends PureComponent {
                         </div>
                         <div className={styles.item}>
                             <h3>Education</h3>
-                            <div className={styles.vizContainer}>
+                            <div className={_cs(styles.vizContainer, styles.vizTableContainer)}>
                                 <SunBurst
                                     className={styles.viz}
                                     data={education}
                                     valueSelector={Report.sizeSelector}
                                     labelSelector={Report.labelSelector}
+                                />
+                                <ListView
+                                    data={flatEducationData}
+                                    keySelector={Report.educationKeySelector}
+                                    renderer={KeyValue}
+                                    groupRendererParams={this.educationGroupRendererParams}
+                                    rendererParams={this.tableRenderParams}
+                                    groupKeySelector={Report.educationGroupKeySelector}
                                 />
                             </div>
                         </div>

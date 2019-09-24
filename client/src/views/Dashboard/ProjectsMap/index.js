@@ -80,7 +80,6 @@ export default class ProjectsMap extends React.PureComponent {
         const { projects } = this.props;
 
         const project = projects.find((p = {}) => p.id === projectId);
-        console.warn('here', project);
 
         return (
             <div className={styles.hoverInfo}>

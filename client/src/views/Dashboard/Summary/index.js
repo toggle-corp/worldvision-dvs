@@ -27,6 +27,18 @@ const defaultProps = {
     noOfProjects: 0,
 };
 
+const getPercent = (data) => {
+    if (isFalsy(data)) {
+        return [];
+    }
+    const total = data.reduce((acc, d) => (acc + d.value), 0);
+    return data.map(d => ({
+        percent: (d.value / total) * 100,
+        ...d,
+    }));
+};
+
+
 export default class Summary extends PureComponent {
     static propTypes = propTypes;
 
@@ -81,24 +93,13 @@ export default class Summary extends PureComponent {
         value: data.value,
     });
 
-    getPercent = (data) => {
-        if (isFalsy(data)) {
-            return [];
-        }
-        const total = data.reduce((acc, d) => (acc + d.value), 0);
-        return data.map(d => ({
-            percent: (d.value / total) * 100,
-            ...d,
-        }));
-    };
+    getPercentSoi = memoize(getPercent);
 
-    getPercentSoi = memoize(data => this.getPercent(data));
+    getPercentChild = memoize(getPercent);
 
-    getPercentChild = memoize(data => this.getPercent(data));
+    getPercentCorr = memoize(getPercent);
 
-    getPercentCorr = memoize(data => this.getPercent(data));
-
-    getPercentHealth = memoize(data => this.getPercent(data));
+    getPercentHealth = memoize(getPercent);
 
     getChildMonitoringDataForViz = memoize((childMonitoring) => {
         const monitoring = [];
