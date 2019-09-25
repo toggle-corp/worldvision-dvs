@@ -40,27 +40,27 @@ api_schema_view = get_schema_view(
 router = routers.DefaultRouter()
 
 # Site settings
-router.register(r'site-settings', SiteSettingsViewSet, base_name='site-settings')
+router.register(r'site-settings', SiteSettingsViewSet, basename='site-settings')
 # Projects list
-router.register(r'projects', ProjectViewSet, base_name='project')
+router.register(r'projects', ProjectViewSet, basename='project')
 # Selected Project's report
-router.register(r'projects-report', ProjectReportViewSet, base_name='project-report')
+router.register(r'projects-report', ProjectReportViewSet, basename='project-report')
 # All projects report summary
-router.register(r'projects-summary', ProjectSummaryViewSet, base_name='project-summary')
+router.register(r'projects-summary', ProjectSummaryViewSet, basename='project-summary')
 # Grouped projects report summary
-router.register(r'summary-groups', SummaryGroupViewSet, base_name='summary-group')
+router.register(r'summary-groups', SummaryGroupViewSet, basename='summary-group')
 
 # Report Models ViewSet
 router.register(r'project-reports',
-                ReportViewSet, base_name='project-raw-report')
+                ReportViewSet, basename='project-raw-report')
 router.register(r'projects-soi',
-                ProjectSOIViewSet, base_name='project-soi')
+                ProjectSOIViewSet, basename='project-soi')
 router.register(r'register-childs-by-age-and-gender',
-                RegisterChildByAgeAndGenderViewSet, base_name='register-child-by-age-and-gender')
+                RegisterChildByAgeAndGenderViewSet, basename='register-child-by-age-and-gender')
 router.register(r'presence-and-participations',
-                PresenceAndParticipationViewSet, base_name='presence-and-participation')
-router.register(r'child-Family-participations',
-                ChildFamilyParticipationViewSet, base_name='child-Family-participation')
+                PresenceAndParticipationViewSet, basename='presence-and-participation')
+router.register(r'child-family-participations',
+                ChildFamilyParticipationViewSet, basename='child-Family-participation')
 
 # Versioning : (v1|v2|v3)
 API_PREFIX = r'^api/(?P<version>(v1))/'

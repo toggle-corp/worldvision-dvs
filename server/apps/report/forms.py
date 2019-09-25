@@ -33,6 +33,10 @@ BULK_IMPORTER = {
 
 
 class ReportAdminForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = '__all__'
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.original_report_file = self.instance.file

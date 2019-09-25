@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/bash -e
 
-# /code/scripts/
-BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# /code/
-ROOT_DIR=$(dirname "$BASE_DIR")
-BUILD_DIR=${ROOT_DIR}/build
+# Copy yarn node_modules from Image
+echo "Copy node packages"
+rsync -a --stats --ignore-existing /node_modules /code/
+yarn start
+
+echo "Building WV App"
+CI=false yarn build
 
 echo "Removing old js/css files"
 set -x
@@ -13,4 +15,4 @@ rm -rf /build/static/css
 set +x
 
 echo "Copying new build files"
-cp -rv ${BUILD_DIR}/* /build/
+cp -rv /code/build/* /build/

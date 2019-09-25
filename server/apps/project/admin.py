@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.urls import reverse
 
 from report.models import Report
+from report.forms import ReportAdminForm
 from .models import Project, District, Municipality
 from .forms import ProjectAdminForm
 
@@ -11,6 +12,7 @@ class ReportInline(admin.TabularInline):
     exclude = ('data',)
     show_change_link = True
     model = Report
+    form = ReportAdminForm
     extra = 0
 
     def has_delete_permission(self, request, obj=None):
@@ -29,6 +31,9 @@ class ProjectAdmin(admin.ModelAdmin):
     autocomplete_fields = ('district',)
     filter_horizontal = ('municipalities',)
     save_on_top = True
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('reports', 'district')
 
     def get_district(self, instance):
         district = instance.district

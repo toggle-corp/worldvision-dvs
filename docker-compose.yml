@@ -24,7 +24,7 @@ services:
     depends_on:
       - db
 
-  client:
+  client: &client
     image: "docker.pkg.github.com/toggle-corp/worldvision-dvs/client:${WV_BRANCH_NAME:-develop}"
     build:
       context: ./client/
@@ -38,6 +38,12 @@ services:
       - ./client/:/code
     ports:
       - '3005:3005'
+
+  client-build:
+    <<: *client
+    command: bash -c 'CI=false yarn build'
+    volumes:
+      - ./client/build/:/code/build/
 
 volumes:
   media:

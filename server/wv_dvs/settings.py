@@ -15,6 +15,7 @@ import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEST_DIR = os.path.join(BASE_DIR, 'wv_dvs/test-documents/')
 APPS_DIR = os.path.join(BASE_DIR, 'apps')
 sys.path.append(APPS_DIR)
 
