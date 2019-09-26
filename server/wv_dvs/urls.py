@@ -16,6 +16,7 @@ from project.views import (
     ProjectViewSet,
     ProjectReportViewSet,
     ProjectSummaryViewSet,
+    ProjectSummaryTrendViewSet,
 )
 from report.views import (
     ReportViewSet,
@@ -47,6 +48,8 @@ router.register(r'projects', ProjectViewSet, basename='project')
 router.register(r'projects-report', ProjectReportViewSet, basename='project-report')
 # All projects report summary
 router.register(r'projects-summary', ProjectSummaryViewSet, basename='project-summary')
+# All projects report summary (Trend)
+router.register(r'projects-summary-trend', ProjectSummaryTrendViewSet, basename='project-summary-trend')
 # Grouped projects report summary
 router.register(r'summary-groups', SummaryGroupViewSet, basename='summary-group')
 

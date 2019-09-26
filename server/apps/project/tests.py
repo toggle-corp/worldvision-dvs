@@ -22,3 +22,8 @@ class ProjectTest(TestCase):
         url = '/api/v1/projects-summary/'
         response = self.client.get(url)
         self.assert_200(response)
+
+    def test_projects_summary_trend(self):
+        url = '/api/v1/projects-summary-trend/'
+        response = self.client.get(url)
+        self.assert_200(response)
