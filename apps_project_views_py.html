@@ -30,8 +30,8 @@
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
 
         <h2 class="stats">
-            23 statements &nbsp;
-            <span class="run hide_run shortkey_r button_toggle_run">23 run</span>
+            27 statements &nbsp;
+            <span class="run hide_run shortkey_r button_toggle_run">27 run</span>
             <span class="mis shortkey_m button_toggle_mis">0 missing</span>
             <span class="exc shortkey_x button_toggle_exc">0 excluded</span>
 
@@ -115,6 +115,16 @@
 <p id="n44" class="stm run hide_run"><a href="#n44">44</a></p>
 <p id="n45" class="stm run hide_run"><a href="#n45">45</a></p>
 <p id="n46" class="stm run hide_run"><a href="#n46">46</a></p>
+<p id="n47" class="pln"><a href="#n47">47</a></p>
+<p id="n48" class="pln"><a href="#n48">48</a></p>
+<p id="n49" class="stm run hide_run"><a href="#n49">49</a></p>
+<p id="n50" class="pln"><a href="#n50">50</a></p>
+<p id="n51" class="pln"><a href="#n51">51</a></p>
+<p id="n52" class="pln"><a href="#n52">52</a></p>
+<p id="n53" class="pln"><a href="#n53">53</a></p>
+<p id="n54" class="stm run hide_run"><a href="#n54">54</a></p>
+<p id="n55" class="stm run hide_run"><a href="#n55">55</a></p>
+<p id="n56" class="stm run hide_run"><a href="#n56">56</a></p>
 
             </td>
             <td class="text">
@@ -164,6 +174,16 @@
 <p id="t44" class="stm run hide_run">    <span class="key">def</span> <span class="nam">list</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">,</span> <span class="nam">version</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
 <p id="t45" class="stm run hide_run">        <span class="nam">summary</span> <span class="op">=</span> <span class="nam">get_projects_summary</span><span class="op">(</span><span class="nam">Project</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">all</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 <p id="t46" class="stm run hide_run">        <span class="key">return</span> <span class="nam">response</span><span class="op">.</span><span class="nam">Response</span><span class="op">(</span><span class="nam">summary</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t47" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t48" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t49" class="stm run hide_run"><span class="key">class</span> <span class="nam">ProjectSummaryTrendViewSet</span><span class="op">(</span><span class="nam">viewsets</span><span class="op">.</span><span class="nam">ViewSet</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
+<p id="t50" class="pln">    <span class="str">"""</span><span class="strut">&nbsp;</span></p>
+<p id="t51" class="pln"><span class="str">    Project's report viewset</span><span class="strut">&nbsp;</span></p>
+<p id="t52" class="pln"><span class="str">    """</span><span class="strut">&nbsp;</span></p>
+<p id="t53" class="pln"><span class="strut">&nbsp;</span></p>
+<p id="t54" class="stm run hide_run">    <span class="key">def</span> <span class="nam">list</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">request</span><span class="op">,</span> <span class="nam">version</span><span class="op">)</span><span class="op">:</span><span class="strut">&nbsp;</span></p>
+<p id="t55" class="stm run hide_run">        <span class="nam">summary</span> <span class="op">=</span> <span class="nam">get_projects_summary</span><span class="op">(</span><span class="nam">Project</span><span class="op">.</span><span class="nam">objects</span><span class="op">.</span><span class="nam">all</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="nam">group_by_date</span><span class="op">=</span><span class="key">True</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t56" class="stm run hide_run">        <span class="key">return</span> <span class="nam">response</span><span class="op">.</span><span class="nam">Response</span><span class="op">(</span><span class="nam">summary</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -174,7 +194,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.5.4</a>,
-            created at 2019-09-25 04:19
+            created at 2019-09-26 14:34
         </p>
     </div>
 </div>
