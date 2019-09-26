@@ -17,7 +17,7 @@ from .serializers import (
 )
 
 
-class ProjectSummaryViewSet(viewsets.ModelViewSet):
+class ProjectSummaryViewSet(viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_fields = ('project', 'date',)
 

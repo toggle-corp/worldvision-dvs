@@ -24,3 +24,7 @@ class SummaryGroupTest(TestCase):
         url = f'/api/v1/summary-groups/{group.pk}/'
         response = self.client.get(url)
         self.assert_200(response)
+
+        url = f'/api/v1/summary-groups/{group.pk}/trend/'
+        response = self.client.get(url)
+        self.assert_200(response)

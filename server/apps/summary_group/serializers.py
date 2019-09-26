@@ -1,5 +1,4 @@
 from django.db.models import Prefetch, Sum
-from django.db.models.functions import ExtractYear
 from rest_framework import serializers
 
 from report.report_fields import LABELS
@@ -13,13 +12,67 @@ from report.models import (
 from .models import SummaryGroup
 
 
+def _get_report_data(
+    increment_obj_field,
+    report,
+    child_monitoring,
+    health_nutrition,
+    correspondences,
+    education,
+    education_fields,
+    rc,
+):
+
+    if not report.data:
+        return
+
+    data = report.data
+    date = report.date
+    for datum in data['childMonitoring']:
+        key = datum['key']
+        if key in child_monitoring:
+            increment_obj_field(child_monitoring, key, datum['value'], date)
+    for datum in data['healthNutrition']:
+        key = datum['key']
+        if key in health_nutrition:
+            increment_obj_field(health_nutrition, key, datum['value'], date)
+    for datum in data['correspondences']:
+        for key in correspondences.keys():
+            increment_obj_field(correspondences, key, datum[key], date)
+    for datum in data['education']['children']:
+        for key in education_fields[:2]:
+            if key == datum.get('key'):
+                increment_obj_field(education, key, datum.get('size'), date)
+        for c_datum in datum['children']:
+            for key in education_fields[2:]:
+                if key == c_datum.get('key'):
+                    increment_obj_field(education, key, c_datum.get('size'), date)
+    for key in rc.keys():
+        increment_obj_field(rc, key, data['rcData'].get(key) or 0, date)
+
+
+def _add_date_to_query(data, fields, year_key='date__year', month_key='date__month'):
+    return [
+        {
+            **{
+                field: datum[field]
+                for field in fields
+            },
+            'date': '{:04d}-{:02d}'.format(
+                datum[year_key],
+                datum[month_key],
+            )
+        } for datum in data
+    ]
+
+
 def get_projects_summary(qs, group_by_date=False):
     def map_normalize(fields, data):
         if group_by_date:
             return {
-                key: {'value': data[key][year], 'label': LABELS[key], 'year': year}
+                key: {'value': data[key][date], 'label': LABELS[key], 'date': date}
                 for key in fields
-                for year in data[key]
+                for date in data[key]
             }
         return {
             key: {'value': data[key], 'label': LABELS[key]}
@@ -29,9 +82,9 @@ def get_projects_summary(qs, group_by_date=False):
     def normalize(fields, data):
         if group_by_date:
             return [
-                {'key': key, 'value': data[key][year], 'label': LABELS[key], 'year': year}
+                {'key': key, 'value': data[key][date], 'label': LABELS[key], 'date': date}
                 for key in fields
-                for year in data[key]
+                for date in data[key]
             ]
         return [
             {'key': key, 'value': data[key], 'label': LABELS[key]}
@@ -39,11 +92,11 @@ def get_projects_summary(qs, group_by_date=False):
         ]
 
     def increment_obj_field(obj, key, increment, date):
-        year = date and date.year
+        year_month = date and date.strftime('%Y-%m')
         if group_by_date:
-            if obj[key].get(year) is None:
-                obj[key][year] = 0
-            obj[key][year] += increment
+            if obj[key].get(year_month) is None:
+                obj[key][year_month] = 0
+            obj[key][year_month] += increment
         else:
             obj[key] += increment
 
@@ -90,32 +143,16 @@ def get_projects_summary(qs, group_by_date=False):
         ppresenceandparticipations = project.presenceandparticipation_set.all()[:1 if group_by_date else None]
 
         for report in reports:
-            if not report.data:
-                continue
-
-            data = report.data
-            date = report.date
-            for datum in data['childMonitoring']:
-                key = datum['key']
-                if key in child_monitoring:
-                    increment_obj_field(child_monitoring, key, datum['value'], date)
-            for datum in data['healthNutrition']:
-                key = datum['key']
-                if key in health_nutrition:
-                    increment_obj_field(health_nutrition, key, datum['value'], date)
-            for datum in data['correspondences']:
-                for key in correspondences.keys():
-                    increment_obj_field(correspondences, key, datum[key], date)
-            for datum in data['education']['children']:
-                for key in education_fields[:2]:
-                    if key == datum.get('key'):
-                        increment_obj_field(education, key, datum.get('size'), date)
-                for c_datum in datum['children']:
-                    for key in education_fields[2:]:
-                        if key == c_datum.get('key'):
-                            increment_obj_field(education, key, c_datum.get('size'), date)
-            for key in rc.keys():
-                increment_obj_field(rc, key, data['rcData'].get(key) or 0, date)
+            _get_report_data(
+                increment_obj_field,
+                report,
+                child_monitoring,
+                health_nutrition,
+                correspondences,
+                education,
+                education_fields,
+                rc,
+            )
 
         for instances, data in (
             (psois, soi),
@@ -129,20 +166,19 @@ def get_projects_summary(qs, group_by_date=False):
     registerchildbyageandgender = []
     childfamilyparticipation = []
     if group_by_date:
-        fields = ('age_range', 'gender', 'date__year',)
-        registerchildbyageandgender = list(
-            RegisterChildByAgeAndGender.objects
-            .order_by(*fields).values(*fields)
-            .annotate(count_sum=Sum('count'))
-            .values(*fields[:2], 'count_sum', year=ExtractYear('date'))
-        )
-        fields = ('type', 'participation', 'gender', 'date__year',)
-        childfamilyparticipation = list(
-            ChildFamilyParticipation.objects
-            .order_by(*fields).values(*fields)
-            .annotate(count_sum=Sum('count'))
-            .values(*fields[:3], 'count_sum', year=ExtractYear('date'))
-        )
+        fields = ('age_range', 'gender', 'date__year', 'date__month',)
+        query = RegisterChildByAgeAndGender.objects\
+            .order_by(*fields).values(*fields)\
+            .annotate(count_sum=Sum('count'))\
+            .values(*fields, 'count_sum')
+        registerchildbyageandgender = _add_date_to_query(query, fields[:2])
+
+        fields = ('type', 'participation', 'gender', 'date__year', 'date__month',)
+        query = ChildFamilyParticipation.objects\
+            .order_by(*fields).values(*fields)\
+            .annotate(count_sum=Sum('count'))\
+            .values(*fields, 'count_sum')
+        childfamilyparticipation = _add_date_to_query(query, fields[:3])
     else:
         registerchildbyageandgenderdates = RegisterChildByAgeAndGender.objects.filter(
             project__in=projects
@@ -186,12 +222,19 @@ def get_projects_summary(qs, group_by_date=False):
     }
 
 
-class SummaryGroupSerializer(serializers.ModelSerializer):
-    summary = serializers.SerializerMethodField()
-
+class SimpleSummaryGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = SummaryGroup
         fields = '__all__'
 
+
+class SummaryGroupSerializer(SimpleSummaryGroupSerializer):
+    summary = serializers.SerializerMethodField()
+
     def get_summary(self, obj):
         return get_projects_summary(obj.projects.all())
+
+
+class SummaryGroupTrendSerializer(SummaryGroupSerializer):
+    def get_summary(self, obj):
+        return get_projects_summary(obj.projects.all(), group_by_date=True)
