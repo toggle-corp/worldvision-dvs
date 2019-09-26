@@ -56,8 +56,22 @@ export default class SummaryContainer extends React.PureComponent {
             },
             trendSummary: {
                 component: TrendSummary,
+                rendererParams: this.trendRendererParams,
             },
         };
+    }
+
+    trendRendererParams = () => {
+        const { activeSummary } = this.state;
+        const {
+            summaryGroups,
+        } = this.props;
+
+        const {
+            trend,
+        } = summaryGroups[activeSummary];
+
+        return ({ trend });
     }
 
     summaryRendererParams = () => {
@@ -68,11 +82,13 @@ export default class SummaryContainer extends React.PureComponent {
         } = this.props;
 
         const {
+            trend,
             summary,
             projects,
         } = summaryGroups[activeSummary];
 
         return ({
+            trend,
             summary,
             noOfProjects: projects.length,
             siteSettings,
