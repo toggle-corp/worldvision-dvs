@@ -44,3 +44,13 @@ class ProjectSummaryViewSet(viewsets.ViewSet):
     def list(self, request, version):
         summary = get_projects_summary(Project.objects.all())
         return response.Response(summary)
+
+
+class ProjectSummaryTrendViewSet(viewsets.ViewSet):
+    """
+    Project's report viewset
+    """
+
+    def list(self, request, version):
+        summary = get_projects_summary(Project.objects.all(), group_by_date=True)
+        return response.Response(summary)

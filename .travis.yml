@@ -24,7 +24,8 @@ script:
     REACT_APP_MAPBOX_ACCESS_TOKEN=${REACT_APP_MAPBOX_ACCESS_TOKEN}
     REACT_APP_MAPBOX_STYLE=${REACT_APP_MAPBOX_STYLE}
     " > .env
-  - docker-compose run --rm client-build
+    # Instead of Test
+  - docker-compose run --rm client bash -c 'rsync -a --stats --ignore-existing /node_modules /code/ && CI=false yarn build'
 
 after_success:
   - docker-compose push

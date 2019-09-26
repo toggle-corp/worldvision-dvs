@@ -1,4 +1,5 @@
 from django.db.models import Prefetch, Sum
+from django.db.models.functions import ExtractYear
 from rest_framework import serializers
 
 from report.report_fields import LABELS
@@ -12,20 +13,43 @@ from report.models import (
 from .models import SummaryGroup
 
 
-def get_projects_summary(qs):
+def get_projects_summary(qs, group_by_date=False):
     def map_normalize(fields, data):
+        if group_by_date:
+            return {
+                key: {'value': data[key][year], 'label': LABELS[key], 'year': year}
+                for key in fields
+                for year in data[key]
+            }
         return {
             key: {'value': data[key], 'label': LABELS[key]}
             for key in fields
         }
 
     def normalize(fields, data):
+        if group_by_date:
+            return [
+                {'key': key, 'value': data[key][year], 'label': LABELS[key], 'year': year}
+                for key in fields
+                for year in data[key]
+            ]
         return [
             {'key': key, 'value': data[key], 'label': LABELS[key]}
             for key in fields
         ]
 
+    def increment_obj_field(obj, key, increment, date):
+        year = date and date.year
+        if group_by_date:
+            if obj[key].get(year) is None:
+                obj[key][year] = 0
+            obj[key][year] += increment
+        else:
+            obj[key] += increment
+
     def initial_dict(fields):
+        if group_by_date:
+            return {field: {} for field in fields}
         return {field: 0 for field in fields}
 
     child_monitoring_fields = [
@@ -61,67 +85,87 @@ def get_projects_summary(qs):
     )
 
     for project in projects:
-        report = project.reports.first()
-        psoi = project.projectsoi_set.first()
-        ppresenceandparticipation = project.presenceandparticipation_set.first()
+        reports = project.reports.all()[:1 if group_by_date else None]
+        psois = project.projectsoi_set.all()[:1 if group_by_date else None]
+        ppresenceandparticipations = project.presenceandparticipation_set.all()[:1 if group_by_date else None]
 
-        if report and report.data:
+        for report in reports:
+            if not report.data:
+                continue
+
             data = report.data
+            date = report.date
             for datum in data['childMonitoring']:
                 key = datum['key']
                 if key in child_monitoring:
-                    child_monitoring[key] += datum['value']
+                    increment_obj_field(child_monitoring, key, datum['value'], date)
             for datum in data['healthNutrition']:
                 key = datum['key']
                 if key in health_nutrition:
-                    health_nutrition[key] += datum['value']
+                    increment_obj_field(health_nutrition, key, datum['value'], date)
             for datum in data['correspondences']:
                 for key in correspondences.keys():
-                    correspondences[key] += datum[key]
+                    increment_obj_field(correspondences, key, datum[key], date)
             for datum in data['education']['children']:
                 for key in education_fields[:2]:
                     if key == datum.get('key'):
-                        education[key] += datum.get('size')
+                        increment_obj_field(education, key, datum.get('size'), date)
                 for c_datum in datum['children']:
                     for key in education_fields[2:]:
                         if key == c_datum.get('key'):
-                            education[key] += c_datum.get('size')
+                            increment_obj_field(education, key, c_datum.get('size'), date)
             for key in rc.keys():
-                rc[key] += data['rcData'].get(key) or 0
+                increment_obj_field(rc, key, data['rcData'].get(key) or 0, date)
 
-        for instance, data in (
-            (psoi, soi),
-            (ppresenceandparticipation, presenceandparticipation)
+        for instances, data in (
+            (psois, soi),
+            (ppresenceandparticipations, presenceandparticipation)
         ):
-            if instance is None:
-                continue
-            for key in data:
-                data[key] += getattr(instance, key)
-
-    registerchildbyageandgenderdates = RegisterChildByAgeAndGender.objects.filter(
-        project__in=projects
-    ).order_by('-date').values_list('date', flat=True)[:1]
-    childfamilyparticipationdates = ChildFamilyParticipation.objects.filter(
-        project__in=projects
-    ).order_by('-date').values_list('date', flat=True)[:1]
+            for instance in instances:
+                date = instance.date
+                for key in data:
+                    increment_obj_field(data, key, getattr(instance, key), date)
 
     registerchildbyageandgender = []
-    if registerchildbyageandgenderdates:
-        date = registerchildbyageandgenderdates[0]
-        fields = ('age_range', 'gender',)
-        registerchildbyageandgender = list(
-            RegisterChildByAgeAndGender.objects.filter(date=date)
-            .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
-        )
-
     childfamilyparticipation = []
-    if childfamilyparticipationdates:
-        date = childfamilyparticipationdates[0]
-        fields = ('type', 'participation', 'gender')
-        childfamilyparticipation = list(
-            ChildFamilyParticipation.objects.filter(date=date)
-            .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
+    if group_by_date:
+        fields = ('age_range', 'gender', 'date__year',)
+        registerchildbyageandgender = list(
+            RegisterChildByAgeAndGender.objects
+            .order_by(*fields).values(*fields)
+            .annotate(count_sum=Sum('count'))
+            .values(*fields[:2], 'count_sum', year=ExtractYear('date'))
         )
+        fields = ('type', 'participation', 'gender', 'date__year',)
+        childfamilyparticipation = list(
+            ChildFamilyParticipation.objects
+            .order_by(*fields).values(*fields)
+            .annotate(count_sum=Sum('count'))
+            .values(*fields[:3], 'count_sum', year=ExtractYear('date'))
+        )
+    else:
+        registerchildbyageandgenderdates = RegisterChildByAgeAndGender.objects.filter(
+            project__in=projects
+        ).order_by('-date').values_list('date', flat=True)[:1]
+        childfamilyparticipationdates = ChildFamilyParticipation.objects.filter(
+            project__in=projects
+        ).order_by('-date').values_list('date', flat=True)[:1]
+
+        if registerchildbyageandgenderdates:
+            date = registerchildbyageandgenderdates[0]
+            fields = ('age_range', 'gender',)
+            registerchildbyageandgender = list(
+                RegisterChildByAgeAndGender.objects.filter(date=date)
+                .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
+            )
+
+        if childfamilyparticipationdates:
+            date = childfamilyparticipationdates[0]
+            fields = ('type', 'participation', 'gender')
+            childfamilyparticipation = list(
+                ChildFamilyParticipation.objects.filter(date=date)
+                .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
+            )
 
     reportDates = projects.filter(
         reports__data__reportDate__isnull=False,
