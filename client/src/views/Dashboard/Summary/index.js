@@ -119,7 +119,7 @@ export default class Summary extends PureComponent {
 
     getPercentHealth = memoize(getPercent);
 
-    getChildMonitoringDataForViz = memoize((childMonitoring) => {
+    getChildMonitoringDataForViz = memoize((childMonitoring = []) => {
         const monitoring = [];
         const notSighted30DaysAndVisited = {
             key: '@NotSighted30DaysAndVisitCompleted',

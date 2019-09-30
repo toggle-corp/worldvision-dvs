@@ -6,6 +6,11 @@ import {
     _cs,
 } from '@togglecorp/fujs';
 
+import {
+    createConnectedRequestCoordinator,
+    createRequestClient,
+} from '#request';
+
 import SelectInput from '#rsci/SelectInput';
 import ScrollTabs from '#rscv/ScrollTabs';
 import MultiViewContainer from '#rscv/MultiViewContainer';
@@ -19,6 +24,7 @@ const propTypes = {
     summaryGroups: PropTypes.object, // eslint-disable-line react/forbid-prop-types
     className: PropTypes.string,
     siteSettings: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+    requests: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 const defaultProps = {
@@ -27,8 +33,18 @@ const defaultProps = {
     className: '',
 };
 
-const summaryKeySelector = d => d.name;
+const requests = {
+    summaryRequest: {
+        url: ({ params }) => {
+            if (!params || !params.id) {
+                return '/error/';
+            }
+            return `/summary-groups/${params.id}/`;
+        },
+    },
+};
 
+const summaryKeySelector = d => d.name;
 const summaryLabelSelector = d => d.name;
 
 const tabs = {
@@ -36,7 +52,7 @@ const tabs = {
     trendSummary: 'Trend',
 };
 
-export default class SummaryContainer extends React.PureComponent {
+class SummaryContainer extends React.PureComponent {
     static propTypes = propTypes;
 
     static defaultProps = defaultProps;
@@ -68,10 +84,11 @@ export default class SummaryContainer extends React.PureComponent {
         } = this.props;
 
         const {
-            trend,
+            id,
+            name,
         } = summaryGroups[activeSummary];
 
-        return ({ trend });
+        return ({ id, name });
     }
 
     summaryRendererParams = () => {
@@ -79,16 +96,30 @@ export default class SummaryContainer extends React.PureComponent {
         const {
             siteSettings,
             summaryGroups,
+            requests: {
+                summaryRequest = {},
+            },
         } = this.props;
 
+        if (activeSummary === 'overview') {
+            const {
+                summary,
+                projects,
+            } = summaryGroups.overview;
+
+            return ({
+                summary,
+                noOfProjects: projects.length,
+                siteSettings,
+            });
+        }
+
         const {
-            trend,
-            summary,
-            projects,
-        } = summaryGroups[activeSummary];
+            summary = {},
+            projects = [],
+        } = summaryRequest.response || {};
 
         return ({
-            trend,
             summary,
             noOfProjects: projects.length,
             siteSettings,
@@ -96,13 +127,19 @@ export default class SummaryContainer extends React.PureComponent {
     }
 
     getSummaryList = memoize(summaryGroups => (
-        mapToList(
-            summaryGroups,
-            d => d,
-        )
-    ));
+        mapToList(summaryGroups)));
 
     handleSummaryInputClick = (activeSummary) => {
+        const {
+            summaryGroups,
+            requests: {
+                summaryRequest,
+            },
+        } = this.props;
+        if (activeSummary !== 'overview') {
+            const { id } = summaryGroups[activeSummary];
+            summaryRequest.do({ id });
+        }
         this.setState({ activeSummary });
     }
 
@@ -154,3 +191,7 @@ export default class SummaryContainer extends React.PureComponent {
         );
     }
 }
+
+export default createConnectedRequestCoordinator()(
+    createRequestClient(requests)(SummaryContainer),
+);

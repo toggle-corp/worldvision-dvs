@@ -90,10 +90,6 @@ const requests = {
             setSummaryGroups({ summaryGroups: response });
         },
     },
-    summaryTrendRequest: {
-        url: '/projects-summary-trend/',
-        onMount: true,
-    },
 };
 
 class Dashboard extends PureComponent {
@@ -122,11 +118,6 @@ class Dashboard extends PureComponent {
                         points,
                         siteSettings,
                         summaryGroups,
-                        requests: {
-                            summaryTrendRequest: {
-                                response,
-                            },
-                        },
                     } = this.props;
 
                     const summaryGroupsMap = listToMap(
@@ -136,7 +127,6 @@ class Dashboard extends PureComponent {
                     );
 
                     summaryGroupsMap.overview = {
-                        trend: response || [],
                         summary,
                         projects,
                         name: 'overview',
