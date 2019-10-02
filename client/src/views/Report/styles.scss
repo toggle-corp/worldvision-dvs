@@ -149,6 +149,14 @@
                 &:nth-child(even) {
                     background-color: var(--color-foreground-alt);
                 }
+
+                .table {
+                    flex-grow: 1;
+                }
+
+                .bold {
+                    font-weight: var(--font-weight-bold);
+                }
             }
         }
 

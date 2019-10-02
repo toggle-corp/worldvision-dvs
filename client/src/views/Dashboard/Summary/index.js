@@ -14,6 +14,8 @@ import KeyValue from '#components/KeyValue';
 import ParticipationItem from '#components/ParticipationItem';
 import DonutChart from '#rscz/DonutChart';
 
+import { transformSoi } from '#utils/transform';
+
 import styles from './styles.scss';
 
 const propTypes = {
@@ -77,8 +79,6 @@ export default class Summary extends PureComponent {
             || key === '@HealthNotSatisfactory'
             || key === 'pendingOverDue';
 
-        const isSoi = key === 'soi';
-
         return ({
             title: data.label,
             value: data.value,
@@ -90,14 +90,19 @@ export default class Summary extends PureComponent {
                 isWarning && styles.warning,
                 isDanger && styles.danger,
             ),
-            titleClassName: _cs(isSoi && styles.bold),
         });
     }
 
-    tableParams = (key, data) => ({
-        title: data.label,
-        value: data.value,
-    });
+    tableParams = (key, data) => {
+        const isSoi = key === 'soi';
+
+        return ({
+            title: data.label,
+            value: data.value,
+            colorOnlyNumber: true,
+            titleClassName: _cs(isSoi && styles.bold),
+        });
+    };
 
     childFamilyGroupParams = groupKey => ({
         children: groupKey.split('_').join(' '),
@@ -111,7 +116,7 @@ export default class Summary extends PureComponent {
         participation: data.participation,
     });
 
-    getPercentSoi = memoize(getPercent);
+    getSoi = memoize(transformSoi);
 
     getPercentChild = memoize(getPercent);
 
@@ -185,7 +190,7 @@ export default class Summary extends PureComponent {
 
         const percentChild = this.getPercentChild(childMonitoring);
         const percentCorr = this.getPercentCorr(correspondences);
-        const percentSoi = this.getPercentSoi(soi);
+        const soiValues = this.getSoi(soi);
         const percentHealth = this.getPercentHealth(healthNutrition);
         const childMonitoringVizData = this.getChildMonitoringDataForViz(childMonitoring);
         const childFamily = this.getChildFamilyGrouped(childFamilyParticipation);
@@ -300,8 +305,8 @@ export default class Summary extends PureComponent {
                             />
                             <ListView
                                 className={styles.table}
-                                data={percentSoi}
-                                rendererParams={this.percentTableParams}
+                                data={soiValues}
+                                rendererParams={this.tableParams}
                                 keySelector={Summary.tableKeySelector}
                                 renderer={KeyValue}
                             />

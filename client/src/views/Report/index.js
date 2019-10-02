@@ -6,8 +6,10 @@ import memoize from 'memoize-one';
 import { connect } from 'react-redux';
 import {
     _cs,
+    isFalsy,
     mapToList,
     camelToNormal,
+    compareDate,
 } from '@togglecorp/fujs';
 
 import {
@@ -78,6 +80,41 @@ const requests = {
             setReport({ projectId, report: response });
         },
     },
+    soiGetRequest: {
+        url: '/projects-soi/',
+        query: ({ props: { projectId } }) => ({ project: projectId }),
+        onMount: true,
+    },
+};
+
+const transformSoi = (soiData) => {
+    if (isFalsy(soiData)) {
+        return [];
+    }
+
+    const sortedSoi = soiData.sort((a, b) => {
+        const { date: aDate } = a;
+        const { date: bDate } = b;
+
+        return compareDate(new Date(bDate), new Date(aDate));
+    });
+
+    const { 0: soi = {} } = sortedSoi;
+    const {
+        totalClosed,
+        closedOn,
+    } = soi;
+
+    return ([
+        {
+            label: 'Total Closed',
+            value: totalClosed,
+        },
+        {
+            label: 'Closed On',
+            value: closedOn,
+        },
+    ]);
 };
 
 class Report extends PureComponent {
@@ -95,7 +132,7 @@ class Report extends PureComponent {
     static valueSelector = d => d.value;
 
     static labelSelector = (d) => {
-        if (d.name !== 'RC Supply') {
+        if (d.name !== 'RC Supm1ply') {
             return d.name;
         }
         return null;
@@ -121,6 +158,10 @@ class Report extends PureComponent {
     static educationGroupKeySelector = d => d.groupKey;
 
     static correspondenceKeySelector = d => d.typeName;
+
+    static soiKeySelector = d => d.label;
+
+    getSoi = memoize(transformSoi);
 
     tableRenderParams = (key, data) => {
         if (key === '@cms') {
@@ -157,6 +198,13 @@ class Report extends PureComponent {
             ),
         });
     };
+
+    soiParams = (key, data) => ({
+        title: data.label,
+        value: data.value,
+        colorOnlyNumber: true,
+        titleClassName: styles.bold,
+    });
 
     educationGroupRendererParams = (groupKey) => {
         const children = groupKey === '@PrimarySchoolAge'
@@ -317,6 +365,9 @@ class Report extends PureComponent {
                 reportGetRequest: {
                     pending: reportGetPending,
                 },
+                soiGetRequest: {
+                    response: soi,
+                },
             },
         } = this.props;
 
@@ -347,6 +398,7 @@ class Report extends PureComponent {
             } = {},
         } = report;
 
+        const soiValues = this.getSoi(soi);
         const remoteChildren = this.getSortedRemoteChildren(rcData);
 
         const {
@@ -476,6 +528,16 @@ class Report extends PureComponent {
                         </div>
                         <div className={styles.item}>
                             <h3>RC Distribution Based on Language & People Group</h3>
+                        </div>
+                        <div className={styles.item}>
+                            <h3>Service Service Operations Indicators Summary Report</h3>
+                            <ListView
+                                className={styles.table}
+                                data={soiValues}
+                                rendererParams={this.soiParams}
+                                keySelector={Report.soiKeySelector}
+                                renderer={KeyValue}
+                            />
                         </div>
                     </div>
                 </div>
