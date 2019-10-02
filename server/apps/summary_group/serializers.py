@@ -213,7 +213,7 @@ def get_projects_summary(qs, group_by_date=False):
         'child_monitoring': normalize(child_monitoring_fields, child_monitoring),
         'health_nutrition': normalize(health_nutrition_fields, health_nutrition),
         'correspondences': normalize(correspondences_fields, correspondences),
-        'education': map_normalize(education_fields, education),
+        'education': normalize(education_fields, education),
         'rc': normalize(rc_fields, rc),
         'soi': normalize(soi_fields, soi),
         'presence_and_participation': normalize(presenceandparticipation_fields, presenceandparticipation),
