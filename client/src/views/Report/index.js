@@ -29,6 +29,7 @@ import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import KeyValue from '#components/KeyValue';
+import GaugeChart from '#rscz/GaugeChart';
 
 import CorrespondenceItem from './CorrespondenceItem';
 import ReportMap from './ReportMap';
@@ -398,8 +399,11 @@ class Report extends PureComponent {
             } = {},
         } = report;
 
-        const soiValues = this.getSoi(soi);
         const remoteChildren = this.getSortedRemoteChildren(rcData);
+
+        const soiValues = this.getSoi(soi);
+        const totalSoi = (soiValues.find(s => s.label === 'Total Closed') || {}).value || 0;
+        const closedSoi = (soiValues.find(s => s.label === 'Closed On') || {}).value || 0;
 
         const {
             childMonitoring,
@@ -531,13 +535,22 @@ class Report extends PureComponent {
                         </div>
                         <div className={styles.item}>
                             <h3>Service Service Operations Indicators Summary Report</h3>
-                            <ListView
-                                className={styles.table}
-                                data={soiValues}
-                                rendererParams={this.soiParams}
-                                keySelector={Report.soiKeySelector}
-                                renderer={KeyValue}
-                            />
+                            <div className={styles.tableViz}>
+                                <GaugeChart
+                                    className={styles.viz}
+                                    noOfSections={2}
+                                    minValue={0}
+                                    maxValue={totalSoi}
+                                    currentValue={closedSoi}
+                                />
+                                <ListView
+                                    className={styles.table}
+                                    data={soiValues}
+                                    rendererParams={this.soiParams}
+                                    keySelector={Report.soiKeySelector}
+                                    renderer={KeyValue}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

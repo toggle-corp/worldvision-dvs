@@ -13,6 +13,7 @@ import FormattedDate from '#rscv/FormattedDate';
 import KeyValue from '#components/KeyValue';
 import ParticipationItem from '#components/ParticipationItem';
 import DonutChart from '#rscz/DonutChart';
+import GaugeChart from '#rscz/GaugeChart';
 
 import { transformSoi } from '#utils/transform';
 
@@ -188,6 +189,9 @@ export default class Summary extends PureComponent {
             siteSettings,
         } = this.props;
 
+        const soiTotal = soi.find(s => s.key === 'total_closed').value || 0;
+        const soiClosed = soi.find(s => s.key === 'closed_on').value || 0;
+
         const percentChild = this.getPercentChild(childMonitoring);
         const percentCorr = this.getPercentCorr(correspondences);
         const soiValues = this.getSoi(soi);
@@ -281,6 +285,25 @@ export default class Summary extends PureComponent {
                 <div className={styles.item}>
                     <h3>SOI Index</h3>
                     <div className={styles.itemTableViz}>
+                        <GaugeChart
+                            className={styles.viz}
+                            noOfSections={2}
+                            minValue={0}
+                            maxValue={soiTotal}
+                            currentValue={soiClosed}
+                        />
+                        <ListView
+                            className={styles.table}
+                            data={soiValues}
+                            rendererParams={this.tableParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={KeyValue}
+                        />
+                    </div>
+                </div>
+                <div className={styles.item}>
+                    <h3>Correspondences</h3>
+                    <div className={styles.itemTableViz}>
                         <DonutChart
                             className={styles.viz}
                             data={correspondences}
@@ -294,23 +317,13 @@ export default class Summary extends PureComponent {
                                 '#f44336',
                             ]}
                         />
-                        <div className={styles.table}>
-                            <h3>Correspondences</h3>
-                            <ListView
-                                className={styles.table}
-                                data={percentCorr}
-                                rendererParams={this.percentTableParams}
-                                keySelector={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
-                            <ListView
-                                className={styles.table}
-                                data={soiValues}
-                                rendererParams={this.tableParams}
-                                keySelector={Summary.tableKeySelector}
-                                renderer={KeyValue}
-                            />
-                        </div>
+                        <ListView
+                            className={styles.table}
+                            data={percentCorr}
+                            rendererParams={this.percentTableParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={KeyValue}
+                        />
                     </div>
                 </div>
                 <div className={styles.item}>

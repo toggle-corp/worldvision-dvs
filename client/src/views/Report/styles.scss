@@ -158,6 +158,21 @@
                     font-weight: var(--font-weight-bold);
                 }
             }
+
+            .table-viz {
+                display: flex;
+                align-items: center;
+
+                .table {
+                    align-self: flex-start;
+                    flex-grow: 1;
+                }
+
+                .viz {
+                    margin-left: -var(--spacing-medium);
+                    width: 180px;
+                }
+            }
         }
 
         .upper-container {
