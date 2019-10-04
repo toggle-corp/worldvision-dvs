@@ -43,7 +43,8 @@ const getPercent = (data) => {
         ...d,
     }));
 };
-
+const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
+const sectionPercents = [0.75, 0.1, 0.15];
 const getParticipationKey = p => (p > 3 ? '3+' : String(p));
 
 export default class Summary extends PureComponent {
@@ -181,7 +182,7 @@ export default class Summary extends PureComponent {
                 rc,
                 childMonitoring,
                 correspondences,
-                soi,
+                soi = [],
                 healthNutrition,
                 childFamilyParticipation,
             },
@@ -189,8 +190,8 @@ export default class Summary extends PureComponent {
             siteSettings,
         } = this.props;
 
-        const soiTotal = soi.find(s => s.key === 'total_closed').value || 0;
-        const soiClosed = soi.find(s => s.key === 'closed_on').value || 0;
+        const soiTotal = (soi.find(s => s.key === 'total_closed') || {}).value || 0;
+        const soiClosed = (soi.find(s => s.key === 'closed_on') || {}).value || 0;
 
         const percentChild = this.getPercentChild(childMonitoring);
         const percentCorr = this.getPercentCorr(correspondences);
@@ -287,10 +288,11 @@ export default class Summary extends PureComponent {
                     <div className={styles.itemTableViz}>
                         <GaugeChart
                             className={styles.viz}
-                            noOfSections={2}
+                            sectionPercents={sectionPercents}
                             minValue={0}
                             maxValue={soiTotal}
                             currentValue={soiClosed}
+                            colorScheme={soiColorScheme}
                         />
                         <ListView
                             className={styles.table}

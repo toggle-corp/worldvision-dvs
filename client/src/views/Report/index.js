@@ -42,6 +42,9 @@ import {
 
 import styles from './styles.scss';
 
+const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
+const sectionPercents = [0.75, 0.1, 0.15];
+
 const propTypes = {
     setReport: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
     projectId: PropTypes.number.isRequired, // eslint-disable-line react/no-unused-prop-types
@@ -538,10 +541,11 @@ class Report extends PureComponent {
                             <div className={styles.tableViz}>
                                 <GaugeChart
                                     className={styles.viz}
-                                    noOfSections={2}
+                                    sectionPercents={sectionPercents}
                                     minValue={0}
                                     maxValue={totalSoi}
                                     currentValue={closedSoi}
+                                    colorScheme={soiColorScheme}
                                 />
                                 <ListView
                                     className={styles.table}
