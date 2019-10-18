@@ -34,6 +34,12 @@ const defaultProps = {
     noOfProjects: 0,
 };
 
+const ageKeyMap = {
+    '>=13': 'RC with age equal or greater than 13 years',
+    '<=6': 'RC with age less than or equal to 6 years',
+    '7-12': 'RC with age greater than 6 years and less than 13 years',
+};
+
 const donutColor = ['#41cf76', '#f44336'];
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
 const sectionPercents = [0.75, 0.1, 0.15];
@@ -229,14 +235,14 @@ export default class Summary extends PureComponent {
         ]);
     });
 
-    getEducationInvolvement = (education) => {
+    getEducationInvolvement = memoize((education) => {
         if (isFalsy(education)) {
             return [];
         }
 
         const educated = education.filter(values => (
             values.key === 'PrimaryEducated'
-            || values.key === 'SecondaryEducated'
+                || values.key === 'SecondaryEducated'
         )).reduce((a, b) => ({ ...a, value: a.value + b.value }), {
             value: 0,
             key: 'educated',
@@ -245,7 +251,7 @@ export default class Summary extends PureComponent {
 
         const uneducated = education.filter(values => (
             values.key === '@SecondarySchoolAgeNoEducation'
-            || values.key === '@PrimarySchoolAgeNoEducation'
+                || values.key === '@PrimarySchoolAgeNoEducation'
         )).reduce((a, b) => ({ ...a, value: a.value + b.value }), {
             value: 0,
             key: 'uneducated',
@@ -256,7 +262,37 @@ export default class Summary extends PureComponent {
             educated,
             uneducated,
         ]);
-    }
+    });
+
+    getFemaleRcAge = memoize((data) => {
+        if (isFalsy(data)) {
+            return [];
+        }
+
+        const distribution = data.filter(rc => rc.gender === 'female')
+            .map((value) => {
+                const { ageRange, countSum } = value;
+
+                return { key: ageRange, label: ageKeyMap[ageRange], value: countSum };
+            });
+
+        return distribution;
+    });
+
+    getMaleRcAge = memoize((data) => {
+        if (isFalsy(data)) {
+            return [];
+        }
+
+        const distribution = data.filter(rc => rc.gender === 'male')
+            .map((value) => {
+                const { ageRange, countSum } = value;
+
+                return { key: ageRange, label: ageKeyMap[ageRange], value: countSum };
+            });
+
+        return distribution;
+    });
 
     render() {
         const {
@@ -267,6 +303,7 @@ export default class Summary extends PureComponent {
                 correspondences,
                 education,
                 soi,
+                registerChildByAgeAndGender,
                 healthNutrition,
                 childFamilyParticipation,
             },
@@ -285,6 +322,8 @@ export default class Summary extends PureComponent {
         const childFamily = this.getChildFamilyGrouped(childFamilyParticipation);
         const educationValues = this.getEducation(education);
         const educationInvolvement = this.getEducationInvolvement(educationValues);
+        const femaleRCAgeDistribution = this.getFemaleRcAge(registerChildByAgeAndGender);
+        const maleRCAgeDistribution = this.getMaleRcAge(registerChildByAgeAndGender);
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -442,6 +481,29 @@ export default class Summary extends PureComponent {
                             renderer={ParticipationItem}
                             groupKeySelector={Summary.groupKeySelector}
                             groupRendererClassName={styles.childFamilyGroup}
+                        />
+                    </div>
+                </div>
+                <div className={styles.item}>
+                    <h3> RC Age / Gender Distribution </h3>
+                    <div>
+                        <h3> Female </h3>
+                        <ListView
+                            className={styles.table}
+                            data={femaleRCAgeDistribution}
+                            rendererParams={this.tableParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={KeyValue}
+                        />
+                    </div>
+                    <div>
+                        <h3> Male </h3>
+                        <ListView
+                            className={styles.table}
+                            data={maleRCAgeDistribution}
+                            rendererParams={this.tableParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={KeyValue}
                         />
                     </div>
                 </div>
