@@ -117,6 +117,19 @@ const educationLegendData = [
     },
 ];
 
+const soiLegendData = [
+    {
+        key: 'Total Closed',
+        label: 'Total Closed',
+        color: '#44df96',
+    },
+    {
+        key: 'Closed On',
+        label: 'Closed On',
+        color: '#c25be2',
+    },
+];
+
 const legendKeySelector = d => d.key;
 const legendLabelSelector = d => d.label;
 const legendColorSelector = d => d.color;
@@ -260,6 +273,22 @@ class TrendSummary extends React.PureComponent {
         });
     });
 
+    getSoiData = memoize((soi) => {
+        const values = getChartData(soi);
+
+        return ({
+            values,
+            columns: [
+                'Closed On',
+                'Total Closed',
+            ],
+            colors: {
+                'Total Closed': '#44df96',
+                'Closed On': '#c25be2',
+            },
+        });
+    });
+
     render() {
         const {
             id,
@@ -287,6 +316,7 @@ class TrendSummary extends React.PureComponent {
             healthNutrition = [],
             childMonitoring = [],
             correspondences = [],
+            soi = [],
             education = [],
         } = response;
 
@@ -295,6 +325,7 @@ class TrendSummary extends React.PureComponent {
         const childMonitoringData = this.getChildMonitoringData(childMonitoring);
         const correspondenceData = this.getCorrespondenceData(correspondences);
         const educationData = this.getEducationData(education);
+        const soiData = this.getSoiData(soi);
 
         return (
             <div className={_cs(styles.trend, className)}>
@@ -365,6 +396,20 @@ class TrendSummary extends React.PureComponent {
                     <Legend
                         className={styles.legend}
                         data={educationLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
+                </div>
+                <div className={_cs(styles.item)}>
+                    <h3> SOI Trend </h3>
+                    <GroupedBarChart
+                        data={soiData}
+                        groupSelector={groupSelector}
+                    />
+                    <Legend
+                        className={styles.legend}
+                        data={soiLegendData}
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
