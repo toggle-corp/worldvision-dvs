@@ -113,8 +113,10 @@ def get_projects_summary(qs, group_by_date=False):
     correspondences_fields = ['pendingCurrent', 'pendingOverDue']
     education_fields = [
         '@PrimarySchoolAge', '@SecondarySchoolAge',
-        '@PrimarySchoolAgeNonFormal', '@PrimarySchoolAgeNoEducation',
-        '@SecondarySchoolAgeNonFormal', '@SecondarySchoolAgeVocational', '@SecondarySchoolAgeNoEducation',
+        '@PrimarySchoolAgeFormal', '@PrimarySchoolAgeNonFormal', '@PrimarySchoolAgeNoEducation',
+
+        '@SecondarySchoolAgeFormal', '@SecondarySchoolAgeNonFormal', '@SecondarySchoolAgeVocational',
+        '@SecondarySchoolAgeNoEducation',
     ]
     rc_fields = [
         'planned', 'totalRc', 'sponsored', 'available', 'hold',

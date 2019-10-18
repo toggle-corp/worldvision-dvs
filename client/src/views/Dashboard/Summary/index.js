@@ -6,6 +6,7 @@ import {
     isFalsy,
     listToGroupList,
     mapToList,
+    listToMap,
 } from '@togglecorp/fujs';
 
 import ListView from '#rscv/List/ListView';
@@ -33,6 +34,10 @@ const defaultProps = {
     noOfProjects: 0,
 };
 
+const donutColor = ['#41cf76', '#f44336'];
+const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
+const sectionPercents = [0.75, 0.1, 0.15];
+
 const getPercent = (data) => {
     if (isFalsy(data)) {
         return [];
@@ -43,8 +48,6 @@ const getPercent = (data) => {
         ...d,
     }));
 };
-const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
-const sectionPercents = [0.75, 0.1, 0.15];
 const getParticipationKey = p => (p > 3 ? '3+' : String(p));
 
 export default class Summary extends PureComponent {
@@ -175,6 +178,86 @@ export default class Summary extends PureComponent {
         );
     })
 
+    getEducation = memoize((education) => {
+        if (isFalsy(education)) {
+            return [];
+        }
+
+        const educationMap = listToMap(
+            education,
+            d => d.key,
+            d => d,
+        );
+
+        const primary = {
+            key: '@PrimarySchoolAge',
+            value: educationMap['@PrimarySchoolAge'].value,
+            label: 'RC of Primary School Age',
+        };
+
+        const secondary = {
+            key: '@SecondarySchoolAge',
+            value: educationMap['@SecondarySchoolAge'].value,
+            label: 'RC of Secondary School Age',
+        };
+
+        const primaryEducated = {
+            key: 'PrimaryEducated',
+            value: educationMap['@PrimarySchoolAgeFormal'].value || 0
+                + educationMap['@PrimarySchoolAgeNonFormal'].value || 0,
+            label: 'Number of Primary School Age RC Involved in Education',
+        };
+
+        const primaryUneducated = educationMap['@PrimarySchoolAgeNoEducation'];
+
+        const secondaryEducated = {
+            key: 'SecondaryEducated',
+            value: educationMap['@SecondarySchoolAgeFormal'].value || 0
+                + educationMap['@SecondarySchoolAgeNonFormal'].value || 0
+                + educationMap['@SecondarySchoolAgeVocational'].value || 0,
+            label: 'Number of Secondary School Age RC Involved in Education',
+        };
+        const secondaryUneducated = educationMap['@SecondarySchoolAgeNoEducation'];
+
+        return ([
+            primary,
+            secondary,
+            primaryEducated,
+            primaryUneducated,
+            secondaryEducated,
+            secondaryUneducated,
+        ]);
+    });
+
+    getEducationInvolvement = (education) => {
+        if (isFalsy(education)) {
+            return [];
+        }
+
+        const educated = education.filter(values => (
+            values.key === 'PrimaryEducated'
+            || values.key === 'SecondaryEducated'
+        )).reduce((a, b) => ({ ...a, value: a.value + b.value }), {
+            value: 0,
+            key: 'educated',
+            label: 'Number of RC involved in education',
+        });
+
+        const uneducated = education.filter(values => (
+            values.key === '@SecondarySchoolAgeNoEducation'
+            || values.key === '@PrimarySchoolAgeNoEducation'
+        )).reduce((a, b) => ({ ...a, value: a.value + b.value }), {
+            value: 0,
+            key: 'uneducated',
+            label: 'Number of RC not involved in education',
+        });
+
+        return ([
+            educated,
+            uneducated,
+        ]);
+    }
+
     render() {
         const {
             className,
@@ -182,7 +265,8 @@ export default class Summary extends PureComponent {
                 rc,
                 childMonitoring,
                 correspondences,
-                soi = [],
+                education,
+                soi,
                 healthNutrition,
                 childFamilyParticipation,
             },
@@ -190,8 +274,8 @@ export default class Summary extends PureComponent {
             siteSettings,
         } = this.props;
 
-        const soiTotal = (soi.find(s => s.key === 'total_closed') || {}).value || 0;
-        const soiClosed = (soi.find(s => s.key === 'closed_on') || {}).value || 0;
+        const soiTotal = soi ? (soi.find(s => s.key === 'total_closed') || {}).value || 0 : 0;
+        const soiClosed = soi ? (soi.find(s => s.key === 'closed_on') || {}).value || 0 : 0;
 
         const percentChild = this.getPercentChild(childMonitoring);
         const percentCorr = this.getPercentCorr(correspondences);
@@ -199,6 +283,8 @@ export default class Summary extends PureComponent {
         const percentHealth = this.getPercentHealth(healthNutrition);
         const childMonitoringVizData = this.getChildMonitoringDataForViz(childMonitoring);
         const childFamily = this.getChildFamilyGrouped(childFamilyParticipation);
+        const educationValues = this.getEducation(education);
+        const educationInvolvement = this.getEducationInvolvement(educationValues);
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -243,15 +329,34 @@ export default class Summary extends PureComponent {
                             valueSelector={Summary.valueSelector}
                             labelSelector={Summary.labelSelector}
                             labelModifier={Summary.labelModifierSelector}
-                            colorScheme={[
-                                '#41cf76',
-                                '#f44336',
-                            ]}
+                            colorScheme={donutColor}
                         />
                         <ListView
                             className={styles.table}
                             data={percentHealth}
                             rendererParams={this.percentTableParams}
+                            keySelector={Summary.tableKeySelector}
+                            renderer={KeyValue}
+                        />
+                    </div>
+                </div>
+                <div className={styles.item}>
+                    <h3>Education</h3>
+                    <div className={styles.itemTableViz}>
+                        <DonutChart
+                            className={styles.viz}
+                            data={educationInvolvement}
+                            sideLengthRatio={0.2}
+                            hideLabel
+                            valueSelector={Summary.valueSelector}
+                            labelSelector={Summary.labelSelector}
+                            labelModifier={Summary.labelModifierSelector}
+                            colorScheme={donutColor}
+                        />
+                        <ListView
+                            className={styles.table}
+                            data={educationValues}
+                            rendererParams={this.tableParams}
                             keySelector={Summary.tableKeySelector}
                             renderer={KeyValue}
                         />
@@ -314,10 +419,7 @@ export default class Summary extends PureComponent {
                             labelSelector={Summary.labelSelector}
                             sideLengthRatio={0.2}
                             labelModifier={Summary.labelModifierSelector}
-                            colorScheme={[
-                                '#41cf76',
-                                '#f44336',
-                            ]}
+                            colorScheme={donutColor}
                         />
                         <ListView
                             className={styles.table}

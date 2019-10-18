@@ -1,0 +1,20 @@
+.trend {
+    display: flex;
+    flex-direction: column;
+    .item {
+        display: flex;
+        flex-direction: column;
+
+        h3 {
+            padding: var(--spacing-small) var(--spacing-medium);
+            text-transform: capitalize;
+            color: var(--color-accent);
+            font-weight: var(--font-weight-bold);
+        }
+    }
+
+    .legend {
+        display: flex;
+        justify-content: center;
+    }
+}
