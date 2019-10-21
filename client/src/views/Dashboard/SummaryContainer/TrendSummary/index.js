@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 import {
+    _cs,
     mapToList,
     listToGroupList,
-    _cs,
 } from '@togglecorp/fujs';
 
 import {
@@ -155,7 +155,6 @@ const getChartData = (rawData) => {
 
     return values;
 };
-
 const transformChildMonitoring = (values) => {
     const transformedValues = values.map((value) => {
         const {
@@ -279,8 +278,8 @@ class TrendSummary extends React.PureComponent {
         return ({
             values,
             columns: [
-                'Closed On',
                 'Total Closed',
+                'Closed On',
             ],
             colors: {
                 'Total Closed': '#44df96',

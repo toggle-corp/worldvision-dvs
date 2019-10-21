@@ -30,6 +30,8 @@ import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import KeyValue from '#components/KeyValue';
 import GaugeChart from '#rscz/GaugeChart';
+import GroupedBarChart from '#rscz/GroupedBarChart';
+import Legend from '#rscz/Legend';
 
 import CorrespondenceItem from './CorrespondenceItem';
 import ReportMap from './ReportMap';
@@ -44,6 +46,22 @@ import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
 const sectionPercents = [0.75, 0.1, 0.15];
+const soiLegendData = [
+    {
+        key: 'Total Closed',
+        label: 'Total Closed',
+        color: '#41cf76',
+    },
+    {
+        key: 'Closed On',
+        label: 'Closed On',
+        color: '#ef8c00',
+    },
+];
+const legendKeySelector = d => d.key;
+const legendLabelSelector = d => d.label;
+const legendColorSelector = d => d.color;
+const soiGroupSelector = d => d.date;
 
 const propTypes = {
     setReport: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
@@ -166,6 +184,29 @@ class Report extends PureComponent {
     static soiKeySelector = d => d.label;
 
     getSoi = memoize(transformSoi);
+
+    getSoiTrendData = memoize((soi = []) => {
+        const values = soi.map((value) => {
+            const { date, totalClosed, closedOn } = value;
+            return {
+                date,
+                'Total Closed': totalClosed,
+                'Closed On': closedOn,
+            };
+        });
+
+        return ({
+            values,
+            columns: [
+                'Total Closed',
+                'Closed On',
+            ],
+            colors: {
+                'Total Closed': '#41cf76',
+                'Closed On': '#ef8c00',
+            },
+        });
+    });
 
     tableRenderParams = (key, data) => {
         if (key === '@cms') {
@@ -416,6 +457,8 @@ class Report extends PureComponent {
         const healthDonut = this.getHealthDonutData(healthNutrition);
         const correspondences = this.getCorrespondenceData(correspondencesFromProps);
         const flatEducationData = this.getFlatEducationData(education);
+        const soiTrendData = this.getSoiTrendData(soi);
+        console.warn('soiTrendData', soiTrendData);
 
         return (
             <div className={styles.region}>
@@ -538,7 +581,7 @@ class Report extends PureComponent {
                         </div>
                         <div className={styles.item}>
                             <h3>Service Service Operations Indicators Summary Report</h3>
-                            <div className={styles.tableViz}>
+                            <div className={styles.vizGroup}>
                                 <GaugeChart
                                     className={styles.viz}
                                     sectionPercents={sectionPercents}
@@ -553,6 +596,18 @@ class Report extends PureComponent {
                                     rendererParams={this.soiParams}
                                     keySelector={Report.soiKeySelector}
                                     renderer={KeyValue}
+                                />
+                                <h3> SOI Trend </h3>
+                                <GroupedBarChart
+                                    className={styles.viz}
+                                    data={soiTrendData}
+                                    groupSelector={soiGroupSelector}
+                                />
+                                <Legend
+                                    data={soiLegendData}
+                                    keySelector={legendKeySelector}
+                                    labelSelector={legendLabelSelector}
+                                    colorSelector={legendColorSelector}
                                 />
                             </div>
                         </div>

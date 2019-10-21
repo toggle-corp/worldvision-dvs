@@ -6,6 +6,7 @@ import {
     isFalsy,
     listToGroupList,
     mapToList,
+    isDefined,
     listToMap,
 } from '@togglecorp/fujs';
 
@@ -184,6 +185,10 @@ export default class Summary extends PureComponent {
         );
     })
 
+    getValueFromMap = (map, key) => (
+        (isDefined(map) && isDefined(map[key])) ? map[key].value : undefined
+    );
+
     getEducation = memoize((education) => {
         if (isFalsy(education)) {
             return [];
@@ -197,20 +202,20 @@ export default class Summary extends PureComponent {
 
         const primary = {
             key: '@PrimarySchoolAge',
-            value: educationMap['@PrimarySchoolAge'].value,
+            value: this.getValueFromMap(educationMap, '@PrimarySchoolAge'),
             label: 'RC of Primary School Age',
         };
 
         const secondary = {
             key: '@SecondarySchoolAge',
-            value: educationMap['@SecondarySchoolAge'].value,
+            value: this.getValueFromMap(educationMap, '@SecondarySchoolAge'),
             label: 'RC of Secondary School Age',
         };
 
         const primaryEducated = {
             key: 'PrimaryEducated',
-            value: educationMap['@PrimarySchoolAgeFormal'].value || 0
-                + educationMap['@PrimarySchoolAgeNonFormal'].value || 0,
+            value: this.getValueFromMap(educationMap, '@PrimarySchoolAgeFormal') || 0
+                + this.getValueFromMap(educationMap, '@PrimarySchoolAgeNonFormal') || 0,
             label: 'Number of Primary School Age RC Involved in Education',
         };
 
@@ -218,9 +223,9 @@ export default class Summary extends PureComponent {
 
         const secondaryEducated = {
             key: 'SecondaryEducated',
-            value: educationMap['@SecondarySchoolAgeFormal'].value || 0
-                + educationMap['@SecondarySchoolAgeNonFormal'].value || 0
-                + educationMap['@SecondarySchoolAgeVocational'].value || 0,
+            value: this.getValueFromMap(educationMap, '@SecondarySchoolAgeFormal') || 0
+                + this.getValueFromMap(educationMap, '@SecondarySchoolAgeNonFormal') || 0
+                + this.getValueFromMap(educationMap, '@SecondarySchoolAgeVocational') || 0,
             label: 'Number of Secondary School Age RC Involved in Education',
         };
         const secondaryUneducated = educationMap['@SecondarySchoolAgeNoEducation'];

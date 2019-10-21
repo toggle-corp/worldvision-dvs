@@ -1,6 +1,8 @@
 .trend {
     display: flex;
     flex-direction: column;
+    overflow-y: auto;
+
     .item {
         display: flex;
         flex-direction: column;

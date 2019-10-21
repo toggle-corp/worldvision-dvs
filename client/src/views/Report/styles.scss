@@ -173,6 +173,27 @@
                     width: 180px;
                 }
             }
+
+            .viz-group {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+
+                h3 {
+                    padding-top: var(--spacing-extra-large);
+                    text-align: center;
+                }
+
+                .viz {
+                    flex-grow: 1;
+                    margin-left: -var(--spacing-medium);
+                }
+
+                .table {
+                    align-self: flex-start;
+                }
+            }
         }
 
         .upper-container {
