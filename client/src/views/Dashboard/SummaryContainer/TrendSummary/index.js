@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
 import {
+    _cs,
     mapToList,
     listToGroupList,
-    _cs,
 } from '@togglecorp/fujs';
 
 import {
@@ -13,6 +13,7 @@ import {
 } from '#request';
 
 import GroupedBarChart from '#rscz/GroupedBarChart';
+import Legend from '#rscz/Legend';
 
 import styles from './styles.scss';
 
@@ -34,11 +35,104 @@ const requests = {
         onMount: true,
     },
     summaryGroupTrendRequest: {
+        // FIXME do not send request if id is undefined
         url: ({ props: { id } }) => `/summary-groups/${id}/trend/`,
         onMount: true,
         onPropsChanged: ['id', 'name'],
     },
 };
+
+const rcLegendData = [
+    {
+        key: 'Planned RC',
+        label: 'Planned RC',
+        color: '#44df96',
+    },
+    {
+        key: 'Actual RC',
+        label: 'Actual RC',
+        color: '#8c3dc3',
+    },
+    {
+        key: 'Sponsored',
+        label: 'Sponsored RC',
+        color: '#ff6641',
+    },
+    {
+        key: 'Available',
+        label: 'Available RC',
+        color: '#0082de',
+    },
+];
+
+const childMonitoringLegendData = [
+    {
+        key: 'Not Sighted Less than 90 Days',
+        label: 'Not Sighted Less than 90 Days',
+        color: '#44df96',
+    },
+    {
+        key: 'Not Sighted More than 90 Days',
+        label: 'Not Sighted More than 90 Days',
+        color: '#c25be2',
+    },
+];
+
+const healthNutritionLegendData = [
+    {
+        key: 'Health Satisfactory',
+        label: 'Health Satisfactory',
+        color: '#ff8042',
+    },
+    {
+        key: 'Health Not Satisfactory',
+        label: 'Health Not Satisfactory',
+        color: '#027efd',
+    },
+];
+
+const correspondenceLegendData = [
+    {
+        key: 'Pending Current',
+        label: 'Pending Current',
+        color: '#44df96',
+    },
+    {
+        key: 'Pending Overdue',
+        label: 'Pending Overdue',
+        color: '#c25be2',
+    },
+];
+
+const educationLegendData = [
+    {
+        key: 'Involved in education',
+        label: 'Involved in education',
+        color: '#ff8042',
+    },
+    {
+        key: 'Not involved in education',
+        label: 'Not involved in education',
+        color: '#027efd',
+    },
+];
+
+const soiLegendData = [
+    {
+        key: 'Total Closed',
+        label: 'Total Closed',
+        color: '#44df96',
+    },
+    {
+        key: 'Closed On',
+        label: 'Closed On',
+        color: '#c25be2',
+    },
+];
+
+const legendKeySelector = d => d.key;
+const legendLabelSelector = d => d.label;
+const legendColorSelector = d => d.color;
 
 const groupByDate = data => listToGroupList(
     data,
@@ -61,7 +155,6 @@ const getChartData = (rawData) => {
 
     return values;
 };
-
 const transformChildMonitoring = (values) => {
     const transformedValues = values.map((value) => {
         const {
@@ -112,6 +205,12 @@ class TrendSummary extends React.PureComponent {
         return ({
             values,
             columns: ['Planned RC', 'Actual RC', 'Sponsored', 'Available'],
+            colors: {
+                'Planned RC': '#44df96',
+                'Actual RC': '#8c3dc3',
+                Sponsored: '#ff6641',
+                Available: '#0082de',
+            },
         });
     });
 
@@ -121,6 +220,10 @@ class TrendSummary extends React.PureComponent {
         return ({
             values,
             columns: ['Health Satisfactory', 'Health Not Satisfactory'],
+            colors: {
+                'Health Satisfactory': '#ff8042',
+                'Health Not Satisfactory': '#027efd',
+            },
         });
     });
 
@@ -133,6 +236,10 @@ class TrendSummary extends React.PureComponent {
                 'Not Sighted Less than 90 Days',
                 'Not Sighted More than 90 Days',
             ],
+            colors: {
+                'Not Sighted Less than 90 Days': '#44df96',
+                'Not Sighted More than 90 Days': '#c25be2',
+            },
         });
     });
 
@@ -142,6 +249,10 @@ class TrendSummary extends React.PureComponent {
         return ({
             values,
             columns: ['Pending Current', 'Pending Overdue'],
+            colors: {
+                'Pending Current': '#44df96',
+                'Pending Overdue': '#c25be2',
+            },
         });
     });
 
@@ -154,6 +265,26 @@ class TrendSummary extends React.PureComponent {
                 'Involved in education',
                 'Not involved in education',
             ],
+            colors: {
+                'Involved in education': '#ff8042',
+                'Not involved in education': '#027efd',
+            },
+        });
+    });
+
+    getSoiData = memoize((soi) => {
+        const values = getChartData(soi);
+
+        return ({
+            values,
+            columns: [
+                'Total Closed',
+                'Closed On',
+            ],
+            colors: {
+                'Total Closed': '#44df96',
+                'Closed On': '#c25be2',
+            },
         });
     });
 
@@ -184,6 +315,7 @@ class TrendSummary extends React.PureComponent {
             healthNutrition = [],
             childMonitoring = [],
             correspondences = [],
+            soi = [],
             education = [],
         } = response;
 
@@ -192,44 +324,94 @@ class TrendSummary extends React.PureComponent {
         const childMonitoringData = this.getChildMonitoringData(childMonitoring);
         const correspondenceData = this.getCorrespondenceData(correspondences);
         const educationData = this.getEducationData(education);
+        const soiData = this.getSoiData(soi);
 
         return (
             <div className={_cs(styles.trend, className)}>
-                <div className={_cs(styles.rcTrend)}>
+                <div className={_cs(styles.item)}>
                     <h3> RC Supply Trend </h3>
                     <GroupedBarChart
                         data={rcData}
                         groupSelector={groupSelector}
                         lineDataSelector={rcLineSelector}
                     />
+                    <Legend
+                        className={styles.legend}
+                        data={rcLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
                 </div>
-                <div className={_cs(styles.childMonitoring)}>
+                <div className={_cs(styles.item)}>
                     <h3> Child Monitoring Trend </h3>
                     <GroupedBarChart
                         data={childMonitoringData}
                         groupSelector={groupSelector}
                         lineDataSelector={childMonitoringLineSelector}
                     />
+                    <Legend
+                        className={styles.legend}
+                        data={childMonitoringLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
                 </div>
-                <div className={_cs(styles.healthNutrition)}>
+                <div className={_cs(styles.item)}>
                     <h3> Health Nutrition Trend </h3>
                     <GroupedBarChart
                         data={healthData}
                         groupSelector={groupSelector}
                     />
+                    <Legend
+                        className={styles.legend}
+                        data={healthNutritionLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
                 </div>
-                <div className={_cs(styles.correspondence)}>
+                <div className={_cs(styles.item)}>
                     <h3> Correspondence Trend </h3>
                     <GroupedBarChart
                         data={correspondenceData}
                         groupSelector={groupSelector}
                     />
+                    <Legend
+                        className={styles.legend}
+                        data={correspondenceLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
                 </div>
-                <div className={_cs(styles.education)}>
+                <div className={_cs(styles.item)}>
                     <h3> Education Trend </h3>
                     <GroupedBarChart
                         data={educationData}
                         groupSelector={groupSelector}
+                    />
+                    <Legend
+                        className={styles.legend}
+                        data={educationLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
+                </div>
+                <div className={_cs(styles.item)}>
+                    <h3> SOI Trend </h3>
+                    <GroupedBarChart
+                        data={soiData}
+                        groupSelector={groupSelector}
+                    />
+                    <Legend
+                        className={styles.legend}
+                        data={soiLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
                     />
                 </div>
             </div>

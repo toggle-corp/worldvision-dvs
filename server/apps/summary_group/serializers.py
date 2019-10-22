@@ -113,8 +113,10 @@ def get_projects_summary(qs, group_by_date=False):
     correspondences_fields = ['pendingCurrent', 'pendingOverDue']
     education_fields = [
         '@PrimarySchoolAge', '@SecondarySchoolAge',
-        '@PrimarySchoolAgeNonFormal', '@PrimarySchoolAgeNoEducation',
-        '@SecondarySchoolAgeNonFormal', '@SecondarySchoolAgeVocational', '@SecondarySchoolAgeNoEducation',
+        '@PrimarySchoolAgeFormal', '@PrimarySchoolAgeNonFormal', '@PrimarySchoolAgeNoEducation',
+
+        '@SecondarySchoolAgeFormal', '@SecondarySchoolAgeNonFormal', '@SecondarySchoolAgeVocational',
+        '@SecondarySchoolAgeNoEducation',
     ]
     rc_fields = [
         'planned', 'totalRc', 'sponsored', 'available', 'hold',
@@ -138,9 +140,9 @@ def get_projects_summary(qs, group_by_date=False):
     )
 
     for project in projects:
-        reports = project.reports.all()[:1 if group_by_date else None]
-        psois = project.projectsoi_set.all()[:1 if group_by_date else None]
-        ppresenceandparticipations = project.presenceandparticipation_set.all()[:1 if group_by_date else None]
+        reports = project.reports.all()[:None if group_by_date else 1]
+        psois = project.projectsoi_set.all()[:None if group_by_date else 1]
+        ppresenceandparticipations = project.presenceandparticipation_set.all()[:None if group_by_date else 1]
 
         for report in reports:
             _get_report_data(

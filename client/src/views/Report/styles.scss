@@ -149,6 +149,50 @@
                 &:nth-child(even) {
                     background-color: var(--color-foreground-alt);
                 }
+
+                .table {
+                    flex-grow: 1;
+                }
+
+                .bold {
+                    font-weight: var(--font-weight-bold);
+                }
+            }
+
+            .table-viz {
+                display: flex;
+                align-items: center;
+
+                .table {
+                    align-self: flex-start;
+                    flex-grow: 1;
+                }
+
+                .viz {
+                    margin-left: -var(--spacing-medium);
+                    width: 180px;
+                }
+            }
+
+            .viz-group {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+
+                h3 {
+                    padding-top: var(--spacing-extra-large);
+                    text-align: center;
+                }
+
+                .viz {
+                    flex-grow: 1;
+                    margin-left: -var(--spacing-medium);
+                }
+
+                .table {
+                    align-self: flex-start;
+                }
             }
         }
 
