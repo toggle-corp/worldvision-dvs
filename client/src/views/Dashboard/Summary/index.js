@@ -9,7 +9,7 @@ import {
     isDefined,
     listToMap,
 } from '@togglecorp/fujs';
-
+import Legend from '#rscz/Legend';
 import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
 import KeyValue from '#components/KeyValue';
@@ -36,10 +36,40 @@ const defaultProps = {
 };
 
 const ageKeyMap = {
-    '>=13': 'RC with age equal or greater than 13 years',
-    '<=6': 'RC with age less than or equal to 6 years',
-    '7-12': 'RC with age greater than 6 years and less than 13 years',
+    '<=6': {
+        key: 1,
+        label: '0 - 6',
+    },
+    '7-12': {
+        key: 2,
+        label: '7 - 12',
+    },
+    '>=13': {
+        key: 3,
+        label: '13+',
+    },
 };
+
+const soiLegendData = [
+    {
+        key: 1,
+        label: '>=85%',
+        color: '#81c784',
+    },
+    {
+        key: 2,
+        label: '75% - 85%',
+        color: '#fff176',
+    },
+    {
+        key: 3,
+        label: '<75%',
+        color: '#ef5350',
+    },
+];
+const legendKeySelector = d => d.key;
+const legendLabelSelector = d => d.label;
+const legendColorSelector = d => d.color;
 
 const donutColor = ['#41cf76', '#f44336'];
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
@@ -55,7 +85,27 @@ const getPercent = (data) => {
         ...d,
     }));
 };
-const getParticipationKey = p => (p > 3 ? '3+' : String(p));
+const getParticipationKey = p => (p > 3 ? '4+' : String(p));
+
+const getAgeDistribution = (data) => {
+    const distribution = data.map((value) => {
+        const { ageRange, countSum } = value;
+        const { key, label } = ageKeyMap[ageRange];
+
+        return { key, label, value: countSum };
+    });
+
+    const sorted = [
+        ...distribution,
+        {
+            key: 4,
+            label: 'Total',
+            value: distribution.reduce((a, b) => a + b.value, 0),
+        },
+    ].sort((a, b) => a.key - b.key);
+
+    return sorted;
+};
 
 export default class Summary extends PureComponent {
     static propTypes = propTypes;
@@ -107,10 +157,14 @@ export default class Summary extends PureComponent {
 
     tableParams = (key, data) => {
         const isSoi = key === 'soi';
+        const isPercent = key === 'percent';
 
         return ({
             title: data.label,
             value: data.value,
+            percent: data.value,
+            isPercent,
+            showValue: !isPercent,
             colorOnlyNumber: true,
             titleClassName: _cs(isSoi && styles.bold),
         });
@@ -131,8 +185,6 @@ export default class Summary extends PureComponent {
     getSoi = memoize(transformSoi);
 
     getPercentChild = memoize(getPercent);
-
-    getPercentCorr = memoize(getPercent);
 
     getPercentHealth = memoize(getPercent);
 
@@ -274,14 +326,8 @@ export default class Summary extends PureComponent {
             return [];
         }
 
-        const distribution = data.filter(rc => rc.gender === 'female')
-            .map((value) => {
-                const { ageRange, countSum } = value;
-
-                return { key: ageRange, label: ageKeyMap[ageRange], value: countSum };
-            });
-
-        return distribution;
+        const female = data.filter(rc => rc.gender === 'female');
+        return getAgeDistribution(female);
     });
 
     getMaleRcAge = memoize((data) => {
@@ -289,23 +335,17 @@ export default class Summary extends PureComponent {
             return [];
         }
 
-        const distribution = data.filter(rc => rc.gender === 'male')
-            .map((value) => {
-                const { ageRange, countSum } = value;
-
-                return { key: ageRange, label: ageKeyMap[ageRange], value: countSum };
-            });
-
-        return distribution;
+        const male = data.filter(rc => rc.gender === 'male');
+        return getAgeDistribution(male);
     });
 
     render() {
         const {
             className,
             summary: {
+                childFamilyParticipationDate,
                 rc,
                 childMonitoring,
-                correspondences,
                 education,
                 soi,
                 registerChildByAgeAndGender,
@@ -320,7 +360,6 @@ export default class Summary extends PureComponent {
         const soiClosed = soi ? (soi.find(s => s.key === 'closed_on') || {}).value || 0 : 0;
 
         const percentChild = this.getPercentChild(childMonitoring);
-        const percentCorr = this.getPercentCorr(correspondences);
         const soiValues = this.getSoi(soi);
         const percentHealth = this.getPercentHealth(healthNutrition);
         const childMonitoringVizData = this.getChildMonitoringDataForViz(childMonitoring);
@@ -451,31 +490,27 @@ export default class Summary extends PureComponent {
                             renderer={KeyValue}
                         />
                     </div>
+                    <Legend
+                        className={styles.legend}
+                        data={soiLegendData}
+                        keySelector={legendKeySelector}
+                        labelSelector={legendLabelSelector}
+                        colorSelector={legendColorSelector}
+                    />
                 </div>
                 <div className={styles.item}>
-                    <h3>Correspondences</h3>
-                    <div className={styles.itemTableViz}>
-                        <DonutChart
-                            className={styles.viz}
-                            data={correspondences}
-                            hideLabel
-                            valueSelector={Summary.valueSelector}
-                            labelSelector={Summary.labelSelector}
-                            sideLengthRatio={0.2}
-                            labelModifier={Summary.labelModifierSelector}
-                            colorScheme={donutColor}
-                        />
-                        <ListView
-                            className={styles.table}
-                            data={percentCorr}
-                            rendererParams={this.percentTableParams}
-                            keySelector={Summary.tableKeySelector}
-                            renderer={KeyValue}
-                        />
-                    </div>
-                </div>
-                <div className={styles.item}>
-                    <h3>Child Family Participation</h3>
+                    <h3>
+                        Child Family Participation Suppport Benificiaries (
+                        {
+                            <FormattedDate
+                                className={styles.date}
+                                date={childFamilyParticipationDate}
+                                mode="dd-MMM-yyyy"
+
+                            />
+                        }
+                        )
+                    </h3>
                     <div className={styles.itemTableViz}>
                         <ListView
                             className={_cs(styles.table, styles.childFamily)}
@@ -490,9 +525,9 @@ export default class Summary extends PureComponent {
                     </div>
                 </div>
                 <div className={styles.item}>
-                    <h3> RC Age / Gender Distribution </h3>
+                    <h3>Age / Gender Distribution</h3>
                     <div>
-                        <h3> Female </h3>
+                        <h3>Female</h3>
                         <ListView
                             className={styles.table}
                             data={femaleRCAgeDistribution}
@@ -502,7 +537,7 @@ export default class Summary extends PureComponent {
                         />
                     </div>
                     <div>
-                        <h3> Male </h3>
+                        <h3>Male</h3>
                         <ListView
                             className={styles.table}
                             data={maleRCAgeDistribution}

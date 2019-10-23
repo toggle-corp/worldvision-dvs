@@ -11,6 +11,7 @@ const propTypes = {
     titleClassName: PropTypes.string,
     value: PropTypes.number,
     percent: PropTypes.number,
+    showValue: PropTypes.bool,
     isPercent: PropTypes.bool,
     className: PropTypes.string,
     colorOnlyNumber: PropTypes.bool,
@@ -21,6 +22,7 @@ const defaultProps = {
     className: '',
     titleClassName: '',
     isPercent: false,
+    showValue: true,
     percent: undefined,
     colorOnlyNumber: false,
 };
@@ -35,6 +37,7 @@ export default class KeyValue extends PureComponent {
             title,
             value,
             percent,
+            showValue,
             isPercent,
             className,
             titleClassName,
@@ -62,11 +65,13 @@ export default class KeyValue extends PureComponent {
                             precision={percent ? 2 : 0}
                             suffix={percent ? '%' : ''}
                         />
-                        <Numeral
-                            className={_cs(styles.percentValue, className)}
-                            value={value}
-                            precision={0}
-                        />
+                        {showValue && (
+                            <Numeral
+                                className={_cs(styles.percentValue, className)}
+                                value={value}
+                                precision={0}
+                            />
+                        )}
                     </div>
                 ) : (
                     <Numeral

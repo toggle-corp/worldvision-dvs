@@ -198,10 +198,10 @@ def get_projects_summary(qs, group_by_date=False):
             )
 
         if childfamilyparticipationdates:
-            date = childfamilyparticipationdates[0]
+            childfamilyparticipation_date = childfamilyparticipationdates[0]
             fields = ('type', 'participation', 'gender')
             childfamilyparticipation = list(
-                ChildFamilyParticipation.objects.filter(date=date)
+                ChildFamilyParticipation.objects.filter(date=childfamilyparticipation_date)
                 .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
             )
 
@@ -220,6 +220,9 @@ def get_projects_summary(qs, group_by_date=False):
         'soi': normalize(soi_fields, soi),
         'presence_and_participation': normalize(presenceandparticipation_fields, presenceandparticipation),
         'register_child_by_age_and_gender': registerchildbyageandgender,
+        'child_family_participation_date': (
+            'childfamilyparticipation_date' in locals() and childfamilyparticipation_date
+        ),
         'child_family_participation': childfamilyparticipation,
     }
 
