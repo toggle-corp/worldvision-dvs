@@ -334,6 +334,7 @@ class TrendSummary extends React.PureComponent {
                         data={rcData}
                         groupSelector={groupSelector}
                         lineDataSelector={rcLineSelector}
+                        showValue
                     />
                     <Legend
                         className={styles.legend}
@@ -349,6 +350,7 @@ class TrendSummary extends React.PureComponent {
                         data={childMonitoringData}
                         groupSelector={groupSelector}
                         lineDataSelector={childMonitoringLineSelector}
+                        showValue
                     />
                     <Legend
                         className={styles.legend}
@@ -363,6 +365,7 @@ class TrendSummary extends React.PureComponent {
                     <GroupedBarChart
                         data={healthData}
                         groupSelector={groupSelector}
+                        showValue
                     />
                     <Legend
                         className={styles.legend}
@@ -377,6 +380,7 @@ class TrendSummary extends React.PureComponent {
                     <GroupedBarChart
                         data={correspondenceData}
                         groupSelector={groupSelector}
+                        showValue
                     />
                     <Legend
                         className={styles.legend}
@@ -391,6 +395,7 @@ class TrendSummary extends React.PureComponent {
                     <GroupedBarChart
                         data={educationData}
                         groupSelector={groupSelector}
+                        showValue
                     />
                     <Legend
                         className={styles.legend}
@@ -405,6 +410,7 @@ class TrendSummary extends React.PureComponent {
                     <GroupedBarChart
                         data={soiData}
                         groupSelector={groupSelector}
+                        showValue
                     />
                     <Legend
                         className={styles.legend}

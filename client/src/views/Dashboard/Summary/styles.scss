@@ -87,5 +87,10 @@
                 font-weight: var(--font-weight-bold);
             }
         }
+
+        .legend {
+            display: flex;
+            padding-left: var(--spacing-large);
+        }
     }
 }

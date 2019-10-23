@@ -6,6 +6,7 @@ import Numeral from '#rscv/Numeral';
 import styles from './styles.scss';
 
 const propTypes = {
+    groupKey: PropTypes.string.isRequired,
     male: PropTypes.number,
     female: PropTypes.number,
     total: PropTypes.number,
@@ -25,6 +26,7 @@ export default class ParticipationItem extends PureComponent {
 
     render() {
         const {
+            groupKey,
             male,
             female,
             total,
@@ -34,7 +36,7 @@ export default class ParticipationItem extends PureComponent {
         return (
             <div className={styles.participationItem}>
                 <div className={styles.left}>
-                    {`Participation ${participation}`}
+                    {`${participation} ${groupKey.split('_').pop()}`}
                 </div>
                 <div className={styles.right}>
                     <span>
