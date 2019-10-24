@@ -7,7 +7,11 @@ import {
 import schema from '#schema';
 import { sanitizeResponse } from '#utils/common';
 
-const wsEndpoint = process.env.REACT_APP_API_SERVER_URL || 'http://localhost:8005/api/v1';
+const {
+    protocol,
+    hostname,
+} = window.location;
+export const wsEndpoint = `${protocol}//${hostname}:8005/api/v1`;
 
 export function createConnectedRequestCoordinator<OwnProps>() {
     type Props = OwnProps;
