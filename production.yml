@@ -33,6 +33,7 @@ services:
           - ./data/media:/media/server/
         ports:
           - '80:80'
+          - '8080:80'
           - '8005:8005'
         depends_on:
           - server

@@ -501,14 +501,12 @@ export default class Summary extends PureComponent {
                 <div className={styles.item}>
                     <h3>
                         Child Family Participation Suppport Benificiaries (
-                        {
-                            <FormattedDate
-                                className={styles.date}
-                                date={childFamilyParticipationDate}
-                                mode="dd-MMM-yyyy"
+                        <FormattedDate
+                            className={styles.date}
+                            date={childFamilyParticipationDate}
+                            mode="dd-MMM-yyyy"
 
-                            />
-                        }
+                        />
                         )
                     </h3>
                     <div className={styles.itemTableViz}>
