@@ -16,7 +16,7 @@ def extract(xml_data, _generated_on):
     # Sample string 'Generated on 6/12/2019 10:22:06 AM'
     generated_on_str = report['Tablix1']['Details_Collection']['Details']['table1']['@Textbox172']
     matched = DATE_PATTERN.match(generated_on_str).group(1)
-    generated_on = _generated_on or datetime.strptime(matched, '%d/%m/%Y').date()
+    generated_on = _generated_on or datetime.strptime(matched, '%m/%d/%Y').date()
 
     for pj in project_collection:
         number = pj['@ProjectId_1'].replace('Total:', '').strip()

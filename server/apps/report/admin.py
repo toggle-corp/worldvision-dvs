@@ -17,6 +17,7 @@ from .models import (
     RegisterChildByAgeAndGender,
     PresenceAndParticipation,
     ChildFamilyParticipation,
+    LanguagePeopleGroupDisability,
 )
 from .filters import SelectedReportListFilter
 from .forms import ReportAdminForm, BulkImportForm
@@ -71,6 +72,7 @@ class ReportAdmin(admin.ModelAdmin):
 
 class ProjectSummaryAdmin(admin.ModelAdmin):
     autocomplete_fields = ('project',)
+    # date_hierarchy = 'date'
 
     def get_list_display(self, request):
         return [
@@ -129,3 +131,4 @@ admin.register(ProjectSOI)(ProjectSummaryAdmin)
 admin.register(RegisterChildByAgeAndGender)(ProjectSummaryAdmin)
 admin.register(PresenceAndParticipation)(ProjectSummaryAdmin)
 admin.register(ChildFamilyParticipation)(ProjectSummaryAdmin)
+admin.register(LanguagePeopleGroupDisability)(ProjectSummaryAdmin)

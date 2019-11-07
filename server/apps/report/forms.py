@@ -1,5 +1,8 @@
+import traceback
 import logging
 import xmltodict
+import io
+import csv
 
 from django.contrib.admin.widgets import AdminDateWidget
 from django.db import transaction
@@ -13,12 +16,14 @@ from .models import (
     RegisterChildByAgeAndGender,
     PresenceAndParticipation,
     ChildFamilyParticipation,
+    LanguagePeopleGroupDisability,
 )
 from .bulk_import import (
     SOI,
     child_family_participation,
     presence_and_participation,
     register_child_by_age_and_gender,
+    language_people_group_disability,
 )
 from .utils import delete_file
 
@@ -29,7 +34,20 @@ BULK_IMPORTER = {
     RegisterChildByAgeAndGender: register_child_by_age_and_gender,
     PresenceAndParticipation: presence_and_participation,
     ChildFamilyParticipation: child_family_participation,
+    LanguagePeopleGroupDisability: language_people_group_disability,
 }
+
+# where user needs to provide the data information
+DATE_REQUIRED_MODELS = [
+    PresenceAndParticipation,
+    ChildFamilyParticipation,
+    LanguagePeopleGroupDisability,
+]
+
+# where the import files should be CSV (instead of xlm)
+CSV_IMPORT_MODELS = [
+    LanguagePeopleGroupDisability,
+]
 
 
 class ReportAdminForm(forms.ModelForm):
@@ -75,17 +93,25 @@ class BulkImportForm(forms.Form):
         bulk_model = kwargs.pop('bulk_model', 0)
 
         super().__init__(*args, **kwargs)
-        if bulk_model in [PresenceAndParticipation, ChildFamilyParticipation]:
+        if bulk_model in DATE_REQUIRED_MODELS:
             self.fields['generated_on'].required = True
             self.fields['generated_on'].help_text = 'Required'
+        if bulk_model in CSV_IMPORT_MODELS:
+            self.fields['file'].widget.attrs['accept'] = 'text/csv'
 
     @staticmethod
     def handle_uploaded_file(request, generated_on, model):
         file = request.FILES['file']
         try:
-            xml_data = xmltodict.parse(file.open().read())
+            if model in CSV_IMPORT_MODELS:
+                raw_data = csv.DictReader(
+                    io.StringIO(file.read().decode('utf-8')),
+                    skipinitialspace=True,
+                )
+            else:
+                raw_data = xmltodict.parse(file.open().read())
             with transaction.atomic():
-                BULK_IMPORTER.get(model).extract(xml_data, generated_on)
+                BULK_IMPORTER.get(model).extract(raw_data, generated_on)
             messages.add_message(
                 request,
                 messages.INFO,
@@ -102,5 +128,6 @@ class BulkImportForm(forms.Form):
                 mark_safe(
                     f"Importing <b>{file}</b> failed for <b>{model._meta.verbose_name.upper()}</b>"
                     " !! Check file structure and try again!!"
+                    f"<br /><pre>{traceback.format_exc()}</pre>"
                 ),
             )

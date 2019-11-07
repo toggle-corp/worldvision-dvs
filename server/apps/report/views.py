@@ -1,12 +1,14 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 
+from project.models import Project
 from report.models import (
     Report,
     ProjectSOI,
     RegisterChildByAgeAndGender,
     PresenceAndParticipation,
     ChildFamilyParticipation,
+    LanguagePeopleGroupDisability,
 )
 from .serializers import (
     ReportSerializer,
@@ -14,6 +16,7 @@ from .serializers import (
     RegisterChildByAgeAndGenderSerializer,
     PresenceAndParticipationSerializer,
     ChildFamilyParticipationSerializer,
+    ProjectLanguagePeopleGroupDisabilitySerializer,
 )
 
 
@@ -48,3 +51,14 @@ class ChildFamilyParticipationViewSet(ProjectSummaryViewSet):
     queryset = ChildFamilyParticipation.objects.all()
     serializer_class = ChildFamilyParticipationSerializer
     filter_backends = [DjangoFilterBackend]
+
+
+class ProjectLanguagePeopleGroupDisabilityViewSet(
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet
+):
+    """
+    Retrive project's disability metrics
+    """
+    queryset = Project.objects.all()
+    serializer_class = ProjectLanguagePeopleGroupDisabilitySerializer

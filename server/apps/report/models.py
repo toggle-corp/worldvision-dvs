@@ -136,6 +136,16 @@ class ChildFamilyParticipation(ProjectSummaryModel):
         unique_together = ('project', 'date', 'type', 'participation', 'gender',)
 
 
+class LanguagePeopleGroupDisability(ProjectSummaryModel):
+    language = models.CharField(max_length=255)
+    people_group = models.CharField(max_length=255)
+    disability = models.CharField(max_length=255, null=True, blank=True)
+    count = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('project', 'date', 'language', 'people_group', 'disability',)
+
+
 @receiver(models.signals.post_delete, sender=Report)
 def delete_report_file(sender, instance, *args, **kwargs):
     """ Deletes report file on `post_delete` """
