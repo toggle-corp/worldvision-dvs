@@ -105,7 +105,7 @@ class BulkImportForm(forms.Form):
         try:
             if model in CSV_IMPORT_MODELS:
                 raw_data = csv.DictReader(
-                    io.StringIO(file.read().decode('utf-8')),
+                    io.StringIO(file.read().decode('utf-8', errors='ignore')),
                     skipinitialspace=True,
                 )
             else:
