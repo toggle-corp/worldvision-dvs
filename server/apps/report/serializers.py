@@ -44,18 +44,27 @@ class ChildFamilyParticipationSerializer(serializers.ModelSerializer):
 
 class ProjectLanguagePeopleGroupDisabilitySerializer(serializers.ModelSerializer):
     project_id = serializers.IntegerField(source='id')
-    disabilities = serializers.SerializerMethodField()
+    language = serializers.SerializerMethodField()
+    people_group = serializers.SerializerMethodField()
+    disability = serializers.SerializerMethodField()
 
-    def get_disabilities(self, instance):
+    def _get_field_value(self, instance, field):
         qs = LanguagePeopleGroupDisability.objects.filter(project=instance)
-        return {
-            field: list(
-                qs.values('date', field).annotate(
-                    count=Sum('count', distinct=True),
-                ).values('date', f'{field}', 'count')
-            ) for field in ('language', 'people_group', 'disability')
-        }
+        return list(
+            qs.values('date', field).annotate(
+                count=Sum('count', distinct=True),
+            ).values('date', f'{field}', 'count')
+        )
+
+    def get_language(self, instance):
+        return self._get_field_value(instance, 'language')
+
+    def get_people_group(self, instance):
+        return self._get_field_value(instance, 'people_group')
+
+    def get_disability(self, instance):
+        return self._get_field_value(instance, 'disability')
 
     class Meta:
         model = Project
-        fields = ('project_id', 'disabilities')
+        fields = ('project_id', 'language', 'people_group', 'disability')

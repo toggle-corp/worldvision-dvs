@@ -8,7 +8,6 @@ from report.models import (
     RegisterChildByAgeAndGender,
     PresenceAndParticipation,
     ChildFamilyParticipation,
-    LanguagePeopleGroupDisability,
 )
 from .serializers import (
     ReportSerializer,
