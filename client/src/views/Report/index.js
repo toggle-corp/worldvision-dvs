@@ -28,10 +28,12 @@ import HorizontalBar from '#rscz/HorizontalBar';
 import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
-import KeyValue from '#components/KeyValue';
 import GaugeChart from '#rscz/GaugeChart';
 import GroupedBarChart from '#rscz/GroupedBarChart';
 import Legend from '#rscz/Legend';
+
+import KeyValue from '#components/KeyValue';
+import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
 
 import CorrespondenceItem from './CorrespondenceItem';
 import ReportMap from './ReportMap';
@@ -105,6 +107,12 @@ const requests = {
     soiGetRequest: {
         url: '/projects-soi/',
         query: ({ props: { projectId } }) => ({ project: projectId }),
+        onMount: true,
+    },
+    languagePeopleGroupGetRequest: {
+        url: ({ props: { projectId } }) => (
+            `/project-language-people-group-disabilities/${projectId}/`
+        ),
         onMount: true,
     },
 };
@@ -413,6 +421,9 @@ class Report extends PureComponent {
                 soiGetRequest: {
                     response: soi,
                 },
+                languagePeopleGroupGetRequest: {
+                    response: languagePeopleGroupDisability,
+                },
             },
         } = this.props;
 
@@ -458,7 +469,6 @@ class Report extends PureComponent {
         const correspondences = this.getCorrespondenceData(correspondencesFromProps);
         const flatEducationData = this.getFlatEducationData(education);
         const soiTrendData = this.getSoiTrendData(soi);
-        console.warn('soiTrendData', soiTrendData);
 
         return (
             <div className={styles.region}>
@@ -574,12 +584,6 @@ class Report extends PureComponent {
                             </div>
                         </div>
                         <div className={styles.item}>
-                            <h3>Participation / Support</h3>
-                        </div>
-                        <div className={styles.item}>
-                            <h3>RC Distribution Based on Language & People Group</h3>
-                        </div>
-                        <div className={styles.item}>
                             <h3>Service Service Operations Indicators Summary Report</h3>
                             <div className={styles.vizGroup}>
                                 <GaugeChart
@@ -610,6 +614,12 @@ class Report extends PureComponent {
                                     colorSelector={legendColorSelector}
                                 />
                             </div>
+                        </div>
+                        <div className={styles.item}>
+                            <LanguagePeopleGroupDisability
+                                className={styles.languagePeopleGroupDisability}
+                                data={languagePeopleGroupDisability}
+                            />
                         </div>
                     </div>
                 </div>

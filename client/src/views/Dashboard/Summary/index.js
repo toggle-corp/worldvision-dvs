@@ -12,10 +12,12 @@ import {
 import Legend from '#rscz/Legend';
 import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
-import KeyValue from '#components/KeyValue';
 import ParticipationItem from '#components/ParticipationItem';
 import DonutChart from '#rscz/DonutChart';
 import GaugeChart from '#rscz/GaugeChart';
+
+import KeyValue from '#components/KeyValue';
+import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
 
 import { transformSoi } from '#utils/transform';
 
@@ -351,6 +353,7 @@ export default class Summary extends PureComponent {
                 registerChildByAgeAndGender,
                 healthNutrition,
                 childFamilyParticipation,
+                languagePeopleGroupDisability,
             },
             noOfProjects,
             siteSettings,
@@ -544,6 +547,11 @@ export default class Summary extends PureComponent {
                             renderer={KeyValue}
                         />
                     </div>
+                </div>
+                <div className={styles.item}>
+                    <LanguagePeopleGroupDisability
+                        data={languagePeopleGroupDisability}
+                    />
                 </div>
             </div>
         );

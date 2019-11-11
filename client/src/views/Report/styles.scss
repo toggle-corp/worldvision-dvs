@@ -157,6 +157,12 @@
                 .bold {
                     font-weight: var(--font-weight-bold);
                 }
+
+                .language-people-group-disability {
+                    display: flex;
+                    height: 60vh;
+                    overflow-y: auto;
+                }
             }
 
             .table-viz {
