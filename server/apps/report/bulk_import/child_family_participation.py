@@ -2,6 +2,7 @@ import copy
 
 from project.models import Project
 from report.models import Gender, ChildFamilyParticipation as CFP
+from report.utils import convert_to_int
 
 TYPE_INITIAL = {
     Gender.MALE: {},
@@ -39,14 +40,14 @@ def extract(xml_data, generated_on):
     collection = xml_data['Report']['Tablix1']['Details_Collection']['Details']
     import_data = {}
     for pj_data in collection:
-        pj_number = int(pj_data['@Project'])
+        pj_number = convert_to_int(pj_data['@Project'])
         gender_raw = pj_data['@Gender']
         gender = Gender.FEMALE if gender_raw == 'F' else Gender.MALE
 
-        child_participation = int(pj_data['@ChildParticipation'])
-        family_participation = int(pj_data['@FamilyParticipation'])
-        child_support = int(pj_data['@ChildSupport'])
-        family_support = int(pj_data['@FamilySupport'])
+        child_participation = convert_to_int(pj_data['@ChildParticipation'])
+        family_participation = convert_to_int(pj_data['@FamilyParticipation'])
+        child_support = convert_to_int(pj_data['@ChildSupport'])
+        family_support = convert_to_int(pj_data['@FamilySupport'])
 
         if import_data.get(pj_number) is None:
             import_data[pj_number] = copy.deepcopy(INITIAL_PARTICIPATION)

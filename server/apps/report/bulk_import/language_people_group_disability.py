@@ -1,5 +1,6 @@
 from project.models import Project
 from report.models import LanguagePeopleGroupDisability
+from report.utils import convert_to_int
 
 
 def increment(obj, keys, value=1):
@@ -16,7 +17,7 @@ def extract(csv_data, generated_on):
 
     # Collect Data
     for row in csv_data:
-        pj_number = int(row['ProjectID'])
+        pj_number = convert_to_int(row['ProjectID'])
         language = row['Language']
         people_group = row['PeopleGroup']
         disability = row['Disability']

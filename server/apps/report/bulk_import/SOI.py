@@ -3,6 +3,7 @@ from datetime import datetime
 from report.utils import DATE_PATTERN
 from project.models import Project
 from report.models import ProjectSOI
+from report.utils import convert_to_int
 
 
 def extract(xml_data, _generated_on):
@@ -20,8 +21,8 @@ def extract(xml_data, _generated_on):
 
     for pj in project_collection:
         number = pj['@ProjectId_1'].replace('Total:', '').strip()
-        total_closed = int(pj['@TotalClosed_1'])
-        closed_on_time = int(pj['@ClosedOnTime_1'])
+        total_closed = convert_to_int(pj['@TotalClosed_1'])
+        closed_on_time = convert_to_int(pj['@ClosedOnTime_1'])
 
         project, pj_created = Project.objects.get_or_create(number=number)
         if pj_created:
