@@ -11,6 +11,7 @@ from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import JsonLexer
 
+from wv_dvs.admin import ModelAdmin
 from .models import (
     Report,
     ProjectSOI,
@@ -24,7 +25,7 @@ from .forms import ReportAdminForm, BulkImportForm
 
 
 @admin.register(Report)
-class ReportAdmin(admin.ModelAdmin):
+class ReportAdmin(ModelAdmin):
     exclude = ('data',)
     readonly_fields = ('data_prettified',)
     search_fields = ('name', 'project__name', 'file')
@@ -70,7 +71,7 @@ class ReportAdmin(admin.ModelAdmin):
     data_prettified.short_description = 'data'
 
 
-class ProjectSummaryAdmin(admin.ModelAdmin):
+class ProjectSummaryAdmin(ModelAdmin):
     autocomplete_fields = ('project',)
     # date_hierarchy = 'date'
 

@@ -2,6 +2,7 @@ from django.utils.safestring import mark_safe
 from django.contrib import admin
 from django.urls import reverse
 
+from wv_dvs.admin import ModelAdmin
 from report.models import Report
 from report.forms import ReportAdminForm
 from .models import Project, District, Municipality
@@ -20,7 +21,7 @@ class ReportInline(admin.TabularInline):
 
 
 @admin.register(Project)
-class ProjectAdmin(admin.ModelAdmin):
+class ProjectAdmin(ModelAdmin):
     inlines = (ReportInline,)
     form = ProjectAdminForm
     search_fields = ('name', 'number',)
@@ -65,14 +66,14 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 @admin.register(District)
-class DistrictAdmin(admin.ModelAdmin):
+class DistrictAdmin(ModelAdmin):
     search_fields = ('name', 'code')
     list_display = ('name', 'code')
     ordering = ('name', 'code')
 
 
 @admin.register(Municipality)
-class MunicipalityAdmin(admin.ModelAdmin):
+class MunicipalityAdmin(ModelAdmin):
     list_display = ('name', 'code', 'get_district')
     search_fields = ('name', 'code')
     ordering = ('name', 'code')
