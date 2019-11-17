@@ -14,7 +14,7 @@ before_install:
 
 before_script:
   - mkdir -p $(dirname "$REACT_STORE_DIR")
-  - git clone https://github.com/toggle-corp/react-store ${REACT_STORE_DIR}
+  - git clone https://github.com/toggle-corp/react-store --branch wv-release-v2 ${REACT_STORE_DIR}
   - git --git-dir=$REACT_STORE_DIR/.git --no-pager show --pretty=fuller --quiet
   - docker-compose build
   - /tmp/cc-test-reporter before-build

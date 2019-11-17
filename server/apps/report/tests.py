@@ -1,4 +1,6 @@
+import csv
 import os
+import io
 import datetime
 import xmltodict
 from parameterized import parameterized
@@ -8,12 +10,13 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 
 from wv_dvs.tests import TestCase
 from project.models import Project
-from report.forms import BULK_IMPORTER, ReportAdminForm
+from report.forms import BULK_IMPORTER, ReportAdminForm, CSV_IMPORT_MODELS
 from report.models import (
     ProjectSOI,
     RegisterChildByAgeAndGender,
     PresenceAndParticipation,
     ChildFamilyParticipation,
+    LanguagePeopleGroupDisability,
 )
 
 
@@ -22,6 +25,7 @@ MODEL_API_URLS = {
     RegisterChildByAgeAndGender: '/api/v1/register-childs-by-age-and-gender/',
     PresenceAndParticipation: '/api/v1/presence-and-participations/',
     ChildFamilyParticipation: '/api/v1/child-family-participations/',
+    LanguagePeopleGroupDisability: '/api/v1/project-language-people-group-disabilities/{}/',
 }
 
 TEST_DOC_FILES = {
@@ -29,6 +33,7 @@ TEST_DOC_FILES = {
     RegisterChildByAgeAndGender: 'RegisteredChildrenListAgeGender.xml',
     PresenceAndParticipation: 'PresenceParticipationSummaryNO.xml',
     ChildFamilyParticipation: 'ChildFamilyParticipationSupportCountReport.xml',
+    LanguagePeopleGroupDisability: 'NPL_REPORT.csv',
 }
 
 date = str(datetime.datetime.now().date())
@@ -71,14 +76,23 @@ class ReportTestCase(TestCase):
     ], name_func=lambda func, _, param: f'{func.__name__}__{param.args[0].__name__}')
     def test_bulk_import(self, model):
         response = self.client.get(MODEL_API_URLS[model])
-        self.assert_200(response)
+        if model not in CSV_IMPORT_MODELS:
+            self.assert_200(response)
 
         file = TEST_DOC_FILES.get(model)
         with open(
             os.path.join(settings.TEST_DIR, file), 'rb',
         ) as fp:
-            xml_data = xmltodict.parse(fp.read())
-            BULK_IMPORTER.get(model).extract(xml_data, date)
+            if model in CSV_IMPORT_MODELS:
+                raw_data = csv.DictReader(
+                    io.StringIO(fp.read().decode('utf-8', errors='ignore')),
+                    skipinitialspace=True,
+                )
+            else:
+                raw_data = xmltodict.parse(fp.read())
+            BULK_IMPORTER.get(model).extract(raw_data, date)
 
         response = self.client.get(MODEL_API_URLS[model])
-        self.assert_200(response)
+        if model in CSV_IMPORT_MODELS:
+            response = self.client.get(MODEL_API_URLS[model].format(Project.objects.first().pk))
+            self.assert_200(response)
