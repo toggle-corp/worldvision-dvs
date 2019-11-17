@@ -12,6 +12,4 @@ if ($time_iso8601 ~ "^(\d{4})-(\d{2})-(\d{2})T(\d{2})") {
 
 access_log /var/log/nginx/access.log;
 
-#if ($http_x_forwarded_proto = 'http') {
-#     return 301 https://$server_name$request_uri;
-#}
+# vi:syntax=nginx

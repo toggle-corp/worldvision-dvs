@@ -25,14 +25,16 @@ services:
         command: bash -c '/code/scripts/sync_build.sh'
 
     nginx: # NGINX Server
-        image: nginx:1.13
+        build: ./nginx
         volumes:
-          - ./nginx/:/etc/nginx/conf.d/:z
+          - ./nginx/configs/:/etc/nginx/conf.d/:z
           - server-static:/static/server/
           - client-static:/static/client/
           - ./data/media:/media/server/
+          - certs:/etc/letsencrypt
         ports:
           - '80:80'
+          - '443:443'
           - '8080:80'
           - '8005:8005'
         depends_on:
@@ -41,3 +43,4 @@ services:
 volumes:
   server-static:
   client-static:
+  certs:
