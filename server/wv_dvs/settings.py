@@ -187,6 +187,7 @@ REDOC_SETTINGS = {
     'EXPAND_RESPONSES': [],
 }
 
+# NOTE: May throw RequestDataTooBig when used.
 if DEBUG and os.environ.get('DJANGO_USE_SILK', 'False').lower() == 'true':
     INSTALLED_APPS += ['silk']
     MIDDLEWARE += ['silk.middleware.SilkyMiddleware']

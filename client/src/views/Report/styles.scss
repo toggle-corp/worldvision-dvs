@@ -139,15 +139,15 @@
 
             .item {
                 flex-basis: calc(100% / 3);
+                border-right: var(--width-separator-thin) solid var(--color-separator);
+                border-bottom: var(--width-separator-thin) solid var(--color-separator);
+                padding: 0;
                 height: 60vh;
+                overflow-y: auto;
 
                 h3 {
                     padding-top: var(--spacing-extra-large);
                     text-align: center;
-                }
-
-                &:nth-child(even) {
-                    background-color: var(--color-foreground-alt);
                 }
 
                 .table {
@@ -232,6 +232,19 @@
                         }
                     }
                 }
+            }
+        }
+
+        .language {
+            .heading {
+                flex-shrink: 0;
+                padding-bottom: var(--spacing-medium);
+            }
+
+            .language-people-group-disability {
+                display: flex;
+                flex-grow: 1;
+                overflow-y: auto;
             }
         }
     }

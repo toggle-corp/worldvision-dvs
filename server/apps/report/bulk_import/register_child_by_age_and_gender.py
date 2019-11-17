@@ -3,6 +3,7 @@ from datetime import datetime
 from project.models import Project
 from report.utils import DATE_PATTERN
 from report.models import Gender, RegisterChildByAgeAndGender
+from report.utils import convert_to_int
 
 
 def extract(xml_data, _generated_on):
@@ -22,13 +23,13 @@ def extract(xml_data, _generated_on):
         age_data = pj_age_data['Age_Collection']['Age']
         # Sample string 'Project : 174175- Lamjung CESP'
         pj_translation = pj_age_data['@ProjectTranslation']
-        project_number = str(int(pj_translation.split('-')[0].split(':')[1]))
+        project_number = str(convert_to_int(pj_translation.split('-')[0].split(':')[1]))
         projects_name[project_number] = pj_age_data['@ProjectTranslation'].split('-')[1]
 
         import_data[project_number] = {}
         for age_datum in age_data:
             # Sample string 'Age in Years : 1 Years'
-            age = int(age_datum['@Age'].split(':')[1].replace('Years', ''))
+            age = convert_to_int(age_datum['@Age'].split(':')[1].replace('Years', ''))
             children_data = age_datum['Details_Collection']['Details']
             age_range = RegisterChildByAgeAndGender.get_range_for_age(age)
             import_data[project_number][age_range] = {

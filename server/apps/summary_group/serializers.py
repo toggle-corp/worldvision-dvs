@@ -8,6 +8,7 @@ from report.models import (
     RegisterChildByAgeAndGender,
     PresenceAndParticipation,
     ChildFamilyParticipation,
+    LanguagePeopleGroupDisability,
 )
 from .models import SummaryGroup
 
@@ -210,6 +211,20 @@ def get_projects_summary(qs, group_by_date=False):
     ).order_by('reports__data__reportDate').values_list('reports__data__reportDate', flat=True)[:1]
     reportDate = reportDates[0] if reportDates else None
 
+    disability_qs = LanguagePeopleGroupDisability.objects.filter(project__in=projects)
+    language_people_group_disability = {
+        'language': disability_qs.values('date', 'language').annotate(
+            count=Sum('count', distinct=True),
+        ).values('date', 'language', 'count'),
+        # NOTE: Using list for djangorestframework-camel-case
+        'people_group': list(disability_qs.values('date', 'people_group').annotate(
+            count=Sum('count', distinct=True),
+        ).values('date', 'people_group', 'count')),
+        'disability': disability_qs.values('date', 'disability').annotate(
+            count=Sum('count', distinct=True),
+        ).values('date', 'disability', 'count'),
+    }
+
     return {
         'report_date': reportDate,
         'child_monitoring': normalize(child_monitoring_fields, child_monitoring),
@@ -224,6 +239,7 @@ def get_projects_summary(qs, group_by_date=False):
             'childfamilyparticipation_date' in locals() and childfamilyparticipation_date
         ),
         'child_family_participation': childfamilyparticipation,
+        'language_people_group_disability': language_people_group_disability,
     }
 
 

@@ -1,0 +1,21 @@
+.language-people-group-disability {
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    overflow-y: auto;
+
+    .tabs {
+        flex-shrink: 0;
+    }
+
+    .table {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .list-container {
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+}

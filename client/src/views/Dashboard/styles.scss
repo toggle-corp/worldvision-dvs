@@ -33,8 +33,15 @@
             }
 
             .aggregated-container {
+                display: flex;
+                flex-direction: column;
                 border: var(--width-separator-thin) solid var(--color-separator);
                 width: var(--width-aggregated-data);
+                overflow-y: auto;
+
+                .aggregated {
+                    flex-grow: 1;
+                }
             }
         }
     }

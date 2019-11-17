@@ -6,6 +6,7 @@ from django.conf.urls import url, include, static
 from django.views.static import serve
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.conf import settings
+from django.views.generic.base import RedirectView
 from rest_framework import routers, permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -24,6 +25,7 @@ from report.views import (
     RegisterChildByAgeAndGenderViewSet,
     PresenceAndParticipationViewSet,
     ChildFamilyParticipationViewSet,
+    ProjectLanguagePeopleGroupDisabilityViewSet,
 )
 
 api_schema_view = get_schema_view(
@@ -64,6 +66,11 @@ router.register(r'presence-and-participations',
                 PresenceAndParticipationViewSet, basename='presence-and-participation')
 router.register(r'child-family-participations',
                 ChildFamilyParticipationViewSet, basename='child-Family-participation')
+router.register(
+    r'project-language-people-group-disabilities',
+    ProjectLanguagePeopleGroupDisabilityViewSet,
+    basename='project-language-people-group-disability',
+)
 
 # Versioning : (v1|v2|v3)
 API_PREFIX = r'^api/(?P<version>(v1))/'
@@ -74,6 +81,7 @@ def get_api_path(path):
 
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='admin/')),
     path('admin/', admin.site.urls),
 
     # API Documentation

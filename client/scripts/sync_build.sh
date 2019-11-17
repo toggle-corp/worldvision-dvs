@@ -3,7 +3,6 @@
 # Copy yarn node_modules from Image
 echo "Copy node packages"
 rsync -a --stats --ignore-existing /node_modules /code/
-yarn start
 
 echo "Building WV App"
 CI=false yarn build

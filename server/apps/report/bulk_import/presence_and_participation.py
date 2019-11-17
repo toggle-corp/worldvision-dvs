@@ -1,5 +1,6 @@
 from project.models import Project
 from report.models import PresenceAndParticipation
+from report.utils import convert_to_int
 
 
 def extract(xml_data, generated_on):
@@ -21,7 +22,7 @@ def extract(xml_data, generated_on):
         ['table1']['Detail_Collection']['Detail']
     )
     for pj in collection:
-        pj_number = int(pj['@ProjectCode'])
+        pj_number = convert_to_int(pj['@ProjectCode'])
         pj_name = pj['@ProjectName']
         total_rc_temporarily_away = pj['@Total_RC___Temporarily_Away']
         total_no_of_rc_records_dropped_during_the_month = pj['@DropsLast12Mos']

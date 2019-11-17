@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { listToMap } from '@togglecorp/fujs';
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
+import Resizable from '#rscv/Resizable/ResizableH';
 import MultiViewContainer from '#rscv/MultiViewContainer';
 
 import {
@@ -133,20 +134,25 @@ class Dashboard extends PureComponent {
                     };
 
                     return (
-                        <div className={styles.dashboardContent}>
-                            <div className={styles.mapContainer}>
+                        <Resizable
+                            className={styles.dashboardContent}
+                            leftContainerClassName={styles.mapContainer}
+                            rightContainerClassName={styles.aggregatedContainer}
+                            leftChild={(
                                 <ProjectsMap
                                     className={styles.map}
                                     projects={projects}
                                     points={points}
                                 />
-                            </div>
-                            <SummaryContainer
-                                className={styles.aggregatedContainer}
-                                siteSettings={siteSettings}
-                                summaryGroups={summaryGroupsMap}
-                            />
-                        </div>
+                            )}
+                            rightChild={(
+                                <SummaryContainer
+                                    className={styles.aggregated}
+                                    siteSettings={siteSettings}
+                                    summaryGroups={summaryGroupsMap}
+                                />
+                            )}
+                        />
                     );
                 },
                 wrapContainer: true,

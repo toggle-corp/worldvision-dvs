@@ -12,10 +12,12 @@ import {
 import Legend from '#rscz/Legend';
 import ListView from '#rscv/List/ListView';
 import FormattedDate from '#rscv/FormattedDate';
-import KeyValue from '#components/KeyValue';
 import ParticipationItem from '#components/ParticipationItem';
 import DonutChart from '#rscz/DonutChart';
 import GaugeChart from '#rscz/GaugeChart';
+
+import KeyValue from '#components/KeyValue';
+import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
 
 import { transformSoi } from '#utils/transform';
 
@@ -67,6 +69,7 @@ const soiLegendData = [
         color: '#ef5350',
     },
 ];
+const emptyObject = {};
 const legendKeySelector = d => d.key;
 const legendLabelSelector = d => d.label;
 const legendColorSelector = d => d.color;
@@ -184,7 +187,29 @@ export default class Summary extends PureComponent {
 
     getSoi = memoize(transformSoi);
 
-    getPercentChild = memoize(getPercent);
+    getPercentChild = memoize((data) => {
+        if (isFalsy(data)) {
+            return [];
+        }
+        const total = data.reduce((acc, d) => (acc + d.value), 0);
+        const childData = data.map(d => ({
+            percent: (d.value / total) * 100,
+            ...d,
+        }));
+        const notsighted = (data.find(d => d.key === '@NotSighted90Days') || emptyObject).value;
+
+        const percent = total ? (((total - notsighted) / total) * 100) : 0;
+
+        return ([
+            ...childData,
+            {
+                key: '@cms',
+                label: 'CMS',
+                value: (total - notsighted),
+                percent: +percent.toFixed(2),
+            },
+        ]);
+    });
 
     getPercentHealth = memoize(getPercent);
 
@@ -351,6 +376,7 @@ export default class Summary extends PureComponent {
                 registerChildByAgeAndGender,
                 healthNutrition,
                 childFamilyParticipation,
+                languagePeopleGroupDisability,
             },
             noOfProjects,
             siteSettings,
@@ -471,7 +497,7 @@ export default class Summary extends PureComponent {
                         />
                     </div>
                 </div>
-                <div className={styles.item}>
+                <div className={_cs(styles.item, styles.soiIndex)}>
                     <h3>SOI Index</h3>
                     <div className={styles.itemTableViz}>
                         <GaugeChart
@@ -544,6 +570,12 @@ export default class Summary extends PureComponent {
                             renderer={KeyValue}
                         />
                     </div>
+                </div>
+                <div className={styles.item}>
+                    <LanguagePeopleGroupDisability
+                        data={languagePeopleGroupDisability}
+                        hideLanguage
+                    />
                 </div>
             </div>
         );
