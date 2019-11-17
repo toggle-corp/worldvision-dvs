@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    background-color: var(--color-foreground-alt);
     overflow-y: auto;
 
     .tooltip {
@@ -12,8 +13,9 @@
 
     .info {
         display: inline-block;
+        margin-bottom: var(--spacing-small);
         border-bottom: var(--width-separator-thin) solid var(--color-separator);
-        background-color: var(--color-background-header);
+        background-color: var(--color-foreground);
         padding: var(--spacing-medium-alt) var(--spacing-medium);
         line-height: 1.3;
         color: var(--color-text-label);
@@ -35,8 +37,10 @@
     }
 
     .item {
-        padding: var(--spacing-medium-alt) var(--spacing-small);
-        width: 100%;
+        margin: var(--spacing-small) var(--spacing-medium);
+        border: var(--width-separator-thin) solid var(--color-separator);
+        background-color: var(--color-foreground);
+        width: calc(100% - 2 * var(--spacing-medium));
 
         h3 {
             padding: var(--spacing-small) var(--spacing-medium);
@@ -60,6 +64,8 @@
             }
 
             .child-family {
+                padding-right: var(--spacing-small);
+
                 .child-family-group {
                     padding: var(--spacing-small) var(--spacing-medium);
                     text-transform: capitalize;
@@ -92,5 +98,9 @@
             display: flex;
             padding-left: var(--spacing-large);
         }
+    }
+
+    .soi-index {
+        padding-bottom: var(--spacing-small);
     }
 }

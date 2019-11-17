@@ -615,7 +615,10 @@ class Report extends PureComponent {
                                 />
                             </div>
                         </div>
-                        <div className={styles.item}>
+                        <div className={_cs(styles.item, styles.language)}>
+                            <h3 className={styles.heading}>
+                                Language / People Group / Disability
+                            </h3>
                             <LanguagePeopleGroupDisability
                                 className={styles.languagePeopleGroupDisability}
                                 data={languagePeopleGroupDisability}

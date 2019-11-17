@@ -1,11 +1,18 @@
 .trend {
     display: flex;
     flex-direction: column;
+    background-color: var(--color-foreground-alt);
+    padding-top: var(--spacing-small);
     overflow-y: auto;
 
     .item {
         display: flex;
         flex-direction: column;
+        margin: var(--spacing-small) var(--spacing-medium);
+        border: var(--width-separator-thin) solid var(--color-separator);
+        background-color: var(--color-foreground);
+        padding-bottom: var(--spacing-small);
+        width: calc(100% - 2 * var(--spacing-medium));
 
         h3 {
             padding: var(--spacing-small) var(--spacing-medium);
