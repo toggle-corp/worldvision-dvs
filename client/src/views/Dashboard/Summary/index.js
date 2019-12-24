@@ -37,6 +37,9 @@ const defaultProps = {
     noOfProjects: 0,
 };
 
+const droppedKey = 'total_no_of_rc_records_dropped_during_the_month';
+const rcAwayKey = 'total_rc_temporarily_away';
+
 const ageKeyMap = {
     '<=6': {
         key: 1,
@@ -211,6 +214,28 @@ export default class Summary extends PureComponent {
         ]);
     });
 
+    getRcData = memoize((rc, presenceAndParticipation) => {
+        const preAndPar = listToMap(
+            presenceAndParticipation,
+            d => d.key,
+            d => d,
+        );
+
+        return ([
+            ...rc,
+            {
+                key: 'totalRcDropped',
+                value: preAndPar[droppedKey].value,
+                label: 'Total RC Dropped',
+            },
+            {
+                key: 'totalRcTemporarilyAway',
+                value: preAndPar[rcAwayKey].value,
+                label: 'Total RC Temporarily Away',
+            },
+        ]);
+    });
+
     getPercentHealth = memoize(getPercent);
 
     getChildMonitoringDataForViz = memoize((childMonitoring = []) => {
@@ -373,6 +398,7 @@ export default class Summary extends PureComponent {
                 childMonitoring,
                 education,
                 soi,
+                presenceAndParticipation,
                 registerChildByAgeAndGender,
                 healthNutrition,
                 childFamilyParticipation,
@@ -394,6 +420,7 @@ export default class Summary extends PureComponent {
         const educationInvolvement = this.getEducationInvolvement(educationValues);
         const femaleRCAgeDistribution = this.getFemaleRcAge(registerChildByAgeAndGender);
         const maleRCAgeDistribution = this.getMaleRcAge(registerChildByAgeAndGender);
+        const rcData = this.getRcData(rc, presenceAndParticipation);
 
         const infoText = `The data below is
             aggregated from sponsorship
@@ -421,7 +448,7 @@ export default class Summary extends PureComponent {
                     <h3>RC Supply</h3>
                     <ListView
                         className={styles.table}
-                        data={rc}
+                        data={rcData}
                         rendererParams={this.tableParams}
                         keySelector={Summary.tableKeySelector}
                         renderer={KeyValue}

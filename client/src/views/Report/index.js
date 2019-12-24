@@ -56,7 +56,7 @@ const soiLegendData = [
     },
     {
         key: 'Closed On',
-        label: 'Closed On',
+        label: 'Closed On Time',
         color: '#ef8c00',
     },
 ];
@@ -141,8 +141,12 @@ const transformSoi = (soiData) => {
             value: totalClosed,
         },
         {
-            label: 'Closed On',
+            label: 'Closed On Time',
             value: closedOn,
+        },
+        {
+            label: 'Rating',
+            value: (closedOn / totalClosed) * 100,
         },
     ]);
 };
@@ -252,12 +256,19 @@ class Report extends PureComponent {
         });
     };
 
-    soiParams = (key, data) => ({
-        title: data.label,
-        value: data.value,
-        colorOnlyNumber: true,
-        titleClassName: styles.bold,
-    });
+    soiParams = (key, data) => {
+        const isPercent = key === 'Rating';
+
+        return ({
+            title: data.label,
+            value: data.value,
+            percent: data.value,
+            isPercent,
+            showValue: !isPercent,
+            colorOnlyNumber: true,
+            titleClassName: styles.bold,
+        });
+    };
 
     educationGroupRendererParams = (groupKey) => {
         const children = groupKey === '@PrimarySchoolAge'
@@ -458,7 +469,7 @@ class Report extends PureComponent {
 
         const soiValues = this.getSoi(soi);
         const totalSoi = (soiValues.find(s => s.label === 'Total Closed') || {}).value || 0;
-        const closedSoi = (soiValues.find(s => s.label === 'Closed On') || {}).value || 0;
+        const closedSoi = (soiValues.find(s => s.label === 'Closed On Time') || {}).value || 0;
 
         const {
             childMonitoring,
@@ -595,7 +606,7 @@ class Report extends PureComponent {
                                     colorScheme={soiColorScheme}
                                 />
                                 <ListView
-                                    className={styles.table}
+                                    className={_cs(styles.table, styles.sso)}
                                     data={soiValues}
                                     rendererParams={this.soiParams}
                                     keySelector={Report.soiKeySelector}
