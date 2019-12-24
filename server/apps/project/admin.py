@@ -6,7 +6,6 @@ from wv_dvs.admin import ModelAdmin
 from report.models import Report
 from report.forms import ReportAdminForm
 from .models import Project, District, Municipality
-from .forms import ProjectAdminForm
 
 
 class ReportInline(admin.TabularInline):
@@ -23,7 +22,6 @@ class ReportInline(admin.TabularInline):
 @admin.register(Project)
 class ProjectAdmin(ModelAdmin):
     inlines = (ReportInline,)
-    form = ProjectAdminForm
     search_fields = ('name', 'number',)
     list_display = (
         'name', 'number', 'long', 'lat', 'recent_report', 'get_district',
@@ -45,24 +43,12 @@ class ProjectAdmin(ModelAdmin):
     get_district.short_description = 'District'
 
     def recent_report(self, instance):
-        report = instance.selected_report
+        report = instance.recent_report
         if report:
             link = reverse('admin:report_report_change', args=(report.id,))
             return mark_safe('<a href="%s">%s</a>' % (link, report.name))
 
     recent_report.short_description = 'Recent Report'
-
-    def get_exclude(self, request, obj=None):
-        if not obj:
-            return ('selected_report',)
-
-    def save_related(self, request, form, formsets, change):
-        super().save_related(request, form, formsets, change)
-        instance = form.instance
-        reports = instance.reports.all()
-        if not instance.selected_report and reports and len(reports):
-            instance.selected_report = reports[0]
-            instance.save()
 
 
 @admin.register(District)

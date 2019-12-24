@@ -30,7 +30,7 @@ class ProjectReportViewSet(viewsets.ViewSet):
         queryset = Project.objects.all()
         project = get_object_or_404(queryset, pk=pk)
         serializer = ReportSerializer(
-            project.selected_report,
+            project.recent_report,
             context={'request': request}
         )
         return response.Response(serializer.data)

@@ -1,6 +1,7 @@
-from project.models import Project
 from report.models import LanguagePeopleGroupDisability
 from report.utils import convert_to_int
+
+from .common import get_or_create_project
 
 
 def increment(obj, keys, value=1):
@@ -29,7 +30,7 @@ def extract(csv_data, generated_on):
 
     # Save Data to DB
     for pj_number, language_data in import_data.items():
-        project, pj_created = Project.objects.get_or_create(number=pj_number)
+        project = get_or_create_project(pj_number)
         for language, people_group_data in language_data.items():
             for people_group, disability_data in people_group_data.items():
                 for disability, count in disability_data.items():

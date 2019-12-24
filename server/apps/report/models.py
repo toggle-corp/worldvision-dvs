@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
@@ -31,7 +32,9 @@ class Report(models.Model):
     file = models.FileField(upload_to='reports/', validators=[validate_file_extension])
 
     class Meta:
-        ordering = ('-id',)
+        verbose_name = 'ADP Management Report'
+        verbose_name_plural = 'ADP Management Reports'
+        ordering = ('-date',)
 
     @staticmethod
     def extract_from_file(file):
@@ -48,14 +51,8 @@ class Report(models.Model):
             )
             raise ValidationError(u'Unsupported xml file')
 
-    def is_selected(self):
-        selected_report = self.project.selected_report
-        if selected_report and selected_report == self:
-            return True
-        return False
-
     def __str__(self):
-        return f"{self.name} {(self.is_selected() and '<-- (Currently Selected)') or ''}"
+        return f"{self.name}"
 
 
 class ProjectSummaryModel(models.Model):
@@ -151,3 +148,26 @@ def delete_report_file(sender, instance, *args, **kwargs):
     """ Deletes report file on `post_delete` """
     if instance.file:
         delete_file(instance.file.path)
+
+
+class BulkImportReport(models.Model):
+    """
+    For bulk import logging
+    """
+    SUCCESS = 'success'
+    FAILED = 'failed'
+    STATUS_CHOICES = (
+        (SUCCESS, 'Success'),
+        (FAILED, 'Failed'),
+    )
+
+    report_type = models.CharField(max_length=100)
+    file = models.FileField(upload_to='bulk-import-report/')  # Provide by user
+    generated_on = models.DateField(default=None, null=True)  # Provide by user
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=10, null=True, choices=STATUS_CHOICES,)
+    log_message = models.TextField(null=True)
+
+    def __str__(self):
+        return f'{self.report_type}:{self.generated_on}'

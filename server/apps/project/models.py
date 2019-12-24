@@ -46,10 +46,9 @@ class Project(models.Model):
     long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
-    @property
-    def selected_report(self):
-        if self.reports.count():
-            return self.reports.order_by('-id').first()
-
     def __str__(self):
         return f'{self.name} - {self.number}'
+
+    @property
+    def recent_report(self):
+        return self.reports.order_by('-date').first()

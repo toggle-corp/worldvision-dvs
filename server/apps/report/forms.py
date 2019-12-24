@@ -1,9 +1,11 @@
+import datetime
 import traceback
 import logging
 import xmltodict
 import io
 import csv
 
+from django.utils import timezone
 from django.contrib.admin.widgets import AdminDateWidget
 from django.db import transaction
 from django import forms
@@ -17,6 +19,7 @@ from .models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    BulkImportReport,
 )
 from .bulk_import import (
     SOI,
@@ -51,6 +54,12 @@ CSV_IMPORT_MODELS = [
 
 
 class ReportAdminForm(forms.ModelForm):
+    date = forms.DateField(
+        widget=AdminDateWidget(),
+        required=False,
+        help_text='Overrides generated date for the document.',
+    )
+
     class Meta:
         model = Report
         fields = '__all__'
@@ -58,15 +67,22 @@ class ReportAdminForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.original_report_file = self.instance.file
-        file = self.fields.get('file')
-        if file:
-            file.widget.attrs = {'accept': '.xml'}
+        if self.fields.get('file'):
+            self.fields['file'].widget.attrs = {'accept': '.xml'}
 
     def clean(self):
         cleaned_data = super().clean()
-        file = cleaned_data['file']
-        if self.instance.file != file:
+        file = cleaned_data.get('file')
+        if file and self.instance.file != file:
             cleaned_data['data'] = Report.extract_from_file(file)
+            try:
+                cleaned_data['date'] = (
+                    cleaned_data.get('date') or
+                    datetime.datetime.strptime(cleaned_data['data'].get('reportDate'), '%m/%d/%Y %H:%M:%S %p').date()
+                )
+            except (TypeError, ValueError):
+                # Default value
+                cleaned_data['date'] = timezone.now().date()
 
     def save(self, *args, **kwargs):
         if self.cleaned_data.get('data'):
@@ -102,6 +118,13 @@ class BulkImportForm(forms.Form):
     @staticmethod
     def handle_uploaded_file(request, generated_on, model):
         file = request.FILES['file']
+        bulk_import_log = BulkImportReport.objects.create(
+            report_type=model.__name__,
+            # Provided params for import
+            generated_on=generated_on,
+            file=request.FILES['file'],
+            created_by=request.user,
+        )
         try:
             if model in CSV_IMPORT_MODELS:
                 raw_data = csv.DictReader(
@@ -112,22 +135,21 @@ class BulkImportForm(forms.Form):
                 raw_data = xmltodict.parse(file.open().read())
             with transaction.atomic():
                 BULK_IMPORTER.get(model).extract(raw_data, generated_on)
-            messages.add_message(
-                request,
-                messages.INFO,
-                mark_safe(
-                    f"Successfully imported <b>{file}</b> "
-                    f"to <b>{model._meta.verbose_name.upper()}</b>"
-                ),
+            success_message = (
+                f"Successfully imported <b>{file}</b> "
+                f"to <b>{model._meta.verbose_name.upper()}</b>"
             )
+            messages.add_message(request, messages.INFO, mark_safe(success_message))
+            bulk_import_log.log_message = success_message
+            bulk_import_log.status = BulkImportReport.SUCCESS
         except Exception:
             logger.error(f'Error importing {model}', exc_info=True)
-            messages.add_message(
-                request,
-                messages.ERROR,
-                mark_safe(
+            error_message = (
                     f"Importing <b>{file}</b> failed for <b>{model._meta.verbose_name.upper()}</b>"
                     " !! Check file structure and try again!!"
                     f"<br /><pre>{traceback.format_exc()}</pre>"
-                ),
             )
+            messages.add_message(request, messages.ERROR, mark_safe(error_message))
+            bulk_import_log.log_message = error_message
+            bulk_import_log.status = BulkImportReport.FAILED
+        bulk_import_log.save()

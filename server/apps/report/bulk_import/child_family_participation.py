@@ -1,8 +1,9 @@
 import copy
 
-from project.models import Project
 from report.models import Gender, ChildFamilyParticipation as CFP
 from report.utils import convert_to_int
+
+from .common import get_or_create_project
 
 TYPE_INITIAL = {
     Gender.MALE: {},
@@ -63,7 +64,7 @@ def extract(xml_data, generated_on):
             increment(import_data[pj_number][type_value][gender], type_number)
 
     for pj_number, participation_data in import_data.items():
-        project, pj_created = Project.objects.get_or_create(number=pj_number)
+        project = get_or_create_project(pj_number)
         for participation_type, gender_data in participation_data.items():
             for gender_type, number_data in gender_data.items():
                 for participation_number, count in number_data.items():

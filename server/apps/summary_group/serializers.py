@@ -135,15 +135,16 @@ def get_projects_summary(qs, group_by_date=False):
     presenceandparticipation = initial_dict(presenceandparticipation_fields)
 
     projects = qs.prefetch_related(
-        Prefetch('reports', queryset=Report.objects.order_by('-id')),
+        Prefetch('reports', queryset=Report.objects.order_by('-date')),
         Prefetch('projectsoi_set', queryset=ProjectSOI.objects.order_by('-date')),
         Prefetch('presenceandparticipation_set', queryset=PresenceAndParticipation.objects.order_by('-date')),
     )
 
     for project in projects:
-        reports = project.reports.all()[:None if group_by_date else 1]
-        psois = project.projectsoi_set.all()[:None if group_by_date else 1]
-        ppresenceandparticipations = project.presenceandparticipation_set.all()[:None if group_by_date else 1]
+        index = None if group_by_date else 1
+        reports = project.reports.all()[:index]
+        psois = project.projectsoi_set.all()[:index]
+        ppresenceandparticipations = project.presenceandparticipation_set.all()[:index]
 
         for report in reports:
             _get_report_data(
@@ -170,31 +171,33 @@ def get_projects_summary(qs, group_by_date=False):
     childfamilyparticipation = []
     if group_by_date:
         fields = ('age_range', 'gender', 'date__year', 'date__month',)
-        query = RegisterChildByAgeAndGender.objects\
-            .order_by(*fields).values(*fields)\
-            .annotate(count_sum=Sum('count'))\
-            .values(*fields, 'count_sum')
+        query = RegisterChildByAgeAndGender.objects.filter(
+            project__in=projects,
+        ).order_by(*fields).values(*fields).annotate(
+            count_sum=Sum('count')
+        ).values(*fields, 'count_sum')
         registerchildbyageandgender = _add_date_to_query(query, fields[:2])
 
         fields = ('type', 'participation', 'gender', 'date__year', 'date__month',)
-        query = ChildFamilyParticipation.objects\
-            .order_by(*fields).values(*fields)\
-            .annotate(count_sum=Sum('count'))\
-            .values(*fields, 'count_sum')
+        query = ChildFamilyParticipation.objects.filter(
+            project__in=projects,
+        ).order_by(*fields).values(*fields).annotate(
+            count_sum=Sum('count')
+        ).values(*fields, 'count_sum')
         childfamilyparticipation = _add_date_to_query(query, fields[:3])
     else:
         registerchildbyageandgenderdates = RegisterChildByAgeAndGender.objects.filter(
-            project__in=projects
+            project__in=projects,
         ).order_by('-date').values_list('date', flat=True)[:1]
         childfamilyparticipationdates = ChildFamilyParticipation.objects.filter(
-            project__in=projects
+            project__in=projects,
         ).order_by('-date').values_list('date', flat=True)[:1]
 
         if registerchildbyageandgenderdates:
             date = registerchildbyageandgenderdates[0]
             fields = ('age_range', 'gender',)
             registerchildbyageandgender = list(
-                RegisterChildByAgeAndGender.objects.filter(date=date)
+                RegisterChildByAgeAndGender.objects.filter(project__in=projects, date=date)
                 .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
             )
 
@@ -202,13 +205,13 @@ def get_projects_summary(qs, group_by_date=False):
             childfamilyparticipation_date = childfamilyparticipationdates[0]
             fields = ('type', 'participation', 'gender')
             childfamilyparticipation = list(
-                ChildFamilyParticipation.objects.filter(date=childfamilyparticipation_date)
+                ChildFamilyParticipation.objects.filter(project__in=projects, date=childfamilyparticipation_date)
                 .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
             )
 
     reportDates = projects.filter(
-        reports__data__reportDate__isnull=False,
-    ).order_by('reports__data__reportDate').values_list('reports__data__reportDate', flat=True)[:1]
+        reports__date__isnull=False,
+    ).order_by('reports__date').values_list('reports__date', flat=True)[:1]
     reportDate = reportDates[0] if reportDates else None
 
     disability_qs = LanguagePeopleGroupDisability.objects.filter(project__in=projects)
