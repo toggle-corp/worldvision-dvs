@@ -125,7 +125,7 @@ const soiLegendData = [
     },
     {
         key: 'Closed On',
-        label: 'Closed On',
+        label: 'Closed On Time',
         color: '#c25be2',
     },
 ];
