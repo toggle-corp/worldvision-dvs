@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import memoize from 'memoize-one';
-
 import {
     _cs,
     isFalsy,
+    listToGroupList,
 } from '@togglecorp/fujs';
 
 import ListView from '#rscv/List/ListView';
@@ -57,28 +57,40 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
         };
     }
 
-    getLanguageDistribution = memoize((data = []) => {
+    getLanguageDistribution = memoize((data) => {
         if (isFalsy(data)) {
             return [];
         }
 
-        return data.sort((a, b) => b.count - a.count);
+        const grouped = listToGroupList(data, d => d.date);
+        const latestDate = Object.keys(grouped)
+            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a));
+
+        return grouped[latestDate];
     });
 
-    getPeopleGroupDistribution = memoize((data = []) => {
+    getPeopleGroupDistribution = memoize((data) => {
         if (isFalsy(data)) {
             return [];
         }
 
-        return data.sort((a, b) => b.count - a.count);
+        const grouped = listToGroupList(data, d => d.date);
+        const latestDate = Object.keys(grouped)
+            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a));
+
+        return grouped[latestDate];
     });
 
-    getDisabilityDistribution = memoize((data = []) => {
+    getDisabilityDistribution = memoize((data) => {
         if (isFalsy(data)) {
             return [];
         }
 
-        return data.sort((a, b) => b.count - a.count);
+        const grouped = listToGroupList(data, d => d.date);
+        const latestDate = Object.keys(grouped)
+            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a));
+
+        return grouped[latestDate];
     });
 
     languageParams = (key, data) => ({
@@ -121,6 +133,7 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
         const languageDistribution = this.getLanguageDistribution(language);
         const peopleGroupDistribution = this.getPeopleGroupDistribution(peopleGroup);
         const disabilityDistribution = this.getDisabilityDistribution(disability);
+
 
         return (
             <div className={_cs(className, styles.languagePeopleGroupDisability)}>
