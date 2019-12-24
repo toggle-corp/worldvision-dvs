@@ -606,7 +606,7 @@ class Report extends PureComponent {
                                     colorScheme={soiColorScheme}
                                 />
                                 <ListView
-                                    className={styles.table}
+                                    className={_cs(styles.table, styles.sso)}
                                     data={soiValues}
                                     rendererParams={this.soiParams}
                                     keySelector={Report.soiKeySelector}
