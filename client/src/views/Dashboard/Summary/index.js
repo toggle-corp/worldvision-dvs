@@ -214,7 +214,7 @@ export default class Summary extends PureComponent {
         ]);
     });
 
-    getRcData = memoize((rc, presenceAndParticipation) => {
+    getRcData = memoize((rc = [], presenceAndParticipation) => {
         const preAndPar = listToMap(
             presenceAndParticipation,
             d => d.key,
@@ -225,12 +225,12 @@ export default class Summary extends PureComponent {
             ...rc,
             {
                 key: 'totalRcDropped',
-                value: preAndPar[droppedKey].value,
+                value: (preAndPar[droppedKey] || {}).value,
                 label: 'Total RC Dropped',
             },
             {
                 key: 'totalRcTemporarilyAway',
-                value: preAndPar[rcAwayKey].value,
+                value: (preAndPar[rcAwayKey] || {}).value,
                 label: 'Total RC Temporarily Away',
             },
         ]);
