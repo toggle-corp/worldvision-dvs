@@ -151,7 +151,7 @@ const getChartData = (rawData) => {
 
             return Object.assign({ date }, ...filtered);
         },
-    );
+    ).sort((a, b) => (new Date(b.date) - new Date(a.date)));
 
     return values;
 };

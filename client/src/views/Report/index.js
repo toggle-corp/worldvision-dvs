@@ -205,7 +205,7 @@ class Report extends PureComponent {
                 'Total Closed': totalClosed,
                 'Closed On': closedOn,
             };
-        });
+        }).sort((a, b) => (new Date(b.date) - new Date(a.date)));
 
         return ({
             values,
