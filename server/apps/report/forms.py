@@ -121,7 +121,7 @@ class BulkImportForm(forms.Form):
         bulk_import_log = BulkImportReport.objects.create(
             report_type=model.__name__,
             # Provided params for import
-            generated_on=generated_on,
+            generated_on=generated_on if generated_on else None,
             file=request.FILES['file'],
             created_by=request.user,
         )
