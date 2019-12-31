@@ -58,19 +58,19 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
     }
 
     getLanguageDistribution = memoize((data) => {
-        if (isFalsy(data)) {
+        if (isFalsy(data) || data.length < 1) {
             return [];
         }
 
         const grouped = listToGroupList(data, d => d.date);
         const latestDate = Object.keys(grouped)
-            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a));
+            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a), null);
 
         return grouped[latestDate];
     });
 
     getPeopleGroupDistribution = memoize((data) => {
-        if (isFalsy(data)) {
+        if (isFalsy(data) || data.length < 1) {
             return [];
         }
 
@@ -82,7 +82,7 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
     });
 
     getDisabilityDistribution = memoize((data) => {
-        if (isFalsy(data)) {
+        if (isFalsy(data) || data.length < 1) {
             return [];
         }
 
