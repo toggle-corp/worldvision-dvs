@@ -157,10 +157,10 @@ class Report extends PureComponent {
     static defaultProps = defaultProps;
 
     static sizeSelector = (d) => {
-        if (d.name !== 'RC Supply') {
-            return d.size;
+        if (d.children) {
+            return 0;
         }
-        return null;
+        return d.size;
     };
 
     static valueSelector = d => d.value;
