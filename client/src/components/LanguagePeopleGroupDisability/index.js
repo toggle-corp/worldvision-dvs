@@ -64,7 +64,7 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
 
         const grouped = listToGroupList(data, d => d.date);
         const latestDate = Object.keys(grouped)
-            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a), null);
+            .reduce((a, b) => (new Date(b) < new Date(a) ? a : b), null);
 
         return grouped[latestDate];
     });
@@ -76,7 +76,7 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
 
         const grouped = listToGroupList(data, d => d.date);
         const latestDate = Object.keys(grouped)
-            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a));
+            .reduce((a, b) => (new Date(b) < new Date(a) ? a : b));
 
         return grouped[latestDate];
     });
@@ -88,7 +88,7 @@ export default class LanguagePeopleGroupDisability extends React.PureComponent {
 
         const grouped = listToGroupList(data, d => d.date);
         const latestDate = Object.keys(grouped)
-            .reduce((a, b) => (new Date(b) < new Date(a) ? b : a));
+            .reduce((a, b) => (new Date(b) < new Date(a) ? a : b));
 
         return grouped[latestDate];
     });

@@ -63,6 +63,9 @@ def extract(xml_data, generated_on):
                 continue
             increment(import_data[pj_number][type_value][gender], type_number)
 
+    # Clear older record for that date
+    CFP.objects.filter(date=generated_on).all().delete()
+
     for pj_number, participation_data in import_data.items():
         project = get_or_create_project(pj_number)
         for participation_type, gender_data in participation_data.items():

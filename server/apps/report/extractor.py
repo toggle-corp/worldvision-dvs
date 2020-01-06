@@ -59,12 +59,14 @@ def extract_health_nutrition(data):
        ('@HealthSatisfactory', 'good'),
        ('@HealthNotSatisfactory', 'bad'),
        ('@Below5Child', 'normal'),
-       ('@NotParticipatingHealthNutriActivities', 'normal'),
-       ('@NotVarifiedHealthGrowthCard', 'bad'),
        ('@NotFollowingGrowthCurve', 'bad'),
        ('@MUACSevereMalnutrition', 'bad'),
        ('@MUACModerateMalnutrition', 'bad'),
        ('@MUACPartiallyImmunized', 'normal'),
+
+       # TODO: Remove this from data also
+       ('@NotParticipatingHealthNutriActivities', 'normal'),
+       ('@NotVarifiedHealthGrowthCard', 'bad'),
     )
     return [
         {

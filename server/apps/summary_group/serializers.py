@@ -218,14 +218,16 @@ def get_projects_summary(qs, group_by_date=False):
     language_people_group_disability = {
         'language': disability_qs.values('date', 'language').annotate(
             count=Sum('count', distinct=True),
-        ).values('date', 'language', 'count'),
+        ).order_by('date', '-count', 'language').values('date', 'language', 'count'),
         # NOTE: Using list for djangorestframework-camel-case
-        'people_group': list(disability_qs.values('date', 'people_group').annotate(
-            count=Sum('count', distinct=True),
-        ).values('date', 'people_group', 'count')),
+        'people_group': list(
+            disability_qs.values('date', 'people_group').annotate(
+                count=Sum('count', distinct=True),
+            ).order_by('date', '-count', 'people_group').values('date', 'people_group', 'count')
+        ),
         'disability': disability_qs.values('date', 'disability').annotate(
             count=Sum('count', distinct=True),
-        ).values('date', 'disability', 'count'),
+        ).order_by('date', '-count', 'disability').values('date', 'disability', 'count'),
     }
 
     return {

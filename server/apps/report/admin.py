@@ -161,7 +161,7 @@ class ChildFamilyParticipation(ProjectSummaryAdmin):
 
 @admin.register(LanguagePeopleGroupDisability)
 class LanguagePeopleGroupDisability(ProjectSummaryAdmin):
-    pass
+    list_filter = ('language', 'people_group', 'disability')
 
 
 @admin.register(BulkImportReport)

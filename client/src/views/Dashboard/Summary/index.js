@@ -226,7 +226,7 @@ export default class Summary extends PureComponent {
             {
                 key: 'totalRcDropped',
                 value: (preAndPar[droppedKey] || {}).value,
-                label: 'Total RC Dropped',
+                label: 'Total RC Dropped in last 12 Months',
             },
             {
                 key: 'totalRcTemporarilyAway',

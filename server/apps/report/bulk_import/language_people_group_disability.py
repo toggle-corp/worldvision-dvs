@@ -28,6 +28,9 @@ def extract(csv_data, generated_on):
             (pj_number, language, people_group, disability)
         )
 
+    # Clear database for given date
+    LanguagePeopleGroupDisability.objects.filter(date=generated_on).all().delete()
+
     # Save Data to DB
     for pj_number, language_data in import_data.items():
         project = get_or_create_project(pj_number)

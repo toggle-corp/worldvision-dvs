@@ -45,6 +45,9 @@ def extract(xml_data, _generated_on):
                 gender = Gender.MALE if gender_str == 'M' else Gender.FEMALE
                 import_data[project_number][age_range][gender] += 1
 
+    # Clear records for that date
+    RegisterChildByAgeAndGender.objects.filter(date=generated_on).all().delete()
+
     for project_number, pj_data in import_data.items():
         project = get_or_create_project(project_number, name=projects_name[project_number])
         for age_range, ar_data in pj_data.items():
