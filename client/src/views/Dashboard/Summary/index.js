@@ -601,7 +601,6 @@ export default class Summary extends PureComponent {
                 <div className={styles.item}>
                     <LanguagePeopleGroupDisability
                         data={languagePeopleGroupDisability}
-                        hideLanguage
                     />
                 </div>
             </div>

@@ -96,6 +96,13 @@ const modifier = (element, key) => (
     }
 );
 
+
+const healthKeysToRemove = [
+    '@NotVarifiedHealthGrowthCard',
+    '@NotParticipatingHealthNutriActivities',
+];
+
+
 const requests = {
     reportGetRequest: {
         url: ({ props: { projectId } }) => `/projects-report/${projectId}/`,
@@ -368,6 +375,10 @@ class Report extends PureComponent {
         return healthDonut;
     })
 
+    getRemovedData = memoize((healthNutrition = [], keysToRemove) => (
+        healthNutrition.filter(c => keysToRemove.indexOf(c.key) === -1)
+    ))
+
     getCorrespondenceData = memoize((correspondences = []) => {
         const correspondencesTotal = correspondences.reduce((acc, d) => ({
             pendingCurrent: acc.pendingCurrent + d.pendingCurrent,
@@ -477,6 +488,7 @@ class Report extends PureComponent {
         } = this.getChildMonitoringData(childMonitoringFromProps);
 
         const healthDonut = this.getHealthDonutData(healthNutrition);
+        const healthNutritionFiltered = this.getRemovedData(healthNutrition, healthKeysToRemove);
         const correspondences = this.getCorrespondenceData(correspondencesFromProps);
         const flatEducationData = this.getFlatEducationData(education);
         const soiTrendData = this.getSoiTrendData(soi);
@@ -530,7 +542,7 @@ class Report extends PureComponent {
                                 <div className={styles.vizWrapper}>
                                     <ListView
                                         className={styles.table}
-                                        data={healthNutrition}
+                                        data={healthNutritionFiltered}
                                         rendererParams={this.tableRenderParams}
                                         keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
