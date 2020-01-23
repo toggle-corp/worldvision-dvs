@@ -146,7 +146,7 @@ class ProjectSOI(ProjectSummaryAdmin):
 
 @admin.register(RegisterChildByAgeAndGender)
 class RegisterChildByAgeAndGender(ProjectSummaryAdmin):
-    list_filter = ('age_range', 'gender')
+    list_filter = ('age', 'gender')
 
 
 @admin.register(PresenceAndParticipation)

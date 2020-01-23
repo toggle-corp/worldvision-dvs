@@ -79,30 +79,12 @@ class ProjectSOI(ProjectSummaryModel):
 
 
 class RegisterChildByAgeAndGender(ProjectSummaryModel):
-    ZERO_TO_SIX = '<=6'
-    SEVEN_TO_TWELVE = '7-12'
-    THIRTEEN_OR_ABOVE = '>=13'
-    AGE_RANGE_CHOICES = (
-        (ZERO_TO_SIX, '<=6'),
-        (SEVEN_TO_TWELVE, '7-12'),
-        (THIRTEEN_OR_ABOVE, '>=13'),
-    )
-
-    age_range = models.CharField(max_length=10, choices=AGE_RANGE_CHOICES)
+    age = models.IntegerField()
     gender = models.CharField(max_length=10, choices=Gender.CHOICES)
     count = models.IntegerField(default=0)
 
-    @classmethod
-    def get_range_for_age(cls, _age):
-        age = int(_age)
-        if age <= 6:
-            return cls.ZERO_TO_SIX
-        elif age >= 7 and age <= 12:
-            return cls.SEVEN_TO_TWELVE
-        return cls.THIRTEEN_OR_ABOVE
-
     class Meta:
-        unique_together = ('project', 'date', 'age_range', 'gender',)
+        unique_together = ('project', 'date', 'age', 'gender',)
 
 
 class PresenceAndParticipation(ProjectSummaryModel):

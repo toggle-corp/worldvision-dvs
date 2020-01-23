@@ -31,8 +31,7 @@ def extract(xml_data, _generated_on):
             # Sample string 'Age in Years : 1 Years'
             age = convert_to_int(age_datum['@Age'].split(':')[1].replace('Years', ''))
             children_data = age_datum['Details_Collection']['Details']
-            age_range = RegisterChildByAgeAndGender.get_range_for_age(age)
-            import_data[project_number][age_range] = import_data[project_number].get(age_range, {
+            import_data[project_number][age] = import_data[project_number].get(age, {
                 Gender.MALE: 0,
                 Gender.FEMALE: 0,
             })
@@ -43,19 +42,19 @@ def extract(xml_data, _generated_on):
                 # Sample string 'F - Female'
                 gender_str = child['@Gender'].strip()[0]
                 gender = Gender.MALE if gender_str == 'M' else Gender.FEMALE
-                import_data[project_number][age_range][gender] += 1
+                import_data[project_number][age][gender] += 1
 
     # Clear records for that date
     RegisterChildByAgeAndGender.objects.filter(date=generated_on).all().delete()
 
     for project_number, pj_data in import_data.items():
         project = get_or_create_project(project_number, name=projects_name[project_number])
-        for age_range, ar_data in pj_data.items():
+        for age, ar_data in pj_data.items():
             for gender, count in ar_data.items():
                 rcag, _ = RegisterChildByAgeAndGender.objects.get_or_create(
                     date=generated_on,
                     project=project,
-                    age_range=age_range,
+                    age=age,
                     gender=gender,
                 )
                 rcag.count = count

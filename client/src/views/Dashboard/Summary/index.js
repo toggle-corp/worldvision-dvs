@@ -41,18 +41,9 @@ const droppedKey = 'total_no_of_rc_records_dropped_during_the_month';
 const rcAwayKey = 'total_rc_temporarily_away';
 
 const ageKeyMap = {
-    '<=6': {
-        key: 1,
-        label: '0 - 6',
-    },
-    '7-12': {
-        key: 2,
-        label: '7 - 12',
-    },
-    '>=13': {
-        key: 3,
-        label: '13+',
-    },
+    '<=6': '0 - 6',
+    '7-12': '7 - 12',
+    '13-18': '13 - 18',
 };
 
 const soiLegendData = [
@@ -91,15 +82,19 @@ const getPercent = (data) => {
         ...d,
     }));
 };
-const getParticipationKey = p => (p > 3 ? '4+' : String(p));
+const getParticipationKey = p => (p > 2 ? '3+' : String(p));
 
 const getAgeDistribution = (data) => {
-    const distribution = data.map((value) => {
-        const { ageRange, countSum } = value;
-        const { key, label } = ageKeyMap[ageRange];
+    if (isFalsy(data)) {
+        return [];
+    }
 
-        return { key, label, value: countSum };
-    });
+    const ageRanges = Object.keys(data).filter(k => k !== 'gender');
+    const distribution = ageRanges.map(ageRange => ({
+        key: ageRange,
+        label: ageKeyMap[ageRange] || ageRange,
+        value: data[ageRange],
+    }));
 
     const sorted = [
         ...distribution,
@@ -377,7 +372,7 @@ export default class Summary extends PureComponent {
         }
 
         const female = data.filter(rc => rc.gender === 'female');
-        return getAgeDistribution(female);
+        return getAgeDistribution(female[0]);
     });
 
     getMaleRcAge = memoize((data) => {
@@ -386,7 +381,7 @@ export default class Summary extends PureComponent {
         }
 
         const male = data.filter(rc => rc.gender === 'male');
-        return getAgeDistribution(male);
+        return getAgeDistribution(male[0]);
     });
 
     render() {

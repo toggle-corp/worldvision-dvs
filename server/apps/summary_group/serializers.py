@@ -1,4 +1,4 @@
-from django.db.models import Prefetch, Sum
+from django.db.models import Prefetch, Sum, Q
 from rest_framework import serializers
 
 from report.report_fields import LABELS
@@ -167,16 +167,24 @@ def get_projects_summary(qs, group_by_date=False):
                 for key in data:
                     increment_obj_field(data, key, getattr(instance, key), date)
 
+    registerchildbyageandgender_annotate = {
+        '<=6': Sum('count', filter=Q(age__lte=6)),
+        '7-12': Sum('count', filter=Q(age__gt=6, age__lte=12)),
+        '13-18': Sum('count', filter=Q(age__gt=12, age__lte=18)),
+        '18+': Sum('count', filter=Q(age__gt=18)),
+    }
     registerchildbyageandgender = []
     childfamilyparticipation = []
     if group_by_date:
-        fields = ('age_range', 'gender', 'date__year', 'date__month',)
+        fields = ('date__year', 'date__month', 'gender')
         query = RegisterChildByAgeAndGender.objects.filter(
             project__in=projects,
         ).order_by(*fields).values(*fields).annotate(
-            count_sum=Sum('count')
-        ).values(*fields, 'count_sum')
-        registerchildbyageandgender = _add_date_to_query(query, fields[:2])
+            **registerchildbyageandgender_annotate,
+        ).values(*fields, *registerchildbyageandgender_annotate.keys())
+        registerchildbyageandgender = _add_date_to_query(
+            query, ['gender', *registerchildbyageandgender_annotate.keys()]
+        )
 
         fields = ('type', 'participation', 'gender', 'date__year', 'date__month',)
         query = ChildFamilyParticipation.objects.filter(
@@ -195,10 +203,12 @@ def get_projects_summary(qs, group_by_date=False):
 
         if registerchildbyageandgenderdates:
             date = registerchildbyageandgenderdates[0]
-            fields = ('age_range', 'gender',)
+            fields = ('gender',)
             registerchildbyageandgender = list(
                 RegisterChildByAgeAndGender.objects.filter(project__in=projects, date=date)
-                .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
+                .order_by(*fields).values(*fields).annotate(
+                    **registerchildbyageandgender_annotate,
+                ).values(*fields, *registerchildbyageandgender_annotate.keys())
             )
 
         if childfamilyparticipationdates:
