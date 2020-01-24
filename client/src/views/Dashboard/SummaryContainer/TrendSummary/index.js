@@ -67,8 +67,8 @@ const rcLegendData = [
 
 const childMonitoringLegendData = [
     {
-        key: 'Not Sighted Less than 90 Days',
-        label: 'Not Sighted Less than 90 Days',
+        key: 'Sighted Less than 90 Days',
+        label: 'Sighted Less than 90 Days',
         color: '#44df96',
     },
     {
@@ -163,7 +163,7 @@ const transformChildMonitoring = (values) => {
             ...others
         } = value;
 
-        return { ...others, 'Not Sighted Less than 90 Days': (lessThanSixty + lessThanNinety) };
+        return { ...others, 'Sighted Less than 90 Days': (lessThanSixty + lessThanNinety) };
     });
 
     return transformedValues;
@@ -233,11 +233,11 @@ class TrendSummary extends React.PureComponent {
         return ({
             values,
             columns: [
-                'Not Sighted Less than 90 Days',
+                'Sighted Less than 90 Days',
                 'Not Sighted More than 90 Days',
             ],
             colors: {
-                'Not Sighted Less than 90 Days': '#44df96',
+                'Sighted Less than 90 Days': '#44df96',
                 'Not Sighted More than 90 Days': '#c25be2',
             },
         });
