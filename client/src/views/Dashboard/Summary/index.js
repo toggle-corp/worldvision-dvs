@@ -202,7 +202,7 @@ export default class Summary extends PureComponent {
             ...childData,
             {
                 key: '@cms',
-                label: 'CMS',
+                label: 'CMS Rating',
                 value: (total - notsighted),
                 percent: +percent.toFixed(2),
             },
@@ -313,17 +313,21 @@ export default class Summary extends PureComponent {
             key: 'PrimaryEducated',
             value: this.getValueFromMap(educationMap, '@PrimarySchoolAgeFormal') || 0
                 + this.getValueFromMap(educationMap, '@PrimarySchoolAgeNonFormal') || 0,
-            label: 'Number of Primary School Age RC Involved in Education',
+            label: 'Primary School Age RC Involved in Education',
         };
 
-        const primaryUneducated = educationMap['@PrimarySchoolAgeNoEducation'];
+        const primaryUneducated = {
+            key: 'PrimaryEducated',
+            value: this.getValueFromMap(educationMap, '@PrimarySchoolAgeNoEducation') || 0,
+            label: 'Primary School Age RC Not Involved in Education',
+        };
 
         const secondaryEducated = {
             key: 'SecondaryEducated',
             value: this.getValueFromMap(educationMap, '@SecondarySchoolAgeFormal') || 0
                 + this.getValueFromMap(educationMap, '@SecondarySchoolAgeNonFormal') || 0
                 + this.getValueFromMap(educationMap, '@SecondarySchoolAgeVocational') || 0,
-            label: 'Number of Secondary School Age RC Involved in Education',
+            label: 'Secondary School Age RC Involved in Education',
         };
         const secondaryUneducated = educationMap['@SecondarySchoolAgeNoEducation'];
 
@@ -388,7 +392,6 @@ export default class Summary extends PureComponent {
         const {
             className,
             summary: {
-                childFamilyParticipationDate,
                 rc,
                 childMonitoring,
                 education,
@@ -400,7 +403,12 @@ export default class Summary extends PureComponent {
                 languagePeopleGroupDisability,
             },
             noOfProjects,
-            siteSettings,
+            siteSettings: {
+                startDate,
+                endDate,
+                childFamilyStartDate,
+                childFamilyEndDate,
+            },
         } = this.props;
 
         const soiTotal = soi ? (soi.find(s => s.key === 'total_closed') || {}).value || 0 : 0;
@@ -429,13 +437,13 @@ export default class Summary extends PureComponent {
                     {infoText}
                     <FormattedDate
                         className={styles.date}
-                        date={siteSettings.startDate}
+                        date={startDate}
                         mode="dd-MMM-yyyy"
                     />
                     to
                     <FormattedDate
                         className={styles.date}
-                        date={siteSettings.endDate}
+                        date={endDate}
                         mode="dd-MMM-yyyy"
                     />
                 </span>
@@ -494,7 +502,7 @@ export default class Summary extends PureComponent {
                     </div>
                 </div>
                 <div className={styles.item}>
-                    <h3>Child Monitoring</h3>
+                    <h3>Child Monitoring Status</h3>
                     <div className={styles.itemTableViz}>
                         <DonutChart
                             className={styles.viz}
@@ -520,7 +528,7 @@ export default class Summary extends PureComponent {
                     </div>
                 </div>
                 <div className={_cs(styles.item, styles.soiIndex)}>
-                    <h3>SOI Index</h3>
+                    <h3>Service Operation Indicator Index</h3>
                     <div className={styles.itemTableViz}>
                         <GaugeChart
                             className={styles.viz}
@@ -551,9 +559,14 @@ export default class Summary extends PureComponent {
                         Child Family Participation Suppport Benificiaries (
                         <FormattedDate
                             className={styles.date}
-                            date={childFamilyParticipationDate}
+                            date={childFamilyStartDate}
                             mode="dd-MMM-yyyy"
-
+                        />
+                        to
+                        <FormattedDate
+                            className={styles.date}
+                            date={childFamilyEndDate}
+                            mode="dd-MMM-yyyy"
                         />
                         )
                     </h3>
