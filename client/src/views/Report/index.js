@@ -152,7 +152,7 @@ const transformSoi = (soiData) => {
             value: closedOn,
         },
         {
-            label: 'Rating',
+            label: 'SOI Rating',
             value: (closedOn / totalClosed) * 100,
         },
     ]);
@@ -327,7 +327,7 @@ class Report extends PureComponent {
             ...childMonitoring,
             {
                 key: '@cms',
-                name: 'CMS',
+                name: 'CMS Rating',
                 value: (total - notsighted),
                 percent: +percent.toFixed(2),
             },
@@ -516,7 +516,7 @@ class Report extends PureComponent {
                         />
                         <div className={styles.tableContainer}>
                             <div className={styles.item}>
-                                <h3>Child Monitoring</h3>
+                                <h3>Child Monitoring Status</h3>
                                 <div className={styles.vizWrapper}>
                                     <ListView
                                         className={styles.table}

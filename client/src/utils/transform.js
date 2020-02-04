@@ -17,7 +17,7 @@ export const transformSoi = (soiData) => {
         {
             key: 'percent',
             value: percent || 0,
-            label: 'Rating',
+            label: 'SOI Rating',
         },
     ]);
 };
