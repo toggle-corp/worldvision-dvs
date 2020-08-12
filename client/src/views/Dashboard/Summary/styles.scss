@@ -54,6 +54,18 @@
             padding: 0 var(--spacing-small);
         }
 
+        .within-tolerance {
+            color: var(--color-success);
+        }
+
+        .out-of-tolerance {
+            color: var(--color-danger);
+        }
+
+        .child-marriage {
+            width: 100%;
+        }
+
         .table {
             display: table;
             width: 100%;

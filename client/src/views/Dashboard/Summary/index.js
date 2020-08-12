@@ -156,6 +156,28 @@ export default class Summary extends PureComponent {
         });
     }
 
+    rcParams = (key, data, _, allData) => {
+        const isActual = key === 'totalRc';
+        if (isActual) {
+            const { planned = 0, totalRc = 0 } = listToMap(allData, d => d.key, d => d.value);
+            const isWithinTolerance = Math.abs(planned - totalRc) < planned * 0.02;
+            const className = isWithinTolerance
+                ? styles.withinTolerance : styles.outOfTolerance;
+
+            return ({
+                title: data.label,
+                value: data.value,
+                className,
+                colorOnlyNumber: false,
+            });
+        }
+
+        return ({
+            title: data.label,
+            value: data.value,
+        });
+    }
+
     tableParams = (key, data) => {
         const isSoi = key === 'soi';
         const isPercent = key === 'percent';
@@ -401,6 +423,7 @@ export default class Summary extends PureComponent {
                 healthNutrition,
                 childFamilyParticipation,
                 languagePeopleGroupDisability,
+                totalChildMarriageCount,
             },
             noOfProjects,
             siteSettings: {
@@ -452,7 +475,7 @@ export default class Summary extends PureComponent {
                     <ListView
                         className={styles.table}
                         data={rcData}
-                        rendererParams={this.tableParams}
+                        rendererParams={this.rcParams}
                         keySelector={Summary.tableKeySelector}
                         renderer={KeyValue}
                     />
@@ -552,6 +575,16 @@ export default class Summary extends PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
+                    />
+                </div>
+                <div className={styles.item}>
+                    <h3>
+                        Child Marriage Count
+                    </h3>
+                    <KeyValue
+                        className={styles.childMarriage}
+                        value={totalChildMarriageCount}
+                        title="Total Child Marriage Count"
                     />
                 </div>
                 <div className={styles.item}>
