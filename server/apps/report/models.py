@@ -97,6 +97,8 @@ class ChildFamilyParticipation(ProjectSummaryModel):
     FAMILY_PARTICIPATION = 'family_participation'
     CHILD_SUPPORT = 'child_support'
     FAMILY_SUPPORT = 'family_support'
+    BENEFIT_SUPPORT = 'benefit_support'
+
     TYPE_CHOICES = (
         # Participation
         (CHILD_PARTICIPATION, 'Child Participation'),
@@ -104,6 +106,7 @@ class ChildFamilyParticipation(ProjectSummaryModel):
         # Support
         (CHILD_SUPPORT, 'Child Support'),
         (FAMILY_SUPPORT, 'Family Support'),
+        (BENEFIT_SUPPORT, 'Benefit Support'),
     )
 
     type = models.CharField(max_length=30, choices=TYPE_CHOICES)

@@ -15,6 +15,7 @@ INITIAL_PARTICIPATION = {
     CFP.FAMILY_PARTICIPATION: copy.deepcopy(TYPE_INITIAL),
     CFP.CHILD_SUPPORT: copy.deepcopy(TYPE_INITIAL),
     CFP.FAMILY_SUPPORT: copy.deepcopy(TYPE_INITIAL),
+    CFP.BENEFIT_SUPPORT: copy.deepcopy(TYPE_INITIAL),
 }
 
 
@@ -49,6 +50,7 @@ def extract(xml_data, generated_on):
         family_participation = convert_to_int(pj_data['@FamilyParticipation'])
         child_support = convert_to_int(pj_data['@ChildSupport'])
         family_support = convert_to_int(pj_data['@FamilySupport'])
+        benefit_support = convert_to_int(pj_data['@BenefitSupport'])
 
         if import_data.get(pj_number) is None:
             import_data[pj_number] = copy.deepcopy(INITIAL_PARTICIPATION)
@@ -58,6 +60,7 @@ def extract(xml_data, generated_on):
                 (CFP.FAMILY_PARTICIPATION, family_participation),
                 (CFP.CHILD_SUPPORT, child_support),
                 (CFP.FAMILY_SUPPORT, family_support),
+                (CFP.BENEFIT_SUPPORT, benefit_support),
         ]:
             if type_number == 0:
                 continue

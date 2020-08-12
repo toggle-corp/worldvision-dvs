@@ -133,6 +133,8 @@ def get_projects_summary(qs, group_by_date=False):
     rc = initial_dict(rc_fields)
     soi = initial_dict(soi_fields)
     presenceandparticipation = initial_dict(presenceandparticipation_fields)
+    total_child_marriage_count = qs.aggregate(
+        total_child_marriage_count=Sum('child_marriage_count'))['total_child_marriage_count']
 
     projects = qs.prefetch_related(
         Prefetch('reports', queryset=Report.objects.order_by('-date')),
@@ -242,6 +244,7 @@ def get_projects_summary(qs, group_by_date=False):
 
     return {
         'report_date': reportDate,
+        'total_child_marriage_count': total_child_marriage_count,
         'child_monitoring': normalize(child_monitoring_fields, child_monitoring),
         'health_nutrition': normalize(health_nutrition_fields, health_nutrition),
         'correspondences': normalize(correspondences_fields, correspondences),

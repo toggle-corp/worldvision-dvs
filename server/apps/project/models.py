@@ -46,6 +46,8 @@ class Project(models.Model):
     long = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
+    child_marriage_count = models.IntegerField(default=0)
+
     def __str__(self):
         return f'{self.name} - {self.number}'
 
