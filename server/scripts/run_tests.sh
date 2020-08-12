@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/bin/bash -xe
 
-set -xe
 /code/scripts/wait-for-it.sh db:5432
 
 # python manage.py test -v 3
