@@ -26,7 +26,7 @@ script:
     REACT_APP_MAPBOX_STYLE=${REACT_APP_MAPBOX_STYLE}
     " > .env
     # Instead of Test
-  - docker-compose run --rm client bash -c 'rsync -a --stats --ignore-existing /node_modules /code/ && CI=false yarn build'
+  - docker-compose run --rm client bash -c 'rsync -a --stats --ignore-existing /node_modules /code/ && yarn install && CI=false yarn build'
 
 after_success:
   - docker-compose push
