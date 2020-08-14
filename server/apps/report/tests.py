@@ -17,6 +17,7 @@ from report.models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
 )
 
 
@@ -25,6 +26,7 @@ MODEL_API_URLS = {
     RegisterChildByAgeAndGender: '/api/v1/register-childs-by-age-and-gender/',
     PresenceAndParticipation: '/api/v1/presence-and-participations/',
     ChildFamilyParticipation: '/api/v1/child-family-participations/',
+    SupportPariticipationDetail: '/api/v1/support-patricipation-details/',
     LanguagePeopleGroupDisability: '/api/v1/project-language-people-group-disabilities/{}/',
 }
 
@@ -33,6 +35,7 @@ TEST_DOC_FILES = {
     RegisterChildByAgeAndGender: 'RegisteredChildrenListAgeGender.xml',
     PresenceAndParticipation: 'PresenceParticipationSummaryNO.xml',
     ChildFamilyParticipation: 'ChildFamilyParticipationSupportCountReport.xml',
+    SupportPariticipationDetail: 'SupportParticipationDetails.csv',
     LanguagePeopleGroupDisability: 'NPL_REPORT.csv',
 }
 

@@ -34,16 +34,19 @@ def extract(csv_data, _):
     # Save Data to DB
     for pj_number, language_data in import_data.items():
         project = get_or_create_project(pj_number)
-        for p_type, p_type_data in language_data.items():
-            for comment, comment_data in p_type_data.items():
-                for p_date, count in comment_data.items():
-                    if count == 0:
-                        continue
-                    sppd, _ = SupportPariticipationDetail.objects.get_or_create(
-                        project=project,
-                        date=p_date,
-                        type=p_type,
-                        comment=comment,
-                    )
-                    sppd.count = count
-                    sppd.save()
+        for p_type, comment, p_date, count in [
+            (p_type, comment, p_date, count)
+            for p_type, p_type_data in language_data.items()
+            for comment, comment_data in p_type_data.items()
+            for p_date, count in comment_data.items()
+        ]:
+            if count == 0:
+                continue
+            sppd, _ = SupportPariticipationDetail.objects.get_or_create(
+                project=project,
+                date=p_date,
+                type=p_type,
+                comment=comment,
+            )
+            sppd.count = count
+            sppd.save()
