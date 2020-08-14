@@ -19,14 +19,17 @@ from .models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
+
     BulkImportReport,
 )
 from .bulk_import import (
     SOI,
-    child_family_participation,
-    presence_and_participation,
-    register_child_by_age_and_gender,
-    language_people_group_disability,
+    child_family_participation as child_family_participation_importer,
+    presence_and_participation as presence_and_participation_importer,
+    register_child_by_age_and_gender as register_child_by_age_and_gender_importer,
+    language_people_group_disability as language_people_group_disability_importer,
+    support_pariticipation_detail as support_pariticipation_detail_importer,
 )
 from .utils import delete_file
 
@@ -34,22 +37,29 @@ logger = logging.getLogger(__name__)
 
 BULK_IMPORTER = {
     ProjectSOI: SOI,
-    RegisterChildByAgeAndGender: register_child_by_age_and_gender,
-    PresenceAndParticipation: presence_and_participation,
-    ChildFamilyParticipation: child_family_participation,
-    LanguagePeopleGroupDisability: language_people_group_disability,
+    RegisterChildByAgeAndGender: register_child_by_age_and_gender_importer,
+    PresenceAndParticipation: presence_and_participation_importer,
+    ChildFamilyParticipation: child_family_participation_importer,
+    LanguagePeopleGroupDisability: language_people_group_disability_importer,
+    SupportPariticipationDetail: support_pariticipation_detail_importer,
 }
 
-# where user needs to provide the data information
+# where user needs to provide the data information (else it's optional but will be used if provided)
 DATE_REQUIRED_MODELS = [
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
 ]
 
-# where the import files should be CSV (instead of xlm)
+# Where this is no necessicty for date field from user (date isn't used)
+DATE_NOT_REQUIRED_MODELS = [
+    SupportPariticipationDetail,
+]
+
+# where the import files should be CSV (instead of xml)
 CSV_IMPORT_MODELS = [
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
 ]
 
 
@@ -109,7 +119,9 @@ class BulkImportForm(forms.Form):
         bulk_model = kwargs.pop('bulk_model', 0)
 
         super().__init__(*args, **kwargs)
-        if bulk_model in DATE_REQUIRED_MODELS:
+        if bulk_model in DATE_NOT_REQUIRED_MODELS:
+            self.fields['generated_on'].widget = forms.HiddenInput()
+        elif bulk_model in DATE_REQUIRED_MODELS:
             self.fields['generated_on'].required = True
             self.fields['generated_on'].help_text = 'Required'
         if bulk_model in CSV_IMPORT_MODELS:
@@ -126,6 +138,7 @@ class BulkImportForm(forms.Form):
             created_by=request.user,
         )
         try:
+            file.seek(0)
             if model in CSV_IMPORT_MODELS:
                 raw_data = csv.DictReader(
                     io.StringIO(file.read().decode('utf-8', errors='ignore')),

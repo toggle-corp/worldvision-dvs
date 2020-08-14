@@ -19,6 +19,8 @@ from .models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
+
     BulkImportReport,
 )
 from .forms import ReportAdminForm, BulkImportForm
@@ -140,28 +142,33 @@ class ProjectSummaryAdmin(ModelAdmin):
 
 
 @admin.register(ProjectSOI)
-class ProjectSOI(ProjectSummaryAdmin):
+class ProjectSOIAdmin(ProjectSummaryAdmin):
     pass
 
 
 @admin.register(RegisterChildByAgeAndGender)
-class RegisterChildByAgeAndGender(ProjectSummaryAdmin):
+class RegisterChildByAgeAndGenderAdmin(ProjectSummaryAdmin):
     list_filter = ('age', 'gender')
 
 
 @admin.register(PresenceAndParticipation)
-class PresenceAndParticipation(ProjectSummaryAdmin):
+class PresenceAndParticipationAdmin(ProjectSummaryAdmin):
     pass
 
 
 @admin.register(ChildFamilyParticipation)
-class ChildFamilyParticipation(ProjectSummaryAdmin):
+class ChildFamilyParticipationAdmin(ProjectSummaryAdmin):
     pass
 
 
 @admin.register(LanguagePeopleGroupDisability)
-class LanguagePeopleGroupDisability(ProjectSummaryAdmin):
+class LanguagePeopleGroupDisabilityAdmin(ProjectSummaryAdmin):
     list_filter = ('language', 'people_group', 'disability')
+
+
+@admin.register(SupportPariticipationDetail)
+class SupportPariticipationDetailAdmin(ProjectSummaryAdmin):
+    list_filter = ('type', 'comment',)
 
 
 @admin.register(BulkImportReport)

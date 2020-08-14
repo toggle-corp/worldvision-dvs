@@ -16,6 +16,12 @@ class MunicipalitySerializer(serializers.ModelSerializer):
         fields = ('name', 'code')
 
 
+class MiniProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'name',)
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     rc_data = serializers.SerializerMethodField()
     district = DistrictSerializer()

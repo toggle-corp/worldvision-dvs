@@ -9,6 +9,7 @@ from report.models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
 )
 from .models import SummaryGroup
 
@@ -177,6 +178,7 @@ def get_projects_summary(qs, group_by_date=False):
     }
     registerchildbyageandgender = []
     childfamilyparticipation = []
+    support_pariticipation_detail = []
     if group_by_date:
         fields = ('date__year', 'date__month', 'gender')
         query = RegisterChildByAgeAndGender.objects.filter(
@@ -195,11 +197,22 @@ def get_projects_summary(qs, group_by_date=False):
             count_sum=Sum('count')
         ).values(*fields, 'count_sum')
         childfamilyparticipation = _add_date_to_query(query, fields[:3])
+
+        fields = ('type', 'comment', 'date__year', 'date__month',)
+        query = SupportPariticipationDetail.objects.filter(
+            project__in=projects,
+        ).order_by(*fields).values(*fields).annotate(
+            count_sum=Sum('count'),
+        ).values(*fields, 'count_sum')
+        support_pariticipation_detail = _add_date_to_query(query, fields[:2])
     else:
         registerchildbyageandgenderdates = RegisterChildByAgeAndGender.objects.filter(
             project__in=projects,
         ).order_by('-date').values_list('date', flat=True)[:1]
         childfamilyparticipationdates = ChildFamilyParticipation.objects.filter(
+            project__in=projects,
+        ).order_by('-date').values_list('date', flat=True)[:1]
+        supportpariticipationdetaildates = SupportPariticipationDetail.objects.filter(
             project__in=projects,
         ).order_by('-date').values_list('date', flat=True)[:1]
 
@@ -218,6 +231,14 @@ def get_projects_summary(qs, group_by_date=False):
             fields = ('type', 'participation', 'gender')
             childfamilyparticipation = list(
                 ChildFamilyParticipation.objects.filter(project__in=projects, date=childfamilyparticipation_date)
+                .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
+            )
+
+        if supportpariticipationdetaildates:
+            supportpariticipationdetail_date = supportpariticipationdetaildates[0]
+            fields = ('type', 'comment',)
+            support_pariticipation_detail = list(
+                SupportPariticipationDetail.objects.filter(project__in=projects, date=supportpariticipationdetail_date)
                 .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
             )
 
@@ -258,6 +279,7 @@ def get_projects_summary(qs, group_by_date=False):
         ),
         'child_family_participation': childfamilyparticipation,
         'language_people_group_disability': language_people_group_disability,
+        'support_pariticipation_detail': support_pariticipation_detail,
     }
 
 

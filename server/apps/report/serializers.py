@@ -9,36 +9,49 @@ from report.models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
 )
 
+from project.serializers import MiniProjectSerializer
 
-class ReportSerializer(serializers.ModelSerializer):
+
+class BaseSerializer(serializers.ModelSerializer):
+    project_detail = MiniProjectSerializer(source='project', read_only=True)
+
+
+class ReportSerializer(BaseSerializer):
     class Meta:
         model = Report
         fields = '__all__'
 
 
-class ProjectSOISerializer(serializers.ModelSerializer):
+class ProjectSOISerializer(BaseSerializer):
     class Meta:
         model = ProjectSOI
         fields = '__all__'
 
 
-class RegisterChildByAgeAndGenderSerializer(serializers.ModelSerializer):
+class RegisterChildByAgeAndGenderSerializer(BaseSerializer):
     class Meta:
         model = RegisterChildByAgeAndGender
         fields = '__all__'
 
 
-class PresenceAndParticipationSerializer(serializers.ModelSerializer):
+class PresenceAndParticipationSerializer(BaseSerializer):
     class Meta:
         model = PresenceAndParticipation
         fields = '__all__'
 
 
-class ChildFamilyParticipationSerializer(serializers.ModelSerializer):
+class ChildFamilyParticipationSerializer(BaseSerializer):
     class Meta:
         model = ChildFamilyParticipation
+        fields = '__all__'
+
+
+class SupportPariticipationDetailSerializer(BaseSerializer):
+    class Meta:
+        model = SupportPariticipationDetail
         fields = '__all__'
 
 
