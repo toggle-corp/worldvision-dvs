@@ -25,7 +25,6 @@ import {
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
 import HorizontalBar from '#rscz/HorizontalBar';
-import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import GaugeChart from '#rscz/GaugeChart';
@@ -43,6 +42,8 @@ import {
     triColorScheme,
     biColorScheme,
 } from './report-utils';
+
+import DonutChartReCharts from './DonutChart.js';
 
 import styles from './styles.scss';
 
@@ -525,16 +526,12 @@ class Report extends PureComponent {
                                         keySelector={Report.childKeySelector}
                                         renderer={KeyValue}
                                     />
-                                    <DonutChart
-                                        className={styles.viz}
-                                        sideLengthRatio={0.2}
-                                        data={childDonutData}
-                                        hideLabel
-                                        valueSelector={Report.valueSelector}
-                                        labelSelector={Report.labelSelector}
-                                        labelModifier={Report.labelModifierSelector}
-                                        colorScheme={triColorScheme}
-                                    />
+                                    <div className={styles.viz}>
+                                        <DonutChartReCharts
+                                            data={childDonutData}
+                                            colorScheme={triColorScheme}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.item}>
@@ -547,16 +544,12 @@ class Report extends PureComponent {
                                         keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
                                     />
-                                    <DonutChart
-                                        className={styles.viz}
-                                        hideLabel
-                                        sideLengthRatio={0.2}
-                                        data={healthDonut}
-                                        valueSelector={Report.valueSelector}
-                                        labelSelector={Report.labelSelector}
-                                        labelModifier={Report.labelModifierSelector}
-                                        colorScheme={biColorScheme}
-                                    />
+                                    <div className={styles.viz}>
+                                        <DonutChartReCharts
+                                            data={healthDonut}
+                                            colorScheme={biColorScheme}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

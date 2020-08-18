@@ -187,7 +187,7 @@
 
                 .viz {
                     flex-grow: 1;
-                    margin-left: -var(--spacing-medium);
+                    margin-left: -var(--spacing-extra-large);
                 }
 
                 .table {
@@ -233,6 +233,7 @@
 
                         .viz {
                             height: 180px;
+                            margin-left:  var(--spacing-extra-large);
                         }
                     }
                 }
