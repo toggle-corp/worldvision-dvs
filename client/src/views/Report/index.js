@@ -44,7 +44,7 @@ import {
 } from './report-utils';
 
 import DonutChartReCharts from './DonutChart.js';
-
+import HorizontalBarRecharts from './HorizontalBar.js';
 import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
@@ -558,7 +558,7 @@ class Report extends PureComponent {
                         <div className={styles.item}>
                             <h3>RC Data</h3>
                             <div className={styles.vizContainer}>
-                                <HorizontalBar
+                                {/* <HorizontalBar
                                     className={styles.viz}
                                     data={remoteChildren}
                                     valueSelector={Report.valueSelector}
@@ -566,6 +566,10 @@ class Report extends PureComponent {
                                     showGridLines={false}
                                     colorScheme={horizontalBarColorScheme}
                                     margins={horizontalBarMargin}
+                                /> */}
+                                <HorizontalBarRecharts
+                                    data={remoteChildren}
+                                    colorScheme={horizontalBarColorScheme}
                                 />
                             </div>
                         </div>

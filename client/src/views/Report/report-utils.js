@@ -7,6 +7,7 @@ export const horizontalBarColorScheme = [
     '#28859f',
     '#22769e',
     '#1e699e',
+    '#41c9a2',
 ];
 
 export const horizontalBarMargin = {
