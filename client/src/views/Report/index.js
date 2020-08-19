@@ -45,6 +45,8 @@ import {
 
 import DonutChartReCharts from './DonutChart.js';
 import HorizontalBarRecharts from './HorizontalBar.js';
+import GroupedBarChartRecharts from './GroupedBarChart.js';
+
 import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
@@ -622,17 +624,21 @@ class Report extends PureComponent {
                                     renderer={KeyValue}
                                 />
                                 <h3> SOI Trend </h3>
-                                <GroupedBarChart
+                                <GroupedBarChartRecharts
+                                    data={soiTrendData}
+                                />
+                                {/* <GroupedBarChart
                                     className={styles.viz}
                                     data={soiTrendData}
                                     groupSelector={soiGroupSelector}
                                 />
+
                                 <Legend
                                     data={soiLegendData}
                                     keySelector={legendKeySelector}
                                     labelSelector={legendLabelSelector}
                                     colorSelector={legendColorSelector}
-                                />
+                                /> */}
                             </div>
                         </div>
                         <div className={_cs(styles.item, styles.language)}>

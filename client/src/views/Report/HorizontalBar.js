@@ -14,7 +14,7 @@ export default function HorizontalBar(props) {
     return (
         <ResponsiveContainer
             height={350}
-            width={350}
+            width="100%"
         >
             <BarChart
                 data={data}
