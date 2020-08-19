@@ -109,10 +109,6 @@ const getAgeDistribution = (data) => {
 };
 
 export default class Summary extends PureComponent {
-    static propTypes = propTypes;
-
-    static defaultProps = defaultProps;
-
     static valueSelector = d => d.value;
 
     static labelSelector = d => d.label;
@@ -129,6 +125,10 @@ export default class Summary extends PureComponent {
     `);
 
     static tableKeySelector = d => d.key;
+
+    static propTypes = propTypes;
+
+    static defaultProps = defaultProps;
 
     percentTableParams = (key, data) => {
         const isSuccess = key === '@NotSighted30Days'
@@ -204,6 +204,19 @@ export default class Summary extends PureComponent {
         total: data.total,
         participation: data.participation,
     });
+
+    participationKeySelector = d => d.comment;
+
+    participationGroupSelector = d => d.type;
+
+    participationGroupParams = d => ({
+        children: d,
+    });
+
+    participationDetailsParams = (key, data) => ({
+        title: data.comment,
+        value: data.countSum,
+    })
 
     getSoi = memoize(transformSoi);
 
@@ -424,6 +437,7 @@ export default class Summary extends PureComponent {
                 childFamilyParticipation,
                 languagePeopleGroupDisability,
                 totalChildMarriageCount,
+                supportPariticipationDetail,
             },
             noOfProjects,
             siteSettings: {
@@ -613,6 +627,20 @@ export default class Summary extends PureComponent {
                             renderer={ParticipationItem}
                             groupKeySelector={Summary.groupKeySelector}
                             groupRendererClassName={styles.childFamilyGroup}
+                        />
+                    </div>
+                </div>
+                <div className={styles.item}>
+                    <h3>Support Participation Details</h3>
+                    <div>
+                        <ListView
+                            className={styles.table}
+                            data={supportPariticipationDetail}
+                            rendererParams={this.participationDetailsParams}
+                            groupRendererParams={this.participationGroupParams}
+                            keySelector={this.participationKeySelector}
+                            renderer={KeyValue}
+                            groupKeySelector={this.participationGroupSelector}
                         />
                     </div>
                 </div>
