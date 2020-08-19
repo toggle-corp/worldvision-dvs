@@ -197,22 +197,11 @@ def get_projects_summary(qs, group_by_date=False):
             count_sum=Sum('count')
         ).values(*fields, 'count_sum')
         childfamilyparticipation = _add_date_to_query(query, fields[:3])
-
-        fields = ('type', 'comment', 'date__year', 'date__month',)
-        query = SupportPariticipationDetail.objects.filter(
-            project__in=projects,
-        ).order_by(*fields).values(*fields).annotate(
-            count_sum=Sum('count'),
-        ).values(*fields, 'count_sum')
-        support_pariticipation_detail = _add_date_to_query(query, fields[:2])
     else:
         registerchildbyageandgenderdates = RegisterChildByAgeAndGender.objects.filter(
             project__in=projects,
         ).order_by('-date').values_list('date', flat=True)[:1]
         childfamilyparticipationdates = ChildFamilyParticipation.objects.filter(
-            project__in=projects,
-        ).order_by('-date').values_list('date', flat=True)[:1]
-        supportpariticipationdetaildates = SupportPariticipationDetail.objects.filter(
             project__in=projects,
         ).order_by('-date').values_list('date', flat=True)[:1]
 
@@ -234,13 +223,11 @@ def get_projects_summary(qs, group_by_date=False):
                 .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
             )
 
-        if supportpariticipationdetaildates:
-            supportpariticipationdetail_date = supportpariticipationdetaildates[0]
-            fields = ('type', 'comment',)
-            support_pariticipation_detail = list(
-                SupportPariticipationDetail.objects.filter(project__in=projects, date=supportpariticipationdetail_date)
-                .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
-            )
+        fields = ('type', 'comment',)
+        support_pariticipation_detail = list(
+            SupportPariticipationDetail.objects.filter(project__in=projects)
+            .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
+        )
 
     reportDates = projects.filter(
         reports__date__isnull=False,
@@ -263,7 +250,7 @@ def get_projects_summary(qs, group_by_date=False):
         ).order_by('date', '-count', 'disability').values('date', 'disability', 'count'),
     }
 
-    return {
+    common_stats = {
         'report_date': reportDate,
         'total_child_marriage_count': total_child_marriage_count,
         'child_monitoring': normalize(child_monitoring_fields, child_monitoring),
@@ -274,13 +261,18 @@ def get_projects_summary(qs, group_by_date=False):
         'soi': normalize(soi_fields, soi),
         'presence_and_participation': normalize(presenceandparticipation_fields, presenceandparticipation),
         'register_child_by_age_and_gender': registerchildbyageandgender,
-        'child_family_participation_date': (
-            'childfamilyparticipation_date' in locals() and childfamilyparticipation_date
-        ),
+        'child_family_participation_date': locals().get('childfamilyparticipation_date'),
         'child_family_participation': childfamilyparticipation,
         'language_people_group_disability': language_people_group_disability,
-        'support_pariticipation_detail': support_pariticipation_detail,
     }
+
+    if not group_by_date:
+        # Not required for trend data
+        return {
+            **common_stats,
+            'support_pariticipation_detail': support_pariticipation_detail,
+        }
+    return common_stats
 
 
 class SimpleSummaryGroupSerializer(serializers.ModelSerializer):
