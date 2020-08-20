@@ -164,9 +164,6 @@ class SummaryContainer extends React.PureComponent {
             <div className={_cs(className, styles.summaryContainer)}>
                 <header className={styles.header}>
                     <div className={styles.topContainer}>
-                        <h3 className={styles.heading}>
-                            Summary of:
-                        </h3>
                         <SelectInput
                             className={styles.summaryList}
                             options={summaryList}

@@ -11,7 +11,9 @@ const {
     protocol,
     hostname,
 } = window.location;
-export const wsEndpoint = `${protocol}//${hostname}:8005/api/v1`;
+
+const wsEndpointHostname = process.env.REACT_APP_SERVER_ENDPOINT || `${hostname}:8005`;
+export const wsEndpoint = `${protocol}//${wsEndpointHostname}/api/v1`;
 
 export function createConnectedRequestCoordinator<OwnProps>() {
     type Props = OwnProps;

@@ -96,6 +96,13 @@ const modifier = (element, key) => (
     }
 );
 
+
+const healthKeysToRemove = [
+    '@NotVarifiedHealthGrowthCard',
+    '@NotParticipatingHealthNutriActivities',
+];
+
+
 const requests = {
     reportGetRequest: {
         url: ({ props: { projectId } }) => `/projects-report/${projectId}/`,
@@ -145,7 +152,7 @@ const transformSoi = (soiData) => {
             value: closedOn,
         },
         {
-            label: 'Rating',
+            label: 'SOI Rating',
             value: (closedOn / totalClosed) * 100,
         },
     ]);
@@ -157,10 +164,10 @@ class Report extends PureComponent {
     static defaultProps = defaultProps;
 
     static sizeSelector = (d) => {
-        if (d.name !== 'RC Supply') {
-            return d.size;
+        if (d.children) {
+            return 0;
         }
-        return null;
+        return d.size;
     };
 
     static valueSelector = d => d.value;
@@ -205,7 +212,7 @@ class Report extends PureComponent {
                 'Total Closed': totalClosed,
                 'Closed On': closedOn,
             };
-        });
+        }).sort((a, b) => (new Date(b.date) - new Date(a.date)));
 
         return ({
             values,
@@ -320,7 +327,7 @@ class Report extends PureComponent {
             ...childMonitoring,
             {
                 key: '@cms',
-                name: 'CMS',
+                name: 'CMS Rating',
                 value: (total - notsighted),
                 percent: +percent.toFixed(2),
             },
@@ -367,6 +374,10 @@ class Report extends PureComponent {
         const healthDonut = healthNutrition.filter(c => healthDonutKeys.indexOf(c.key) >= 0);
         return healthDonut;
     })
+
+    getRemovedData = memoize((healthNutrition = [], keysToRemove) => (
+        healthNutrition.filter(c => keysToRemove.indexOf(c.key) === -1)
+    ))
 
     getCorrespondenceData = memoize((correspondences = []) => {
         const correspondencesTotal = correspondences.reduce((acc, d) => ({
@@ -477,6 +488,7 @@ class Report extends PureComponent {
         } = this.getChildMonitoringData(childMonitoringFromProps);
 
         const healthDonut = this.getHealthDonutData(healthNutrition);
+        const healthNutritionFiltered = this.getRemovedData(healthNutrition, healthKeysToRemove);
         const correspondences = this.getCorrespondenceData(correspondencesFromProps);
         const flatEducationData = this.getFlatEducationData(education);
         const soiTrendData = this.getSoiTrendData(soi);
@@ -504,7 +516,7 @@ class Report extends PureComponent {
                         />
                         <div className={styles.tableContainer}>
                             <div className={styles.item}>
-                                <h3>Child Monitoring</h3>
+                                <h3>Child Monitoring Status</h3>
                                 <div className={styles.vizWrapper}>
                                     <ListView
                                         className={styles.table}
@@ -530,7 +542,7 @@ class Report extends PureComponent {
                                 <div className={styles.vizWrapper}>
                                     <ListView
                                         className={styles.table}
-                                        data={healthNutrition}
+                                        data={healthNutritionFiltered}
                                         rendererParams={this.tableRenderParams}
                                         keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}

@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from report.utils import DATE_PATTERN
-from project.models import Project
 from report.models import ProjectSOI
 from report.utils import convert_to_int
+
+from .common import get_or_create_project
 
 
 def extract(xml_data, _generated_on):
@@ -24,10 +25,15 @@ def extract(xml_data, _generated_on):
         total_closed = convert_to_int(pj['@TotalClosed_1'])
         closed_on_time = convert_to_int(pj['@ClosedOnTime_1'])
 
-        project, pj_created = Project.objects.get_or_create(number=number)
-        if pj_created:
-            project.name = pj['Detail_Collection']['Detail'][0]['@ProjectName']
-            project.save()
+        project_details = pj['Detail_Collection']['Detail']
+        project = get_or_create_project(
+            number,
+            name=(
+                # project_details can be both array and dict
+                project_details[0] if isinstance(project_details, list) else
+                project_details
+            )['@ProjectName']
+        )
         project_soi, _ = ProjectSOI.objects.get_or_create(project=project, date=generated_on)
         project_soi.total_closed = total_closed
         project_soi.closed_on = closed_on_time

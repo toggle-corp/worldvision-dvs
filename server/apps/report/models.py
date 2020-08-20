@@ -1,5 +1,6 @@
 import logging
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.postgres.fields import JSONField
 from django.core.exceptions import ValidationError
@@ -31,7 +32,9 @@ class Report(models.Model):
     file = models.FileField(upload_to='reports/', validators=[validate_file_extension])
 
     class Meta:
-        ordering = ('-id',)
+        verbose_name = 'ADP Management Report'
+        verbose_name_plural = 'ADP Management Reports'
+        ordering = ('-date',)
 
     @staticmethod
     def extract_from_file(file):
@@ -48,14 +51,8 @@ class Report(models.Model):
             )
             raise ValidationError(u'Unsupported xml file')
 
-    def is_selected(self):
-        selected_report = self.project.selected_report
-        if selected_report and selected_report == self:
-            return True
-        return False
-
     def __str__(self):
-        return f"{self.name} {(self.is_selected() and '<-- (Currently Selected)') or ''}"
+        return f"{self.name}"
 
 
 class ProjectSummaryModel(models.Model):
@@ -82,30 +79,12 @@ class ProjectSOI(ProjectSummaryModel):
 
 
 class RegisterChildByAgeAndGender(ProjectSummaryModel):
-    ZERO_TO_SIX = '<=6'
-    SEVEN_TO_TWELVE = '7-12'
-    THIRTEEN_OR_ABOVE = '>=13'
-    AGE_RANGE_CHOICES = (
-        (ZERO_TO_SIX, '<=6'),
-        (SEVEN_TO_TWELVE, '7-12'),
-        (THIRTEEN_OR_ABOVE, '>=13'),
-    )
-
-    age_range = models.CharField(max_length=10, choices=AGE_RANGE_CHOICES)
+    age = models.IntegerField()
     gender = models.CharField(max_length=10, choices=Gender.CHOICES)
     count = models.IntegerField(default=0)
 
-    @classmethod
-    def get_range_for_age(cls, _age):
-        age = int(_age)
-        if age <= 6:
-            return cls.ZERO_TO_SIX
-        elif age >= 7 and age <= 12:
-            return cls.SEVEN_TO_TWELVE
-        return cls.THIRTEEN_OR_ABOVE
-
     class Meta:
-        unique_together = ('project', 'date', 'age_range', 'gender',)
+        unique_together = ('project', 'date', 'age', 'gender',)
 
 
 class PresenceAndParticipation(ProjectSummaryModel):
@@ -118,6 +97,8 @@ class ChildFamilyParticipation(ProjectSummaryModel):
     FAMILY_PARTICIPATION = 'family_participation'
     CHILD_SUPPORT = 'child_support'
     FAMILY_SUPPORT = 'family_support'
+    BENEFIT_SUPPORT = 'benefit_support'
+
     TYPE_CHOICES = (
         # Participation
         (CHILD_PARTICIPATION, 'Child Participation'),
@@ -125,6 +106,7 @@ class ChildFamilyParticipation(ProjectSummaryModel):
         # Support
         (CHILD_SUPPORT, 'Child Support'),
         (FAMILY_SUPPORT, 'Family Support'),
+        (BENEFIT_SUPPORT, 'Benefit Support'),
     )
 
     type = models.CharField(max_length=30, choices=TYPE_CHOICES)
@@ -146,8 +128,40 @@ class LanguagePeopleGroupDisability(ProjectSummaryModel):
         unique_together = ('project', 'date', 'language', 'people_group', 'disability',)
 
 
+class SupportPariticipationDetail(ProjectSummaryModel):
+    type = models.CharField(max_length=255)
+    comment = models.CharField(max_length=255)
+    count = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('project', 'date', 'type', 'comment',)
+
+
 @receiver(models.signals.post_delete, sender=Report)
 def delete_report_file(sender, instance, *args, **kwargs):
     """ Deletes report file on `post_delete` """
     if instance.file:
         delete_file(instance.file.path)
+
+
+class BulkImportReport(models.Model):
+    """
+    For bulk import logging
+    """
+    SUCCESS = 'success'
+    FAILED = 'failed'
+    STATUS_CHOICES = (
+        (SUCCESS, 'Success'),
+        (FAILED, 'Failed'),
+    )
+
+    report_type = models.CharField(max_length=100)
+    file = models.FileField(upload_to='bulk-import-report/')  # Provide by user
+    generated_on = models.DateField(default=None, null=True)  # Provide by user
+    created_at = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.CharField(max_length=10, null=True, choices=STATUS_CHOICES,)
+    log_message = models.TextField(null=True)
+
+    def __str__(self):
+        return f'{self.report_type}:{self.generated_on}'

@@ -25,6 +25,7 @@ from report.views import (
     RegisterChildByAgeAndGenderViewSet,
     PresenceAndParticipationViewSet,
     ChildFamilyParticipationViewSet,
+    SupportPariticipationDetailViewSet,
     ProjectLanguagePeopleGroupDisabilityViewSet,
 )
 
@@ -66,6 +67,8 @@ router.register(r'presence-and-participations',
                 PresenceAndParticipationViewSet, basename='presence-and-participation')
 router.register(r'child-family-participations',
                 ChildFamilyParticipationViewSet, basename='child-Family-participation')
+router.register(r'support-patricipation-details',
+                SupportPariticipationDetailViewSet, basename='support-patricipation-detail')
 router.register(
     r'project-language-people-group-disabilities',
     ProjectLanguagePeopleGroupDisabilityViewSet,

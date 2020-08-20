@@ -3,7 +3,6 @@ from django.db import models
 
 
 class SingletonModel(models.Model):
-
     class Meta:
         abstract = True
 
@@ -23,10 +22,17 @@ class SingletonModel(models.Model):
 class SiteSetting(SingletonModel):
     start_date = models.DateField()
     end_date = models.DateField()
+    child_family_start_date = models.DateField("Child family support/participation start date", null=True)
+    child_family_end_date = models.DateField("Child family support/participation end date", null=True)
 
     def clean(self):
         if self.start_date and self.end_date and \
                 self.start_date > self.end_date:
+            raise ValidationError(
+                'Start Date shouldn\'t be greater then End Date'
+            )
+        if self.child_family_start_date and self.child_family_end_date and \
+                self.child_family_start_date > self.child_family_end_date:
             raise ValidationError(
                 'Start Date shouldn\'t be greater then End Date'
             )

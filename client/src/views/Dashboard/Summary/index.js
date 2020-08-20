@@ -41,18 +41,9 @@ const droppedKey = 'total_no_of_rc_records_dropped_during_the_month';
 const rcAwayKey = 'total_rc_temporarily_away';
 
 const ageKeyMap = {
-    '<=6': {
-        key: 1,
-        label: '0 - 6',
-    },
-    '7-12': {
-        key: 2,
-        label: '7 - 12',
-    },
-    '>=13': {
-        key: 3,
-        label: '13+',
-    },
+    '<=6': '0 - 6',
+    '7-12': '7 - 12',
+    '13-18': '13 - 18',
 };
 
 const soiLegendData = [
@@ -91,15 +82,19 @@ const getPercent = (data) => {
         ...d,
     }));
 };
-const getParticipationKey = p => (p > 3 ? '4+' : String(p));
+const getParticipationKey = p => (p > 2 ? '3+' : String(p));
 
 const getAgeDistribution = (data) => {
-    const distribution = data.map((value) => {
-        const { ageRange, countSum } = value;
-        const { key, label } = ageKeyMap[ageRange];
+    if (isFalsy(data)) {
+        return [];
+    }
 
-        return { key, label, value: countSum };
-    });
+    const ageRanges = Object.keys(data).filter(k => k !== 'gender');
+    const distribution = ageRanges.map(ageRange => ({
+        key: ageRange,
+        label: ageKeyMap[ageRange] || ageRange,
+        value: data[ageRange],
+    }));
 
     const sorted = [
         ...distribution,
@@ -114,10 +109,6 @@ const getAgeDistribution = (data) => {
 };
 
 export default class Summary extends PureComponent {
-    static propTypes = propTypes;
-
-    static defaultProps = defaultProps;
-
     static valueSelector = d => d.value;
 
     static labelSelector = d => d.label;
@@ -134,6 +125,10 @@ export default class Summary extends PureComponent {
     `);
 
     static tableKeySelector = d => d.key;
+
+    static propTypes = propTypes;
+
+    static defaultProps = defaultProps;
 
     percentTableParams = (key, data) => {
         const isSuccess = key === '@NotSighted30Days'
@@ -158,6 +153,28 @@ export default class Summary extends PureComponent {
                 isWarning && styles.warning,
                 isDanger && styles.danger,
             ),
+        });
+    }
+
+    rcParams = (key, data, _, allData) => {
+        const isActual = key === 'totalRc';
+        if (isActual) {
+            const { planned = 0, totalRc = 0 } = listToMap(allData, d => d.key, d => d.value);
+            const isWithinTolerance = Math.abs(planned - totalRc) < planned * 0.02;
+            const className = isWithinTolerance
+                ? styles.withinTolerance : styles.outOfTolerance;
+
+            return ({
+                title: data.label,
+                value: data.value,
+                className,
+                colorOnlyNumber: false,
+            });
+        }
+
+        return ({
+            title: data.label,
+            value: data.value,
         });
     }
 
@@ -188,6 +205,19 @@ export default class Summary extends PureComponent {
         participation: data.participation,
     });
 
+    participationKeySelector = d => d.comment;
+
+    participationGroupSelector = d => d.type;
+
+    participationGroupParams = d => ({
+        children: d,
+    });
+
+    participationDetailsParams = (key, data) => ({
+        title: data.comment,
+        value: data.countSum,
+    })
+
     getSoi = memoize(transformSoi);
 
     getPercentChild = memoize((data) => {
@@ -207,14 +237,14 @@ export default class Summary extends PureComponent {
             ...childData,
             {
                 key: '@cms',
-                label: 'CMS',
+                label: 'CMS Rating',
                 value: (total - notsighted),
                 percent: +percent.toFixed(2),
             },
         ]);
     });
 
-    getRcData = memoize((rc, presenceAndParticipation) => {
+    getRcData = memoize((rc = [], presenceAndParticipation) => {
         const preAndPar = listToMap(
             presenceAndParticipation,
             d => d.key,
@@ -225,12 +255,12 @@ export default class Summary extends PureComponent {
             ...rc,
             {
                 key: 'totalRcDropped',
-                value: preAndPar[droppedKey].value,
-                label: 'Total RC Dropped',
+                value: (preAndPar[droppedKey] || {}).value,
+                label: 'Total RC Dropped in last 12 Months',
             },
             {
                 key: 'totalRcTemporarilyAway',
-                value: preAndPar[rcAwayKey].value,
+                value: (preAndPar[rcAwayKey] || {}).value,
                 label: 'Total RC Temporarily Away',
             },
         ]);
@@ -318,17 +348,21 @@ export default class Summary extends PureComponent {
             key: 'PrimaryEducated',
             value: this.getValueFromMap(educationMap, '@PrimarySchoolAgeFormal') || 0
                 + this.getValueFromMap(educationMap, '@PrimarySchoolAgeNonFormal') || 0,
-            label: 'Number of Primary School Age RC Involved in Education',
+            label: 'Primary School Age RC Involved in Education',
         };
 
-        const primaryUneducated = educationMap['@PrimarySchoolAgeNoEducation'];
+        const primaryUneducated = {
+            key: 'PrimaryEducated',
+            value: this.getValueFromMap(educationMap, '@PrimarySchoolAgeNoEducation') || 0,
+            label: 'Primary School Age RC Not Involved in Education',
+        };
 
         const secondaryEducated = {
             key: 'SecondaryEducated',
             value: this.getValueFromMap(educationMap, '@SecondarySchoolAgeFormal') || 0
                 + this.getValueFromMap(educationMap, '@SecondarySchoolAgeNonFormal') || 0
                 + this.getValueFromMap(educationMap, '@SecondarySchoolAgeVocational') || 0,
-            label: 'Number of Secondary School Age RC Involved in Education',
+            label: 'Secondary School Age RC Involved in Education',
         };
         const secondaryUneducated = educationMap['@SecondarySchoolAgeNoEducation'];
 
@@ -377,7 +411,7 @@ export default class Summary extends PureComponent {
         }
 
         const female = data.filter(rc => rc.gender === 'female');
-        return getAgeDistribution(female);
+        return getAgeDistribution(female[0]);
     });
 
     getMaleRcAge = memoize((data) => {
@@ -386,14 +420,13 @@ export default class Summary extends PureComponent {
         }
 
         const male = data.filter(rc => rc.gender === 'male');
-        return getAgeDistribution(male);
+        return getAgeDistribution(male[0]);
     });
 
     render() {
         const {
             className,
             summary: {
-                childFamilyParticipationDate,
                 rc,
                 childMonitoring,
                 education,
@@ -403,9 +436,16 @@ export default class Summary extends PureComponent {
                 healthNutrition,
                 childFamilyParticipation,
                 languagePeopleGroupDisability,
+                totalChildMarriageCount,
+                supportPariticipationDetail,
             },
             noOfProjects,
-            siteSettings,
+            siteSettings: {
+                startDate,
+                endDate,
+                childFamilyStartDate,
+                childFamilyEndDate,
+            },
         } = this.props;
 
         const soiTotal = soi ? (soi.find(s => s.key === 'total_closed') || {}).value || 0 : 0;
@@ -434,13 +474,13 @@ export default class Summary extends PureComponent {
                     {infoText}
                     <FormattedDate
                         className={styles.date}
-                        date={siteSettings.startDate}
+                        date={startDate}
                         mode="dd-MMM-yyyy"
                     />
                     to
                     <FormattedDate
                         className={styles.date}
-                        date={siteSettings.endDate}
+                        date={endDate}
                         mode="dd-MMM-yyyy"
                     />
                 </span>
@@ -449,7 +489,7 @@ export default class Summary extends PureComponent {
                     <ListView
                         className={styles.table}
                         data={rcData}
-                        rendererParams={this.tableParams}
+                        rendererParams={this.rcParams}
                         keySelector={Summary.tableKeySelector}
                         renderer={KeyValue}
                     />
@@ -499,7 +539,7 @@ export default class Summary extends PureComponent {
                     </div>
                 </div>
                 <div className={styles.item}>
-                    <h3>Child Monitoring</h3>
+                    <h3>Child Monitoring Status</h3>
                     <div className={styles.itemTableViz}>
                         <DonutChart
                             className={styles.viz}
@@ -525,7 +565,7 @@ export default class Summary extends PureComponent {
                     </div>
                 </div>
                 <div className={_cs(styles.item, styles.soiIndex)}>
-                    <h3>SOI Index</h3>
+                    <h3>Service Operation Indicator Index</h3>
                     <div className={styles.itemTableViz}>
                         <GaugeChart
                             className={styles.viz}
@@ -553,12 +593,27 @@ export default class Summary extends PureComponent {
                 </div>
                 <div className={styles.item}>
                     <h3>
+                        Child Marriage Count
+                    </h3>
+                    <KeyValue
+                        className={styles.childMarriage}
+                        value={totalChildMarriageCount}
+                        title="Total Child Marriage Count"
+                    />
+                </div>
+                <div className={styles.item}>
+                    <h3>
                         Child Family Participation Suppport Benificiaries (
                         <FormattedDate
                             className={styles.date}
-                            date={childFamilyParticipationDate}
+                            date={childFamilyStartDate}
                             mode="dd-MMM-yyyy"
-
+                        />
+                        to
+                        <FormattedDate
+                            className={styles.date}
+                            date={childFamilyEndDate}
+                            mode="dd-MMM-yyyy"
                         />
                         )
                     </h3>
@@ -572,6 +627,20 @@ export default class Summary extends PureComponent {
                             renderer={ParticipationItem}
                             groupKeySelector={Summary.groupKeySelector}
                             groupRendererClassName={styles.childFamilyGroup}
+                        />
+                    </div>
+                </div>
+                <div className={styles.item}>
+                    <h3>Support Participation Details</h3>
+                    <div>
+                        <ListView
+                            className={styles.table}
+                            data={supportPariticipationDetail}
+                            rendererParams={this.participationDetailsParams}
+                            groupRendererParams={this.participationGroupParams}
+                            keySelector={this.participationKeySelector}
+                            renderer={KeyValue}
+                            groupKeySelector={this.participationGroupSelector}
                         />
                     </div>
                 </div>
@@ -601,7 +670,6 @@ export default class Summary extends PureComponent {
                 <div className={styles.item}>
                     <LanguagePeopleGroupDisability
                         data={languagePeopleGroupDisability}
-                        hideLanguage
                     />
                 </div>
             </div>

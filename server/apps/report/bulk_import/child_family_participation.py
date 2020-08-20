@@ -1,8 +1,9 @@
 import copy
 
-from project.models import Project
 from report.models import Gender, ChildFamilyParticipation as CFP
 from report.utils import convert_to_int
+
+from .common import get_or_create_project
 
 TYPE_INITIAL = {
     Gender.MALE: {},
@@ -14,6 +15,7 @@ INITIAL_PARTICIPATION = {
     CFP.FAMILY_PARTICIPATION: copy.deepcopy(TYPE_INITIAL),
     CFP.CHILD_SUPPORT: copy.deepcopy(TYPE_INITIAL),
     CFP.FAMILY_SUPPORT: copy.deepcopy(TYPE_INITIAL),
+    CFP.BENEFIT_SUPPORT: copy.deepcopy(TYPE_INITIAL),
 }
 
 
@@ -48,6 +50,7 @@ def extract(xml_data, generated_on):
         family_participation = convert_to_int(pj_data['@FamilyParticipation'])
         child_support = convert_to_int(pj_data['@ChildSupport'])
         family_support = convert_to_int(pj_data['@FamilySupport'])
+        benefit_support = convert_to_int(pj_data['@BenefitSupport'])
 
         if import_data.get(pj_number) is None:
             import_data[pj_number] = copy.deepcopy(INITIAL_PARTICIPATION)
@@ -57,13 +60,17 @@ def extract(xml_data, generated_on):
                 (CFP.FAMILY_PARTICIPATION, family_participation),
                 (CFP.CHILD_SUPPORT, child_support),
                 (CFP.FAMILY_SUPPORT, family_support),
+                (CFP.BENEFIT_SUPPORT, benefit_support),
         ]:
             if type_number == 0:
                 continue
             increment(import_data[pj_number][type_value][gender], type_number)
 
+    # Clear older record for that date
+    CFP.objects.filter(date=generated_on).all().delete()
+
     for pj_number, participation_data in import_data.items():
-        project, pj_created = Project.objects.get_or_create(number=pj_number)
+        project = get_or_create_project(pj_number)
         for participation_type, gender_data in participation_data.items():
             for gender_type, number_data in gender_data.items():
                 for participation_number, count in number_data.items():

@@ -6,7 +6,7 @@ import re
 logger = logging.getLogger(__name__)
 
 
-DATE_PATTERN = re.compile(r'.*(\d{1,2}/\d{1,2}/\d{4}).*')
+DATE_PATTERN = re.compile(r'.*\s(\d{1,2}/\d{1,2}/\d{4}).*')
 
 
 def parse_xml(xml_content):

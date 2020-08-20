@@ -4,6 +4,9 @@
 echo "Copy node packages"
 rsync -a --stats --ignore-existing /node_modules /code/
 
+echo "Yarn install packages"
+yarn install
+
 echo "Building WV App"
 CI=false yarn build
 

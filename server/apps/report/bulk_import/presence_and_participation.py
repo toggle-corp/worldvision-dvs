@@ -1,6 +1,7 @@
-from project.models import Project
 from report.models import PresenceAndParticipation
 from report.utils import convert_to_int
+
+from .common import get_or_create_project
 
 
 def extract(xml_data, generated_on):
@@ -27,10 +28,7 @@ def extract(xml_data, generated_on):
         total_rc_temporarily_away = pj['@Total_RC___Temporarily_Away']
         total_no_of_rc_records_dropped_during_the_month = pj['@DropsLast12Mos']
 
-        project, pj_created = Project.objects.get_or_create(number=pj_number)
-        if pj_created:
-            project.name = pj_name
-            project.save()
+        project = get_or_create_project(pj_number, name=pj_name)
         pap, _ = PresenceAndParticipation.objects.get_or_create(
             project=project,
             date=generated_on,

@@ -19,20 +19,32 @@ from .models import (
     PresenceAndParticipation,
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
+    SupportPariticipationDetail,
+
+    BulkImportReport,
 )
-from .filters import SelectedReportListFilter
 from .forms import ReportAdminForm, BulkImportForm
 
 
 @admin.register(Report)
 class ReportAdmin(ModelAdmin):
     exclude = ('data',)
-    readonly_fields = ('data_prettified',)
     search_fields = ('name', 'project__name', 'file')
-    list_display = ('name', 'get_project', 'file', 'is_selected')
-    list_filter = (SelectedReportListFilter,)
+    list_display = ('name', 'get_project', 'file', 'date')
+    list_filter = ('project',)
     autocomplete_fields = ('project',)
+    date_hierarchy = 'date'
     form = ReportAdminForm
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super().get_readonly_fields(request, obj)
+        if obj is not None:
+            return [
+                *readonly_fields,
+                'file',
+                'data_prettified',
+            ]
+        return readonly_fields
 
     def get_project(self, instance):
         project = instance.project
@@ -73,7 +85,8 @@ class ReportAdmin(ModelAdmin):
 
 class ProjectSummaryAdmin(ModelAdmin):
     autocomplete_fields = ('project',)
-    # date_hierarchy = 'date'
+    list_filter = ('date',)
+    date_hierarchy = 'date'
 
     def get_list_display(self, request):
         return [
@@ -128,8 +141,64 @@ class ProjectSummaryAdmin(ModelAdmin):
         return render(request, "admin/bulk_import_form.html", context)
 
 
-admin.register(ProjectSOI)(ProjectSummaryAdmin)
-admin.register(RegisterChildByAgeAndGender)(ProjectSummaryAdmin)
-admin.register(PresenceAndParticipation)(ProjectSummaryAdmin)
-admin.register(ChildFamilyParticipation)(ProjectSummaryAdmin)
-admin.register(LanguagePeopleGroupDisability)(ProjectSummaryAdmin)
+@admin.register(ProjectSOI)
+class ProjectSOIAdmin(ProjectSummaryAdmin):
+    pass
+
+
+@admin.register(RegisterChildByAgeAndGender)
+class RegisterChildByAgeAndGenderAdmin(ProjectSummaryAdmin):
+    list_filter = ('age', 'gender')
+
+
+@admin.register(PresenceAndParticipation)
+class PresenceAndParticipationAdmin(ProjectSummaryAdmin):
+    pass
+
+
+@admin.register(ChildFamilyParticipation)
+class ChildFamilyParticipationAdmin(ProjectSummaryAdmin):
+    pass
+
+
+@admin.register(LanguagePeopleGroupDisability)
+class LanguagePeopleGroupDisabilityAdmin(ProjectSummaryAdmin):
+    list_filter = ('language', 'people_group', 'disability')
+
+
+@admin.register(SupportPariticipationDetail)
+class SupportPariticipationDetailAdmin(ProjectSummaryAdmin):
+    list_filter = ('type', 'comment',)
+
+
+@admin.register(BulkImportReport)
+class BulkImportReportAdmin(admin.ModelAdmin):
+    list_display = ('report_type', 'created_at', 'created_by', 'file')
+    exclude = ('log_message',)
+    readonly_fields = ('log_message_display',)
+    list_filter = ('created_at', 'status', 'report_type')
+
+    def get_model_perms(self, request):
+        return {}
+
+    def has_add_permission(self, requests, obj=None):
+        return False
+
+    def has_change_permission(self, requests, obj=None):
+        return False
+
+    def has_delete_permission(self, requests, obj=None):
+        return False
+
+    def log_message_display(self, obj):
+        if obj.log_message:
+            style_class = 'error' if obj.status == BulkImportReport.FAILED else ''
+            return mark_safe(
+                f'''
+                <ul class="messagelist">
+                    <li class="{style_class}">
+                        {obj.log_message}
+                    </li>
+                </ul>
+                '''
+            )

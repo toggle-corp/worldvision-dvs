@@ -28,7 +28,7 @@
         }
 
         .date {
-            padding: 0 var(--spacing-smaller);
+            padding: 0 var(--spacing-small);
 
             &:last-child ::after {
                 content: '.';
@@ -47,6 +47,23 @@
             text-transform: capitalize;
             color: var(--color-accent);
             font-weight: var(--font-weight-bold);
+        }
+
+        .date {
+            display: inline-block;
+            padding: 0 var(--spacing-small);
+        }
+
+        .within-tolerance {
+            color: var(--color-success);
+        }
+
+        .out-of-tolerance {
+            color: var(--color-danger);
+        }
+
+        .child-marriage {
+            width: 100%;
         }
 
         .table {
