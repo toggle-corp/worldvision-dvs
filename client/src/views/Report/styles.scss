@@ -254,3 +254,20 @@
         }
     }
 }
+
+.sunburstCell {
+    cursor: pointer;
+}
+
+.customToolTip {
+    padding: var(--spacing-medium) var(--spacing-large);
+    background-color: white;
+    box-shadow: 0 var(--spacing-medium) var(--spacing-medium) 0 rgba(0,0,0,0.2);
+}
+
+.customToolTipValue {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: var(--font-size-super-large);
+}

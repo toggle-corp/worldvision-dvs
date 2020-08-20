@@ -28,3 +28,8 @@ export const biColorScheme = [
     '#41cf76',
     '#f44336',
 ];
+
+export const sunBurstColorScheme = [
+    '#1f78b4',
+    '#b2df8a',
+];

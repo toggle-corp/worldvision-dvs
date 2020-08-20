@@ -24,12 +24,12 @@ import {
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
-import HorizontalBar from '#rscz/HorizontalBar';
+// import HorizontalBar from '#rscz/HorizontalBar';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import GaugeChart from '#rscz/GaugeChart';
-import GroupedBarChart from '#rscz/GroupedBarChart';
-import Legend from '#rscz/Legend';
+// import GroupedBarChart from '#rscz/GroupedBarChart';
+// import Legend from '#rscz/Legend';
 
 import KeyValue from '#components/KeyValue';
 import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
@@ -41,12 +41,13 @@ import {
     horizontalBarMargin,
     triColorScheme,
     biColorScheme,
+    sunBurstColorScheme,
 } from './report-utils';
 
 import DonutChartReCharts from './DonutChart.js';
 import HorizontalBarRecharts from './HorizontalBar.js';
 import GroupedBarChartRecharts from './GroupedBarChart.js';
-
+import SunBurstRecharts from './SunBurst';
 import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
@@ -63,6 +64,65 @@ const soiLegendData = [
         color: '#ef8c00',
     },
 ];
+
+const sbData = {
+    key: 'education',
+    name: 'Education',
+    size: 9500,
+    children: [
+        {
+            key: '@PrimarySchoolAge',
+            name: '#RC of Primary School Age',
+            size: 5000,
+            children: [
+                {
+                    key: '@PrimarySchoolAgeFormal',
+                    name: 'RC of Primary School Age Involved in Formal Education',
+                    size: 2500,
+                },
+                {
+                    key: '@PrimarySchoolAgeNonFormal',
+                    name: 'RC of Primary School Age Involved in Non-Formal Education',
+                    size: 1500,
+                },
+                {
+                    key: '@PrimarySchoolAgeNoEducation',
+                    name: 'RC of Primary School Age Not Involved in Education',
+                    size: 1000,
+                },
+            ],
+        },
+        {
+            key: '@SecondarySchoolAge',
+            name: '#RC of Secondary School Age',
+            size: 4500,
+            children: [
+                {
+                    key: '@SecondarySchoolAgeFormal',
+                    name: 'RC of Secondary School Age Involved in Formal Education',
+                    size: 2400,
+                },
+                {
+                    key: '@SecondarySchoolAgeNonFormal',
+                    name: 'RC of Secondary School Age Involved in Non-Formal Education',
+                    size: 1100,
+                },
+                {
+                    key: '@SecondarySchoolAgeVocational',
+                    name: 'RC of Secondary School Age Involved in Vocational Preparation',
+                    size: 600,
+                },
+                {
+                    key: '@SecondarySchoolAgeNoEducation',
+                    name: 'RC of Secondary School Age Not Involved in Education or Vocational Preparation',
+                    size: 400,
+                },
+            ],
+        },
+    ],
+};
+
+
 const legendKeySelector = d => d.key;
 const legendLabelSelector = d => d.label;
 const legendColorSelector = d => d.color;
@@ -498,7 +558,7 @@ class Report extends PureComponent {
 
         return (
             <div className={styles.region}>
-                { reportGetPending && <LoadingAnimation /> }
+                {reportGetPending && <LoadingAnimation />}
                 <div className={styles.header}>
                     <div className={styles.heading}>
                         <button
@@ -580,9 +640,13 @@ class Report extends PureComponent {
                             <div className={_cs(styles.vizContainer, styles.vizTableContainer)}>
                                 <SunBurst
                                     className={styles.viz}
-                                    data={education}
+                                    data={sbData}
                                     valueSelector={Report.sizeSelector}
                                     labelSelector={Report.labelSelector}
+                                />
+                                <SunBurstRecharts
+                                    data={sbData}
+                                    colorScheme={sunBurstColorScheme}
                                 />
                                 <ListView
                                     data={flatEducationData}
