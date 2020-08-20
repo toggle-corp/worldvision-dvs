@@ -233,7 +233,7 @@
 
                         .viz {
                             height: 180px;
-                            margin-left:  var(--spacing-extra-large);
+                            margin-left: var(--spacing-extra-large);
                         }
                     }
                 }
@@ -255,19 +255,19 @@
     }
 }
 
-.sunburstCell {
+.sunburst-cell {
     cursor: pointer;
 }
 
-.customToolTip {
+.custom-Tooltip {
     padding: var(--spacing-medium) var(--spacing-large);
-    background-color: white;
-    box-shadow: 0 var(--spacing-medium) var(--spacing-medium) 0 rgba(0,0,0,0.2);
+    background-color: var(--color-foreground);
+    box-shadow: 0 var(--spacing-medium) var(--spacing-medium) 0 var(--color-separator-alt);
 }
 
-.customToolTipValue {
+.custom-Tooltip-Value {
     text-align: center;
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
     font-size: var(--font-size-super-large);
 }

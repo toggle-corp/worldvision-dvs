@@ -82,12 +82,12 @@ const getCellColor = (dataKey, colorSchemeValue) => {
 const CustomTooltip = ({ active, payload }) => {
     if (active) {
         return (
-            <div className={styles.customToolTip}>
+            <div className={styles.customTooltip}>
                 <p>
                     {/* eslint-disable-next-line react/prop-types */}
                     {payload[0].name}
                 </p>
-                <p className={styles.customToolTipValue}>
+                <p className={styles.customTooltipValue}>
                     {/* eslint-disable-next-line react/prop-types */}
                     {payload[0].value}
                 </p>
