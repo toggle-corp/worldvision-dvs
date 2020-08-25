@@ -1,9 +1,15 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+} from 'recharts';
 
 export default function GroupedBarChart(props) {
     const {
@@ -29,11 +35,11 @@ export default function GroupedBarChart(props) {
                 <Tooltip />
                 <Legend />
                 {
-                    barLabels.map(label => (
+                    barLabels.map(([key, colorValue]) => (
                         <Bar
-                            dataKey={label[0]}
-                            key={label[0]}
-                            fill={label[1]}
+                            dataKey={key}
+                            key={key}
+                            fill={colorValue}
                         />
                     ))
                 }
@@ -43,5 +49,5 @@ export default function GroupedBarChart(props) {
 }
 
 GroupedBarChart.propTypes = {
-    data: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired,
 };

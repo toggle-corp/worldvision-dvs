@@ -1,6 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -8,6 +5,7 @@ import {
     PieChart,
     Pie,
     Cell,
+    ResponsiveContainer,
 } from 'recharts';
 
 export default function DonutChart(props) {
@@ -16,26 +14,28 @@ export default function DonutChart(props) {
         colorScheme,
     } = props;
     return (
-        <PieChart
+        <ResponsiveContainer
+            height="100%"
             width={180}
-            height={180}
         >
-            <Pie
-                data={data}
-                innerRadius={65}
-                outerRadius={85}
-                dataKey="value"
-            >
-                {
-                    data.map((d, index) => (
-                        <Cell
-                            key={d.key}
-                            fill={colorScheme[index]}
-                        />
-                    ))
-                }
-            </Pie>
-        </PieChart>
+            <PieChart>
+                <Pie
+                    data={data}
+                    innerRadius={65}
+                    outerRadius={85}
+                    dataKey="value"
+                >
+                    {
+                        data.map((d, index) => (
+                            <Cell
+                                key={d.key}
+                                fill={colorScheme[index]}
+                            />
+                        ))
+                    }
+                </Pie>
+            </PieChart>
+        </ResponsiveContainer>
     );
 }
 

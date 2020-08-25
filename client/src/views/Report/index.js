@@ -65,64 +65,6 @@ const soiLegendData = [
     },
 ];
 
-const sbData = {
-    key: 'education',
-    name: 'Education',
-    size: 9500,
-    children: [
-        {
-            key: '@PrimarySchoolAge',
-            name: '#RC of Primary School Age',
-            size: 5000,
-            children: [
-                {
-                    key: '@PrimarySchoolAgeFormal',
-                    name: 'RC of Primary School Age Involved in Formal Education',
-                    size: 2500,
-                },
-                {
-                    key: '@PrimarySchoolAgeNonFormal',
-                    name: 'RC of Primary School Age Involved in Non-Formal Education',
-                    size: 1500,
-                },
-                {
-                    key: '@PrimarySchoolAgeNoEducation',
-                    name: 'RC of Primary School Age Not Involved in Education',
-                    size: 1000,
-                },
-            ],
-        },
-        {
-            key: '@SecondarySchoolAge',
-            name: '#RC of Secondary School Age',
-            size: 4500,
-            children: [
-                {
-                    key: '@SecondarySchoolAgeFormal',
-                    name: 'RC of Secondary School Age Involved in Formal Education',
-                    size: 2400,
-                },
-                {
-                    key: '@SecondarySchoolAgeNonFormal',
-                    name: 'RC of Secondary School Age Involved in Non-Formal Education',
-                    size: 1100,
-                },
-                {
-                    key: '@SecondarySchoolAgeVocational',
-                    name: 'RC of Secondary School Age Involved in Vocational Preparation',
-                    size: 600,
-                },
-                {
-                    key: '@SecondarySchoolAgeNoEducation',
-                    name: 'RC of Secondary School Age Not Involved in Education or Vocational Preparation',
-                    size: 400,
-                },
-            ],
-        },
-    ],
-};
-
-
 const legendKeySelector = d => d.key;
 const legendLabelSelector = d => d.label;
 const legendColorSelector = d => d.color;
@@ -556,6 +498,8 @@ class Report extends PureComponent {
         const flatEducationData = this.getFlatEducationData(education);
         const soiTrendData = this.getSoiTrendData(soi);
 
+        const isEducationEmpty = Object.keys(education).length === 0;
+
         return (
             <div className={styles.region}>
                 {reportGetPending && <LoadingAnimation />}
@@ -635,29 +579,38 @@ class Report extends PureComponent {
                                 />
                             </div>
                         </div>
-                        <div className={styles.item}>
-                            <h3>Education</h3>
-                            <div className={_cs(styles.vizContainer, styles.vizTableContainer)}>
-                                <SunBurst
-                                    className={styles.viz}
-                                    data={sbData}
-                                    valueSelector={Report.sizeSelector}
-                                    labelSelector={Report.labelSelector}
-                                />
-                                <SunBurstRecharts
-                                    data={sbData}
-                                    colorScheme={sunBurstColorScheme}
-                                />
-                                <ListView
-                                    data={flatEducationData}
-                                    keySelector={Report.educationKeySelector}
-                                    renderer={KeyValue}
-                                    groupRendererParams={this.educationGroupRendererParams}
-                                    rendererParams={this.tableRenderParams}
-                                    groupKeySelector={Report.educationGroupKeySelector}
-                                />
-                            </div>
-                        </div>
+                        {
+                            !isEducationEmpty && (
+                                <div className={styles.item}>
+                                    <h3>Education</h3>
+                                    <div
+                                        className={
+                                            _cs(styles.vizContainer, styles.vizTableContainer)
+                                        }
+                                    >
+                                        {/* <SunBurst
+                                            className={styles.viz}
+                                            data={education}
+                                            valueSelector={Report.sizeSelector}
+                                            labelSelector={Report.labelSelector}
+                                        /> */}
+                                        <SunBurstRecharts
+                                            data={education}
+                                            colorScheme={sunBurstColorScheme}
+                                        />
+                                        <ListView
+                                            data={flatEducationData}
+                                            keySelector={Report.educationKeySelector}
+                                            renderer={KeyValue}
+                                            groupRendererParams={this.educationGroupRendererParams}
+                                            rendererParams={this.tableRenderParams}
+                                            groupKeySelector={Report.educationGroupKeySelector}
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        }
+
                         <div className={styles.item}>
                             <h3>Correspondence</h3>
                             <div className={styles.tables}>

@@ -1,7 +1,4 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable react/no-array-index-key */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,9 +6,10 @@ import {
     Pie,
     Cell,
     Tooltip,
+    ResponsiveContainer,
 } from 'recharts';
 
-import styles from './styles.scss';
+import styles from './sunburstStyles.scss';
 
 const getSunBurstData = (dataObject) => {
     const centerPieData = [{
@@ -34,7 +32,13 @@ const getSunBurstData = (dataObject) => {
             name,
             size,
         });
-        secondLevelData.push(children.flat());
+
+        secondLevelData.push(children.map(
+            child => ({
+                ...child,
+                firstLevelKey: key,
+            }),
+        ));
     });
 
     return {
@@ -63,10 +67,15 @@ const getFilteredData = (newlevel, newKey, dataValue) => {
     }
     if (newlevel === 'second') {
         const tempData = getSunBurstData(dataValue);
+
+        const slData = tempData.secondLevelData.find(fld => fld.key === newKey);
+
+        const flData = tempData.firstLevelData.filter(fld => fld.key === slData.firstLevelKey);
+
         return {
             centerPieData: [],
-            firstLevelData: tempData.firstLevelData.filter(fld => newKey.includes(fld.key)),
-            secondLevelData: tempData.secondLevelData.filter(fld => fld.key === newKey),
+            firstLevelData: flData,
+            secondLevelData: [slData],
         };
     }
     return getSunBurstData(dataValue);
@@ -80,26 +89,31 @@ const getCellColor = (dataKey, colorSchemeValue) => {
 };
 
 const CustomTooltip = ({ active, payload }) => {
-    if (active) {
-        return (
-            <div className={styles.customTooltip}>
-                <p>
-                    {/* eslint-disable-next-line react/prop-types */}
-                    {payload[0].name}
-                </p>
-                <p className={styles.customTooltipValue}>
-                    {/* eslint-disable-next-line react/prop-types */}
-                    {payload[0].value}
-                </p>
-            </div>
-        );
+    if (!active) {
+        return null;
     }
-    return null;
+    if (payload.length <= 0) {
+        return null;
+    }
+
+    const { name, value } = payload[0];
+
+    return (
+        <div className={styles.customTooltip}>
+            <p>
+                {name}
+            </p>
+            <p className={styles.customTooltipValue}>
+                {value}
+            </p>
+        </div>
+    );
 };
 
 CustomTooltip.propTypes = {
-    active: PropTypes.bool.isRequired,
-    payload: PropTypes.array.isRequired,
+    active: PropTypes.bool, // eslint-disable-line react/require-default-props
+    // eslint-disable-next-line react/require-default-props
+    payload: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 export default function SunBurst(props) {
@@ -111,13 +125,10 @@ export default function SunBurst(props) {
     const [level, setLevel] = useState('zero');
     const [key, setKey] = useState('');
 
-    const updateFilterParams = useCallback(
-        (levelParam, keyParam) => {
-            setLevel(levelParam);
-            setKey(keyParam);
-        },
-        [setKey, setLevel],
-    );
+    const updateFilterParams = (levelParam, keyParam) => {
+        setLevel(levelParam);
+        setKey(keyParam);
+    };
 
     const {
         centerPieData,
@@ -129,79 +140,81 @@ export default function SunBurst(props) {
     );
 
     return (
-        <PieChart
-            width={400}
-            height={400}
+        <ResponsiveContainer
+            width="100%"
+            height={300}
         >
-            {
-                centerPieData && (
-                    <Pie
-                        data={centerPieData}
-                        dataKey="size"
-                        outerRadius={30}
-                    >
-                        {
-                            firstLevelData.map(d => (
-                                <Cell
-                                    key={d.key}
-                                    fill="#a6cee3"
-                                    onClick={() => updateFilterParams('zero', '')}
-                                    className={styles.sunburstCell}
-                                />
-                            ))
-                        }
-                    </Pie>
-                )
-            }
-            {
-                firstLevelData && (
-                    <Pie
-                        data={firstLevelData}
-                        dataKey="size"
-                        innerRadius={centerPieData.length > 0 ? 32 : 0}
-                        outerRadius={centerPieData.length > 0 ? 60 : 40}
-                    >
-                        {
-                            firstLevelData.map(d => (
-                                <Cell
-                                    key={d.key}
-                                    fill={getCellColor(d.key, colorScheme)}
-                                    onClick={() => updateFilterParams('first', d.key)}
-                                    className={styles.sunburstCell}
-                                />
-                            ))
-                        }
-                    </Pie>
+            <PieChart>
+                {
+                    centerPieData && (
+                        <Pie
+                            data={centerPieData}
+                            dataKey="size"
+                            outerRadius={30}
+                        >
+                            {
+                                firstLevelData.map(d => (
+                                    <Cell
+                                        key={d.key}
+                                        fill="#a6cee3"
+                                        onClick={() => updateFilterParams('zero', '')}
+                                        className={styles.sunburstCell}
+                                    />
+                                ))
+                            }
+                        </Pie>
+                    )
+                }
+                {
+                    firstLevelData && (
+                        <Pie
+                            data={firstLevelData}
+                            dataKey="size"
+                            innerRadius={centerPieData.length > 0 ? 32 : 0}
+                            outerRadius={centerPieData.length > 0 ? 60 : 40}
+                        >
+                            {
+                                firstLevelData.map(d => (
+                                    <Cell
+                                        key={d.key}
+                                        fill={getCellColor(d.key, colorScheme)}
+                                        onClick={() => updateFilterParams('first', d.key)}
+                                        className={styles.sunburstCell}
+                                    />
+                                ))
+                            }
+                        </Pie>
 
-                )
-            }
-            {
-                secondLevelData && (
-                    <Pie
-                        data={secondLevelData}
-                        dataKey="size"
-                        innerRadius={centerPieData.length > 0 ? 62 : 42}
-                        outerRadius={90}
-                    >
-                        {
-                            secondLevelData.map(d => (
-                                <Cell
-                                    key={d.key}
-                                    fill={getCellColor(d.key, colorScheme)}
-                                    onClick={() => updateFilterParams('second', d.key)}
-                                    className={styles.sunburstCell}
-                                />
-                            ))
-                        }
-                    </Pie>
-                )
-            }
-            <Tooltip content={<CustomTooltip />} />
-        </PieChart>
+                    )
+                }
+                {
+                    secondLevelData && (
+                        <Pie
+                            data={secondLevelData}
+                            dataKey="size"
+                            innerRadius={centerPieData.length > 0 ? 62 : 42}
+                            outerRadius={90}
+                        >
+                            {
+                                secondLevelData.map(d => (
+                                    <Cell
+                                        key={d.key}
+                                        fill={getCellColor(d.key, colorScheme)}
+                                        onClick={() => updateFilterParams('second', d.key)}
+                                        className={styles.sunburstCell}
+                                    />
+                                ))
+                            }
+                        </Pie>
+                    )
+                }
+                <Tooltip content={<CustomTooltip />} />
+            </PieChart>
+        </ResponsiveContainer>
     );
 }
 
 SunBurst.propTypes = {
-    data: PropTypes.array.isRequired,
-    colorScheme: PropTypes.array.isRequired,
+    data: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+    colorScheme: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };

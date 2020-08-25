@@ -1,10 +1,16 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable react/forbid-prop-types */
-/* eslint-disable linebreak-style */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { BarChart, Bar, XAxis, YAxis, LabelList, Cell, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    LabelList,
+    Cell,
+    Tooltip,
+    ResponsiveContainer,
+} from 'recharts';
 
 export default function HorizontalBar(props) {
     const {
@@ -33,7 +39,7 @@ export default function HorizontalBar(props) {
                     {
                         data.map((d, index) => (
                             <Cell
-                                key={d.key}
+                                key={d.name}
                                 fill={colorScheme[index]}
                             />
                         ))
