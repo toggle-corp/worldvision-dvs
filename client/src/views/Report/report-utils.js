@@ -7,6 +7,7 @@ export const horizontalBarColorScheme = [
     '#28859f',
     '#22769e',
     '#1e699e',
+    '#41c9a2',
 ];
 
 export const horizontalBarMargin = {
@@ -26,4 +27,9 @@ export const triColorScheme = [
 export const biColorScheme = [
     '#41cf76',
     '#f44336',
+];
+
+export const sunBurstColorScheme = [
+    '#1f78b4',
+    '#b2df8a',
 ];

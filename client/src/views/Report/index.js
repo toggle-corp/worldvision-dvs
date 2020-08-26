@@ -24,13 +24,9 @@ import {
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
-import HorizontalBar from '#rscz/HorizontalBar';
-import DonutChart from '#rscz/DonutChart';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import GaugeChart from '#rscz/GaugeChart';
-import GroupedBarChart from '#rscz/GroupedBarChart';
-import Legend from '#rscz/Legend';
 
 import KeyValue from '#components/KeyValue';
 import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
@@ -39,10 +35,13 @@ import CorrespondenceItem from './CorrespondenceItem';
 import ReportMap from './ReportMap';
 import {
     horizontalBarColorScheme,
-    horizontalBarMargin,
     triColorScheme,
     biColorScheme,
 } from './report-utils';
+
+import DonutChartReCharts from './DonutChart.js';
+import HorizontalBarRecharts from './HorizontalBar.js';
+import GroupedBarChartRecharts from './GroupedBarChart.js';
 
 import styles from './styles.scss';
 
@@ -60,6 +59,7 @@ const soiLegendData = [
         color: '#ef8c00',
     },
 ];
+
 const legendKeySelector = d => d.key;
 const legendLabelSelector = d => d.label;
 const legendColorSelector = d => d.color;
@@ -493,9 +493,11 @@ class Report extends PureComponent {
         const flatEducationData = this.getFlatEducationData(education);
         const soiTrendData = this.getSoiTrendData(soi);
 
+        const isEducationEmpty = Object.keys(education).length === 0;
+
         return (
             <div className={styles.region}>
-                { reportGetPending && <LoadingAnimation /> }
+                {reportGetPending && <LoadingAnimation />}
                 <div className={styles.header}>
                     <div className={styles.heading}>
                         <button
@@ -525,16 +527,12 @@ class Report extends PureComponent {
                                         keySelector={Report.childKeySelector}
                                         renderer={KeyValue}
                                     />
-                                    <DonutChart
-                                        className={styles.viz}
-                                        sideLengthRatio={0.2}
-                                        data={childDonutData}
-                                        hideLabel
-                                        valueSelector={Report.valueSelector}
-                                        labelSelector={Report.labelSelector}
-                                        labelModifier={Report.labelModifierSelector}
-                                        colorScheme={triColorScheme}
-                                    />
+                                    <div className={styles.viz}>
+                                        <DonutChartReCharts
+                                            data={childDonutData}
+                                            colorScheme={triColorScheme}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.item}>
@@ -547,16 +545,12 @@ class Report extends PureComponent {
                                         keySelector={Report.healthKeySelector}
                                         renderer={KeyValue}
                                     />
-                                    <DonutChart
-                                        className={styles.viz}
-                                        hideLabel
-                                        sideLengthRatio={0.2}
-                                        data={healthDonut}
-                                        valueSelector={Report.valueSelector}
-                                        labelSelector={Report.labelSelector}
-                                        labelModifier={Report.labelModifierSelector}
-                                        colorScheme={biColorScheme}
-                                    />
+                                    <div className={styles.viz}>
+                                        <DonutChartReCharts
+                                            data={healthDonut}
+                                            colorScheme={biColorScheme}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -565,36 +559,40 @@ class Report extends PureComponent {
                         <div className={styles.item}>
                             <h3>RC Data</h3>
                             <div className={styles.vizContainer}>
-                                <HorizontalBar
-                                    className={styles.viz}
+                                <HorizontalBarRecharts
                                     data={remoteChildren}
-                                    valueSelector={Report.valueSelector}
-                                    labelSelector={Report.labelSelector}
-                                    showGridLines={false}
                                     colorScheme={horizontalBarColorScheme}
-                                    margins={horizontalBarMargin}
                                 />
                             </div>
                         </div>
-                        <div className={styles.item}>
-                            <h3>Education</h3>
-                            <div className={_cs(styles.vizContainer, styles.vizTableContainer)}>
-                                <SunBurst
-                                    className={styles.viz}
-                                    data={education}
-                                    valueSelector={Report.sizeSelector}
-                                    labelSelector={Report.labelSelector}
-                                />
-                                <ListView
-                                    data={flatEducationData}
-                                    keySelector={Report.educationKeySelector}
-                                    renderer={KeyValue}
-                                    groupRendererParams={this.educationGroupRendererParams}
-                                    rendererParams={this.tableRenderParams}
-                                    groupKeySelector={Report.educationGroupKeySelector}
-                                />
-                            </div>
-                        </div>
+                        {
+                            !isEducationEmpty && (
+                                <div className={styles.item}>
+                                    <h3>Education</h3>
+                                    <div
+                                        className={
+                                            _cs(styles.vizContainer, styles.vizTableContainer)
+                                        }
+                                    >
+                                        <SunBurst
+                                            className={styles.viz}
+                                            data={education}
+                                            valueSelector={Report.sizeSelector}
+                                            labelSelector={Report.labelSelector}
+                                        />
+                                        <ListView
+                                            data={flatEducationData}
+                                            keySelector={Report.educationKeySelector}
+                                            renderer={KeyValue}
+                                            groupRendererParams={this.educationGroupRendererParams}
+                                            rendererParams={this.tableRenderParams}
+                                            groupKeySelector={Report.educationGroupKeySelector}
+                                        />
+                                    </div>
+                                </div>
+                            )
+                        }
+
                         <div className={styles.item}>
                             <h3>Correspondence</h3>
                             <div className={styles.tables}>
@@ -625,16 +623,8 @@ class Report extends PureComponent {
                                     renderer={KeyValue}
                                 />
                                 <h3> SOI Trend </h3>
-                                <GroupedBarChart
-                                    className={styles.viz}
+                                <GroupedBarChartRecharts
                                     data={soiTrendData}
-                                    groupSelector={soiGroupSelector}
-                                />
-                                <Legend
-                                    data={soiLegendData}
-                                    keySelector={legendKeySelector}
-                                    labelSelector={legendLabelSelector}
-                                    colorSelector={legendColorSelector}
                                 />
                             </div>
                         </div>
