@@ -47,7 +47,7 @@ import {
 import DonutChartReCharts from './DonutChart.js';
 import HorizontalBarRecharts from './HorizontalBar.js';
 import GroupedBarChartRecharts from './GroupedBarChart.js';
-import SunBurstRecharts from './SunBurst';
+import SunBurstRecharts from './Sunburst';
 import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];

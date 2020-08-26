@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,7 +9,7 @@ import {
     ResponsiveContainer,
 } from 'recharts';
 
-import styles from './sunburstStyles.scss';
+import styles from './styles.scss';
 
 const getSunBurstData = (dataObject) => {
     const centerPieData = [{
@@ -125,10 +125,13 @@ export default function SunBurst(props) {
     const [level, setLevel] = useState('zero');
     const [key, setKey] = useState('');
 
-    const updateFilterParams = (levelParam, keyParam) => {
-        setLevel(levelParam);
-        setKey(keyParam);
-    };
+    const updateFilterParams = useCallback(
+        (levelParam, keyParam) => {
+            setLevel(levelParam);
+            setKey(keyParam);
+        },
+        [setLevel, setKey],
+    );
 
     const {
         centerPieData,
