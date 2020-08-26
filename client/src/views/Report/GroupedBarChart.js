@@ -10,17 +10,20 @@ import {
     Legend,
     ResponsiveContainer,
 } from 'recharts';
+import memoizeOne from 'memoize-one';
 
 export default function GroupedBarChart(props) {
     const {
         data,
     } = props;
 
-    const barLabels = Array.from(
+    const getBarLabels = memoizeOne(labelData => Array.from(
         new Map(
-            Object.entries(data.colors),
+            Object.entries(labelData.colors),
         ),
-    );
+    ));
+
+    const barLabels = getBarLabels(data);
 
     return (
         <ResponsiveContainer
@@ -34,15 +37,13 @@ export default function GroupedBarChart(props) {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                {
-                    barLabels.map(([key, colorValue]) => (
-                        <Bar
-                            dataKey={key}
-                            key={key}
-                            fill={colorValue}
-                        />
-                    ))
-                }
+                {barLabels.map(([key, colorValue]) => (
+                    <Bar
+                        dataKey={key}
+                        key={key}
+                        fill={colorValue}
+                    />
+                ))}
             </BarChart>
         </ResponsiveContainer>
     );

@@ -24,12 +24,9 @@ import {
 
 import LoadingAnimation from '#rscv/LoadingAnimation';
 import SunBurst from '#rscz/SunBurst';
-// import HorizontalBar from '#rscz/HorizontalBar';
 import ListView from '#rscv/List/ListView';
 import List from '#rscv/List';
 import GaugeChart from '#rscz/GaugeChart';
-// import GroupedBarChart from '#rscz/GroupedBarChart';
-// import Legend from '#rscz/Legend';
 
 import KeyValue from '#components/KeyValue';
 import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
@@ -38,16 +35,14 @@ import CorrespondenceItem from './CorrespondenceItem';
 import ReportMap from './ReportMap';
 import {
     horizontalBarColorScheme,
-    horizontalBarMargin,
     triColorScheme,
     biColorScheme,
-    sunBurstColorScheme,
 } from './report-utils';
 
 import DonutChartReCharts from './DonutChart.js';
 import HorizontalBarRecharts from './HorizontalBar.js';
 import GroupedBarChartRecharts from './GroupedBarChart.js';
-import SunBurstRecharts from './Sunburst';
+
 import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
@@ -564,15 +559,6 @@ class Report extends PureComponent {
                         <div className={styles.item}>
                             <h3>RC Data</h3>
                             <div className={styles.vizContainer}>
-                                {/* <HorizontalBar
-                                    className={styles.viz}
-                                    data={remoteChildren}
-                                    valueSelector={Report.valueSelector}
-                                    labelSelector={Report.labelSelector}
-                                    showGridLines={false}
-                                    colorScheme={horizontalBarColorScheme}
-                                    margins={horizontalBarMargin}
-                                /> */}
                                 <HorizontalBarRecharts
                                     data={remoteChildren}
                                     colorScheme={horizontalBarColorScheme}
@@ -588,15 +574,11 @@ class Report extends PureComponent {
                                             _cs(styles.vizContainer, styles.vizTableContainer)
                                         }
                                     >
-                                        {/* <SunBurst
+                                        <SunBurst
                                             className={styles.viz}
                                             data={education}
                                             valueSelector={Report.sizeSelector}
                                             labelSelector={Report.labelSelector}
-                                        /> */}
-                                        <SunBurstRecharts
-                                            data={education}
-                                            colorScheme={sunBurstColorScheme}
                                         />
                                         <ListView
                                             data={flatEducationData}
@@ -644,18 +626,6 @@ class Report extends PureComponent {
                                 <GroupedBarChartRecharts
                                     data={soiTrendData}
                                 />
-                                {/* <GroupedBarChart
-                                    className={styles.viz}
-                                    data={soiTrendData}
-                                    groupSelector={soiGroupSelector}
-                                />
-
-                                <Legend
-                                    data={soiLegendData}
-                                    keySelector={legendKeySelector}
-                                    labelSelector={legendLabelSelector}
-                                    colorSelector={legendColorSelector}
-                                /> */}
                             </div>
                         </div>
                         <div className={_cs(styles.item, styles.language)}>

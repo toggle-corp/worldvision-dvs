@@ -6,6 +6,7 @@ import {
     Pie,
     Cell,
     ResponsiveContainer,
+    Tooltip,
 } from 'recharts';
 
 export default function DonutChart(props) {
@@ -25,15 +26,14 @@ export default function DonutChart(props) {
                     outerRadius={85}
                     dataKey="value"
                 >
-                    {
-                        data.map((d, index) => (
-                            <Cell
-                                key={d.key}
-                                fill={colorScheme[index]}
-                            />
-                        ))
-                    }
+                    {data.map((d, index) => (
+                        <Cell
+                            key={d.key}
+                            fill={colorScheme[index]}
+                        />
+                    ))}
                 </Pie>
+                <Tooltip />
             </PieChart>
         </ResponsiveContainer>
     );

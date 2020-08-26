@@ -142,6 +142,3 @@ typings/
 !.env-nightly.enc
 
 nginx/configs
-
-# vscode
-.vscode/

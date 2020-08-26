@@ -36,14 +36,12 @@ export default function HorizontalBar(props) {
                 />
                 <Tooltip />
                 <Bar dataKey="value">
-                    {
-                        data.map((d, index) => (
-                            <Cell
-                                key={d.name}
-                                fill={colorScheme[index]}
-                            />
-                        ))
-                    }
+                    {data.map((d, index) => (
+                        <Cell
+                            key={d.name}
+                            fill={colorScheme[index]}
+                        />
+                    ))}
                     <LabelList
                         dataKey="value"
                         fill="#000"
