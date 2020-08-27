@@ -17,6 +17,15 @@ export default function HorizontalBar(props) {
         data,
         colorScheme,
     } = props;
+
+    if (data.length <= 0) {
+        return (
+            <div>
+                Nothings to show.
+            </div>
+        );
+    }
+
     return (
         <ResponsiveContainer
             height={350}
@@ -24,18 +33,20 @@ export default function HorizontalBar(props) {
         >
             <BarChart
                 data={data}
-                layout="vertical"
+                barSize={35}
             >
-                <XAxis
-                    type="number"
-                    hide
-                />
                 <YAxis
+                    type="number"
+                />
+                <XAxis
                     type="category"
                     dataKey="name"
+                    scale="auto"
                 />
-                <Tooltip />
-                <Bar dataKey="value">
+                <Tooltip cursor={false} />
+                <Bar
+                    dataKey="value"
+                >
                     {data.map((d, index) => (
                         <Cell
                             key={d.name}
@@ -45,7 +56,7 @@ export default function HorizontalBar(props) {
                     <LabelList
                         dataKey="value"
                         fill="#000"
-                        position="right"
+                        position="top"
                     />
                 </Bar>
             </BarChart>

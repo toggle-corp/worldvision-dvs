@@ -81,8 +81,8 @@
         flex-grow: 1;
         height: 100%;
         overflow-y: auto;
-
         h3 {
+            text-align: center;
             text-transform: initial;
             color: var(--color-accent);
             font-size: var(--font-size-large-alt);
@@ -99,10 +99,10 @@
                 display: flex;
                 flex-grow: 1;
                 padding: var(--spacing-super-large-alt);
-                height: 360px;
 
                 .viz {
                     flex-grow: 1;
+                    margin-bottom: var(--spacing-super-large-alt);
                 }
             }
 
@@ -120,6 +120,7 @@
                 display: flex;
                 flex-direction: column;
                 overflow-y: auto;
+                padding: var(--spacing-super-large-alt);
 
                 .heading {
                     color: var(--color-accent);
@@ -138,11 +139,11 @@
             flex-wrap: wrap;
 
             .item {
-                flex-basis: calc(100% / 3);
+                flex-basis: calc(100% / 2);
                 border-right: var(--width-separator-thin) solid var(--color-separator);
                 border-bottom: var(--width-separator-thin) solid var(--color-separator);
                 padding: 0;
-                height: 60vh;
+                // height: 60vh;
                 overflow-y: auto;
 
                 h3 {
@@ -157,7 +158,13 @@
                 .bold {
                     font-weight: var(--font-weight-bold);
                 }
+
+                .viz-wrapper {
+                    padding: 10vh;
+                }
             }
+
+          
 
             .table-viz {
                 display: flex;
@@ -206,12 +213,12 @@
             border-bottom: var(--width-separator-thin) solid var(--color-separator);
 
             .map {
-                flex-basis: 50%;
+                flex-basis: 60%;
                 flex-grow: 1;
             }
 
             .table-container {
-                flex-basis: 50%;
+                flex-basis: 40%;
                 flex-grow: 1;
 
                 .item {

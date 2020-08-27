@@ -36,34 +36,16 @@ import ReportMap from './ReportMap';
 import {
     horizontalBarColorScheme,
     triColorScheme,
-    biColorScheme,
 } from './report-utils';
 
-import DonutChartReCharts from './DonutChart.js';
-import HorizontalBarRecharts from './HorizontalBar.js';
-import GroupedBarChartRecharts from './GroupedBarChart.js';
+import DonutChartReCharts from './DonutChart';
+import HorizontalBarRecharts from './HorizontalBar';
+import GroupedBarChartRecharts from './GroupedBarChart';
 
 import styles from './styles.scss';
 
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
 const sectionPercents = [0.75, 0.1, 0.15];
-const soiLegendData = [
-    {
-        key: 'Total Closed',
-        label: 'Total Closed',
-        color: '#41cf76',
-    },
-    {
-        key: 'Closed On',
-        label: 'Closed On Time',
-        color: '#ef8c00',
-    },
-];
-
-const legendKeySelector = d => d.key;
-const legendLabelSelector = d => d.label;
-const legendColorSelector = d => d.color;
-const soiGroupSelector = d => d.date;
 
 const propTypes = {
     setReport: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
@@ -96,12 +78,10 @@ const modifier = (element, key) => (
     }
 );
 
-
 const healthKeysToRemove = [
     '@NotVarifiedHealthGrowthCard',
     '@NotParticipatingHealthNutriActivities',
 ];
-
 
 const requests = {
     reportGetRequest: {
@@ -142,18 +122,28 @@ const transformSoi = (soiData) => {
         closedOn,
     } = soi;
 
+    const getSoiRating = (closedOnValue, totalClosedValue) => {
+        if (closedOnValue === undefined || totalClosedValue === undefined) {
+            return 0;
+        }
+        if (totalClosedValue === 0 || closedOnValue > totalClosedValue) {
+            return 0;
+        }
+        return closedOnValue / totalClosedValue * 100;
+    };
+
     return ([
         {
             label: 'Total Closed',
-            value: totalClosed,
+            value: totalClosed !== undefined ? totalClosed : 0,
         },
         {
             label: 'Closed On Time',
-            value: closedOn,
+            value: closedOn !== undefined ? closedOn : 0,
         },
         {
             label: 'SOI Rating',
-            value: (closedOn / totalClosed) * 100,
+            value: getSoiRating(closedOn, totalClosed),
         },
     ]);
 };
@@ -479,6 +469,7 @@ class Report extends PureComponent {
         const remoteChildren = this.getSortedRemoteChildren(rcData);
 
         const soiValues = this.getSoi(soi);
+
         const totalSoi = (soiValues.find(s => s.label === 'Total Closed') || {}).value || 0;
         const closedSoi = (soiValues.find(s => s.label === 'Closed On Time') || {}).value || 0;
 
@@ -516,55 +507,6 @@ class Report extends PureComponent {
                             className={styles.map}
                             project={project}
                         />
-                        <div className={styles.tableContainer}>
-                            <div className={styles.item}>
-                                <h3>Child Monitoring Status</h3>
-                                <div className={styles.vizWrapper}>
-                                    <ListView
-                                        className={styles.table}
-                                        data={childMonitoring}
-                                        rendererParams={this.tableRenderParams}
-                                        keySelector={Report.childKeySelector}
-                                        renderer={KeyValue}
-                                    />
-                                    <div className={styles.viz}>
-                                        <DonutChartReCharts
-                                            data={childDonutData}
-                                            colorScheme={triColorScheme}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.item}>
-                                <h3>Health/Nutrition</h3>
-                                <div className={styles.vizWrapper}>
-                                    <ListView
-                                        className={styles.table}
-                                        data={healthNutritionFiltered}
-                                        rendererParams={this.tableRenderParams}
-                                        keySelector={Report.healthKeySelector}
-                                        renderer={KeyValue}
-                                    />
-                                    <div className={styles.viz}>
-                                        <DonutChartReCharts
-                                            data={healthDonut}
-                                            colorScheme={biColorScheme}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.lowerContainer}>
-                        <div className={styles.item}>
-                            <h3>RC Data</h3>
-                            <div className={styles.vizContainer}>
-                                <HorizontalBarRecharts
-                                    data={remoteChildren}
-                                    colorScheme={horizontalBarColorScheme}
-                                />
-                            </div>
-                        </div>
                         {
                             !isEducationEmpty && (
                                 <div className={styles.item}>
@@ -593,19 +535,59 @@ class Report extends PureComponent {
                             )
                         }
 
+                    </div>
+                    <div className={styles.lowerContainer}>
                         <div className={styles.item}>
-                            <h3>Correspondence</h3>
-                            <div className={styles.tables}>
-                                <List
-                                    data={correspondences}
-                                    rendererParams={this.correspondencesParams}
-                                    keySelector={Report.correspondenceKeySelector}
-                                    renderer={CorrespondenceItem}
+                            <h3>Child Monitoring Status</h3>
+                            <div className={styles.vizContainer}>
+                                <div className={styles.viz}>
+                                    <DonutChartReCharts
+                                        data={childDonutData}
+                                        colorScheme={triColorScheme}
+                                    />
+                                </div>
+                                <ListView
+                                    className={styles.table}
+                                    data={childMonitoring}
+                                    rendererParams={this.tableRenderParams}
+                                    keySelector={Report.childKeySelector}
+                                    renderer={KeyValue}
                                 />
                             </div>
                         </div>
                         <div className={styles.item}>
-                            <h3>Service Service Operations Indicators Summary Report</h3>
+                            <h3>Health/Nutrition</h3>
+                            <div className={styles.vizContainer}>
+                                <div className={styles.viz}>
+                                    <DonutChartReCharts
+                                        data={childDonutData}
+                                        colorScheme={triColorScheme}
+                                    />
+                                </div>
+                                <ListView
+                                    className={styles.table}
+                                    data={childMonitoring}
+                                    rendererParams={this.tableRenderParams}
+                                    keySelector={Report.childKeySelector}
+                                    renderer={KeyValue}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className={styles.lowerContainer}>
+                        <div className={styles.item}>
+                            <h3>RC Data</h3>
+                            <div className={styles.vizWrapper}>
+                                <HorizontalBarRecharts
+                                    data={remoteChildren}
+                                    colorScheme={horizontalBarColorScheme}
+                                />
+                            </div>
+                        </div>
+
+                        <div className={styles.item}>
+                            <h3>Service Operations Indicators Summary Report</h3>
                             <div className={styles.vizGroup}>
                                 <GaugeChart
                                     className={styles.viz}
@@ -625,6 +607,18 @@ class Report extends PureComponent {
                                 <h3> SOI Trend </h3>
                                 <GroupedBarChartRecharts
                                     data={soiTrendData}
+                                />
+                            </div>
+                        </div>
+
+                        <div className={styles.item}>
+                            <h3>Correspondence</h3>
+                            <div className={styles.tables}>
+                                <List
+                                    data={correspondences}
+                                    rendererParams={this.correspondencesParams}
+                                    keySelector={Report.correspondenceKeySelector}
+                                    renderer={CorrespondenceItem}
                                 />
                             </div>
                         </div>

@@ -17,6 +17,13 @@ export default function GroupedBarChart(props) {
         data,
     } = props;
 
+
+    if (data.values.length <= 0) {
+        return (
+            <div>Nothing to show</div>
+        );
+    }
+
     const getBarLabels = memoizeOne(labelData => Array.from(
         new Map(
             Object.entries(labelData.colors),
@@ -25,13 +32,17 @@ export default function GroupedBarChart(props) {
 
     const barLabels = getBarLabels(data);
 
+    const numberOfData = data.values.length;
+
     return (
         <ResponsiveContainer
-            height={200}
-            width="100%"
+            height={250}
+            width={numberOfData < 4 ? '60%' : '90%'}
         >
             <BarChart
                 data={data.values}
+                barCategoryGap={numberOfData > 5 ? '10%' : '20%'}
+                margin={{ top: 50 }}
             >
                 <XAxis dataKey="date" />
                 <YAxis />

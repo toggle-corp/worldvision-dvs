@@ -1,0 +1,16 @@
+.custom-tooltip {
+    padding: var(--spacing-medium) var(--spacing-large);
+    background-color: var(--color-foreground);
+    box-shadow: 0 var(--spacing-medium) var(--spacing-medium) 0 var(--color-separator-alt);
+}
+
+.custom-tooltip-name {
+    text-align: center;
+}
+
+.custom-tooltip-value {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: var(--font-size-super-large);
+}
