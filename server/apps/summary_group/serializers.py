@@ -1,5 +1,9 @@
+import re
 from django.db.models import Prefetch, Sum, Q
 from rest_framework import serializers
+from django.contrib.postgres.fields.jsonb import KeyTextTransform
+from django.db.models.functions import Cast
+from django.db import models
 
 from report.report_fields import LABELS
 from report.models import (
@@ -10,6 +14,9 @@ from report.models import (
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
     SupportPariticipationDetail,
+
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
 )
 from .models import SummaryGroup
 
@@ -179,6 +186,9 @@ def get_projects_summary(qs, group_by_date=False):
     registerchildbyageandgender = []
     childfamilyparticipation = []
     support_pariticipation_detail = []
+    most_vulnerable_children_indicator = None
+    most_vulnerable_children_vulnerability_marker = None
+
     if group_by_date:
         fields = ('date__year', 'date__month', 'gender')
         query = RegisterChildByAgeAndGender.objects.filter(
@@ -229,6 +239,22 @@ def get_projects_summary(qs, group_by_date=False):
             .order_by(*fields).values(*fields).annotate(count_sum=Sum('count')).values(*fields, 'count_sum')
         )
 
+        most_vulnerable_children_indicator = MostVulnerableChildrenIndicator.objects.filter(project__in=projects).aggregate(
+            total_mvc_count=Sum('mvc_count'),
+            total_rc_not_vc_count=Sum('rc_not_vc_count'),
+            total_rc_count=Sum('rc_count'),
+        )
+        most_vulnerable_children_vulnerability_marker = MostVulnerableChildrenVulnerabilityMarker.objects.filter(
+            project__in=projects,
+        ).aggregate(
+            **{
+                re.sub(r'(_)\1+', r'_', f'total_{field}'.lower()): Sum(
+                    Cast(KeyTextTransform(field, 'data'), models.IntegerField())
+                )
+                for field in MostVulnerableChildrenVulnerabilityMarker.FIELDS
+            },
+        )
+
     reportDates = projects.filter(
         reports__date__isnull=False,
     ).order_by('reports__date').values_list('reports__date', flat=True)[:1]
@@ -271,6 +297,8 @@ def get_projects_summary(qs, group_by_date=False):
         return {
             **common_stats,
             'support_pariticipation_detail': support_pariticipation_detail,
+            'most_vulnerable_children_indicator': most_vulnerable_children_indicator,
+            'most_vulnerable_children_vulnerability_marker': most_vulnerable_children_vulnerability_marker,
         }
     return common_stats
 

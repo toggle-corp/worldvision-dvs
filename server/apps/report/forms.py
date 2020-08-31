@@ -21,6 +21,9 @@ from .models import (
     LanguagePeopleGroupDisability,
     SupportPariticipationDetail,
 
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
+
     BulkImportReport,
 )
 from .bulk_import import (
@@ -30,6 +33,9 @@ from .bulk_import import (
     register_child_by_age_and_gender as register_child_by_age_and_gender_importer,
     language_people_group_disability as language_people_group_disability_importer,
     support_pariticipation_detail as support_pariticipation_detail_importer,
+
+    most_vulnerable_children_indicator as most_vulnerable_children_indicator_importer,
+    most_vulnerable_children_vulnerability_marker as most_vulnerable_children_vulnerability_marker_importer,
 )
 from .utils import delete_file
 
@@ -42,6 +48,9 @@ BULK_IMPORTER = {
     ChildFamilyParticipation: child_family_participation_importer,
     LanguagePeopleGroupDisability: language_people_group_disability_importer,
     SupportPariticipationDetail: support_pariticipation_detail_importer,
+
+    MostVulnerableChildrenIndicator: most_vulnerable_children_indicator_importer,
+    MostVulnerableChildrenVulnerabilityMarker: most_vulnerable_children_vulnerability_marker_importer,
 }
 
 # where user needs to provide the data information (else it's optional but will be used if provided)
@@ -54,12 +63,16 @@ DATE_REQUIRED_MODELS = [
 # Where this is no necessicty for date field from user (date isn't used)
 DATE_NOT_REQUIRED_MODELS = [
     SupportPariticipationDetail,
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
 ]
 
 # where the import files should be CSV (instead of xml)
 CSV_IMPORT_MODELS = [
     LanguagePeopleGroupDisability,
     SupportPariticipationDetail,
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
 ]
 
 

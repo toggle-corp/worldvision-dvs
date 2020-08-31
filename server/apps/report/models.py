@@ -137,6 +137,38 @@ class SupportPariticipationDetail(ProjectSummaryModel):
         unique_together = ('project', 'date', 'type', 'comment',)
 
 
+class MostVulnerableChildrenIndicator(ProjectSummaryModel):
+    mvc_count = models.IntegerField(default=0)
+    rc_not_vc_count = models.IntegerField(default=0)
+    rc_count = models.IntegerField(default=0)
+
+    class Meta:
+        unique_together = ('project', 'date',)
+
+
+class MostVulnerableChildrenVulnerabilityMarker(ProjectSummaryModel):
+    FIELDS = (
+        'Child_Labor', 'Sexual_Abuse', 'Physical_Abuse', 'Child_Trafficking', 'Child_Marriage', 'Early_Sexual_Debut',
+        'Substance_Use', 'Abusive_Exploitative_Relationships',
+
+        'Child_Malnourished', 'Child_in_Household_Below_Poverty_Threshold', 'No_Access_to_Basic_Services_and_Facilities',
+        'Child_is_Orphan__Abandoned__Neglected', 'Child_Not_in_School', 'Child_Living_in_Public_Property__Slums',
+        'Child_Head_of_Household', 'Child_Living_or_Working_on_the_Street', 'Child_Caregiver',
+        'Child_living_with_step_parents__divorced_parents__single_parent', 'Extreme_Deprivation',
+
+        'Child_Living_in_Disaster_Prone_Area', 'Child_Living_in_Areas_With_Conflict', 'Child_Living_in_Former_War_Zones',
+        'Child_Affected_by_Epidemic', 'Catastrophe_Disaster',
+
+        'Child_with_Disability', 'Child_Belongs_to_a_Marginalized_Group', 'Child_Refugee__Children_of_Refugees__Migrant',
+        'Child_Delinquent', 'Child_Whose_Parents_are_Imprisoned', 'Child_Without_Birth_Registration',
+        'Child_Living_in_Isolation', 'Serious_Discimination'
+    )
+    data = JSONField(default=dict)
+
+    class Meta:
+        unique_together = ('project', 'date',)
+
+
 @receiver(models.signals.post_delete, sender=Report)
 def delete_report_file(sender, instance, *args, **kwargs):
     """ Deletes report file on `post_delete` """
