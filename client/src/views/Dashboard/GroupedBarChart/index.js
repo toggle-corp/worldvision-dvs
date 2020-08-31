@@ -14,9 +14,10 @@ import {
 
 function CustomizedLabel(props) {
     const { x, y, width, value } = props;
+
     return (
         <text
-            x={x + width / 2}
+            x={x + width / 2.75}
             y={y}
             dy={-8}
             fontSize="12"
@@ -30,7 +31,6 @@ export default function GroupedBarChart(props) {
     const {
         data,
     } = props;
-
 
     if (data.values.length <= 0) {
         return (

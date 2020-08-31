@@ -560,7 +560,7 @@ class Report extends PureComponent {
                             <div className={styles.vizContainer}>
                                 <div className={styles.viz}>
                                     <DonutChartReCharts
-                                        data={childDonutData}
+                                        data={healthDonut}
                                         colorScheme={triColorScheme}
                                     />
                                 </div>
