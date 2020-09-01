@@ -21,6 +21,9 @@ from .models import (
     LanguagePeopleGroupDisability,
     SupportPariticipationDetail,
 
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
+
     BulkImportReport,
 )
 from .forms import ReportAdminForm, BulkImportForm
@@ -169,6 +172,16 @@ class LanguagePeopleGroupDisabilityAdmin(ProjectSummaryAdmin):
 @admin.register(SupportPariticipationDetail)
 class SupportPariticipationDetailAdmin(ProjectSummaryAdmin):
     list_filter = ('type', 'comment',)
+
+
+@admin.register(MostVulnerableChildrenIndicator)
+class MostVulnerableChildrenIndicatorAdmin(ProjectSummaryAdmin):
+    pass
+
+
+@admin.register(MostVulnerableChildrenVulnerabilityMarker)
+class MostVulnerableChildrenVulnerabilityMarkerAdmin(ProjectSummaryAdmin):
+    pass
 
 
 @admin.register(BulkImportReport)
