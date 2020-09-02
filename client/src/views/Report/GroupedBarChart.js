@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isNotDefined } from '@togglecorp/fujs';
 
 import {
     BarChart,
@@ -18,7 +19,7 @@ export default function GroupedBarChart(props) {
     } = props;
 
 
-    if (data.values.length <= 0) {
+    if (isNotDefined(data) || isNotDefined(data.values) || data.values.length <= 0) {
         return (
             <div>Nothing to show</div>
         );

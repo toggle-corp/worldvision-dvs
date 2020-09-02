@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isNotDefined } from '@togglecorp/fujs';
 
 import {
     PieChart,
@@ -15,7 +16,7 @@ const CustomTooltip = ({ active, payload }) => {
     if (!active) {
         return null;
     }
-    if (payload.length <= 0) {
+    if (isNotDefined(payload) || payload.length <= 0) {
         return null;
     }
 
@@ -47,7 +48,8 @@ export default function DonutChart(props) {
         donutChartWidth,
     } = props;
 
-    if (data.length <= 0) {
+
+    if (isNotDefined(data) || data.length <= 0) {
         return (
             <div>
                 Nothings to show.

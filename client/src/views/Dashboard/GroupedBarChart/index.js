@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isNotDefined } from '@togglecorp/fujs';
 
 import {
     BarChart,
@@ -9,7 +10,6 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
-    LabelList,
 } from 'recharts';
 
 function CustomizedLabel(props) {
@@ -20,7 +20,7 @@ function CustomizedLabel(props) {
             x={x + width / 2.75}
             y={y}
             dy={-8}
-            fontSize="12"
+            fontSize={12}
         >
             {value}
         </text>
@@ -32,7 +32,7 @@ export default function GroupedBarChart(props) {
         data,
     } = props;
 
-    if (data.values.length <= 0) {
+    if (isNotDefined(data) || isNotDefined(data.values) || data.values.length <= 0) {
         return (
             <div>Nothing to show</div>
         );

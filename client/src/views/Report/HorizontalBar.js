@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isNotDefined } from '@togglecorp/fujs';
 
 import {
     BarChart,
@@ -18,7 +19,7 @@ export default function HorizontalBar(props) {
         colorScheme,
     } = props;
 
-    if (data.length <= 0) {
+    if (isNotDefined(data) || data.length <= 0) {
         return (
             <div>
                 Nothings to show.
