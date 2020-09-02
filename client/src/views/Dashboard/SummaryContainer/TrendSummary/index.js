@@ -335,6 +335,7 @@ class TrendSummary extends React.PureComponent {
                     {rcData.values.length > 0 && (
                         <GroupedBarChartRecharts
                             data={rcData}
+                            lineKey="Planned RC"
                         />
                     )}
                     {/* <GroupedBarChart
@@ -356,6 +357,7 @@ class TrendSummary extends React.PureComponent {
                     {childMonitoringData.values.length > 0 && (
                         <GroupedBarChartRecharts
                             data={childMonitoringData}
+                            lineKey="Not Sighted More than 90 Days"
                         />
                     )}
                     {/* <GroupedBarChart

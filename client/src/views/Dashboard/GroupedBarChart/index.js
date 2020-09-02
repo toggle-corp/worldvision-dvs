@@ -10,17 +10,18 @@ import {
     Tooltip,
     Legend,
     ResponsiveContainer,
+    ComposedChart,
+    Line,
 } from 'recharts';
 
 function CustomizedLabel(props) {
     const { x, y, width, value } = props;
-
     return (
         <text
-            x={x + width / 2.75}
+            x={x + width / 3}
             y={y}
             dy={-8}
-            fontSize={12}
+            fontSize={10}
         >
             {value}
         </text>
@@ -30,6 +31,7 @@ function CustomizedLabel(props) {
 export default function GroupedBarChart(props) {
     const {
         data,
+        lineKey,
     } = props;
 
     if (isNotDefined(data) || isNotDefined(data.values) || data.values.length <= 0) {
@@ -43,7 +45,7 @@ export default function GroupedBarChart(props) {
             height={250}
             width="100%"
         >
-            <BarChart
+            <ComposedChart
                 data={data.values}
                 margin={{ top: 50 }}
             >
@@ -57,13 +59,25 @@ export default function GroupedBarChart(props) {
                         key={column}
                         fill={data.colors[column]}
                         label={<CustomizedLabel />}
+                        style={{ cursor: 'pointer' }}
                     />
                 ))}
-            </BarChart>
+                {!!lineKey && (
+                    <Line
+                        dataKey={lineKey}
+                        stroke="#0591fb"
+                    />
+                )}
+            </ComposedChart>
         </ResponsiveContainer>
     );
 }
 
+GroupedBarChart.defaultProps = {
+    lineKey: '',
+};
+
 GroupedBarChart.propTypes = {
     data: PropTypes.object.isRequired,
+    lineKey: PropTypes.string,
 };
