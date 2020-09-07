@@ -1,4 +1,3 @@
-import re
 from django.db.models import Prefetch, Sum, Q
 from rest_framework import serializers
 from django.contrib.postgres.fields.jsonb import KeyTextTransform
@@ -248,10 +247,8 @@ def get_projects_summary(qs, group_by_date=False):
             project__in=projects,
         ).aggregate(
             **{
-                re.sub(r'(_)\1+', r'_', f'total_{field}'.lower()): Sum(
-                    Cast(KeyTextTransform(field, 'data'), models.IntegerField())
-                )
-                for field in MostVulnerableChildrenVulnerabilityMarker.FIELDS
+                field_label: Sum(Cast(KeyTextTransform(field, 'data'), models.IntegerField()))
+                for field, field_label in MostVulnerableChildrenVulnerabilityMarker.FIELDS
             },
         )
 

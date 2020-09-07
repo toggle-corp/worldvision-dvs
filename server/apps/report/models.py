@@ -1,3 +1,4 @@
+import re
 import logging
 
 from django.contrib.auth.models import User
@@ -167,6 +168,12 @@ class MostVulnerableChildrenVulnerabilityMarker(ProjectSummaryModel):
 
     class Meta:
         unique_together = ('project', 'date',)
+
+    @classmethod
+    def get_data_fields(cls):
+        return [
+            (field, re.sub(r'(_)\1+', r'_', f'total_{field}'.lower())) for field in cls.FIELDS
+        ]
 
 
 @receiver(models.signals.post_delete, sender=Report)

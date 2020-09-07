@@ -26,6 +26,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     rc_data = serializers.SerializerMethodField()
     district = DistrictSerializer()
     municipalities = MunicipalitySerializer(many=True)
+    support_pariticipation_detail = serializers.SerializerMethodField()
+    most_vulnerable_children_indicator = serializers.SerializerMethodField()
+    most_vulnerable_children_vulnerability_marker = serializers.SerializerMethodField()
 
     class Meta:
         model = Project
@@ -47,3 +50,12 @@ class ProjectSerializer(serializers.ModelSerializer):
                     'value': rc_data.get(field),
                 } for field in fields
             ]
+
+    def get_support_pariticipation_detail(self, obj):
+        return self.context.get('support_pariticipation_detail', {}).get(obj.pk)
+
+    def get_most_vulnerable_children_indicator(self, obj):
+        return self.context.get('most_vulnerable_children_indicator', {}).get(obj.pk)
+
+    def get_most_vulnerable_children_vulnerability_marker(self, obj):
+        return self.context.get('most_vulnerable_children_vulnerability_marker', {}).get(obj.pk)
