@@ -31,6 +31,11 @@ import GaugeChart from '#rscz/GaugeChart';
 import KeyValue from '#components/KeyValue';
 import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisability';
 
+import {
+    transformMostVulnerableChildren,
+    transformMostVulnerableChildrenByMarker,
+} from '#utils/transform';
+
 import CorrespondenceItem from './CorrespondenceItem';
 import ReportMap from './ReportMap';
 import {
@@ -148,6 +153,106 @@ const transformSoi = (soiData) => {
     ]);
 };
 
+const participationDetailsParams = (key, data) => ({
+    title: data.comment,
+    value: data.count_sum,
+});
+const participationKeySelector = d => d.comment;
+
+const participationGroupSelector = d => d.type;
+
+const participationGroupParams = d => ({
+    children: d,
+});
+
+const mvcIndicatorKeySelector = d => d.label;
+
+const mostVulnerableChildrenParams = (key, data) => ({
+    title: data.label,
+    value: data.value,
+});
+
+const mostVulnerableChildrenGroupParams = d => ({ children: d });
+
+const mostVulnerableKeySelector = d => d.label;
+
+const mostVulnerableGroupKeySelector = d => d.type;
+
+const tableParams = (key, data) => {
+    const isSoi = key === 'soi';
+    const isPercent = key === 'percent';
+
+    return ({
+        title: data.label,
+        value: data.value,
+        percent: data.value,
+        isPercent,
+        showValue: !isPercent,
+        colorOnlyNumber: true,
+        titleClassName: _cs(isSoi && styles.bold),
+    });
+};
+
+const educationGroupRendererParams = (groupKey) => {
+    const children = groupKey === '@PrimarySchoolAge'
+        ? 'Primary School Age' : 'Secondary School Age';
+    return ({ children });
+};
+
+const tableRenderParams = (key, data) => {
+    if (key === '@cms') {
+        return ({
+            title: data.name,
+            value: data.value,
+            percent: data.percent,
+            isPercent: true,
+        });
+    }
+
+    const isSuccess = key === '@NotSighted30Days'
+          || key === '@HealthSatisfactory'
+          || key === '@VisitCompleted'
+          || key === 'pendingCurrent'
+          || key.includes('rcEducation')
+          || key === 'good';
+
+    const isWarning = key === '@NotSighted60Days';
+
+    const isDanger = key === '@NotSighted90Days'
+          || key === '@HealthNotSatisfactory'
+          || key === 'pendingOverDue'
+          || key.includes('rcNoEducation')
+          || data.type === 'bad';
+
+    return ({
+        title: data.name,
+        value: data.value,
+        className: _cs(
+            isSuccess && styles.success,
+            isWarning && styles.warning,
+            isDanger && styles.danger,
+        ),
+    });
+};
+const soiParams = (key, data) => {
+    const isPercent = key === 'Rating';
+
+    return ({
+        title: data.label,
+        value: data.value,
+        percent: data.value,
+        isPercent,
+        showValue: !isPercent,
+        colorOnlyNumber: true,
+        titleClassName: styles.bold,
+    });
+};
+
+const correspondencesParams = (key, data) => ({
+    title: data.typeName,
+    data,
+});
+
 class Report extends PureComponent {
     static propTypes = propTypes;
 
@@ -186,13 +291,17 @@ class Report extends PureComponent {
 
     static educationKeySelector = d => d.key;
 
-    static educationGroupKeySelector = d => d.groupKey;
+    educationGroupKeySelector = d => d.groupKey;
 
     static correspondenceKeySelector = d => d.typeName;
 
     static soiKeySelector = d => d.label;
 
     getSoi = memoize(transformSoi);
+
+    getMostVulnerableChildren = memoize(transformMostVulnerableChildren);
+
+    getMostVulnerableChildrenByMarker = memoize(transformMostVulnerableChildrenByMarker);
 
     getSoiTrendData = memoize((soi = []) => {
         const values = soi.map((value) => {
@@ -215,67 +324,6 @@ class Report extends PureComponent {
                 'Closed On': '#ef8c00',
             },
         });
-    });
-
-    tableRenderParams = (key, data) => {
-        if (key === '@cms') {
-            return ({
-                title: data.name,
-                value: data.value,
-                percent: data.percent,
-                isPercent: true,
-            });
-        }
-
-        const isSuccess = key === '@NotSighted30Days'
-            || key === '@HealthSatisfactory'
-            || key === '@VisitCompleted'
-            || key === 'pendingCurrent'
-            || key.includes('rcEducation')
-            || key === 'good';
-
-        const isWarning = key === '@NotSighted60Days';
-
-        const isDanger = key === '@NotSighted90Days'
-            || key === '@HealthNotSatisfactory'
-            || key === 'pendingOverDue'
-            || key.includes('rcNoEducation')
-            || data.type === 'bad';
-
-        return ({
-            title: data.name,
-            value: data.value,
-            className: _cs(
-                isSuccess && styles.success,
-                isWarning && styles.warning,
-                isDanger && styles.danger,
-            ),
-        });
-    };
-
-    soiParams = (key, data) => {
-        const isPercent = key === 'Rating';
-
-        return ({
-            title: data.label,
-            value: data.value,
-            percent: data.value,
-            isPercent,
-            showValue: !isPercent,
-            colorOnlyNumber: true,
-            titleClassName: styles.bold,
-        });
-    };
-
-    educationGroupRendererParams = (groupKey) => {
-        const children = groupKey === '@PrimarySchoolAge'
-            ? 'Primary School Age' : 'Secondary School Age';
-        return ({ children });
-    }
-
-    correspondencesParams = (key, data) => ({
-        title: data.typeName,
-        data,
     });
 
     handleGoBack = () => {
@@ -464,8 +512,12 @@ class Report extends PureComponent {
                 childMonitoring: childMonitoringFromProps,
                 correspondences: correspondencesFromProps,
             } = {},
+            supportPariticipationDetail,
+            mostVulnerableChildrenIndicator,
+            mostVulnerableChildrenVulnerabilityMarker,
         } = report;
 
+        console.warn('support', supportPariticipationDetail);
         const remoteChildren = this.getSortedRemoteChildren(rcData);
 
         const soiValues = this.getSoi(soi);
@@ -478,11 +530,15 @@ class Report extends PureComponent {
             childDonutData,
         } = this.getChildMonitoringData(childMonitoringFromProps);
 
-        const healthDonut = this.getHealthDonutData(healthNutrition);
-        const healthNutritionFiltered = this.getRemovedData(healthNutrition, healthKeysToRemove);
         const correspondences = this.getCorrespondenceData(correspondencesFromProps);
         const flatEducationData = this.getFlatEducationData(education);
         const soiTrendData = this.getSoiTrendData(soi);
+        const mostVulnerableChildren = this.getMostVulnerableChildren(
+            mostVulnerableChildrenIndicator,
+        );
+        const mostVulnerableChildrenMarker = this.getMostVulnerableChildrenByMarker(
+            mostVulnerableChildrenVulnerabilityMarker,
+        );
 
         const isEducationEmpty = Object.keys(education).length === 0;
 
@@ -526,8 +582,8 @@ class Report extends PureComponent {
                                             data={flatEducationData}
                                             keySelector={Report.educationKeySelector}
                                             renderer={KeyValue}
-                                            groupRendererParams={this.educationGroupRendererParams}
-                                            rendererParams={this.tableRenderParams}
+                                            groupRendererParams={educationGroupRendererParams}
+                                            rendererParams={tableRenderParams}
                                             groupKeySelector={Report.educationGroupKeySelector}
                                         />
                                     </div>
@@ -549,7 +605,7 @@ class Report extends PureComponent {
                                 <ListView
                                     className={styles.table}
                                     data={childMonitoring}
-                                    rendererParams={this.tableRenderParams}
+                                    rendererParams={tableRenderParams}
                                     keySelector={Report.childKeySelector}
                                     renderer={KeyValue}
                                 />
@@ -567,7 +623,7 @@ class Report extends PureComponent {
                                 <ListView
                                     className={styles.table}
                                     data={childMonitoring}
-                                    rendererParams={this.tableRenderParams}
+                                    rendererParams={tableRenderParams}
                                     keySelector={Report.childKeySelector}
                                     renderer={KeyValue}
                                 />
@@ -600,7 +656,7 @@ class Report extends PureComponent {
                                 <ListView
                                     className={_cs(styles.table, styles.sso)}
                                     data={soiValues}
-                                    rendererParams={this.soiParams}
+                                    rendererParams={soiParams}
                                     keySelector={Report.soiKeySelector}
                                     renderer={KeyValue}
                                 />
@@ -616,7 +672,7 @@ class Report extends PureComponent {
                             <div className={styles.tables}>
                                 <List
                                     data={correspondences}
-                                    rendererParams={this.correspondencesParams}
+                                    rendererParams={correspondencesParams}
                                     keySelector={Report.correspondenceKeySelector}
                                     renderer={CorrespondenceItem}
                                 />
@@ -630,6 +686,46 @@ class Report extends PureComponent {
                                 className={styles.languagePeopleGroupDisability}
                                 data={languagePeopleGroupDisability}
                             />
+                        </div>
+                        <div className={_cs(styles.item, styles.report)}>
+                            <h3>Support Participation Details</h3>
+                            <div className={styles.container}>
+                                <ListView
+                                    className={styles.list}
+                                    data={supportPariticipationDetail}
+                                    rendererParams={participationDetailsParams}
+                                    groupRendererParams={participationGroupParams}
+                                    keySelector={participationKeySelector}
+                                    renderer={KeyValue}
+                                    groupKeySelector={participationGroupSelector}
+                                />
+                            </div>
+                        </div>
+                        <div className={_cs(styles.item, styles.report)}>
+                            <h3>Most Vulnerable Children By Indicator</h3>
+                            <div className={styles.container}>
+                                <ListView
+                                    className={styles.table}
+                                    data={mostVulnerableChildren}
+                                    rendererParams={tableParams}
+                                    keySelector={mvcIndicatorKeySelector}
+                                    renderer={KeyValue}
+                                />
+                            </div>
+                        </div>
+                        <div className={_cs(styles.item, styles.report)}>
+                            <h3>Most Vulnerable Children By Vulnerability Marker</h3>
+                            <div className={styles.container}>
+                                <ListView
+                                    className={styles.table}
+                                    data={mostVulnerableChildrenMarker}
+                                    rendererParams={mostVulnerableChildrenParams}
+                                    groupRendererParams={mostVulnerableChildrenGroupParams}
+                                    keySelector={mostVulnerableKeySelector}
+                                    renderer={KeyValue}
+                                    groupKeySelector={mostVulnerableGroupKeySelector}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

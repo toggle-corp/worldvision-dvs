@@ -238,10 +238,26 @@
                         }
 
                         .viz {
-                            height: 180px;
                             margin-left: var(--spacing-extra-large);
+                            height: 180px;
                         }
                     }
+                }
+            }
+        }
+
+        .report {
+            display: flex;
+
+            .container {
+                display: flex;
+                flex-grow: 1;
+                padding: var(--spacing-medium) var(--spacing-extra-large);
+
+                .list {
+                    display: table;
+                    width: 100%;
+                    border-collapse: collapse;
                 }
             }
         }
