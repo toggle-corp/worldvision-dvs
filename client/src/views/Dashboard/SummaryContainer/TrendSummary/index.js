@@ -439,7 +439,6 @@ class TrendSummary extends React.PureComponent {
                             data={soiData}
                         />
                     )}
-                    {console.log('soiData---', soiData)}
                     {/* <GroupedBarChart
                         data={soiData}
                         groupSelector={groupSelector}

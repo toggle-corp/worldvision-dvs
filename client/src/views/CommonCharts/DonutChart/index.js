@@ -43,6 +43,8 @@ export default function DonutChart(props) {
     const {
         data,
         colorScheme,
+        donutChartHeight,
+        donutChartWidth,
     } = props;
 
     if (data.length <= 0) {
@@ -56,22 +58,24 @@ export default function DonutChart(props) {
     return (
         <div
             style={{
-                width: '100%',
-                height: 180,
+                width: donutChartWidth,
+                height: donutChartHeight,
+                marginBottom: 12,
             }}
         >
             <ResponsiveContainer>
                 <PieChart>
                     <Pie
                         data={data}
-                        innerRadius={65}
-                        outerRadius={85}
+                        innerRadius={donutChartHeight / 2.75}
+                        outerRadius={donutChartHeight / 2}
                         dataKey="value"
                     >
                         {data.map((d, index) => (
                             <Cell
                                 key={d.key}
                                 fill={colorScheme[index]}
+                                className={styles.cell}
                             />
                         ))}
                     </Pie>
@@ -82,7 +86,14 @@ export default function DonutChart(props) {
     );
 }
 
+DonutChart.defaultProps = {
+    donutChartHeight: 180,
+    donutChartWidth: '100%',
+};
+
 DonutChart.propTypes = {
+    donutChartHeight: PropTypes.number,
+    donutChartWidth: PropTypes.string,
     data: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
     colorScheme: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };

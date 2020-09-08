@@ -21,6 +21,8 @@ import LanguagePeopleGroupDisability from '#components/LanguagePeopleGroupDisabi
 
 import { transformSoi } from '#utils/transform';
 
+import DonutChartRecharts from '../../CommonCharts/DonutChart';
+
 import styles from './styles.scss';
 
 const propTypes = {
@@ -39,6 +41,8 @@ const defaultProps = {
 
 const droppedKey = 'total_no_of_rc_records_dropped_during_the_month';
 const rcAwayKey = 'total_rc_temporarily_away';
+
+const donutChartHeight = 120;
 
 const ageKeyMap = {
     '<=6': '0 - 6',
@@ -70,6 +74,7 @@ const legendColorSelector = d => d.color;
 
 const donutColor = ['#41cf76', '#f44336'];
 const soiColorScheme = ['#ef5350', '#fff176', '#81c784'];
+
 const sectionPercents = [0.75, 0.1, 0.15];
 
 const mvcIndicatorKeySelector = d => d.label;
@@ -366,7 +371,7 @@ export default class Summary extends PureComponent {
         };
 
         const primaryUneducated = {
-            key: 'PrimaryUnEducated',
+            key: 'PrimaryUneducated',
             value: this.getValueFromMap(educationMap, '@PrimarySchoolAgeNoEducation') || 0,
             label: 'Primary School Age RC Not Involved in Education',
         };
@@ -397,7 +402,7 @@ export default class Summary extends PureComponent {
 
         const educated = education.filter(values => (
             values.key === 'PrimaryEducated'
-                || values.key === 'SecondaryEducated'
+            || values.key === 'SecondaryEducated'
         )).reduce((a, b) => ({ ...a, value: a.value + b.value }), {
             value: 0,
             key: 'educated',
@@ -406,7 +411,7 @@ export default class Summary extends PureComponent {
 
         const uneducated = education.filter(values => (
             values.key === '@SecondarySchoolAgeNoEducation'
-                || values.key === '@PrimarySchoolAgeNoEducation'
+            || values.key === '@PrimarySchoolAgeNoEducation'
         )).reduce((a, b) => ({ ...a, value: a.value + b.value }), {
             value: 0,
             key: 'uneducated',
@@ -635,6 +640,18 @@ export default class Summary extends PureComponent {
         ].filter(v => v.value);
     })
 
+    getDonutDataWithName = memoize((donutData) => {
+        if (isFalsy(donutData)) {
+            return [];
+        }
+
+        const dataWithName = donutData.map(data => ({
+            ...data,
+            name: data.label,
+        }));
+        return dataWithName;
+    });
+
     render() {
         const {
             className,
@@ -682,6 +699,10 @@ export default class Summary extends PureComponent {
             mostVulnerableChildrenVulnerabilityMarker,
         );
 
+        const healthNutritionWithName = this.getDonutDataWithName(healthNutrition);
+        const educationInvolvementWithName = this.getDonutDataWithName(educationInvolvement);
+        const childMonitoringVizDataWithName = this.getDonutDataWithName(childMonitoringVizData);
+
         const infoText = `The data below is
             aggregated from sponsorship
             management report from ${noOfProjects}
@@ -717,7 +738,14 @@ export default class Summary extends PureComponent {
                 <div className={styles.item}>
                     <h3>Health / Nutrition</h3>
                     <div className={styles.itemTableViz}>
-                        <DonutChart
+                        <DonutChartRecharts
+                            donutChartHeight={donutChartHeight}
+                            data={healthNutritionWithName}
+                            colorScheme={donutColor}
+                            className={styles.viz}
+                            donutChartWidth="50%"
+                        />
+                        {/* <DonutChart
                             className={styles.viz}
                             data={healthNutrition}
                             sideLengthRatio={0.2}
@@ -726,7 +754,7 @@ export default class Summary extends PureComponent {
                             labelSelector={Summary.labelSelector}
                             labelModifier={Summary.labelModifierSelector}
                             colorScheme={donutColor}
-                        />
+                        /> */}
                         <ListView
                             className={styles.table}
                             data={percentHealth}
@@ -739,7 +767,13 @@ export default class Summary extends PureComponent {
                 <div className={styles.item}>
                     <h3>Education</h3>
                     <div className={styles.itemTableViz}>
-                        <DonutChart
+                        <DonutChartRecharts
+                            donutChartHeight={donutChartHeight}
+                            data={educationInvolvementWithName}
+                            colorScheme={donutColor}
+                            donutChartWidth="50%"
+                        />
+                        {/* <DonutChart
                             className={styles.viz}
                             data={educationInvolvement}
                             sideLengthRatio={0.2}
@@ -748,7 +782,7 @@ export default class Summary extends PureComponent {
                             labelSelector={Summary.labelSelector}
                             labelModifier={Summary.labelModifierSelector}
                             colorScheme={donutColor}
-                        />
+                        /> */}
                         <ListView
                             className={styles.table}
                             data={educationValues}
@@ -756,12 +790,23 @@ export default class Summary extends PureComponent {
                             keySelector={Summary.tableKeySelector}
                             renderer={KeyValue}
                         />
+
                     </div>
                 </div>
                 <div className={styles.item}>
                     <h3>Child Monitoring Status</h3>
                     <div className={styles.itemTableViz}>
-                        <DonutChart
+                        <DonutChartRecharts
+                            donutChartHeight={donutChartHeight}
+                            data={childMonitoringVizDataWithName}
+                            colorScheme={[
+                                '#41cf76',
+                                '#ef8c00',
+                                '#f44336',
+                            ]}
+                            donutChartWidth="50%"
+                        />
+                        {/* <DonutChart
                             className={styles.viz}
                             data={childMonitoringVizData}
                             hideLabel
@@ -774,7 +819,7 @@ export default class Summary extends PureComponent {
                                 '#ef8c00',
                                 '#f44336',
                             ]}
-                        />
+                        /> */}
                         <ListView
                             className={styles.table}
                             data={percentChild}

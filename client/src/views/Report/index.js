@@ -38,7 +38,7 @@ import {
     triColorScheme,
 } from './report-utils';
 
-import DonutChartReCharts from './DonutChart';
+import DonutChartReCharts from '../CommonCharts/DonutChart';
 import HorizontalBarRecharts from './HorizontalBar';
 import GroupedBarChartRecharts from './GroupedBarChart';
 
