@@ -248,7 +248,7 @@ def get_projects_summary(qs, group_by_date=False):
         ).aggregate(
             **{
                 field_label: Sum(Cast(KeyTextTransform(field, 'data'), models.IntegerField()))
-                for field, field_label in MostVulnerableChildrenVulnerabilityMarker.FIELDS
+                for field, field_label in MostVulnerableChildrenVulnerabilityMarker.get_data_fields()
             },
         )
 

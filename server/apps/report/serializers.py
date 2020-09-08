@@ -1,4 +1,7 @@
+from django.db import models
 from django.db.models import Sum
+from django.db.models.functions import Cast
+from django.contrib.postgres.fields.jsonb import KeyTextTransform
 from rest_framework import serializers
 
 from project.models import Project
@@ -10,6 +13,8 @@ from report.models import (
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
     SupportPariticipationDetail,
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
 )
 
 from project.serializers import MiniProjectSerializer
@@ -20,6 +25,30 @@ class BaseSerializer(serializers.ModelSerializer):
 
 
 class ReportSerializer(BaseSerializer):
+    support_pariticipation_detail = serializers.SerializerMethodField()
+    most_vulnerable_children_indicator = serializers.SerializerMethodField()
+    most_vulnerable_children_vulnerability_marker = serializers.SerializerMethodField()
+
+    def get_support_pariticipation_detail(self, obj):
+        return SupportPariticipationDetail.objects.filter(project=obj.project).values('type', 'comment').annotate(
+            count_sum=Sum('count')
+        ).values('type', 'comment', 'count_sum')
+
+    def get_most_vulnerable_children_indicator(self, obj):
+        return MostVulnerableChildrenIndicator.objects.filter(project=obj.project).aggregate(
+            total_mvc_count=Sum('mvc_count'),
+            total_rc_not_vc_count=Sum('rc_not_vc_count'),
+            total_rc_count=Sum('rc_count'),
+        )
+
+    def get_most_vulnerable_children_vulnerability_marker(self, obj):
+        return MostVulnerableChildrenVulnerabilityMarker.objects.filter(project=obj.project).aggregate(
+            **{
+                field_label: Sum(Cast(KeyTextTransform(field, 'data'), models.IntegerField()))
+                for field, field_label in MostVulnerableChildrenVulnerabilityMarker.get_data_fields()
+            },
+        )
+
     class Meta:
         model = Report
         fields = '__all__'
