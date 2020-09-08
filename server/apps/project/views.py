@@ -1,16 +1,18 @@
-from django.shortcuts import get_object_or_404
 from django.db.models import Prefetch
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, response
 
 from summary_group.serializers import get_projects_summary
 from report.models import Report
 from report.serializers import ReportSerializer
+
 from .models import Project
 from .serializers import ProjectSerializer
 
 
 class ProjectViewSet(viewsets.ViewSet):
     """
+    # TODO: Use viewset (Also refactor)
     A simple ViewSet for listing or retrieving projects.
     """
     def list(self, request, version):
