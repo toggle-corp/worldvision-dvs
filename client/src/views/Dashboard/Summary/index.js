@@ -647,18 +647,16 @@ export default class Summary extends PureComponent {
                         />
                         )
                     </h3>
-                    <div className={styles.itemTableViz}>
-                        <ListView
-                            className={_cs(styles.table, styles.childFamily)}
-                            data={childFamily}
-                            rendererParams={this.childFamilyParams}
-                            groupRendererParams={this.childFamilyGroupParams}
-                            keySelector={Summary.tableKeySelector}
-                            renderer={ParticipationItem}
-                            groupKeySelector={Summary.groupKeySelector}
-                            groupRendererClassName={styles.childFamilyGroup}
-                        />
-                    </div>
+                    <ListView
+                        className={_cs(styles.table, styles.childFamily)}
+                        data={childFamily}
+                        rendererParams={this.childFamilyParams}
+                        groupRendererParams={this.childFamilyGroupParams}
+                        keySelector={Summary.tableKeySelector}
+                        renderer={ParticipationItem}
+                        groupKeySelector={Summary.groupKeySelector}
+                        groupRendererClassName={styles.childFamilyGroup}
+                    />
                 </div>
                 <div className={styles.item}>
                     <h3>Support Participation Details</h3>
