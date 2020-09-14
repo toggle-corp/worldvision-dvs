@@ -634,11 +634,13 @@ class Report extends PureComponent {
                     <div className={styles.lowerContainer}>
                         <div className={styles.item}>
                             <h3>RC Data</h3>
-                            <div className={styles.vizWrapper}>
-                                <HorizontalBarRecharts
-                                    data={remoteChildren}
-                                    colorScheme={horizontalBarColorScheme}
-                                />
+                            <div className={styles.vizContainer}>
+                                <div className={styles.viz}>
+                                    <HorizontalBarRecharts
+                                        data={remoteChildren}
+                                        colorScheme={horizontalBarColorScheme}
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -646,7 +648,7 @@ class Report extends PureComponent {
                             <h3>Service Operations Indicators Summary Report</h3>
                             <div className={styles.vizGroup}>
                                 <GaugeChart
-                                    className={styles.viz}
+                                    className={styles.gaugeChart}
                                     sectionPercents={sectionPercents}
                                     minValue={0}
                                     maxValue={totalSoi}
