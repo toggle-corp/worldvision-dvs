@@ -15,6 +15,8 @@ import {
 import GroupedBarChart from '#rscz/GroupedBarChart';
 import Legend from '#rscz/Legend';
 
+import GroupedBarChartRecharts from '../../GroupedBarChart';
+
 import styles from './styles.scss';
 
 const propTypes = {
@@ -279,11 +281,11 @@ class TrendSummary extends React.PureComponent {
             values,
             columns: [
                 'Total Closed',
-                'Closed On',
+                'Closed On Time',
             ],
             colors: {
                 'Total Closed': '#44df96',
-                'Closed On': '#c25be2',
+                'Closed On Time': '#c25be2',
             },
         });
     });
@@ -330,7 +332,13 @@ class TrendSummary extends React.PureComponent {
             <div className={_cs(styles.trend, className)}>
                 <div className={_cs(styles.item)}>
                     <h3> RC Supply Trend </h3>
-                    <GroupedBarChart
+                    {rcData.values.length > 0 && (
+                        <GroupedBarChartRecharts
+                            data={rcData}
+                            lineKey="Planned RC"
+                        />
+                    )}
+                    {/* <GroupedBarChart
                         data={rcData}
                         groupSelector={groupSelector}
                         lineDataSelector={rcLineSelector}
@@ -342,11 +350,17 @@ class TrendSummary extends React.PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
-                    />
+                    /> */}
                 </div>
                 <div className={_cs(styles.item)}>
                     <h3> Child Monitoring Trend </h3>
-                    <GroupedBarChart
+                    {childMonitoringData.values.length > 0 && (
+                        <GroupedBarChartRecharts
+                            data={childMonitoringData}
+                            lineKey="Not Sighted More than 90 Days"
+                        />
+                    )}
+                    {/* <GroupedBarChart
                         data={childMonitoringData}
                         groupSelector={groupSelector}
                         lineDataSelector={childMonitoringLineSelector}
@@ -358,11 +372,16 @@ class TrendSummary extends React.PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
-                    />
+                    /> */}
                 </div>
                 <div className={_cs(styles.item)}>
                     <h3> Health Nutrition Trend </h3>
-                    <GroupedBarChart
+                    {healthData.values.length > 0 && (
+                        <GroupedBarChartRecharts
+                            data={healthData}
+                        />
+                    )}
+                    {/* <GroupedBarChart
                         data={healthData}
                         groupSelector={groupSelector}
                         showValue
@@ -373,11 +392,16 @@ class TrendSummary extends React.PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
-                    />
+                    /> */}
                 </div>
                 <div className={_cs(styles.item)}>
                     <h3> Correspondence Trend </h3>
-                    <GroupedBarChart
+                    {correspondenceData.values.length > 0 && (
+                        <GroupedBarChartRecharts
+                            data={correspondenceData}
+                        />
+                    )}
+                    {/* <GroupedBarChart
                         data={correspondenceData}
                         groupSelector={groupSelector}
                         showValue
@@ -388,11 +412,16 @@ class TrendSummary extends React.PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
-                    />
+                    /> */}
                 </div>
                 <div className={_cs(styles.item)}>
                     <h3> Education Trend </h3>
-                    <GroupedBarChart
+                    {educationData.values.length > 0 && (
+                        <GroupedBarChartRecharts
+                            data={educationData}
+                        />
+                    )}
+                    {/* <GroupedBarChart
                         data={educationData}
                         groupSelector={groupSelector}
                         showValue
@@ -403,11 +432,16 @@ class TrendSummary extends React.PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
-                    />
+                    /> */}
                 </div>
                 <div className={_cs(styles.item)}>
                     <h3> SOI Trend </h3>
-                    <GroupedBarChart
+                    {soiData.values.length > 0 && (
+                        <GroupedBarChartRecharts
+                            data={soiData}
+                        />
+                    )}
+                    {/* <GroupedBarChart
                         data={soiData}
                         groupSelector={groupSelector}
                         showValue
@@ -418,7 +452,7 @@ class TrendSummary extends React.PureComponent {
                         keySelector={legendKeySelector}
                         labelSelector={legendLabelSelector}
                         colorSelector={legendColorSelector}
-                    />
+                    /> */}
                 </div>
             </div>
         );

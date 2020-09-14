@@ -41,12 +41,15 @@
         border: var(--width-separator-thin) solid var(--color-separator);
         background-color: var(--color-foreground);
         width: calc(100% - 2 * var(--spacing-medium));
+        padding-top: var(--spacing-medium);
 
         h3 {
             padding: var(--spacing-small) var(--spacing-medium);
             text-transform: capitalize;
             color: var(--color-accent);
             font-weight: var(--font-weight-bold);
+            text-align: center;
+            margin-bottom: var(--spacing-medium);
         }
 
         .date {
@@ -90,8 +93,7 @@
             }
 
             .viz {
-                margin-left: -var(--spacing-medium);
-                width: 180px;
+                flex-grow: 0;
             }
 
             .success {
