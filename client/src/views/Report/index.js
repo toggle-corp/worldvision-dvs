@@ -192,6 +192,27 @@ const tableParams = (key, data) => {
         titleClassName: _cs(isSoi && styles.bold),
     });
 };
+const mvcParams = (key, data, _, allData) => {
+    const isMvc = key === 'Most Vulnerable Child (MVC) Count';
+    if (isMvc) {
+        const totalCount = allData.find(d => d.label === 'Total RC Count').value || 0;
+        if (totalCount) {
+            const percent = ((data.value / totalCount) * 100).toFixed(2);
+            return ({
+                title: `${data.label} (${percent})%`,
+                value: data.value,
+                percent: data.value,
+                colorOnlyNumber: true,
+            });
+        }
+    }
+    return ({
+        title: data.label,
+        value: data.value,
+        percent: data.value,
+        colorOnlyNumber: true,
+    });
+};
 
 const educationGroupRendererParams = (groupKey) => {
     const children = groupKey === '@PrimarySchoolAge'
@@ -709,7 +730,7 @@ class Report extends PureComponent {
                                 <ListView
                                     className={styles.table}
                                     data={mostVulnerableChildren}
-                                    rendererParams={tableParams}
+                                    rendererParams={mvcParams}
                                     keySelector={mvcIndicatorKeySelector}
                                     renderer={KeyValue}
                                 />

@@ -13,12 +13,17 @@
         background-color: var(--color-foreground);
         padding-bottom: var(--spacing-small);
         width: calc(100% - 2 * var(--spacing-medium));
+        min-height: 320px;
 
         h3 {
             padding: var(--spacing-small) var(--spacing-medium);
             text-transform: capitalize;
             color: var(--color-accent);
             font-weight: var(--font-weight-bold);
+        }
+
+        .chart {
+            flex-grow: 1;
         }
     }
 
