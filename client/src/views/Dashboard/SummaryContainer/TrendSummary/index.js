@@ -331,6 +331,7 @@ class TrendSummary extends React.PureComponent {
                 <div className={_cs(styles.item)}>
                     <h3> RC Supply Trend </h3>
                     <GroupedBarChart
+                        className={styles.chart}
                         data={rcData}
                         groupSelector={groupSelector}
                         lineDataSelector={rcLineSelector}
@@ -347,6 +348,7 @@ class TrendSummary extends React.PureComponent {
                 <div className={_cs(styles.item)}>
                     <h3> Child Monitoring Trend </h3>
                     <GroupedBarChart
+                        className={styles.chart}
                         data={childMonitoringData}
                         groupSelector={groupSelector}
                         lineDataSelector={childMonitoringLineSelector}
@@ -363,6 +365,7 @@ class TrendSummary extends React.PureComponent {
                 <div className={_cs(styles.item)}>
                     <h3> Health Nutrition Trend </h3>
                     <GroupedBarChart
+                        className={styles.chart}
                         data={healthData}
                         groupSelector={groupSelector}
                         showValue
@@ -378,6 +381,7 @@ class TrendSummary extends React.PureComponent {
                 <div className={_cs(styles.item)}>
                     <h3> Correspondence Trend </h3>
                     <GroupedBarChart
+                        className={styles.chart}
                         data={correspondenceData}
                         groupSelector={groupSelector}
                         showValue
@@ -393,6 +397,7 @@ class TrendSummary extends React.PureComponent {
                 <div className={_cs(styles.item)}>
                     <h3> Education Trend </h3>
                     <GroupedBarChart
+                        className={styles.chart}
                         data={educationData}
                         groupSelector={groupSelector}
                         showValue
@@ -408,6 +413,7 @@ class TrendSummary extends React.PureComponent {
                 <div className={_cs(styles.item)}>
                     <h3> SOI Trend </h3>
                     <GroupedBarChart
+                        className={styles.chart}
                         data={soiData}
                         groupSelector={groupSelector}
                         showValue

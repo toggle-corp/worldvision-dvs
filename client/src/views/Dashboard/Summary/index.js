@@ -211,6 +211,28 @@ export default class Summary extends PureComponent {
         });
     };
 
+    mvcParams = (key, data, _, allData) => {
+        const isMvc = key === 'Most Vulnerable Child (MVC) Count';
+        if (isMvc) {
+            const totalCount = allData.find(d => d.label === 'Total RC Count').value || 0;
+            if (totalCount) {
+                const percent = ((data.value / totalCount) * 100).toFixed(2);
+                return ({
+                    title: `${data.label} (${percent})%`,
+                    value: data.value,
+                    percent: data.value,
+                    colorOnlyNumber: true,
+                });
+            }
+        }
+        return ({
+            title: data.label,
+            value: data.value,
+            percent: data.value,
+            colorOnlyNumber: true,
+        });
+    };
+
     childFamilyGroupParams = groupKey => ({
         children: groupKey.split('_').join(' '),
     });
@@ -678,7 +700,7 @@ export default class Summary extends PureComponent {
                         <ListView
                             className={styles.table}
                             data={mostVulnerableChildren}
-                            rendererParams={this.tableParams}
+                            rendererParams={this.mvcParams}
                             keySelector={mvcIndicatorKeySelector}
                             renderer={KeyValue}
                         />
