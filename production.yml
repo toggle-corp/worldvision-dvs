@@ -1,44 +1,44 @@
 version: '3.2'
 
 services:
-    db:
-        image: postgres:9.6
-        volumes:
-          - ./data/postgres-data:/var/lib/postgresql/data
+  db:
+    image: postgres:9.6
+    volumes:
+      - ./data/postgres-data:/var/lib/postgresql/data
 
-    server:
-        image: docker.pkg.github.com/toggle-corp/worldvision-dvs/server:release
-        env_file:
-          - .env-prod
-        volumes:
-          - server-static:/static
-          - ./data/media:/media
-        depends_on:
-          - db
+  server:
+    image: docker.pkg.github.com/toggle-corp/worldvision-dvs/server:release
+    env_file:
+      - .env-prod
+    volumes:
+      - server-static:/static
+      - ./data/media:/media
+    depends_on:
+      - db
 
-    client:
-        image: docker.pkg.github.com/toggle-corp/worldvision-dvs/client:release
-        volumes:
-          - client-static:/build/
-        env_file:
-          - .env-prod
-        command: bash -c '/code/scripts/sync_build.sh'
+  client:
+    image: docker.pkg.github.com/toggle-corp/worldvision-dvs/client:release
+    volumes:
+      - client-static:/build/
+    env_file:
+      - .env-prod
+    command: bash -c '/code/scripts/sync_build.sh'
 
-    nginx: # NGINX Server
-        build: ./nginx
-        volumes:
-          - ./nginx/configs/:/etc/nginx/conf.d/:z
-          - server-static:/static/server/
-          - client-static:/static/client/
-          - ./data/media:/media/server/
-          - certs:/etc/letsencrypt
-        ports:
-          - '80:80'
-          - '443:443'
-          - '8080:80'
-          - '8005:8005'
-        depends_on:
-          - server
+  nginx: # NGINX Server
+    build: ./nginx
+    volumes:
+      - ./nginx/configs/:/etc/nginx/conf.d/:z
+      - server-static:/static/server/
+      - client-static:/static/client/
+      - ./data/media:/media/server/
+      - certs:/etc/letsencrypt
+    ports:
+      - '80:80'
+      - '443:443'
+      - '8080:80'
+      - '8005:8005'
+    depends_on:
+      - server
 
 volumes:
   server-static:

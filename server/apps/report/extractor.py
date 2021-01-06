@@ -5,6 +5,8 @@ def _numeral(value, ignore=False):
     """
     Change to integer/float
     """
+    if value is None:
+        return 0
     try:
         try:
             return int(value)
