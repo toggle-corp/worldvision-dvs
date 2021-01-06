@@ -1,4 +1,6 @@
-#!/bin/bash -xe
+#!/bin/bash
+
+set -xe
 
 /code/scripts/wait-for-it.sh db:5432
 
