@@ -58,17 +58,17 @@ def extract_rc_data(data):
 
 def extract_health_nutrition(data):
     fields = (
-       ('@HealthSatisfactory', 'good'),
-       ('@HealthNotSatisfactory', 'bad'),
-       ('@Below5Child', 'normal'),
-       ('@NotFollowingGrowthCurve', 'bad'),
-       ('@MUACSevereMalnutrition', 'bad'),
-       ('@MUACModerateMalnutrition', 'bad'),
-       ('@MUACPartiallyImmunized', 'normal'),
+        ('@HealthSatisfactory', 'good'),
+        ('@HealthNotSatisfactory', 'bad'),
+        ('@Below5Child', 'normal'),
+        ('@NotFollowingGrowthCurve', 'bad'),
+        # ('@MUACSevereMalnutrition', 'bad'),
+        # ('@MUACModerateMalnutrition', 'bad'),
+        # ('@MUACPartiallyImmunized', 'normal'),
 
-       # TODO: Remove this from data also
-       ('@NotParticipatingHealthNutriActivities', 'normal'),
-       ('@NotVarifiedHealthGrowthCard', 'bad'),
+        # TODO: Remove this from data also
+        ('@NotParticipatingHealthNutriActivities', 'normal'),
+        ('@NotVarifiedHealthGrowthCard', 'bad'),
     )
     return [
         {
@@ -168,11 +168,11 @@ def extract_education(data):
 
 def extract_child_monitoring(data):
     fields = (
-       '@NotSighted30Days',
-       '@NotSighted60Days',
-       '@NotSighted90Days',
-       '@VisitCompleted',
-       '@SponsorVisitCompleted',
+        '@NotSighted30Days',
+        '@NotSighted60Days',
+        '@NotSighted90Days',
+        '@VisitCompleted',
+        '@SponsorVisitCompleted',
     )
     return [
         {
@@ -204,17 +204,55 @@ def extract_correspondence(data):
 
 def extract_data(data):
     report = data['Report']
-    tablix2 = report['Tablix2']
     correspondence_data = report['Tablix3']['Details_Collection']['Details']
 
-    _report = {
-        'reportDate': tablix2['@Textbox55'].split(':', 1)[1].strip(),
-        'rcData': extract_rc_data(tablix2),
-        'rcPieChart': extract_rc_pie_chart(tablix2),
+    # NOTE: Used this mapping to collect data from new xml extract structure
+    collected_data = {
+        key: report[key1][key2] for key, key1, key2 in [
+            ('@Available', 'Tablix4', '@Textbox366'),
+            ('@AvailableFemale', 'Tablix4', '@Textbox378'),
+            ('@AvailableMale', 'Tablix4', '@Textbox235'),
+            ('@Below5Child', 'Tablix2', '@Below5Child'),
+            ('@HealthNotSatisfactory', 'Tablix2', '@HealthNotSatisfactory'),
+            ('@HealthSatisfactory', 'Tablix2', '@HealthSatisfactory'),
+            ('@NotFollowingGrowthCurve', 'Tablix2', '@NotFollowingGrowthCurve'),
+            ('@NotParticipatingHealthNutriActivities', 'Tablix2', '@NotParticipatingHealthNutriActivities'),
+            ('@NotSighted30Days', 'Tablix2', '@NotSighted30Days'),
+            ('@NotSighted60Days', 'Tablix2', '@NotSighted60Days'),
+            ('@NotSighted90Days', 'Tablix2', '@NotSighted90Days'),
+            ('@NotVarifiedHealthGrowthCard', 'Tablix2', '@NotVarifiedHealthGrowthCard'),
+            ('@PlannedRC', 'Tablix1', '@Textbox24'),
+            ('@PrimarySchoolAge', 'Tablix2', '@PrimarySchoolAge'),
+            ('@PrimarySchoolAgeFormal', 'Tablix2', '@PrimarySchoolAgeFormal'),
+            ('@PrimarySchoolAgeNoEducation', 'Tablix2', '@PrimarySchoolAgeNoEducation'),
+            ('@PrimarySchoolAgeNonFormal', 'Tablix2', '@PrimarySchoolAgeNonFormal'),
+            ('@SecondarySchoolAge', 'Tablix2', '@SecondarySchoolAge'),
+            ('@SecondarySchoolAgeFormal', 'Tablix2', '@SecondarySchoolAgeFormal'),
+            ('@SecondarySchoolAgeNoEducation', 'Tablix2', '@SecondarySchoolAgeNoEducation'),
+            ('@SecondarySchoolAgeNonFormal', 'Tablix2', '@SecondarySchoolAgeNonFormal'),
+            ('@SecondarySchoolAgeVocational', 'Tablix2', '@SecondarySchoolAgeVocational'),
+            ('@SponsorVisitCompleted', 'Tablix2', '@SponsorVisitCompleted'),
+            ('@Sponsored', 'Tablix4', '@Textbox233'),
+            ('@SponsoredFemale', 'Tablix4', '@Textbox231'),
+            ('@SponsoredMale', 'Tablix4', '@Textbox228'),
+            ('@TotalDeath', 'Tablix4', '@Textbox237'),
+            ('@TotalFemale', 'Tablix4', '@Textbox225'),
+            ('@TotalHold', 'Tablix4', '@Textbox353'),
+            ('@TotalLeft', 'Tablix4', '@Textbox236'),
+            ('@TotalMale', 'Tablix4', '@Textbox212'),
+            ('@TotalRC', 'Tablix1', '@Textbox25'),
+            ('@VisitCompleted', 'Tablix2', '@VisitCompleted'),
+        ]
+    }
 
-        'healthNutrition': extract_health_nutrition(tablix2),
-        'education': extract_education(tablix2),
-        'childMonitoring': extract_child_monitoring(tablix2),
+    _report = {
+        'reportDate': report['Tablix1']['@Textbox93'].split(':', 1)[1].strip(),
+        'rcData': extract_rc_data(collected_data),
+        'rcPieChart': extract_rc_pie_chart(collected_data),
+
+        'healthNutrition': extract_health_nutrition(collected_data),
+        'education': extract_education(collected_data),
+        'childMonitoring': extract_child_monitoring(collected_data),
         'correspondences': extract_correspondence(correspondence_data),
     }
 
