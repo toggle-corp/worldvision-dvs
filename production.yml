@@ -24,23 +24,26 @@ services:
       - .env-prod
     command: bash -c '/code/scripts/sync_build.sh'
 
-  nginx: # NGINX Server
-    build: ./nginx
-    volumes:
-      - ./nginx/configs/:/etc/nginx/conf.d/:z
-      - server-static:/static/server/
-      - client-static:/static/client/
-      - ./data/media:/media/server/
-      - certs:/etc/letsencrypt
+  caddy:
+    image: caddy:2.2.1
     ports:
-      - '80:80'
-      - '443:443'
-      - '8080:80'
-      - '8005:8005'
+      - "80:80"
+      - "443:443"
+    volumes:
+      # App volumes mapping
+      - client-static:/var/www/
+      - server-static:/var/www/django-static/
+      - ./data/media:/var/www/django-media/
+      # Caddy volumes
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
     depends_on:
       - server
+
 
 volumes:
   server-static:
   client-static:
-  certs:
+  caddy_data:
+  caddy_config:
