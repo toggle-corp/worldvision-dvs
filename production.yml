@@ -3,6 +3,7 @@ version: '3.2'
 services:
   db:
     image: postgres:9.6
+    restart: unless-stopped
     volumes:
       - ./data/postgres-data:/var/lib/postgresql/data
 
@@ -13,6 +14,7 @@ services:
     volumes:
       - server-static:/static
       - ./data/media:/media
+    restart: unless-stopped
     depends_on:
       - db
 
@@ -38,6 +40,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
+    restart: unless-stopped
     depends_on:
       - server
 
