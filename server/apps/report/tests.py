@@ -18,6 +18,8 @@ from report.models import (
     ChildFamilyParticipation,
     LanguagePeopleGroupDisability,
     SupportPariticipationDetail,
+    MostVulnerableChildrenIndicator,
+    MostVulnerableChildrenVulnerabilityMarker,
 )
 
 
@@ -28,6 +30,8 @@ MODEL_API_URLS = {
     ChildFamilyParticipation: '/api/v1/child-family-participations/',
     SupportPariticipationDetail: '/api/v1/support-patricipation-details/',
     LanguagePeopleGroupDisability: '/api/v1/project-language-people-group-disabilities/{}/',
+    MostVulnerableChildrenIndicator: None,
+    MostVulnerableChildrenVulnerabilityMarker: None,
 }
 
 TEST_DOC_FILES = {
@@ -78,7 +82,10 @@ class ReportTestCase(TestCase):
         (model,) for model in BULK_IMPORTER.keys()
     ], name_func=lambda func, _, param: f'{func.__name__}__{param.args[0].__name__}')
     def test_bulk_import(self, model):
-        response = self.client.get(MODEL_API_URLS[model])
+        url = MODEL_API_URLS[model]
+        if url is None:
+            return
+        response = self.client.get(url)
         if model not in CSV_IMPORT_MODELS:
             self.assert_200(response)
 

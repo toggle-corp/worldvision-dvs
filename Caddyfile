@@ -1,0 +1,10 @@
+sdb.wvnepal.org {
+    encode gzip zstd
+    root * /var/www/
+
+    @isServer {
+      path /api* /admin*
+    }
+    reverse_proxy @isServer server
+    file_server
+}

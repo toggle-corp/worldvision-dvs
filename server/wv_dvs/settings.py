@@ -193,3 +193,22 @@ if DEBUG and os.environ.get('DJANGO_USE_SILK', 'False').lower() == 'true':
     MIDDLEWARE += ['silk.middleware.SilkyMiddleware']
     SILKY_META = True
     SILKY_PYTHON_PROFILER = True
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
