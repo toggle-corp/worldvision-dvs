@@ -1,5 +1,5 @@
 Django>=2.1,<2.2
-Pygments==2.2.0
+Pygments==2.7.4
 backcall==0.1.0
 coverage
 decorator==4.3.0
