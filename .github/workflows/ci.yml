@@ -30,25 +30,23 @@ jobs:
       - name: Branch HEAD
         id: branch-head
         run: |
-          BRANCH=$(echo $GITHUB_SHA | head -c7)
+          BRANCH=$(echo ${GITHUB_REF#refs/heads/} | tr / _)
           echo ::set-output name=branch::${BRANCH}
 
       - name: 🐳 Prepare Docker (Server)
         id: server-prep
+        env:
+          WV_BRANCH_NAME: ${{ steps.branch-head.outputs.branch }}
         run: |
-          TAG=$(echo $GITHUB_SHA | head -c7)
-          IMAGE="docker.pkg.github.com/toggle-corp/worldvision-dvs/server"
-          echo ::set-output name=tagged_image::${IMAGE}:${TAG}
-          echo ::set-output name=tag::${TAG}
+          IMAGE="ghcr.io/toggle-corp/worldvision-dvs/server"
+          echo ::set-output name=tagged_image::${IMAGE}:${WV_BRANCH_NAME}
           touch .env
 
       # - name: 🐳 Prepare Docker (Client)
       #   id: client-prep
       #   run: |
-      #     TAG=$(echo $GITHUB_SHA | head -c7)
-      #     IMAGE="docker.pkg.github.com/toggle-corp/worldvision-dvs/client"
-      #     echo ::set-output name=tagged_image::${IMAGE}:${TAG}
-      #     echo ::set-output name=tag::${TAG}
+      #     IMAGE="ghcr.io/toggle-corp/worldvision-dvs/client"
+      #     echo ::set-output name=tagged_image::${IMAGE}:${WV_BRANCH_NAME}
 
       - name: 🐳 Set up Docker Buildx
         id: buildx
@@ -117,11 +115,17 @@ jobs:
       #     REACT_APP_MAPBOX_ACCESS_TOKEN: 'pk.eyJ1IjoiYWRpdHlha2hhdHJpIiwiYSI6ImNqbHh0eHRnZzAzN3YzdnBpeWtua3l0dHIifQ.YVzzJ9GDQKAXtW3MyqnfSQ'
       #     REACT_APP_MAPBOX_STYLE: 'mapbox://styles/deepmapz/cjc8oth8775tu2sr0eeymm3qv'
 
-      - name: 🤞 Push images after succes
+      - name: 🤞 Push images after success (server)
         if: github.event_name == 'push'
-        run: docker-compose push
+        run: docker-compose push server
         env:
           WV_BRANCH_NAME: ${{ steps.branch-head.outputs.branch }}
+
+      # - name: 🤞 Push images after succes (client)
+      #   if: github.event_name == 'push'
+      #   run: docker-compose push client
+      #   env:
+      #     WV_BRANCH_NAME: ${{ steps.branch-head.outputs.branch }}
 
       - name: Deploy coverage to GH Pages 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
