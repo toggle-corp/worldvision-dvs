@@ -13,7 +13,7 @@ def extract(xml_data, _generated_on):
         ['ProjectTranslation_Collection']['ProjectTranslation']
     )
     # Sample string 'As of Date : 8/29/2019 10:52:49 AM'
-    generated_on_str = report['Tablix1']['@Textbox18']
+    generated_on_str = report['Tablix1']['@AsOfDate']
     matched = DATE_PATTERN.match(generated_on_str).group(1)
     generated_on = _generated_on or datetime.strptime(matched, '%m/%d/%Y').date()
 
