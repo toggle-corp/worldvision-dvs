@@ -142,3 +142,4 @@ typings/
 !.env-nightly.enc
 
 nginx/configs
+configs/certs

@@ -27,7 +27,7 @@ services:
     command: bash -c '/code/scripts/sync_build.sh'
 
   caddy:
-    image: caddy:2.2.1
+    image: caddy:2
     ports:
       - "80:80"
       - "443:443"
@@ -38,6 +38,7 @@ services:
       - ./data/media:/var/www/django-media/
       # Caddy volumes
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./configs/certs:/self-certs/
       - caddy_data:/data
       - caddy_config:/config
     restart: unless-stopped

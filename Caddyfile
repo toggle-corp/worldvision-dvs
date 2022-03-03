@@ -1,6 +1,13 @@
+{
+    email dev@togglecorp.com
+}
+
 sdb.wvnepal.org {
     encode gzip zstd
     root * /var/www/
+
+    # This needs to be provided manually.
+    tls /self-certs/server.crt /self-certs/server.key
 
     @isServer {
       path /api* /admin*
